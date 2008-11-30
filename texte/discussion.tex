@@ -1,67 +1,61 @@
 \chapter{Discussion et conclusion}
 
-Les contributions de cette thèse sont doubles, et portent à la fois sur la
-création d'une base de données de patients simulés respirant en TEP dynamique, 
-mais aussi sur un ensemble d'outils d'évaluation des performances de détection
+Les contributions de cette thèse sont doubles. Elles portent, à la fois sur la
+création d'une base de données de patients simulés respirant, en TEP dynamique, et
+sur un ensemble d'outils d'évaluation des performances de détection
 des lésions.  
  
-Je vais tout d'abord présenter une synthèse des résultats présentés dans la
-partie précédente, puis les limites et perspectives de notre systèmes de détection ainsi que de la base de données générée.
+Nous allons tout d'abord présenter une synthèse des résultats, puis les limites et perspectives de notre système de détection ainsi que de la base de données.
 
 \section{Synthèse des résultats}
 
-Les résultats que nous avons présentés montrent une différence nette de
-détectabilité des lésions entre les images non corrigées et les images statiques
-selon tous les critères utilisés, ce qui conforte la fiabilité du système de
-détection que nous avons développés. Les détections réalisées sur les images
-corrigées montrent des performances intermédiaires dans la majorité des cas. 
+Les résultats que nous avons présentés montrent une différence importante de
+détectabilité des lésions dans les images non corrigées et dans les images statiques
+avec tous les critères utilisés. Ce résultat conforte la fiabilité du système de
+détection que nous avons développé. Les détections réalisées dans les images
+corrigées montrent des performances de détectabilité intermédiaires entre celles obtenues dans les images statiques et celles avec obtenues dans les images dynamiques non corrigée. 
 
 Pour le poumon, les courbes Free-ROC montrent que la détectabilité des
-lésions est bien récupérée pour la correction TE-IM, avec une sensibilité de 62\% contre 63\% sur les images statiques pour
-20 faux positifs moyens par image. Cependant, TE-MS mon une sensibilité de seulement 50\% dans les mêmes conditions. Les FDM
-issues de l'analyse JAFROC en revanche montrent une amélioration semblable pour
+lésions est bien retrouvée pour la correction du mouvement respiratoire TE-IM, avec une sensibilité de 62\% contre 63\% sur les images statiques, pour
+20 faux positifs en moyenne par image. La méthode de correctio ndu mouvement TE-MS apporte une sensibilité de seulement 50\% dans les mêmes conditions. En revanche, les FDM
+issues de l'analyse JAFROC montrent une amélioration semblable pour
 les deux techniques de correction du mouvement. Pour le foie, les courbes F-ROC
-montrent que les techniques de correction du mouvement respiratoire arrivent à
-se situer de manière générale au milieu de celles des images statiques et non
-corrigées, avec par exemple pour 9 faux positifs par image une sensibilité de
-58\% pour les images statiques, 53\% pour TE-IM, 48\% pour TE-MS et 37\% pour
+montrent que les techniques de correction du mouvement respiratoire ont des performances intermédiaires celles des images statiques et non
+corrigées avec, par exemple, pour 9 faux positifs par image une sensibilité de
+58\% pour les images statiques, 53\% pour la méthode TE-IM, 48\% pour la méthode TE-MS et 37\% pour
 les images non corrigées. Cependant, les FDM issues des images corrigées du foie
-ne montrent pas d'améliorations notables de la détectabilité apportées par la
-correction de mouvement par rapport aux images non corrigées. 
+ne montrent pas d'améliorations notables de la détectabilité apportée par la
+correction du mouvement par rapport à celle des images non corrigées. 
 
-Les performances observées sur les courbes Free-ROC sont très différentes
- entre les deux organes, notamment le nombre de faux positif moyen est
-beaucoup plus faible pour l'étude sur le foie que sur le poumon. Cette
-différence est facilement expliquée par les différences de volumes entre les
+Les performances observées à l'aide des courbes Free-ROC sont très différentes
+ entre les deux organes, notamment le nombre de faux positif moyen qui est
+beaucoup plus faible pour le foie que pour le poumon. Cette différence
+s'explique par les différences de volumes des
 organes. En effet, le volume des poumons est approximativement deux fois plus
-important qque celui du foie dans les images.
+important que celui du foie dans le modèle XCAT que que nous avons utilisés.
 
-Les courbes Free-ROC sont plus pertinentes que les FDM dans le cadre de la
-détection, mais il n'existe pas de métrique synthétique permettant leur
-comparaison. Il est intéressant de constater que les deux métriques que nous
+Les courbes Free-ROC sont plus pertinentes que les FDM pour la
+détection, mais il n'existe pas de métrique permettant de synthétiser l'ensemble des performances, comme peut le faire l'aire sous la courbe pour les étude ROC. Il est intéressant de constater que les deux métriques que nous
 avons utilisées montrent des résultats parfois contradictoires. Cela peut
-s'expliquer par la différence de l'information qu'elles synthétisent. En effet,
-ces métriques sont complémentaires, et ne représentent pas les mêmes
+s'expliquer par la différence de l'information qu'elles mesurent. En effet,
+ces métriques sont complémentaires, et ne mesurent pas les mêmes
 informations. L'analyse JAFROC
 ne prend en compte que le faux positif de plus haut score pour chaque image,
 tandis les courbes F-ROC utilisent le nombre de faux positifs dépassant un
-certain seuil. Les FDM sont naturellement plus difficiles à interpréter, et sont
-par nature plus sensibles au bruit car elles utilisent des maximums de distributions, et sont
-donc très dépendantes des outsiders. Cependant, elles renseignent
-sur la différence de détectabilité entre les vrais positifs en général et les
-faux positifs de plus haut score. C’est une métrique qui a toute sa place, bien
-qu’elle soit handicapée par la faible quantité d’exemples à disposition, comme
+certain seuil. Les FDM sont naturellement plus difficiles à interpréter et sont,
+par nature, plus sensibles au bruit car elles utilisent des maximums de distributions, et sont
+donc très dépendantes des valeurs extrêmes. Cependant, cette métrique renseigne
+sur la différence de détectabilité entre les vrais positifs et le
+faux positifs de plus haut score. C’est une métrique qui est handicapée par la faible quantité d’exemples à disposition, comme
 le montrent les barres d’erreur~\ref{fig:fom_mod}.
 
 
 
-Les résultats que nous avons obtenus montrent néanmoins sans ambiguïté que
+Les résultats que nous avons obtenus montrent néanmoins, sans ambiguïté, que
 la détectabilité des lésions est améliorée par la correction du mouvement
 respiratoire, notamment en utilisant la correction TE-IM. La détectabilité des
 lésions indiquées par la courbe F-ROC est systématiquement supérieure sur les
-images corrigées par rapport à celle des images non corrigées. 
-
-Cependant la correction TE-MS a des performances inférieures à celles observées
+images corrigées par rapport à celle des images non corrigées. Cependant la correction TE-MS a des performances inférieures à celles observées
 pour TE-IM, ce qui est en contradiction avec les résultats présentés dans la
 littérature sur la quantification des
 lésions~\cite{lamare2007list,qiao2006motion}. Il faut noter que nous n'avons pas
@@ -70,10 +64,10 @@ réalisé notre
 quantification. Ces deux problématiques sont différentes et demandent des
 paramétrages spécifiques. De plus, nous n'avons pas utilisé la même
 implémentation de l'estimateur de mouvement et du correcteur d'image que
-l'auteur, ce qui pourrait expliquer les différences observées. La précision de
+les auteurs, ce qui pourrait expliquer les différences observées. La précision de
 l'estimation de mouvement est aussi différente, car nous utilisons un
-espacement entre les noeuds de 17cm en X et en Y contre 2.5cm pour
-l'évaluation~\cite{lamare2007list}.
+espacement entre les noeuds de la grille B-spline de 17cm en X et en Y contre 2.5cm pour
+l'évaluation de~\cite{lamare2007list}.
 
 
 % \section{FDM}
@@ -90,38 +84,38 @@ l'évaluation~\cite{lamare2007list}.
 
 %Nous avons présenté notre méthodologie pour la création de la base d'apprentissage. Nous avons retenu le jeu de paramètres qui maximise la sensibilité, mais comme nous l'avons signalé dans la partie correspondante, nous utilisons les mêmes données pour estimer les paramètres de la base d'apprentissage et pour réaliser la mesure de performances finales. Cela crée un biais positif, et il serait intéressant de disposer de plus de données pour pouvoir réduire ce biais ou le mesurer.
 
-\subsection{Du système de détection}
+\subsection{Système de détection}
 
 La métrique utilisée pour choisir les paramètres du système CAD
 (voir~\ref{lab:paramClassif}) est très différente de celle utilisée pour
-mesurer les performances de détection sur les jeux d'images
-(voir~\ref{lab:selectionSeuil}). L'étude d'optimisation des paramètres du
+mesurer les performances de détection sur les différents jeux d'images de la base
+(voir~\ref{lab:selectionSeuil}). L'étude de l'optimisation des paramètres du
 système CAD est basée sur une validation croisée qui ne considère que le
 voxel central des lésions. Si le score de ce voxel est supérieur à 0,
 alors la lésion est considérée comme correctement détectée. Les
-performances de détectabilité sont quant à elles basées sur une approche
+performances de détectabilité sont, quant à elles, basées sur une approche
 région, en travaillant sur des agrégats. De plus, les métriques FDM et
-Free-ROC utilisent des seuils variables pour déterminer la performance de chaque
+Free-ROC utilisent des seuils variables pour déterminer les performances de chaque
 technique. 
 
-Il serait intéressant de travailler sur une métrique basée région pour la
-recherche des meilleurs paramètres de la base d'apprentissage, mais dans ce cas
-l'évaluation de la performance pour chaque jeu de paramètres nécessite de traiter
+Il serait intéressant de travailler sur une métrique ``basée région'' pour la
+recherche des meilleurs paramètres de la base d'apprentissage mais, dans ce cas,
+l'évaluation des performances pour chaque jeu de paramètres nécessite de traiter
 toutes les images, ce qui représente plusieurs heures de calculs par jeu de
 paramètres. La recherche exhaustive que nous avons réalisée demande l'évaluation
 de 900 triplets $(c, \gamma, j)$. ll n'est donc pas possible d'utiliser la même
-métrique, à moins d'utiliser des algorithmes d'optimisation avancés et de
+métrique, à moins d'opérer une étude séparée sur les algorithmes d'optimisation à utiliser, et de
 réaliser les calculs sur une grille. 
 
 
-Mais dans tous les cas, la quantité de données simulées devra être plus
+Mais, dans tous les cas, la quantité de données simulées devra être plus
 importante, pour pouvoir éviter le phénomène de sur-apprentissage (optimisation
 des paramètres pour le jeu de données et non pour les classes), qui est
-relativement important dans notre cas, où les données d'apprentissage et
+relativement important dans notre étude, où les données d'apprentissage et
 de tests sont extraites de la même base de données. Cela engendre un biais
 positif sur les résultats. Ce biais n'est pas très grave dans notre cas car
 il affecte toutes les modalités, et nous ne sommes pas intéressés par les
-performances absolues, mais par les relations entre les performances.
+performances absolues, mais par les performances relatives.
 Pour éliminer ce biais, il faut entre autre que la base de données utilisée
 pour le réglage des paramètres soit différente de celle utilisée pour réaliser
 l'estimation des performances.
@@ -136,7 +130,7 @@ objectif.
 %Idéalement, il faudrait utiliser une métrique type Free-ROC pour estimer les perfs de chaque jeu de param (=> sur-apprentissage !!)
 %De plus, si base App != FROC : base app = perfs au 0
 
-\subsection{De la base de données}
+\subsection{Base de données}
 
 Nous avons réalisé notre base de données à partir du modèle anthropomorphique
 XCAT de Paul Segars, principalement pour sa capacité à s'adapter à des
@@ -144,24 +138,24 @@ morphologies différentes et sa prise en charge native d'un modèle respiratoire
 complexe. 
 
 Cependant, cette approche par modèle a des limitations connues, notamment
-l'homogénéisation forcée de l'activité des organes. En effet, contrairement à
-l'imagerie TDM où les coefficients d'atténuations sont relativement constants
+l'homogénéisation de l'activité des organes. En effet, contrairement à
+l'imagerie TDM, où les coefficients d'atténuations sont relativement constants
 dans les tissus et entre les patients, en TEP l'activité mesurée pour un même
 organe varie entre les patients, et n'est pas constante à l'intérieur d'un même
 organe. Les différences d'activités entre les patients s'expliquent par la
 quantité de traceur injecté, d'éventuelles inflammations, le taux de glycémie
-(pour le $^{18}FDG$), ou encore la durée écoulée depuis l'injection.  
+(pour le $^{18}FDG$), ou encore le temps écoulé depuis l'injection.  
 
-Nous avions prévu au début de la création de la base d'intégrer une variabilité
-de captation inter-patients, mais nous avons dû la retirer par manque de temps.
-Cependant, incorporer la variabilité à l'intérieur de l'organe d'un patient
+Nous avions prévu, au début de la création de la base d'intégrer une variabilité
+de captation inter-patients, mais nous avons dû y renoncer par manque de temps.
+De plus, incorporer la variabilité de captation intra-organe pour les patients
 n'aurait pas été possible car le modèle utilisé est trop simpliste.  
 
 Dans la base de données que nous avons simulée, nous nous sommes restreints à
 utiliser des lésions sphériques de petit diamètre (8 et 12 mm). Aux résolutions
 permises par la TEP, cette approximation est suffisante pour modéliser
 correctement les fixations observées en clinique. Cependant cette limite est
-uniquement liée à notre choix de sujet, et n'est pas représentative des
+uniquement liée à notre choix de sujets, et n'est pas représentative des
 possibilités du simulateur. Nous avons notamment travaillé sur des lésions de
 formes différentes dans le cadre de la publication
 de~\cite{le2009incorporating}.  
@@ -180,7 +174,7 @@ pour évaluer de manière précise les interactions entre chaque type de paramè
 et son implication dans le résultat final. 
 
 
-\section{Sur l'imagerie TEP/TDM}
+\section{Imagerie TEP/TDM}
 
 En routine clinique, les acquisitions sont maintenant réalisées conjointement
 avec la TDM. Le rapprochement des scanners TEP et TDM sur le même appareil a
@@ -194,15 +188,13 @@ Un partenariat avait été mis en place avec le laboratoire Leti du CEA de
 Grenoble portant sur l'utilisation de leur simulateur SINDBAD. Nous avons passé
 plusieurs mois à l'évaluer et à adapter nos données pour le valider. En effet,
 il a été développé à l'origine pour le contrôle non destructif, et n'avais
-jamais été utilisé pour simuler des données cliniques où les géométries ainsi
-que les énergies utilisées sont totalement différentes. Nous avions embauché un
+jamais été utilisé pour simuler des données cliniques où les géométries, ainsi
+que les énergies utilisées, sont totalement différentes. Nous avions embauché un
 stagiaire ingénieur pour valider les simulations par rapport à des mesures
-réelles sur des fantômes~\cite{leduvehat}.  
-
-Cependant, les images que nous sommes parvenus à simuler étaient trop
+réelles sur des fantômes~\cite{leduvehat}. Cependant, les images que nous sommes parvenus à simuler étaient trop
 ``parfaites'' pour pouvoir être utilisées conjointement avec les images TEP. En
 effet, le modèle que nous utilisons (XCAT) est trop peu détaillé pour une
-modalité comme la TDM, qui dispose d'une résolution inférieure au mm. Les
+modalité comme la TDM, qui dispose d'une résolution inférieure au millimètre. Les
 inclusions étaient beaucoup trop visibles dans les tissus, en particulier
 au niveau pulmonaire, car ces derniers n'étaient pas assez complexes pour
 pouvoir les dissimuler malgré la modélisation des bronchioles et du système
@@ -213,13 +205,13 @@ parvenus à reproduire. Malgré notre travail avec l'auteur du modèle, il n'a p
 été possible d'améliorer suffisamment la complexité du modèle pour obtenir des
 résultats satisfaisants. 
 
-Malgré les difficultés, et en prenant la suite de nos travaux, le simulateur est
-actuellement en cours d'intégration dans le projet  ViP, où il devrait être
-utilisé à terme pour la simulation médicale. Le but de ce projet est de réaliser
+Malgré ces difficultés, et en prenant la suite de nos travaux, le simulateur est
+actuellement en cours d'intégration dans le projet  VIP ( Virtual Imaging Platform), où il devrait être
+utilisé pour la simulation médicale. Le but de ce projet est de réaliser
 une interface commune pour plusieurs simulateurs et les modèles associés. Une
 interface en cours de développement permettra de réaliser les simulations sur
 une grille de calculs (actuellement la grille Égée). Les simulateurs que nous
-avons utilisés, à savoir PET-SORTEO et SINDBAD sont en cours d'intégration ainsi
+avons utilisés (PET-SORTEO et SINDBAD) sont en cours d'intégration ainsi
 que le modèle XCAT. Des travaux sont en cours pour améliorer le réalisme des
 modèles, notamment grâce à l'ajout d'informations de texture.  
 

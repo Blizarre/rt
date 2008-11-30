@@ -13,7 +13,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   width="852"
+   width="906.59534"
    height="658"
    sodipodi:docname="apportCHO.svg">
   <metadata
@@ -80,7 +80,8 @@
        x1="923.90625"
        y1="321.04065"
        x2="1584.2188"
-       y2="321.04065" />
+       y2="321.04065"
+       gradientTransform="translate(0,2.9016574)" />
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -91,17 +92,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
+     inkscape:window-width="1440"
+     inkscape:window-height="829"
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.72644377"
-     inkscape:cx="714.93515"
+     inkscape:cx="406.58368"
      inkscape:cy="371.74463"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
+     inkscape:current-layer="g3693" />
   <image
      xlink:href="file:///home/marache/documentation/Th%C3%A8se/rapportBiblio/images/apportCHO-data.png"
      width="852"
@@ -119,7 +120,7 @@
   <flowRoot
      xml:space="preserve"
      id="flowRoot2836"
-     style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px"><flowRegion
+     style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"><flowRegion
        id="flowRegion2838"><rect
          id="rect2840"
          width="830.07111"
@@ -144,30 +145,41 @@
          id="flowPara2828">Sans mouvement</flowPara><flowPara
          id="flowPara2834" /></flowRoot>    <text
        id="text2844"
-       y="290.45609"
+       y="288.86536"
        x="925.05438"
        style="font-size:40px;font-style:normal;font-weight:normal;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
        xml:space="preserve"><tspan
-         y="290.45609"
+         y="288.86536"
          x="925.05438"
          id="tspan2846"
          sodipodi:role="line">Correction pendant la reconstruction</tspan></text>
     <text
        id="text2848"
-       y="332.07581"
+       y="330.78217"
        x="921.66016"
-       style="font-size:40px;font-style:normal;font-weight:normal;fill:url(#linearGradient3704);fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#00ff00;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
        xml:space="preserve"><tspan
-         style="fill:url(#linearGradient3704);fill-opacity:1"
-         y="332.07581"
+         style="fill:#00ff00;fill-opacity:1"
+         y="330.78217"
          x="921.66016"
          id="tspan2850"
-         sodipodi:role="line">Correction par gating et recalage</tspan></text>
+         sodipodi:role="line">Synchronisation respiratoire avec recalage</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ff00ff;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="921.66016"
+       y="372.69907"
+       id="text3616"><tspan
+         sodipodi:role="line"
+         id="tspan3618"
+         x="921.66016"
+         y="372.69907"
+         style="fill:#ff00ff;fill-opacity:1">Correction hybride</tspan></text>
   </g>
   <flowRoot
      xml:space="preserve"
      id="flowRoot2882"
-     style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px"><flowRegion
+     style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"><flowRegion
        id="flowRegion2884"><rect
          id="rect2886"
          width="253.2887"
@@ -177,7 +189,7 @@
        id="flowPara2888" /></flowRoot>  <flowRoot
      xml:space="preserve"
      id="flowRoot3662"
-     style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px"><flowRegion
+     style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"><flowRegion
        id="flowRegion3664"><rect
          id="rect3666"
          width="620.83264"
@@ -185,7 +197,7 @@
          x="152.79916"
          y="348.27197" /></flowRegion><flowPara
        id="flowPara3668" /></flowRoot>  <path
-     style="fill:#ffffff;fill-opacity:1;stroke:none;opacity:1"
-     d="M 150.03125 351.03125 L 150.03125 472.15625 L 167.9375 472.15625 L 167.9375 535.5 L 755.75 535.5 L 755.75 404.71875 L 272.5625 404.71875 L 272.5625 351.03125 L 150.03125 351.03125 z "
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     d="m 150.03125,351.03125 0,121.125 17.90625,0 0,63.34375 587.8125,0 0,-130.78125 -483.1875,0 0,-53.6875 -122.53125,0 z"
      id="rect3670" />
 </svg>

@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.175"
-     inkscape:cx="23.991923"
-     inkscape:cy="937.70601"
+     inkscape:zoom="0.35"
+     inkscape:cx="257.68229"
+     inkscape:cy="431.54096"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -68,7 +68,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -151,7 +151,7 @@
        id="g5607"
        ns0:preamble=""
        ns0:text="Diam\\`etre de la sph\\`ere"
-       transform="matrix(5.0561736,0,0,5.0561736,106.04097,-21.28429)">
+       transform="matrix(3.5393215,0,0,3.5393215,456.90427,169.78356)">
       <defs
          id="defs5609">
         <g
@@ -490,7 +490,7 @@
     <g
        ns0:text="Sous-estimation de l\'activit\\\'e (en \\%)"
        ns0:preamble=""
-       transform="matrix(0,-5.0561736,5.0561736,0,332.03561,1756.4266)"
+       transform="matrix(0,-3.5393215,3.5393215,0,527.95863,1310.9458)"
        id="g5727">
       <defs
          id="defs5729">
@@ -999,7 +999,7 @@
        y="-862.49493" />
     <g
        id="g5899"
-       transform="matrix(0,-5.0561736,5.0561736,0,332.03561,862.4266)"
+       transform="matrix(0,-3.5393215,3.5393215,0,533.10149,438.66006)"
        ns0:preamble=""
        ns0:text="Sous-estimation de l\'activit\\\'e (en \\%)">
       <defs
@@ -1494,7 +1494,7 @@
       </g>
     </g>
     <g
-       transform="matrix(5.0561736,0,0,5.0561736,106.04097,-873.28429)"
+       transform="matrix(3.5393215,0,0,3.5393215,474.04713,-671.98787)"
        ns0:text="Diam\\`etre de la sph\\`ere"
        ns0:preamble=""
        id="g6071">
@@ -1828,7 +1828,7 @@
     </g>
     <g
        id="g6191"
-       transform="matrix(5.0561736,0,0,5.0561736,297.46954,-820.14143)"
+       transform="matrix(3.5393215,0,0,3.5393215,608.04713,-634.78787)"
        ns0:preamble=""
        ns0:text="$(a)$">
       <defs
@@ -1925,7 +1925,7 @@
     <g
        ns0:text="$(b)$"
        ns0:preamble=""
-       transform="matrix(5.0561736,0,0,5.0561736,297.46954,35.85857)"
+       transform="matrix(3.5393215,0,0,3.5393215,590.90427,209.78356)"
        id="g6231">
       <defs
          id="defs6233">

@@ -7,15 +7,17 @@ Pour répondre à notre problématique de détection des lésions sur les images
 
 	\subsection{Avantages des bases de données simulées}
 
-Le principal avantage des bases de données simulées est le contrôle qu'elles permettent d'exercer sur les modèles. Il est possible de spécifier les conditions des acquisitions de manière très précise, et garantissent une homogénéité qu'il est difficile d'atteindre en utilisant des données patient.
+Le principal avantage des bases de données simulées est le contrôle qu'elles permettent d'exercer sur les modèles. Il est possible de spécifier les conditions des acquisitions de manière très précise, et de garantir une homogénéité difficile d'atteindre en utilisant des données patient.
 
-Dans le cadre de nos travaux sur la détection, avoir accès à la vérité terrain est particulièrement appréciable, car elle permet de savoir avec une certitude impossible à atteindre en clinique la position, le contraste et le nombre des lésions. En effet, dans le cas de lésions de petit diamètre et de petit contraste, le diagnostic ne peut être donné avec une précision totale par le praticien. 
+Dans le cadre de nos travaux sur la détection, la vérité terrain est particulièrement appréciable, car elle permet de savoir, avec une certitude impossible à atteindre en clinique, la position, le contraste et le nombre des lésions. En effet, dans le cas de lésions de petit diamètre et de petit contraste, le diagnostic ne peut être donné avec une précision totale par le praticien. 
 
 De plus, les simulations permettent d’obtenir des images avec des paramètres qui ne sont pas forcément disponibles en routine clinique. Dans notre cas, la génération des images en mode séquence est indispensable, et très peu d’examens sont réalisés de cette façon, notamment à cause de l’espace disque nécessaire et des temps de reconstruction qu'ils impliquent.
 
 	\section{Modèles}
 
-Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles. Cette variabilité des patients va permettre de limiter le sur-apprentissage des outils de détection. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été déformé de manière manuelle sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des courbes paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'interêt du patient en déplacant les points de contrôle. L'adaptation n’est pas parfaite, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associées aux fantômes adaptés sont présentés dans la figure~\ref{fig:adaptXCAT}.
+\subsection{Modèle anatomique}
+
+Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles de patients. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été déformé de manière manuelle sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des courbes paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'interêt du patient en déplacant les points de contrôle. L'adaptation n’est pas parfaite, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associées aux fantômes adaptés sont présentées dans la figure~\ref{fig:adaptXCAT}.
 
 \begin{figure}
  \centering
@@ -24,7 +26,7 @@ Nous avons utilisé une base de données d’images TDM fournie par le Centre Ho
  \label{fig:fitXCAT}
 \end{figure}
 
-Nous avons choisi le XCAT car il intégre directement un modèle de mouvement respiratoire, et il est conçu pour pouvoir être déformé et ainsi engendre différents patients virtuels.
+Nous avons choisi le XCAT car il intégre directement un modèle de mouvement respiratoire, et il est conçu pour pouvoir être déformé et ainsi engendrer différents patients virtuels.
 
 \begin{figure}
  \centering
@@ -37,10 +39,10 @@ Nous avons choisi le XCAT car il intégre directement un modèle de mouvement re
 \end{figure}
 
 
-		\subsection{Respiration}
+\subsection{Modèle de Respiration}
 
 
-Pour prendre en compte la variabilité du cycle respiratoire (voir figure \ref{fig:variabCycle}), nous avons utilisé 4 cycles différents pour modéliser la respiration du patient. Un signal respiratoire complet a été acquis sur une durée de plusieurs minutes à l'aide d'un spiromètre (voir \ref{lab:spirometre}). Nous avons extrait 3 cycles semblables correspondants à la phase de respiration normale, ainsi qu'un cycle ``anormal'' pour prendre en compte les effets d'une respiration irrégulière du patient pendant une partie du cycle.
+Pour prendre en compte la variabilité du cycle respiratoire (voir figure \ref{fig:variabCycle}), nous avons utilisé 4 cycles différents pour modéliser la respiration du patient. Un signal respiratoire complet a été acquis sur une durée de plusieurs minutes à l'aide d'un spiromètre (voir chapitre \ref{lab:spirometre}). Nous avons extrait 3 cycles semblables correspondants à la phase de respiration normale, ainsi qu'un cycle ``anormal'' pour prendre en compte les effets d'une respiration irrégulière du patient pendant une partie du cycle.
 
 \begin{figure}
  \centering
@@ -66,7 +68,19 @@ Chacun de ces 4 cycles est discrétisé en 8 parties qui seront utilisées pour 
  \label{fig:cycleRespi}
 \end{figure}
 
-	\section{Paramètres de simulation}
+\subsection{Modèle de tumeur}
+
+\todo{améliorer la partie sur la description des lésions. Peut-être préciser quelques publis qui utilisent les mêmes types de lésions}
+
+Nous avons utilisé un modèle de lésion correspondant adapté aux lésions de faible intensité. Elles sont sphériques, avec des diamètres de l'ordre de la résolution de l'imageur TEP.
+
+Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons crée. 173 lésions sont présentes dans le Poumon, contre 103 dans le Foie. La différence de taille entre les organes du XCAT explique la petite taille de la base de lésions du foie. 
+
+Les lésions ont été placées manuellement dans tout le volume de l'organe, en préférant les parties à fort mouvement proche du diaphragme. 
+
+Les contrastes ont été calibrés pour correspondre à des lésions de faibles détectabilité par une étude présenté en~\cite{lab:etudeDetect}.
+
+\section{Paramètres de simulation}
 
 \subsection{Activités des organes}
 
@@ -110,7 +124,7 @@ Vessie		& 50973		       \\
 \end{table}
 
 \subsection{Calibration des contrastes des lésions}
-
+\label{lab:etudeDetect}
 Notre but est de simuler des images avec un ensemble de tumeurs qui sont ni trop évidentes ni impossible à détecter. Nous avons donc cherché à obtenir une échelle de contrastes de tumeurs qui permette un taux de détection par un observateur humain de 10\%, 30\%, 50\%, 70\% et 90\%.
 
 Pour réaliser cela, un ensemble d'images a été simulé sans mouvement respiratoire, avec différentes tailles de tumeurs. Ensuite, une étude ROC avec deux observateurs humains non médecin a été réalisée afin d'estimer la détectabilité de ces couples activité/taille de tumeurs (fig.\ref{fig:calibration}). 
@@ -273,7 +287,6 @@ La base de données générée contient 15 patients, reconstruits avec une corre
  \label{fig:exempleImageRecon}
 \end{figure}
 
-\todo{plus d'images dans cette figure. Mais sans TE-IM et TE-MS}
 
 
 \section{Données clef} % temps de calculs etc....
@@ -319,8 +332,6 @@ Foie 	(107)	& 8 mm (54)		& 1.8 (11)& 2 (11)  & 2.5 (10)& 3 (11)	& 3.5 (11)\\
 
 Les images sont reconstruites avec des voxels de 4mm dans les trois dimensions, ce qui corresponds à la résolution de l'imageur TEP. Les reconstructions sont réalisées à l'aide de l'algorithme OPL-EM avec 8 itérations et 5 sous-ensembles sans régularisation, sauf pour l'estimation de mouvement où seulement 3 itérations avec 5 sous-ensembles sont réalisées, avec une régularisation de 6 mm à chaque itération. 
 
-Le temps de simulation nécessaire pour générer une image statique est de 110 h par processeur environ, contre 130 heures pour générer une image dynamique. La différence de temps s'explique par le processus de simulation. TOutes les simulations se font en 
-
-\todo{en 2 partyis}
+Le temps de simulation nécessaire pour générer une image statique est de 110 h par processeur environ, contre 130 heures pour générer une image dynamique. La différence de temps s'explique par le processus de simulation. En effet, chaque simulation est réalisée en deux temps (voir~\ref{lab:simuSORTEO}), dont le premier a une durée fixe, qui est réalisée pour chacune des 8 simulations des 4 cycles dans le cadre de la simulation dynamique, et seulement une fois pour la simulation statique.
 
 Le volume de données généré est d'environ 6 Go par patient sans prendre en compte les données intermédiaires générées lors de la simulation.

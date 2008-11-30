@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=texte/sim-BD.tex
+lastDocument=texte/resultats.tex
 masterDocument=
 name=rapportBiblio
 pkg_extIsRegExp=false
@@ -21,7 +21,7 @@ column=0
 encoding=UTF-8
 highlight=LaTeX
 line=62
-open=true
+open=false
 order=4
 
 [item:nomenclature.txt]
@@ -30,7 +30,7 @@ column=19
 encoding=UTF-8
 highlight=None
 line=4
-open=true
+open=false
 order=2
 
 [item:rapportbiblio.kilepr]
@@ -44,10 +44,10 @@ order=-1
 
 [item:texte/ImagerieTEP.tex]
 archive=true
-column=0
+column=16
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=333
 open=true
 order=0
 
@@ -65,25 +65,25 @@ archive=true
 column=9
 encoding=UTF-8
 highlight=None
-line=11
-open=true
+line=8
+open=false
 order=3
 
 [item:texte/discussion.tex]
 archive=true
-column=0
+column=27
 encoding=UTF-8
 highlight=LaTeX
-line=240
+line=95
 open=false
 order=8
 
 [item:texte/eval-perf.tex]
 archive=true
-column=52
+column=123
 encoding=UTF-8
 highlight=LaTeX
-line=24
+line=329
 open=false
 order=1
 
@@ -98,10 +98,10 @@ order=-1
 
 [item:texte/mvt-correction.tex]
 archive=true
-column=18
+column=352
 encoding=UTF-8
 highlight=LaTeX
-line=193
+line=178
 open=false
 order=0
 
@@ -110,42 +110,42 @@ archive=true
 column=332
 encoding=UTF-8
 highlight=LaTeX
-line=117
+line=115
 open=false
 order=3
 
 [item:texte/mvt-respi.tex]
 archive=true
-column=37
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=16
+line=33
 open=false
 order=2
 
 [item:texte/resultats.tex]
 archive=true
-column=0
+column=473
 encoding=UTF-8
 highlight=LaTeX
-line=344
-open=false
-order=9
+line=19
+open=true
+order=1
 
 [item:texte/sim-BD.tex]
 archive=true
-column=19
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=323
+line=268
 open=true
-order=5
+order=2
 
 [item:texte/sim-simulation.tex]
 archive=true
-column=332
+column=7
 encoding=UTF-8
 highlight=LaTeX
-line=235
-open=true
+line=47
+open=false
 order=1

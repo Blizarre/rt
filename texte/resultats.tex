@@ -15,9 +15,180 @@ L'objectif est d'évaluer les performances des techniques de correction du mouve
 
 La suite de ce chapitre présente les caractéristiques principales du système d'aide à la détection (CAD) que nous avons utilisé (voir chapitre \ref{lab:chapCAD}), l'étape d'optimisation du CAD que nous avons utilisé, puis la méthode utilisée pour mesurer les performances de détection.
 
+%%%%%%%%%%%%% EXTRAITE DE LA PARTIE PRECEDENTE
+
+\section{Reconstruction des images}
+
+Nous avons utilisé le logiciel de reconstruction fourni par le laboratoire LaTIM dans le cadre d'un partenariat, crée et utilisé par Frédéric Lamare pour ses travaux sur la correction du mouvement respiratoire~\cite{lamare2007list}.
+
+Ce logiciel est capable de reconstruire les images acquises en données séquentielles à l'aide de l'algorithme OPL-EM décrit en \ref{lab:OPLEM}. La reconstruction permet de prendre en compte la correction de l'atténuation, mais ne permet pas la correction des coïncidences aléatoires et des coïncidences diffusées. Nous avons donc choisi de simplifier le problème en supposant une correction parfaite de ces deux effets. Pour cela, nous n'avons pas inclus les photons diffusés ou les coïncidences aléatoires dans les données séquentielles .
+
+\subsection{Paramètres de reconstruction}
+\label{lab:paramRecon}
+
+Lors de l'utilisation des méthodes itératives, il faut définir le nombre d'itérations à appliquer lors de la reconstruction. La figure~\ref{fig:evolRecon} présente des reconstructions  réalisées avec différentes valeurs du nombre d'itérations. Notre partenariat avec le LaTim nous a permis d'obtenir un logiciel de reconstruction basé sur l'algorithme OPL-EM~\ref{lab:OPLEM}. Cet algorithme utilise la technique des sous-ensembles pour accélérer la reconstruction.
+
+L'un des paramètres principaux à prendre en compte lors de la reconstruction est le nombre d'itérations. Le nombre d'itérations totale (nombre d'itération $\times$ Nombre de sous-ensemble) va déterminer la qualité du résultat. Nous avons choisi de travailler avec 5 sous-ensembles et de faire varier le nombre d'itérations de 1 à 7, ce qui corresponds à une évaluation de 5 à 35 itérations totales.
+
+\begin{figure}
+\centering
+\begin{tabular}{|c|c|c|c|}
+ \includegraphics[width=3cm]{images/ite1} & \includegraphics[width=3cm]{images/ite3} & \includegraphics[width=3cm]{images/ite5} & \includegraphics[width=3cm]{images/ite7} \\
+Itération 1  & Itération 3 & Itération 5 & Itération 7 \\
+\hline
+ \includegraphics[width=3cm]{images/ite9} & \includegraphics[width=3cm]{images/ite11} & \includegraphics[width=3cm]{images/ite13} &  \\
+Itération 9  & Itération 11 & Itération 13 &\\
+\end{tabular}
+
+\caption[Illustration de l'évolution des lésions en fonction du nombre d'itérations]{Illustration de l'évolution des images en fonction du nombre d'itérations utilisées pour la reconstruction. Une lésion est présente au centre de la croix rouge.}
+\label{fig:evolRecon}
+\end{figure}
+
+L'optimisation du nombre totale d'itérations est réalisée en maximisant le rapport contraste sur bruit~\cite{takahara2004diffusion} (CSR) des lésions, défini comme suit :
+
+\begin{equation}
+ CSB = \frac{µ_{signal} - µ_{fond}}{\sqrt{\sigma_0}}
+\end{equation}
+
+Où $µ_{signal}$ et $µ_{fond}$ représentent, respectivement, l'activité moyenne d'une zone d'intérêt de taille 3$\times$3$\times$3 voxels centrée sur une lésion, et l'activité moyenne d'une zone saine. Cette zone correspond à un volume de 200 voxels dans le poumon et de 64 voxels dans le foie. $\sigma_0$ représente la variance du bruit. Dans notre cas, cette variance est évaluée sur la zone saine utilisée précédemment. Appliquée aux lésions, cette métrique a l'avantage de permettre une représentation rapide de l'évolution du contraste entre la lésion et le fond, tout en pénalisant le bruit.
+
+L'évaluation du rapport "contraste sur bruit" est réalisée sur un modèle pour toutes les lésions, en fonction du nombre d'itérations sur le foie (6 lésions) et le poumon (6 lésions).
+
+Les résultats sont présentés dans la figure \ref{fig:CNRFoie} pour le foie et \ref{fig:CNRPoumon} pour le poumon.
+
+\begin{figure}
+\centering
+\includegraphics[width=17cm]{images/CNRFoie}
+\caption[Evaluation du rapport contraste sur bruit des lésions du foie en fonction du nombre d'itérations]{Evaluation du rapport "contraste sur bruit" des lésions du foie en fonction du nombre d'itérations : sont indiqués, pour chaque lésion, le niveau de contraste réel ainsi que le diamètre de la lésion}
+\label{fig:CNRFoie}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=17cm]{images/CNRPoumon}
+\caption[Evaluation du rapport "contraste sur bruit" des lésions du poumon en fonction du nombre d'itérations]{Evaluation du rapport Contraste sur bruit des lésions du poumon en fonction du nombre d'itérations : sont indiqués, pour chaque lésion, le niveau de contraste réel ainsi que le diamètre de la lésion}
+\label{fig:CNRPoumon}
+\end{figure}
+
+La première observation est que certaines courbes sont strictement descendantes, surtout dans le foie. Cela s'explique par le fait que le niveau de bruit augmente beaucoup plus rapidement que la différence d'activité entre le signal et le fond. Cependant, les lésions concernées ont toutes un contraste très élevé, ce qui les rend plus facilement détectables. Par contre, pour les autres, on peut voir que l'optimum du CSR des lésions du foie est situé autour de 4 itérations, suivi par un plateau, tandis que l'optimum du CSR des lésions du poumon est plus proche de 8 itérations complètes.
+
+La lésion du foie ayant un contraste de 2.5 et un diamètre de 8mm a une valeur de rapport contraste sur bruit négative. Cela s'explique par le fait que pour les premières itérations, une faible différence d'activité en faveur du fond peut être fortement accentuée par l'écart type qui est très faible. De la même manière, pour les itérations suivantes, l'activité de cette lésion redevient supérieure à celle du fond, mais l'écart-type du bruit devient plus important, ce qui fait que le rapport est proche de zero. Lorsque le nombre d'itérations est très faible, il y a contamination du volume par l'activité environnante (autres lésions, organes proches). Pour des nombres d'itérations plus importants, l'effet de volume partiel diminue, ce qui signifie que l'activité du centre de la lésion augmente.
+
+Nous avons choisi de réaliser les reconstructions avec 8 itérations de 5 sous-ensembles car nous avons montré que ce nombre d'itérations est optimal pour les lésions du poumon, et ne pénalise pas trop la détectabilité des lésions du foie.
+
+\subsection{Gestion des lits}
+
+Le découpage des simulations en "lits" est nécessaire pour simuler de manière réaliste des acquisitions médicales. En effet, le champ de vue de la caméra PET est très limité, et de l'ordre de quelques dizaine de cm. Le patient est donc déplacé entre chaque acquisition, et chacune de ces positions corresponds à un "lit" différent.
+
+Or le logiciel de reconstruction avec correction de mouvement ne prenait pas en compte la possibilité de découper les images en lits.
+
+Nous avons donc modifié le logiciel pour permettre la prise en compte de champs de mouvement corps-entier lors de la reconstruction d'un seul lit. En pratique, le lit à recaler est insérée dans un volume de la taille du champ de mouvement, puis ce champ de mouvement est appliqué sur l'image. Le lit est ensuite extrait de l'image déformée pour continuer la reconstruction.
+
+
+\section{Estimation du mouvement}
+
+L'estimation du mouvement est réalisée uniquement à partir des données TEP et des informations de synchronisation respiratoire. 
+
+\subsection{Principe de l'estimation de mouvement}
+
+L'estimation du mouvement est réalisée selon le principe énoncé en~\ref{lab:estimMvtTEP4D} :
+\begin{enumerate}
+ \item Les données simulées de chaque partie de cycle sont additionnées pour les N instants du cycle respiratoire.
+ %\item Les images correspondant à chaque instant du cycle respiratoire sont reconstruites à partir de ces données en utilisant l'algorithme OPL-EM.
+ \item Les N images reconstruites à partir des données précédente sont utilisées pour calculer le mouvement respiratoire : les images des temps 2 à N sont recalées sur l'image de référence (numéro 1), ce qui associe à chaque instant respiratoire un champ de déformation.
+\end{enumerate}
+
+
+Le champ de mouvement est estimé en utilisant une méthode de recalage par B-splines. Le champ de mouvement est représenté par un nombre réduit de coefficients de B-splines placé en grille sur le volume, comme présenté dans la figure~\ref{fig:Bspline}. L'implémentation de cet algorithme que nous avons utilisé a été fournie par Philips France (laboratoire Medisys). La transformation $g_t(x)$ utilisée pour associer les images temporelle  $f(x,t)$ (pour t allant de 2 à N) avec l'image de référence $f(x,1)$, est représentée de la manière suivante :
+
+\begin{figure}
+\centering
+\includegraphics[width=17cm]{images/Bspline}
+\caption[Exemple d'interpolation par B-spline]{Exemple d'interpolation par B-spline en 1 dimension : La courbe en trait pointillé épais est représentée par la la somme d'un ensemble de courbes B-spline représentées en traits pointillés fins.}
+\label{fig:Bspline}
+\end{figure}
+
+
+\begin{equation}
+  g_t(x)=x + \sum\limits_{j\in \mathbb{Z}^N} c_j \beta^n \left( \frac{x}{h}-j \right)
+\end{equation}
+
+Où $\beta^n(x)$ est la valeur de la fonction B-spline de degré $n$ au point $x$, et $j$ représente les indices des positions de la grille. $h$ correspond à l'espacement entre les points de la grille. A chaque fonction B-spline de la grille corresponds un coefficient de pondération associé nommé $c_j$ qui représente l'apport de la B-spline correspondante au signal final.
+
+Les coefficients $c_j$ sont obtenus à l'aide d'une optimisation multi-échelle sur 3 niveaux : L'estimation est réalisée sur des images de résolution différente, en se basant sur l'estimation à la résolution $r-1$ pour réaliser celle de l'estimation à la résolution $r$. l'optimisation est réalisée par gradient conjugué selon la méthode de Polak-Ribière~\cite{polak1969note}. Nous avons utilisé l'erreur quadratique moyenne pour comme métrique de recalage. Elle a l'avantage d'être simple, rapide, et de ne pas montrer de discontinuités~\cite{ledesma2005spatio}.
+
+
+\subsection{Paramètres de l'estimation de mouvement}
+
+Les images utilisées pour l'estimation du mouvement respiratoire ne sont pas reconstruites avec les mêmes paramètres que les images finales. En effet, la quantité de données disponible pour la reconstruction est 8 fois plus faible que celle utilisée pour réaliser les reconstructions d'images. De plus, nous cherchons à optimiser la qualité de l'estimation de mouvement. C'est pour ces raisons que nous avons réalisé une autre étude pour estimer les paramètres de reconstruction optimaux. 
+
+Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la vérité terrain pour créer une image d'évaluation pour l'image de référence, ainsi qu'une autre pour l'image ``respirante``. Les images d'évaluation sont créées à partir des fantômes de référence en assignant aux organes étudiés (foie et poumon) une valeur de 1, et une valeur plus importante pour les lésions. Le reste a une valeur de 0. Une illustration est présentée dans la figure~\ref{lab:illustrationRecalage}.a). 
+
+\begin{figure}
+\centering
+\begin{tabular}{c c}
+	\includegraphics[width=5cm]{images/sansCorrection} & \includegraphics[width=5cm]{images/avecCorrection} \\
+	a) Cartes non recalées				& b) Cartes recalées
+\end{tabular}
+\caption[Illustration du recalage obtenu]{Illustration de la pertinence du recalage obtenu à partir de l'estimation de mouvement réalisée sur les images. En vert l'image de référence et en gris l'image du temps correspondant à la différence la plus importante. }
+\label{lab:illustrationRecalage}
+\end{figure}
+
+L'image d'évaluation correspondant à l'image ''respirante`` est alors recalée sur l'image de référence à l'aide du champ de mouvement élastique calculé précédemment. Nous évaluons ensuite la qualité du recalage en calculant l'écart quadratique moyen entre les deux images d'évaluation~\ref{lab:illustrationRecalage}.b).
+
+\subsubsection{paramètres de l'estimation de mouvement}
+
+Nous avons évalué l'influence de l'échantillonnage spatial des B-spline sur la qualité de l'estimation de mouvement. En effet, si l'espacement entre les nœuds de contrôle est trop important, les mouvements locaux vont interférer entre eux et le résultat ne sera pas valide. De la même manière, en cas d'espacement trop faible, la nature extrêmement bruitée des images va engendrer des micro-mouvements parasites locaux. Pour réduire le bruit, nous appliquons une filtrage gaussien la largeur à mi-hauteur de 6mm à chaque itération.
+
+Nous avons évalué le recalage des reconstructions pour les paramètres suivants :
+\begin{description}
+ \item[Nombre d'itérations :] Le nombre de sous-ensembles est toujours de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 40.
+ \item[Précision de la grille :] nous avons évalué les performances de la détection pour 3 taille différentes, allant d'une grille très peu précise de 2 noeuds en x, y et z, à une grille plus précise avec 5 noeuds en x et y, et 10 noeuds en z. Une grille intermédiaire a été évaluée avec 3 noeuds en x et y, ainsi que 5 noeuds en z.
+\end{description}
+
+Les résultats sont présentés dans la figure~\ref{fig:perfsFctIterTaille}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{images/perfsRecalageFctIter-grid_crop}
+\caption[Performances de l'estimation de mouvement en fonction de la taille de la grille de recherche]{Performances de l'estimation de mouvement en fonction du nombre d'itérations de la reconstruction selon la taille de la grille utilisée pour l'estimation de mouvement}
+\label{fig:perfsFctIterTaille}
+\end{figure}
+
+Les résultats nous montrent que les meilleures performances sont obtenues pour la configuration $3 \times 3 \times 5$ avec 3 itérations et 5 subsets.
+
+
+\subsubsection{Optimisation des paramètres de reconstruction}
+
+Nous avons ensuite souhaité vérifier que la régularisation avait un impact positif sur la qualité du recalage. Nous avons utilisé les paramètres présentés précédemment pour la valider :
+
+\begin{description}
+ \item[Nombre d'itérations :] Le nombre de sous-ensembles est toujours de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 40.
+ \item[Présence ou absence de régularisation pendant la reconstruction :] Une régularisation par filtrage gaussien de largeur à mi-hauteur de 6 mm est appliquée ou non à chaque itération.
+\end{description}
+
+Les résultats sont présentés dans la figure~\ref{lab:perfsFctIterReg}. Ils montrent clairement que la régularisation entraîne une amélioration des performances, et que la meilleure estimation de mouvement est réalisée pour une reconstruction de 3 itérations avec 5 sous-ensembles. Nous avons utilisé une grille de 3 noeuds en x et en y, soit un espacement de 17cm, et de 5 noeuds en z, soit un espacement de 7.7 cm.
+
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{images/perfsRecalageFctIter_crop}
+\caption[Performances de l'estimation de mouvement en fonction de la régularisation]{Performances de l'estimation de mouvement en fonction du nombre d'itérations complètes de la reconstruction selon la présence ou l'absence de régularisation pendant la reconstruction. Plus la valeur en ordonnées (mesure de différence) est faible, meilleure et la performance}
+\label{lab:perfsFctIterReg}
+\end{figure}
+
+
 \section{Reconstruction de la base}
 
-Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche. 
+Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche. Les images générées sur deux patients sont présentées dans la figure~\ref{fig:exempleImageReconTous}.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=15cm]{images/exempleImageReconToutes}
+ \caption[Images reconstruites corrigées et non corrigées du mouvement]{Images reconstruites avec et sans correctio ndu mouvement respiratoire (8 itérations et 5 subsets). Les flèches représentent une lésion du foie de diamètre 8 mm avec une activité de 3.5 dans le patient 2, ainsi que deux lésions du poumon de 8 mm et d'activité 6.5 pour le patient 2.}
+ \label{fig:exempleImageReconTous}
+\end{figure}
+
 
 \subsection{Images Statiques}
 
@@ -48,7 +219,7 @@ Le système CAD que nous utilisons a été développé à l'origine pendant les 
 
 Le CAD utilise des informations fréquentielles obtenues par décomposition des images en ondelettes biorthogonale 4/4 non décimée (figure \ref{fig:ondelettes}) . Ces données sont utilisées par le système de classification basé sur un SVM travaillant voxel par voxel. Une étape de réduction des faux positifs est ajoutée par la suite.
 
-Le nombre de tumeurs utilisées pour générer la base d'apprentissage est de 107 pour la base d'apprentissage poumon et 173 pour la base d'apprentissage foie. Ce nombre est relativement faible~\cite{hua2005optimal} par rapport à la taille du vecteur de caractéristiques utilisé pour le CAD (entre 24 et 32), ce qui nécéssite de prendre en compte un maximum de données pour l'apprentissage et le test pour éviter le sous-apprentissage. Nous avons donc utilisé une méthode d'évaluation des performances par resubstitution. Cela signifie que les apprentissages et les tests sont réalisés sur la même base de données constituée de 15 patients présentés dans le chapitre \todo{vérifier} 5. %\ref{lab:bdd}.
+Le nombre de tumeurs utilisées pour générer la base d'apprentissage est de 107 pour la base d'apprentissage poumon et 173 pour la base d'apprentissage foie. Ce nombre est relativement faible~\cite{hua2005optimal} par rapport à la taille du vecteur de caractéristiques utilisé pour le CAD (entre 24 et 32), ce qui nécéssite de prendre en compte un maximum de données pour l'apprentissage et le test pour éviter le sous-apprentissage. Nous avons donc utilisé une méthode d'évaluation des performances par resubstitution. Cela signifie que les apprentissages et les tests sont réalisés sur la même base de données constituée de 15 patients présentés dans le chapitre 10. %\ref{lab:bdd}.
 
 \subsection{Vecteur de Caractéristiques}
 
@@ -188,7 +359,7 @@ Le classifieur (SVM) utilise en entrée les données d'apprentissage formatées 
 La sélection du triplet de paramètres $(C, \gamma, j)$ vu précédemment est obtenue à l'aide des algorithmes présentés ci-après. 
 
 \subsubsection{Choix des paramètres du classifieur}
-\label{lab:paramClassif}
+
 Pour obtenir les meilleurs paramètres du classifieur, nous réalisons une recherche exhaustive par grille. Cela correspond à évaluer les performances sur le produit cartésien d'une discrétisation des valeurs de chaque paramètre.
 
 Par exemple, si nous disposons de deux paramètres A et B, et que nous recherchons le meilleur jeu de paramètres, il faut tout d'abord sélectionner pour chaque paramètre la taille de la zone de recherche. Pour A, ce sera les valeurs {-1, 0, 1, 2} et pour B les valeurs {100, 10000, 50000}. Les critères de performance seront évalués pour toutes les combinaisons des valeurs de A et B, tels que (-1, 100), (-1, 10000), (-1, 50000), (0, 100), \dots, (2, 50000). Le jeu de paramètres ayant obtenu les meilleures performances sera donc sélectionné. 
@@ -368,7 +539,7 @@ Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
  		\end{tabular}
 
 	\end{center}
-\caption{Paramètres $(C,\gamma, j)$ sélectionnés pour l'optimisation des performances sur les différentes bases. Sont indiqués pour chaque base le triplet de paramètres sélectionnés ainsi que sa position sur le front de Pareto.}
+\caption[Paramètres $(C,\gamma, j)$ sélectionnés pour l'optimisation des performances sur les différentes bases]{Paramètres $(C,\gamma, j)$ sélectionnés pour l'optimisation des performances sur les différentes bases. Sont indiqués pour chaque base le triplet de paramètres sélectionnés ainsi que sa position sur le front de Pareto.}
 \label{fig:paramsParams}
 \end{table}
 
@@ -390,7 +561,7 @@ En pratique, on choisira le seuil pour avoir la certitude d'avoir un nombre de f
  \begin{center}
    \includegraphics[width=15cm]{images/FROC_param}
  \end{center}
- \caption{Courbe Free-ROC comparant les performances du CAD sur une base \textbf{Témoin} (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base \textbf{Enrichie} (1000 points négatifs par image), sur une base \textbf{Appauvrie} (100 points négatifs par image), sur une base \textbf{Normalisée Écart} (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
+ \caption[Courbe Free-ROC comparant les performances du CAD selon les différents paramètres de base d'apprentissage]{Courbe Free-ROC comparant les performances du CAD sur une base \textbf{Témoin} (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base \textbf{Enrichie} (1000 points négatifs par image), sur une base \textbf{Appauvrie} (100 points négatifs par image), sur une base \textbf{Normalisée Écart} (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
  \label{lab:froc_comp_static}
 \end{figure}
 
@@ -458,7 +629,7 @@ Quatre jeux d'images seront comparées :
 {\small c) NoCorr}
 
 \end{center}
- \caption{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image \textbf{TE-IM}, b) les images non corrigées du mouvement, et c) les images corrigées par la méthode LOR.}
+ \caption[Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image \textbf{TE-IM}, b) les images non corrigées du mouvement, et c) les images corrigées par la méthode LOR.}
 \label{fig:paretoModalite} 
 \end{figure}
 
@@ -491,7 +662,7 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
  		\end{tabular}
 
 	\end{center}
-\caption{Paramètres sélectionnés pour l'optimisation des performances de détection des tumeurs pulmonaires. Chaque triplet de paramètres sélectionné $(C,\gamma,j)$ est indiqué ainsi que sa valeur se sensibilité et spécificité.}
+\caption[Paramètres sélectionnés pour l'optimisation des performances de détection des tumeurs pulmonaires]{Paramètres sélectionnés pour l'optimisation des performances de détection des tumeurs pulmonaires. Chaque triplet de paramètres sélectionné $(C,\gamma,j)$ est indiqué ainsi que sa valeur se sensibilité et spécificité.}
 \label{tab:paramsModPoumon}
 \end{table}
 
@@ -515,14 +686,14 @@ La spécificité observée pour les meilleurs jeux de paramètres est sensibleme
 
 Les courbes F-ROC obtenues sur les différents type d'images sont présentées dans la figure \ref{fig:froc_mod}. 
 
-Toutes les courbes ont un NLF (nombre de faux positifs moyen par image) à peu près équivalent entre 20 et 24, excepté TE-MS avec un NLF de 34. Cependant, les performances en FLL (proportion des lésions localisées) de TE-MS sont constantes à partir d'une NLF de 20 environ. 
+Toutes les courbes ont un NFM (nombre de faux positifs moyen par image) à peu près équivalent entre 20 et 24, excepté TE-MS avec un NFM de 34. Cependant, les performances en FLL (proportion des lésions localisées) de TE-MS sont constantes à partir d'une NFM de 20 environ. 
 
-L'ordre des courbes est constant pour tous les NLF à partir de 5 faux positifs par image. Au delà de cette limite, les performances des images statiques sont supérieures à celles de \textbf{TE-IM} de 1 à 5\%, tandis que \textbf{TE-IM} a des performances supérieures de 3 à 10\% à celles des images \textbf{TE-MS} et de \textbf{TE-MS}. Ces deux dernières ont des performances quasiment identiques.
+L'ordre des courbes est constant pour tous les NFM à partir de 5 faux positifs par image. Au delà de cette limite, les performances des images statiques sont supérieures à celles de \textbf{TE-IM} de 1 à 5\%, tandis que \textbf{TE-IM} a des performances supérieures de 3 à 10\% à celles des images \textbf{TE-MS} et de \textbf{TE-MS}. Ces deux dernières ont des performances quasiment identiques.
 
 Cependant, en dessous de 5 faux positifs par image, les courbes sont trop proches pour pouvoir en déduire une tendance.
 
 
-Globalement, le graphique montre que le maximum de performance est apporté par la base \textbf{Statique}, suivi par la base \textbf{TE-IM}. Les bases \textbf{TE-MS} et \textbf{TE-MS} sont très proches l'une de l'autre mais nettement en dessous des deux premières en terme de FLL, à NLF égale.
+Globalement, le graphique montre que le maximum de performance est apporté par la base \textbf{Statique}, suivi par la base \textbf{TE-IM}. Les bases \textbf{TE-MS} et \textbf{TE-MS} sont très proches l'une de l'autre mais nettement en dessous des deux premières en terme de FLL, à NFM égale.
 
 \begin{figure}[h!]
  \begin{center}
@@ -581,7 +752,7 @@ En ajoutant les informations des niveaux de décomposition supérieurs, on obser
 {\small b) TE-IM}
 
 \end{center}
- \caption{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente les images statiques, b) les images corrigées du mouvement post-reconstruction.}
+ \caption[(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente les images statiques, b) les images corrigées du mouvement post-reconstruction.}
 \label{fig:paretoModalite19_1}
 \end{figure}
 
@@ -598,7 +769,7 @@ En ajoutant les informations des niveaux de décomposition supérieurs, on obser
 {\small d) NoCorr}
 
 \end{center}
- \caption{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
+ \caption[(2/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
 \label{fig:paretoModalite19_2} 
 \end{figure}
 
@@ -628,7 +799,7 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
  		\end{tabular}
 
 \end{center}
-\caption{Paramètres sélectionnés pour l'optimisation des performances du CAD sur les tumeurs hépatiques. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de Pareto.}
+\caption[Paramètres sélectionnés pour l'optimisation des performances du CAD sur les tumeurs hépatiques]{Paramètres sélectionnés pour l'optimisation des performances du CAD sur les tumeurs hépatiques. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de Pareto.}
 \label{fig:paramsModFoie}
 \end{table}
 
@@ -648,9 +819,9 @@ Les courbes Free-ROC de la figure \ref{fig:froc_mod19} montrent un ordre différ
 
 Le maximum de performances est apporté par les images statiques, suivi par les images \textbf{TE-IM}, puis \textbf{TE-MS} et enfin \textbf{TE-MS}. Contrairement au poumon, les courbes sont relativement bien séparées avec une différence de sensibilité de 20\% entre les images non corrigées et statiques. 
 
-Il est étonnant d'observer que les images statiques et \textbf{TE-MS} ont tous les deux un NLF maximum d'environ 17, très supérieur à celui de \textbf{TE-IM} et des images non corrigées qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images \textbf{Statique}, au contraire de \textbf{TE-MS} où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NLF de 11.5 . 
+Il est étonnant d'observer que les images statiques et \textbf{TE-MS} ont tous les deux un NFM maximum d'environ 17, très supérieur à celui de \textbf{TE-IM} et des images non corrigées qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images \textbf{Statique}, au contraire de \textbf{TE-MS} où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NFM de 11.5 . 
 
-Si l'on se contente de comparer les courbes F-ROC pour un NLF donné de 9, la base d'images statiques a la meilleur sensibilité avec 58\%, suivie par \textbf{TE-IM} avec 53\% et \textbf{TE-MS} avec 48\%. Les images non corrigées sont en net retrait avec seulement 37\% de sensibilité.
+Si l'on se contente de comparer les courbes F-ROC pour un NFM donné de 9, la base d'images statiques a la meilleur sensibilité avec 58\%, suivie par \textbf{TE-IM} avec 53\% et \textbf{TE-MS} avec 48\%. Les images non corrigées sont en net retrait avec seulement 37\% de sensibilité.
 
 Les performances sont globalement en retrait par rapport à celles du poumon, mais l'ordre des courbes reste cohérent avec celui observé sur le poumon.
 
@@ -676,7 +847,7 @@ On observe que les images statiques ont un score supérieur de 60\% environ à c
 
 \subsection{Conclusion}
 
-Les résultats des mesures de performance sur les tumeurs hépatiques sont contrastés. Les courbes F-ROC montrent un clair avantage des techniques de correction du mouvement respiratoire, surtout pour \textbf{TE-IM} aux niveaux de NLF communs à tous les jeux d'images. Par contre, les Figures de Mérite obtenues par JAFROC montrent à l'inverse que \textbf{TE-IM} et \textbf{TE-MS} sont au même niveau que les images non corrigées du mouvement, en net retrait par rapport aux images \textbf{Statique}.
+Les résultats des mesures de performance sur les tumeurs hépatiques sont contrastés. Les courbes F-ROC montrent un clair avantage des techniques de correction du mouvement respiratoire, surtout pour \textbf{TE-IM} aux niveaux de NFM communs à tous les jeux d'images. Par contre, les Figures de Mérite obtenues par JAFROC montrent à l'inverse que \textbf{TE-IM} et \textbf{TE-MS} sont au même niveau que les images non corrigées du mouvement, en net retrait par rapport aux images \textbf{Statique}.
 
 
 

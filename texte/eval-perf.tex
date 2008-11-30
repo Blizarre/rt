@@ -91,7 +91,6 @@ Pour analyser les courbes ROC, on considère que les distributions de probabilit
 
 Selon cette hypothèse gaussienne, La distance $d$ corresponds à l'aire sur la courbe :
 
-\todo{revoir la manière dont est dite cette partie ?}
 
 \begin{equation}
  d= \frac{d_1 - d_0}{\sqrt{\sigma_1 + \sigma_0}}
@@ -144,7 +143,6 @@ Dans ce cas, on ne peut pas utiliser le formalisme ROC car le terme de spécific
 
 On utilise les termes de LL (Lésion localisée) et NL (Non-Lésion) en lieu et place des informations de vrai positifs et faux positifs sur les courbes ROC. De la même manière, la sensibilité et la spécificité sont respectivement FLL (Fraction de localisations correctement détectées et localisées) et NFM (Nombre de Faux positifs Moyens par image).
 
-\todo{changer partout LNF par NFM}
 
 \begin{figure}[h]
 	\begin{center}
@@ -207,7 +205,7 @@ Le développement des systèmes CAD a débuté dans les années 1980~\cite{chan1
 
 Cependant, plusieurs CAD sur des images TEP ont été décrits dans des travaux académiques, tels que~\cite{guan2006automatic}, qui recherche des anomalies dans le corps entier. Cependant, ils ne donnent pas de mesures de performances quantitatives. La publication de~\cite{Kanakatte2008pulmonary} utilise des systèmes de classification supervisés (K plus proches voisins et SVM décrits en~\ref{lab:SVM}). Un seuillage est réalisé, puis les candidats sont classés en utilisant des caractéristiques fréquentielles et les moments statistiques. 
 
-\todo{plus de refs ! plus de CAD !}
+<Ajouter CAD présentés dans le papier de TNS>
 
 Cependant les systèmes de classifications existants se concentrent en général sur la délimitation de lésions de fort contraste, ce qui ne correspond pas à notre problématique de détection. 
 
@@ -217,8 +215,8 @@ Dans cette section je vais décrire les deux principales classes de techniques d
 
 		\subsection{Méthodes non supervisées}
 
- Dans le système de classification non supervisé, le classifieur reçoit directement l'ensemble des données à traiter, sans informations supplémentaires. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes, comme présenté dans la figure~\ref{fig:fonctionnementClassifNonSup}. Le nombre de classes peut être un des paramètres d'entrée ou être déterminé de manière automatique.
-\todo{voir quels algos doivent préciser le nombre de classes}
+ Dans le système de classification non supervisé, le classifieur reçoit directement l'ensemble des données à traiter, sans informations supplémentaires. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes, comme présenté dans la figure~\ref{fig:fonctionnementClassifNonSup}. Le nombre de classes peut être un des paramètres d'entréen notamment pour les k-moyennes, ou être déterminé de manière automatique.
+
 
 La classification non supervisée repose sur une méthode statistique utilisant une fonction de proximité. Toutes les observations d'une même classe devront être proches au sens de cette fonction. Le partitionnement idéal est obtenu lorsque la covariance intraclasse est minimisée, ce qui implique que les classe sont le plus homogène possible, et que la distance entre les classes est maximisée, pour que les classes soient le plus différencié possible.
 
@@ -311,16 +309,15 @@ k(x_i,x_j)=e^{-\gamma||x_i-x_j||^2}
 \end{figure}
 
 
-Grâce à la maximisation de la marge, les SVM sont performants dans le cas où l'on ne dispose que de faibles quantités de données. 
-\todo{citer les autres ???}
+Grâce à la maximisation de la marge, les SVM sont performants dans le cas où l'on ne dispose que de faibles quantités de données. D'autres algorithmes tels que les forêts aléatoires parviennent à obtenir des performances similaires~\cite{statnikov2008comprehensive}.
 
 \subsection{Autres classifieurs supervisés}
 
 De nombreux classifieurs supervisés ont été développés :
 
 \label{lab:LDA}
-Le classifieur LDA~\cite{fisher1936use} approxime les deux classes en supposant qu'elles ont une distribution gaussienne de covariance égale. Seule la moyenne de chaque distribution varie, et tout nouveau point est classé en fonction de sa distance à l'une ou l'autre des classes. Bien qu'il soit très rapide, ce classifieur ne fonctionne que dans le cas linéaire. Mais l'approximation gaussienne fonctionne donne des résultats suffisament bons dans de nombreux cas, ce qui explique son utilisation dans.
-\todo{trouver publi utilisation LDA}
+Le classifieur LDA~\cite{fisher1936use} approxime les deux classes en supposant qu'elles ont une distribution gaussienne de covariance égale. Seule la moyenne de chaque distribution varie, et tout nouveau point est classé en fonction de sa distance à l'une ou l'autre des classes. Bien qu'il soit très rapide, ce classifieur ne fonctionne que dans le cas linéaire. Mais l'approximation gaussienne fonctionne donne des résultats suffisament bons dans de nombreux cas, ce qui explique son utilisation pour la détection des lésions en mammographie~\cite{baydush2007incorporation} ou en oncologie TDM~\cite{gurcan2002lung}.
+
 
 Les réseaux de neurones~\cite{haykin1999neural} sont un classifieur non linéaire qui se base sur un fonctionnement simplifié des neurones du cerveau humain. il est constitué de neurones artificiels qui miment les réactions des neurones biologiques. Un neurone applique une fonction à la combinaison linéaire de ses stimuli d'entrée. Chaque élément du vecteur de caractéristique est entré dans un neurone, qui ira stimuler un ou plusieurs autres neurones. L'information se propage jusqu'à un neurone terminal qui donnera le résultat. Les réseaux de neurones sont très performants, mais souffrent de difficultés de mise en place à cause de leur grand nombre de paramètres et de temps d'apprentissage très importants.
 
@@ -328,8 +325,6 @@ Une forêt de décision est un classifieur relativement récent basé sur plusie
 
 \section{Avantages et inconvénients des systèmes CAD}
 
-Les systèmes CAD permettent de surmonter les inconvénients des observateur humain lors des évaluation de méthodes. Ils permettent de limiter la variabilité inter-observateurs en permettant de réaliser l'ensemble de détections avec un seul observateur, et garantissent que toutes les observations sont répétables et réalisées dans les mêmes conditions.
+Les systèmes CAD permettent de surmonter les inconvénients des observateur humain lors des évaluation de méthodes. Ils permettent de limiter la variabilité inter-observateurs en permettant de réaliser l'ensemble des détections avec un seul observateur, et garantissent que toutes les observations réalisées dans les mêmes conditions. Il est aussi possible de reproduire à l'identique les conditions d'évaluation pour traiter de nouvelles données.
 
 Par contre, il n'y a aucune garantie que les systèmes CAD se comportent comme des observateurs humains. Pour cette raison, il est nécessaire de réaliser une validation du système CAD à l'aide d'observateur humain.
-
-\todo{continuer avantages et inconvenients CAD}
