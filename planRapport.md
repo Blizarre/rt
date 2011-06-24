@@ -1,35 +1,60 @@
-Bibliographie sur la Correction du mouvement respiratoire en TEP
-================================================================
+Plan de thèse
+=============
 
-1. Effet du mouvement respiratoire
-    - mouvement : XCAT modèle illustration
-    - localisation
-    - contraste / quantif
-    - volume
-    - détection - peu de choses <- 'Juste une liste des publis... Et description des critères, pas de résultats'
+I.   Imagerie TEP/TDM
+        Principe physique
+                Généralités
+                Diffusion
+                Atténuation
+        Déroulement d'une acquisition
+                2D/3D
+                List-mode / sinogramme
+                Images TDM
+        Algorithmes de reconstruction
+                Itératifs
+                        EM
+                        EM avec subsets (OSEM/OPL-EM)
+                Analytiques
+                        rétroprojection filtrée
+                        ...
+II.  Mouvements respiratoire
+        Respiration et influence sur les acquisitions TEP/TDM
+        
+        Processus d'estimation du mouvement
+        
+        Correction du mouvement respiratoire
+        
+III. Evaluation des performances du diagnostique
+        Problématique de la détection
+                Historique
+                Courbes ROC
+                Free-ROC
+        Systèmes de détection
+                Les CAD en TEP
+                Types de classification - méthodologie
+                        Supervisée
+                        Non supervisée
+                Classifieurs
+                        SVM
+                        LDA
+        Simulations
+                Avantages de la simulation
+                Simulation TEP
+                        Principe
+                        Principaux simulateurs
 
-2. processus estimation du mouvement respiratoire
-    2.1 Avec capteurs externes (court : juste en parler)
-        - spiromètre
-        - ceinture avec capteur
-        - marqueurs
-        - visualisation 3D
-    2.2 à partir images médicales
-        - TDM 4D
-        - TEP 4D
-    2.3. Synchronisation des données acquises TEP : pendant-post
-        3.1 en amplitude
-        3.2 en Phase
-        3.3 Gating
-        -> sélection d''une partie du cycle synchronisé avec une source externe
+IV.  Contributions
+        Description du Modèle
+                Variabilité
+                Modélisation du mouvement respiratoire
+                Implémentation des Tumeurs
+        Base de donnée
+                Simulations
+                Contributions à SORTEO
+                Temps de calculs
 
-    2.3 Combinaison capteurs externes/image
-        - génération d''un modèle
-        - fusion capteur (phase/amplitude) pour chaque bin 
-
-4. Correction du mouvement
-    4.1 Gating respiratoire
-    4.2 Recalage des LOR 
-    4.3 Modification de la matrice de sensibilité
-    4.4 Déconvolution de l''image
-    4.5 Corrections locales
+V.   Evaluation de l'impact du mouvement respiratoire
+                Comparaison des images
+                Système CAD
+                
+                
