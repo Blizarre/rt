@@ -17,12 +17,12 @@ QuickBuild=
 
 [item:main.tex]
 archive=true
-column=21
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=16
+line=164
 open=true
-order=3
+order=0
 
 [item:planRapport.md]
 archive=true
@@ -44,11 +44,11 @@ order=-1
 
 [item:texte/effets.tex]
 archive=true
-column=126
+column=130
 encoding=UTF-8
 highlight=LaTeX
-line=51
-open=true
+line=53
+open=false
 order=0
 
 [item:texte/estimation.tex]
@@ -57,14 +57,14 @@ column=0
 encoding=UTF-8
 highlight=LaTeX
 line=19
-open=true
+open=false
 order=2
 
 [item:texte/methodes.tex]
 archive=true
-column=66
+column=67
 encoding=UTF-8
 highlight=LaTeX
 line=125
-open=true
+open=false
 order=1

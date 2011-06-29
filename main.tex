@@ -7,11 +7,11 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[francais]{babel}
 %\usepackage{fullpage}
-\usepackage{mathpple}  % Pour la police
+%\usepackage{mathpple}  % Pour la police
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{amsmath}   % Pour numberwithin
-\usepackage{tocloft}   % pour cftsecaftersnumb ***
+%\usepackage{amsmath}   % Pour numberwithin
+%\usepackage{tocloft}   % pour cftsecaftersnumb ***
 %\usepackage{spacing} \begin{spacing}{0.8} toto \end{spacing}
 %\makeatletter \renewcommand{\numwidth}{9.55em plus1fil} \makeatother
 \usepackage{fullpage}
@@ -52,11 +52,11 @@
 
 \addtolength{\parskip}{0.5em}
 
-\numberwithin{section}{part} 
+%\numberwithin{section}{part} 
 %%%%%%% pour éloigner le texte de la tables des matières des nombres
-\renewcommand{\cftsecaftersnumb}{\hspace{1em}}
-\renewcommand{\cftsubsecaftersnumb}{\hspace{1em}}
-\renewcommand{\cftsubsubsecaftersnumb}{\hspace{1em}}
+%\renewcommand{\cftsecaftersnumb}{\hspace{1em}}
+%\renewcommand{\cftsubsecaftersnumb}{\hspace{1em}}
+%\renewcommand{\cftsubsubsecaftersnumb}{\hspace{1em}}
 
 
 \newcommand{\verrous}{\textbf{Verrous levés}}
@@ -93,20 +93,7 @@ $\|$\textbf{A Faire : }#1$\|$
 \part{Introduction}
 
 \part{Imagerie TEP}
-	\chapter{Principe Physique}
-		\section{Généralités}
-		\section{Diffusions}
-		\section{Attenuation}
-
-	\chapter{Déroulement d'une acquisition}
-		\section{2D / 3D}
-		\section{list-mode}
-
-	\chapter{Algorithmes de reconstruction}
-		\section{Itératifs}
-			\subsection{EM}
-			\subsection{OSEM}
-		\section{Analytiques}
+	\input{texte/ImagerieTEP}	
 			
 %	\chapter{Imagerie TDM}
 
