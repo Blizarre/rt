@@ -18,16 +18,33 @@ Chaque désintégration d'un élément radioactif va déclencher l'émission d'u
 Ce seront ces photons qui vont être détectés par l'imageur TEP pour reconstituer la position de la désintégration initiale. 
 	\subsection{Détecteur}
 
-Les détecteurs utilisés en TEP sont constitués d'un étage en matériau photomultiplicateur qui va déclencher une émission lumineuse à cahque photon détecté, suivi par un détecteur qui va convertir cette émission lumineuse en impulsion électrique. 
+Les détecteurs utilisés en TEP sont constitués d'un matériau photomultiplicateur placé devant un capteur. Chaque photon va entraîner un qui va déclencher une émission lumineuse à cahque photon détecté, placé à cotésuivi par un détecteur qui va convertir cette émission lumineuse en impulsion électrique. 
 
-	\section{Diffusions}
+	\section{perturbation trajet du photon}
 
-	\section{Attenuation}
+		\subsection{Diffusion}
+		
+		\subsection{Déviation}
+		
+		\subsection{Absorbtion}
 
 \chapter{Déroulement d'une acquisition}
 	\section{2D / 3D}
-	\section{list-mode}
+	\section{Format des données}
+Les données acquises par une caméra TEP peuvent être stockées sous deux formes principales : Sinogramme et list-mode.
+		\subsection{List-mode}
 
+Ce format correspond à un enregistrement ``brut'' des données issues de l'électronique de la caméra.
+
+Ce format de fichier est en fait un enregistrement séquentiel des évènements, dans leur ordre de détection. On peut enregistrer chaque détection indépendamment, ou encore uniquement les coïncidences. Les évènements sont datés, ce qui permet de conserver l'informations temporelles. 
+
+Il existe plusieurs formats de fichiers pour le stockage de ces données, notamment le format LMF (List-Mode Format) développé pour le projet ClearPET et le format ROOT développé par le CERN. 
+
+L'avantage de ces formats est qu'ils permettent de conserver les informations sur la dynamique de l'acquisition, mais aussi qu'ils permettent le stockage de métadonnées utiles en simulations, notamment le nombre de diffusions, ou de marquer les coincidences fortuites.
+
+		\subsection{Sinogramme}
+
+Le sinogramme est une image 
 \chapter{Algorithmes de reconstruction}
 	\section{Itératifs}
 		\subsection{EM}

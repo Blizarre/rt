@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=main.tex
+lastDocument=texte/eval.tex
 masterDocument=
 name=rapportBiblio
 pkg_extIsRegExp=false
@@ -17,12 +17,12 @@ QuickBuild=
 
 [item:main.tex]
 archive=true
-column=17
+column=21
 encoding=UTF-8
 highlight=LaTeX
-line=164
+line=113
 open=true
-order=0
+order=1
 
 [item:planRapport.md]
 archive=true
@@ -39,6 +39,15 @@ column=0
 encoding=
 highlight=
 line=0
+open=false
+order=-1
+
+[item:texte/ImagerieTEP.tex]
+archive=true
+column=28
+encoding=UTF-8
+highlight=LaTeX
+line=46
 open=false
 order=-1
 
@@ -60,11 +69,20 @@ line=19
 open=false
 order=2
 
-[item:texte/methodes.tex]
+[item:texte/eval.tex]
 archive=true
-column=67
+column=150
 encoding=UTF-8
 highlight=LaTeX
-line=125
-open=false
-order=1
+line=72
+open=true
+order=0
+
+[item:texte/methodes.tex]
+archive=true
+column=0
+encoding=UTF-8
+highlight=LaTeX
+line=51
+open=true
+order=2
