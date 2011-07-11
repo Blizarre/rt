@@ -65,12 +65,21 @@ Dans ce cas, on ne peut pas utiliser le formalisme ROC car le terme de specifici
 	\section{Types de classification}
 		\subsection{supervisée - méthodologie}
 
-Les classifieurs supervisés nécessitent une connaissance a priori des classes. On entraîne le classifieur en lui fournissant des \emph{exemples} de cas avec l'étiquette associée. A partire de cette base de données d'entraînement, le classifieur va générer un \emph{modèle} predictif permettant de classer de futurs exemples non encore connus.
+Les classifieurs supervisés nécessitent une connaissance a priori des classes. On entraîne le classifieur en lui fournissant des \emph{exemples} de cas avec l'étiquette associée. A partir de cette base de données d'entraînement, le classifieur va générer un \emph{modèle} predictif permettant de classer de futurs exemples non encore connus.
 
+\begin{figure}[h]
+	
+	\label{fig:courbeFROC}
+	\begin{center}
+	\includegraphics[width=15cm]{images/fonctionnementClassif}
+	\end{center}
+	\caption{Courbe F-ROC}
+\end{figure}
 
 		\subsection{non supervisée - méthodologie}
 
-Dans le système de classificatio non supervisé, on fourni directement au classifieur l'ensemble des données à traiter. Il devra de lui-même discerner 
+Dans le système de classification non supervisé, on fourni directement au classifieur l'ensemble des données à traiter. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes.
+
 	\section{classifieurs}
 
 		
