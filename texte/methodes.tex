@@ -27,7 +27,7 @@ Une autre publication~\cite{boucher2004respiratory} utilise un thermomètre dét
 
 Une variante de cette technique ne nécessitant pas de capteur est décrite dans~\cite{nehmeh2003reduction}. Un point faiblement radioactif est fixé au-dessus du torse du patient. Les acquisitions de l'imageur sont ensuite enregistrées par blocs temporels de 1 seconde, et une zone d'interêt est reconstruite dans chacune des images. Les données où le point source est dans cette zone d'interêt sont sommées et l'image finale reconstruite.
 
-Guoping et al.~\cite{GuopingChangImplementation} réalisent la carte d'atténuation à partir d'une image TDM réalisée en respiration libre, et reconstruisent les données TEP acquises lorsque l'amplitude respiratoire est proche de celle utilisée pour l'acquisition TDM (voir exemples figure \ref{fig:chang2010}. Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
+Guoping et al.~\cite{GuopingChang2010Implementation} réalisent la carte d'atténuation à partir d'une image TDM réalisée en respiration libre, et reconstruisent les données TEP acquises lorsque l'amplitude respiratoire est proche de celle utilisée pour l'acquisition TDM (voir exemples figure \ref{fig:chang2010}. Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -35,7 +35,7 @@ Guoping et al.~\cite{GuopingChangImplementation} réalisent la carte d'atténuat
 			\includegraphics[width=10cm]{images/chang2010}
 		\end{tabular}
 	\end{center}
-	\caption{Images TEP/TDM superposées du poumon reconstruites avec et sans gating respiratoire en utilisant la méthode décrite dans~\cite{GuopingChangImplementation}. On peut observer que les tumeurs sont mieux définies et correspondent à l'image TDM qui sert de référence.} 
+	\caption{Images TEP/TDM superposées du poumon reconstruites avec et sans gating respiratoire en utilisant la méthode décrite dans~\cite{GuopingChang2010Implementation}. On peut observer que les tumeurs sont mieux définies et correspondent à l'image TDM qui sert de référence.} 
 	\label{fig:chang2010}
 \end{figure}
 
@@ -99,7 +99,7 @@ Ces résultats ont été améliorés par l'utilisation de la technique suivante 
 
 Plusieurs auteurs ont présentés des méthodes permettant de réaliser la correction de mouvement pendant la reconstruction. Qiao et al.\cite{qiao2006motion} et Lamare et al.~\cite{lamare2007list} ont proposés une méthode de correction du mouvement respiratoire basé sur une modification de la matrice de sensibilité lors de la reconstruction pour prendre en compte le mouvement. Tous les deux utilisent un champ de mouvement élastique estimé en utilisant un champ interpolé par B-splines.
 
-L'algorithme original utilisé est basé sur OPL-EM~\cite{reader2002regularized} qui organise les données en ``sous-ensemble'' de la même manière que OS-EM~\cite{hudson1994accelerated} mais en utilisant les informations list-mode dans l'algorithme de Lamare. Le principe de la reconstruction avec correction du mouvement respiratoire est décrit par la formule suivante :
+L'algorithme original utilisé est basé sur OPL-EM~\cite{reader2002one} qui organise les données en ``sous-ensemble'' de la même manière que OS-EM~\cite{hudson1994accelerated} mais en utilisant les informations list-mode dans l'algorithme de Lamare. Le principe de la reconstruction avec correction du mouvement respiratoire est décrit par la formule suivante :
 
 \begin{equation}
  f^{k+1}=\frac{f^k}{S} \sum_{N_{frames}} P_t^T \frac{1}{P_t f^k} 
@@ -121,6 +121,7 @@ $S$ est la matrice de sensibilité :
 
 Dans la publication~\cite{lamare2007list}, deux variantes de cette technique sont comparées avec la correction par synchronisation respiratoire avec recalage présentée précédemment ainsi que la correction pré-reconstruction. Les résultats présentés montrent un clair avantage pour la correction pendant la reconstruction, avec des performances 
 
+
 \begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=12cm]{images/lamare2007list}
@@ -135,6 +136,3 @@ Dans la publication~\cite{lamare2007list}, deux variantes de cette technique son
 Cette technique qui est peu décrite en ~\cite{naqa2006deblurring} utilise une connaissance du mouvement respiratoire acquise à partir d'une image TDM 4D pour déduire un filtrage appellé TLP (\textit{Tumor Location Probability}) qui correspond à la dégradation dû au mouvement respiratoire.
 
 L'image est ensuite déconvoluée pour corriger les effets du mouvement respiratoire. Cette méthode a été évaluée sur un fantôme physique et des patients réels à l'aide d'un grand nombre de critères provenant pour partie de la TEP (sous-estimation de l'activité de la tumeur, exemples d'images), et pour partie du domaine de la déconvolution (entropie, ``rugosité'').
-
-
-
