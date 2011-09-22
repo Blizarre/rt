@@ -219,7 +219,6 @@ Tests de deux types de paramètres :
 \begin{description}
  \item[Normalisation :] Les données sont normalisées de manière à ce que la moyenne et l'écart-type de chaque caractéristique soit de 1 ($(\mu, \sigma)=(1,1)$) (mean), ou que l'ensemble des valeurs soit comprises entre -1 et +1 (range).
  \item[Nombre de points de la base d'apprentissage :] Le nombre de points extraits de chaque image pour alimenter la base d'exemples normaux peut avoir une influence sur les résultats. Deux valeurs sont testées. 200 pts/im. (soit 3000 pts. négatifs) et 1000 pts/im. (soit 15000 pts. négatifs)
- \item[positions des points extraits :] Une érosion est réalisée sur les images avant d'extraire les points négatifs. Cele permet de retirer les points de la base d'apprentissage qui sont trop 
 \end{description}
 
 \begin{figure}[h!]

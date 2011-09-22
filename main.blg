@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.6)
+The top-level auxiliary file: main.aux
+The style file: apalike.bst
+Database file #1: biblio.bib
+Warning--empty year in rahmim4d
+Warning--empty journal in rahmim4d
+Warning--empty school in segars2001These
+You've used 46 entries,
+            1935 wiz_defined-function locations,
+            751 strings with 13982 characters,
+and the built_in function-call counts, 21467 in all, are:
+= -- 1975
+> -- 1247
+< -- 19
++ -- 449
+- -- 444
+* -- 1989
+:= -- 3793
+add.period$ -- 139
+call.type$ -- 46
+change.case$ -- 445
+chr.to.int$ -- 45
+cite$ -- 49
+duplicate$ -- 718
+empty$ -- 1301
+format.name$ -- 502
+if$ -- 4117
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 46
+newline$ -- 232
+num.names$ -- 140
+pop$ -- 392
+preamble$ -- 1
+purify$ -- 448
+quote$ -- 0
+skip$ -- 546
+stack$ -- 0
+substring$ -- 1249
+swap$ -- 108
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 272
+warning$ -- 3
+while$ -- 145
+width$ -- 0
+write$ -- 597
+(There were 3 warnings)

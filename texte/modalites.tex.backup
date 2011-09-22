@@ -1,0 +1,26 @@
+
+\section{Tomographie par émission de positons (PET)}
+
+\subsection{Historique}
+
+\subsection{Principe physique}
+
+\subsection{Reconstruction des images}
+
+\section{Tomodensitométrie}
+
+La tomodensitométrie (TDM) est une technique d'imagerie utilisant les rayons X pour imager l'atténuation des tissus. Ils sont transmis d'une source sur un détecteur à travers le corps humain et renseignent sur les différentes atténuation des tissus présents. Des algorithmes de reconstruction analytiques ou itératifs (fedkampf)
+
+ pour mettre en évidence les différences d'atténuation dans les organes.
+
+\subsection{Historique}
+
+\subsection{Principe physique}
+
+
+
+\subsubsection{Physique}
+
+\subsection{Reconstruction des images}
+
+

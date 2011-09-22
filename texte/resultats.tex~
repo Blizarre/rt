@@ -225,17 +225,17 @@ Tests de deux types de paramètres :
 \begin{figure}[h!]
 \label{fig:paretoParams}
 \begin{center}
- \includegraphics[width=14cm]{images/pareto_200_mean.png}
+ \includegraphics[width=19cm]{images/pareto_200_mean.png}
 
 {\small a) Base Témoin}
 \vspace{0.5cm}
 
- \includegraphics[width=14cm]{images/pareto_1000_mean.png}
+ \includegraphics[width=19cm]{images/pareto_1000_mean.png}
  
 {\small b) Base enrichie}
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_200_range.png}
+\includegraphics[width=19cm]{images/pareto_200_range.png}
 
 {\small c) Base Normalisée -1/+1}
 

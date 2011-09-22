@@ -1,0 +1,164 @@
+\begin{thebibliography}{10}
+
+\bibitem{bai2009regularized}
+W.~Bai and M.~Brady.
+\newblock {Regularized B-spline deformable registration for respiratory motion
+  correction in PET images}.
+\newblock {\em Physics in Medicine and Biology}, 54:2719, 2009.
+
+\bibitem{barrett1993model}
+H.H. Barrett, J.~Yao, J.P. Rolland, and K.J. Myers.
+\newblock {Model observers for assessment of image quality}.
+\newblock {\em Proceedings of the National Academy of Sciences of the United
+  States of America}, 90(21):9758, 1993.
+
+\bibitem{bloomfield2003design}
+P.M. Bloomfield, T.J. Spinks, J.~Reed, L.~Schnorr, A.M. Westrip, L.~Livieratos,
+  R.~Fulton, and T.~Jones.
+\newblock {The design and implementation of a motion correction scheme for
+  neurological PET}.
+\newblock {\em Physics in Medicine and Biology}, 48:959, 2003.
+
+\bibitem{boucher2004respiratory}
+L.~Boucher, S.~Rodrigue, R.~Lecomte, and F.~Benard.
+\newblock {Respiratory gating for 3-dimensional PET of the thorax: feasibility
+  and initial results}.
+\newblock {\em Journal of Nuclear Medicine}, 45(2):214, 2004.
+
+\bibitem{GuopingChangImplementation}
+Guoping Chang, Tingting Chang, Tinsu Pan, Jr. Clark, John~W., and Osama~R.
+  Mawlawi.
+\newblock {Implementation of an Automated Respiratory Amplitude Gating
+  Technique for PET/CT: Clinical Evaluation}.
+\newblock {\em J Nucl Med}, 51(1):16--24, 2010.
+
+\bibitem{dawood2008respiratory}
+M.~Dawood, F.~Buther, Xiaoyi Jiang, and K.P. Schafers.
+\newblock Respiratory motion correction in 3-d pet data with advanced optical
+  flow algorithms.
+\newblock {\em Medical Imaging, IEEE Transactions on}, 27(8):1164 --1175, 2008.
+
+\bibitem{dawood2006lung}
+M.~Dawood, N.~Lang, X.~Jiang, and KP~Schafers.
+\newblock {Lung motion correction on respiratory gated 3-D PET/CT images}.
+\newblock {\em IEEE transactions on medical imaging}, 25(4):476, 2006.
+
+\bibitem{detorie2008quantitative}
+Nicole~C. Detorie and Magnus Dahlbom.
+\newblock Quantitative evaluation of reconstruction algorithms for motion
+  compensated pet.
+\newblock In {\em Nuclear Science Symposium Conference Record, 2008. NSS '08.
+  IEEE}, pages 5366 --5372, 11 2008.
+
+\bibitem{dimitrakopoulou2002role}
+A.~Dimitrakopoulou-Strauss, L.G. Strauss, T.~Heichel, H.~Wu, C.~Burger,
+  L.~Bernd, and V.~Ewerbeck.
+\newblock {The role of quantitative 18F-FDG PET studies for the differentiation
+  of malignant and benign bone lesions}.
+\newblock {\em Journal of Nuclear Medicine}, 43(4):510, 2002.
+
+\bibitem{naqa2006deblurring}
+I.~El~Naqa, D.A. Low, J.D. Bradley, M.~Vicic, and J.O. Deasy.
+\newblock {Deblurring of breathing motion artifacts in thoracic PET images by
+  deconvolution methods}.
+\newblock {\em Medical physics}, 33:3587, 2006.
+
+\bibitem{erdi2004ct}
+Y.E. Erdi, S.A. Nehmeh, T.~Pan, A.~Pevsner, K.E. Rosenzweig, G.~Mageras, E.D.
+  Yorke, H.~Schoder, W.~Hsiao, O.D. Squire, et~al.
+\newblock {The CT motion quantitation of lung lesions and its impact on
+  PET-measured SUVs}.
+\newblock {\em Journal of Nuclear Medicine}, 45(8):1287, 2004.
+
+\bibitem{fayad2010application}
+Hadi Fayad, Tinsu Pan, Christian Roux, and Dimitris Visvikis.
+\newblock Application of a generic motion model for pet respiratory motion
+  correction.
+\newblock {\em J. Nuc. Med.}, 51(2_MeetingAbstracts):524, 2010.
+
+\bibitem{guivarc2004synchronization}
+O.~Guivarc'h, A.~Turzo, D.~Visvikis, and Y.~Bizais.
+\newblock {Synchronization of pulmonary scintigraphy by respiratory flow and by
+  impedance plethysmography}.
+\newblock In {\em Proceedings of SPIE}, volume 5370, page 1166, 2004.
+
+\bibitem{klein2002four}
+G.J. Klein.
+\newblock {Four-Dimensional Processing of Deformable Cardiac PET Data}.
+\newblock In {\em Medical Image Analysis}. Citeseer, 2002.
+
+\bibitem{klein19973d}
+G.J. Klein and R.H. Huesman.
+\newblock {A 3D optical flow approach to addition of deformable PET volumes}.
+\newblock {\em nam}, page 0136, 1997.
+
+\bibitem{krak2005effects}
+N.C. Krak, R.~Boellaard, O.S. Hoekstra, J.W.R. Twisk, C.J. Hoekstra, and A.A.
+  Lammertsma.
+\newblock {Effects of ROI definition and reconstruction method on quantitative
+  outcome and applicability in a response monitoring trial}.
+\newblock {\em European journal of nuclear medicine and molecular imaging},
+  32(3):294--301, 2005.
+
+\bibitem{lamare2007respiratory}
+F.~Lamare, T.~Cresson, J.~Savean, C.~Cheze Le~Rest, AJ~Reader, and D.~Visvikis.
+\newblock {Respiratory motion correction using affine transformation of list
+  mode data in PET}.
+\newblock {\em Physics in medicine and biology}, 52:121--140, 2007.
+
+\bibitem{lamare2007list}
+F.~Lamare, MJ~Ledesma~Carbayo, T.~Cresson, G.~Kontaxakis, A.~Santos, C.C.
+  Le~Rest, AJ~Reader, and D.~Visvikis.
+\newblock {List-mode-based reconstruction for respiratory motion correction in
+  PET using non-rigid body transformations}.
+\newblock {\em Physics in medicine and biology}, 52(17):5187--5204, 2007.
+
+\bibitem{livieratos2005rigid}
+L.~Livieratos, L.~Stegger, PM~Bloomfield, K.~Schafers, DL~Bailey, and
+  PG~Camici.
+\newblock {Rigid-body transformation of list-mode projection data for
+  respiratory motion correction in cardiac PET}.
+\newblock {\em Physics in Medicine and Biology}, 50:3313, 2005.
+
+\bibitem{nehmeh2002effect}
+S.A. Nehmeh, Y.E. Erdi, C.C. Ling, K.E. Rosenzweig, H.~Schoder, S.M. Larson,
+  H.A. Macapinlac, O.D. Squire, and J.L. Humm.
+\newblock {Effect of respiratory gating on quantifying PET images of lung
+  cancer}.
+\newblock {\em Journal of Nuclear Medicine}, 43(7):876, 2002.
+
+\bibitem{nehmeh2003reduction}
+S.A. Nehmeh, Y.E. Erdi, K.E. Rosenzweig, H.~Schoder, S.M. Larson, O.D. Squire,
+  and J.L. Humm.
+\newblock {Reduction of respiratory motion artifacts in PET imaging of lung
+  cancer by respiratory correlated dynamic PET: methodology and comparison with
+  respiratory gated PET}.
+\newblock {\em Journal of Nuclear Medicine}, 44(10):1644, 2003.
+
+\bibitem{reader2002regularized}
+A.J. Reader, S.~Ally, F.~Bakatselos, R.~Manavaki, R.J. Walledge, A.P. Jeavons,
+  P.J. Julyan, S.~Zhao, D.L. Hastings, and J.~Zweit.
+\newblock {Regularized one-pass list-mode EM algorithm for high resolution 3D
+  PET image reconstruction into large arrays}.
+\newblock In {\em Nuclear Science Symposium Conference Record, 2001 IEEE},
+  volume~4, pages 1853--1858. IEEE, 2002.
+
+\bibitem{sherwood2006fundamentals}
+L.~Sherwood.
+\newblock {\em {Fundamentals of physiology: a human perspective}}.
+\newblock Thomson Brooks/Cole, 2006.
+
+\bibitem{Thielemans2006Lesion}
+K.~Thielemans, R.M. Manjeshwar, Xiaodong Tao, and E.~Asma.
+\newblock Lesion detectability in motion compensated image reconstruction of
+  respiratory gated pet/ct.
+\newblock In {\em Nuclear Science Symposium Conference Record, 2006. IEEE},
+  volume~6, pages 3278 --3282, 11 2006.
+
+\bibitem{thorndyke2006reducing}
+B.~Thorndyke, E.~Schreibmann, A.~Koong, and L.~Xing.
+\newblock {Reducing respiratory motion artifacts in positron emission
+  tomography through retrospective stacking}.
+\newblock {\em Medical physics}, 33:2632, 2006.
+
+\end{thebibliography}
