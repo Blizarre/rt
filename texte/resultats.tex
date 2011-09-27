@@ -214,33 +214,85 @@ Limitations de volume englobant + Limitation des différences d'étendue des ama
 
 \section{Tests de différents paramètres}
 
-Tests de deux types de paramètres : 
+Tests de 3 types de paramètres : 
 
 \begin{description}
  \item[Normalisation :] Les données sont normalisées de manière à ce que la moyenne et l'écart-type de chaque caractéristique soit de 1 ($(\mu, \sigma)=(1,1)$) (mean), ou que l'ensemble des valeurs soit comprises entre -1 et +1 (range).
  \item[Nombre de points de la base d'apprentissage :] Le nombre de points extraits de chaque image pour alimenter la base d'exemples normaux peut avoir une influence sur les résultats. Deux valeurs sont testées. 200 pts/im. (soit 3000 pts. négatifs) et 1000 pts/im. (soit 15000 pts. négatifs)
- \item[positions des points extraits :] Une érosion est réalisée sur les images avant d'extraire les points négatifs. Cele permet de retirer les points de la base d'apprentissage qui sont trop 
+ \item[positions des points extraits :] Une érosion est réalisée sur les images avant d'extraire les points négatifs. Cele permet de retirer les points de la base d'apprentissage qui pourraient poser des problèmes 
 \end{description}
 
 \begin{figure}[h!]
-\label{fig:paretoParams}
+\label{fig:paretoParams1}
 \begin{center}
- \includegraphics[width=14cm]{images/pareto_200_mean.png}
+ \includegraphics[width=14cm]{images/pareto_param_200.png}
 
 {\small a) Base Témoin}
 \vspace{0.5cm}
 
- \includegraphics[width=14cm]{images/pareto_1000_mean.png}
+\includegraphics[width=14cm]{images/pareto_param_100.png}
+
+{\small b) Base appauvrie}
+
+
+ \includegraphics[width=14cm]{images/pareto_param_1000.png}
  
-{\small b) Base enrichie}
-\vspace{0.5cm}
+{\small c) Base enrichie}
 
-\includegraphics[width=14cm]{images/pareto_200_range.png}
 
-{\small c) Base Normalisée -1/+1}
 
 \end{center}
- \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a), la base témoin, avec 200 points négatifs par image et une normalisation mean, en b) la base enrichie avec 1000 points négatifs par image et une normalisation mean, et en c) la base normalisation avec 200 points négatifs par image et une normalisation range.}
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (1/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a), la base témoin, avec 200 points négatifs par image et une normalisation mean, en b) la base appauvrie avec 100 points négatifs par image et une normalisation mean, et en c) la base enrichie avec 1000 points négatifs par image et une normalisation mean.}
+\end{figure}
+
+
+
+\begin{figure}[h!]
+\label{fig:paretoParams2}
+\begin{center}
+
+\includegraphics[width=14cm]{images/pareto_param_range.png}
+
+{\small d) Base Normalisée -1/+1}
+
+\vspace{0.5cm}
+
+\includegraphics[width=14cm]{images/pareto_param_erosion.png}
+
+{\small d) Base \'Erodée}
+
+
+\end{center}
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (2/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base normalisation avec 200 points négatifs par image et une normalisation range. En b), la base érodée, avec 200 points négatifs par image et une normalisation mean, en b) la base enrichie avec 1000 points négatifs par image et une normalisation mean. }
+\end{figure}
+
+
+
+
+\begin{figure}[h!]
+\label{fig:paramsParams}
+%	\begin{center}
+		\begin{tabular}{c c c c c c}
+  \hline
+  a	& Base Témoin 	& Base Erosion	& Base appauvrie& Base enrichie & Base normalisée \\
+  \hline
+ C 	& 464		& 74		& 5412		& 5412		& 10000 \\
+\hline
+$\gamma$& 0.0053	& 0.0094	& 0.00031	& 0.0017	& 0.052 \\
+\hline
+j	& 3		& 3		& 3		& 4		& 3	\\
+\hline
+\hline
+Sensibilité& 0.75	& 0.80		& \textbf{0.82}		& 0.60		& 0.76	\\
+\hline
+Spécificité& 0.99	& 0.99		& 0.99		& 0.99		& 0.99 \\
+\hline
+Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
+\hline
+ 		\end{tabular}
+
+%	\end{center}
+\caption{Paramètres sélectionnés pour l'optimisation des performances. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
 \end{figure}
 
 
@@ -267,6 +319,58 @@ Résultats :
 \item Spécificité = 0.9886666666666667
 \end{itemize}
 
+
+\subsection{Base Erosion}
+
+Cette base contient des données normalisées par la méthode mean/std avec 200 points extraits de chaque image érodée (2 voxels).
+
+\subsubsection{Meilleurs paramètres}
+
+Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams}.b en maximisant la sensibilité.
+
+\includegraphics[width=14cm]{images/pareto_param_erosion.png}
+
+\begin{itemize}
+\item C = 73.56422544596414
+\item gamma = 0.009392560525107726
+\item j = 3
+\end{itemize}
+
+Résultats :
+
+\begin{itemize}
+\item Précision = 0.9836121115775354
+\item Sensibilité = 0.7978151260504203
+\item Spécificité = 0.9943333333333333
+\end{itemize}
+
+\subsection{Base Appauvrie}
+
+Cette base contient des données normalisées par la méthode mean/std avec 100 points extraits de chaque image.
+
+\subsubsection{Meilleurs paramètres}
+
+Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams}.b en maximisant la sensibilité.
+
+\includegraphics[width=14cm]{images/pareto_param_100.png}
+
+\begin{itemize}
+\item C = 5411.6952654646375
+\item gamma = 3.113120996555228E-4
+\item j = 3
+\end{itemize}
+
+Résultats :
+
+\begin{itemize}
+\item Précision = 0.9695129144695682
+\item Sensibilité = 0.8201680672268907
+\item Spécificité = 0.9866666666666667
+\end{itemize}
+
+
+
+
 \subsection{Base Enrichie}
 
 Cette base contient des données normalisées par la méthode mean/std avec 1000 points extraits de chaque image.
@@ -288,6 +392,8 @@ Résultats :
 \item Sensibilité = 0.6010084033613444
 \item Spécificité = 0.9952
 \end{itemize}
+
+
 
 
 \subsection{Base Normalisation}
@@ -321,18 +427,18 @@ Le maximum de performances est apporté par la combinaison de 200 points avec me
 \begin{figure}[h!]
  
  \begin{center}
-   \includegraphics[width=15cm]{images/JAFROC_comp_Static_crop}
+   \includegraphics[width=15cm]{images/JAFROC_param}
  \end{center}
- \caption{\label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation moyenne et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), et sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image).}
+ \caption{\label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation moyenne et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), sur une base appauvrie (100 points négatifs par image), sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
 
 \end{figure}
 
 
 \subsection{Comparaison des performances JAFROC}
 
-La p-value est de 0.11, ce qui ne permet pas de déclarer que statistiquement les données sont différentes.
+La p-value est de 0.049, ce qui permet pas déclarer que au moins deux paramètres testés sont différents.
 
-\includegraphics[width=15cm]{images/comparaisonFOM_mean_crop}
+\includegraphics[width=15cm]{images/FOM_param}
 
 
 \section{Comparaison des performances des différentes méthodes}
@@ -348,21 +454,83 @@ Les caractéristiques utilisées pour obtenir ces résultats sont les suivants :
 \begin{figure}[h!]
 
 \begin{center}
- \includegraphics[width=14cm]{images/pareto_IM.png}
+ \includegraphics[width=14cm]{images/pareto_mod_IM.png}
+
 {\small a) ET-IM}
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_LOR.png}
+\includegraphics[width=14cm]{images/pareto_mod_LOR.png}
  
 {\small b) ET-LOR}
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_NoCorr.png}
+\includegraphics[width=14cm]{images/pareto_mod_NoCorr.png}
 
 {\small c) ET-NoCorr}
 
 \end{center}
  \caption{\label{fig:paretoModalite} Fronts de pareto des résultats de la rechdeche des meilleurs paramètres du classifieur pour les différentes modalitées, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-IM, b) les images non corrigées du mouvement, et c) les images corrigées par ka méthode LOR.}
+\end{figure}
+
+
+
+
+% Static : 857.6958985908936	0.001709975946676697	32.0	0.9790779315594078	0.6160173160173159	0.992
+% LOR	 : 251.18864315095797	0.005323362023203629	32.0	0.969422309209811	0.5134199134199134	0.9856666666666667 
+% NoCorr : 5411.6952654646375	0.001709975946676697	32.0	0.9417478291936561	0.30779220779220784	0.9643333333333333
+% IM	 : 5411.6952654646375	5.49280271653059E-4	32.0	0.9826195691007659	0.6805194805194804	0.9933333333333334
+\begin{figure}[h!]
+\label{fig:paramsModFoie}
+%	\begin{center}
+		\begin{tabular}{c c c c c c}
+  \hline
+  a	& Base Statique	& Base IM	& Base LOR	& Base NoCorr	\\
+  \hline
+ C 	& 858		& 5412		& 251		& 5412		\\
+\hline
+$\gamma$& 0.005		& 0.00055	& 0.0053	& 0.0017	\\
+\hline
+j	& 4		& 4		& 4		& 4		\\
+\hline
+\hline
+Sensibilité& 0.62	& 0.68		& 0.51		& 0.31	\\
+\hline
+Spécificité& 0.99	& 0.99		& 0.99		& 0.96		\\
+\hline
+Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
+\hline
+ 		\end{tabular}
+
+%	\end{center}
+\caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+\end{figure}
+
+
+
+\begin{figure}[h!]
+\label{fig:paramsModPoumon}
+%	\begin{center}
+		\begin{tabular}{c c c c c c}
+  \hline
+  a	& Base Statique	& Base IM	& Base LOR	& Base NoCorr	\\
+  \hline
+ C 	& 464		& 10000		& 10000		& 10000		\\
+\hline
+$\gamma$& 0.0053	& 0.00097	& 0.00031	& 0.00055	\\
+\hline
+j	& 3		& 3		& 4		& 3		\\
+\hline
+\hline
+Sensibilité& 0.75	& 0.81		& 0.82		& 0.83	\\
+\hline
+Spécificité& 0.99	& 0.99		& 0.99		& 0.99		\\
+\hline
+Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
+\hline
+ 		\end{tabular}
+
+%	\end{center}
+\caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
 \end{figure}
 
 
@@ -452,7 +620,7 @@ Résultats :
 
 La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement les données sont différentes.
 
-\includegraphics[width=15cm]{images/comparaisonFOM_mod_crop}
+\includegraphics[width=15cm]{images/FOM_mod}
 
 \subsection{Courbes Free-ROC}
 
@@ -461,7 +629,7 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 
 \begin{figure}[h!]
  \begin{center}
-   \includegraphics[width=15cm]{images/JAFROC_comp_Mod_crop}
+   \includegraphics[width=15cm]{images/JAFROC_mod}
  \end{center}
  \caption{ \label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
 \end{figure}
