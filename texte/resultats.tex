@@ -17,6 +17,8 @@ Dans le cas présent, l'objectif est de d'évaluer les performances des techniqu
 
 Le système CAD utilise des informations fréquentielles obtenue par décomposition des images en ondelettes Biorthogonale 4.4. Ces données sont utilisées par le système de classification basé sur un SVM travaillant voxel par voxel. Une étape de réduction des faux positifs est ajoutée par la suite.
 
+\'Etant donné le faible nombre de tumeurs présentes dans les organes considérés, la base d'aprentissage est générée à partir des images utilisées pour la base de test. 
+
 \subsection{Classifications}
 
 \begin{enumerate}
@@ -71,10 +73,17 @@ Les points normaux extraits des images pour alimenter la base vont avoir une inf
 
 \subsection{Création des agrégats}
 
-Les résultats de la classification des images forment des cartes de score, qui sont 
-\subsection{Critère basés sur l'intersection}
+Les résultats de la classification des images forment des cartes de score, qui représentent le résultat de la classification pour chaque voxel de l'image source. Ce résultat est donné sous la forme d'un nombre correspondant à la distance entre le vecteur de caractéristique et la surface de séparation. Nous avons choisit une approche par agrégats plutôt que par voxels car elle est plus proche de la réalité de la routine clinique, car le praticien ne travaille pas voxel par voxel mais en indiquant des zones dans l'image.
 
-Les points classés positifs sont regroupés en amas de points connexes (connexité 27 en 3D). Il y a un ensemble de règles qui vont déterminer si un amas intersectant une lésions représente un vrai positif. Soit $L$ l'ensemble des points de la lésion, $A$ les points correspondant à l'amas candidat.
+Les voxels dépassants un seuil prédeterminé sont regroupés selon une connexité 28 ($3\times3\times3$ en 3D). 
+
+
+\subsection{Critères de sélection des agrégats}
+
+Soit $L$ l'ensemble des points de la lésion, $A$ les points correspondant à l'amas candidat.
+
+Les agrégats seront considérés comme des vrai positifs si ils intersectent une tumeur selon les règles suivantes, comme de faux positifs si ils n'intersectent aucune tumeur. Cependant, si leur taille est inférieure à la taille minimale définie par première règle ($\alpha \times card( L )$), l'amas n'est pas considéré.
+
 
 \begin{description}
  \item[$card( L \cap A ) > \alpha \times card( L )$] avec $\alpha$ fixé à 0.05 qui fixe la proportion minimale de la tumeur qui doit être présente dans l'amas. Elle permet d'éviter les amas qui intersecteraient la tumeur par accident.
@@ -83,7 +92,6 @@ Les points classés positifs sont regroupés en amas de points connexes (connexi
 
 
 \chapter{Analyse des résultats}
-
 
 \section{Tests de différents paramètres}
 
