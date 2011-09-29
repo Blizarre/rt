@@ -1,6 +1,6 @@
 \chapter{méthodes (MIC 2010)}
 
-J'ai utilisé la base de donnée présentée dans pa partie\ref{lab:bdd} pour évaluer les performances des techniques de correction du mouvement respiratoire présentés dans le chapitre \ref{lab:corrMvt}. 
+J'ai utilisé la base de donnée présentée dans la partie\ref{lab:bdd} pour évaluer les performances des techniques de correction du mouvement respiratoire présentés dans le chapitre \ref{lab:corrMvt}. 
 
 Les techniques de correction du mouvement implémentées sont les suivantes :
 
@@ -20,21 +20,19 @@ Le système CAD utilise des informations fréquentielles obtenue par décomposit
 \subsection{Classifications}
 
 \begin{enumerate}
- \item Décomposition des images en ondelettes : Pour chaque voxel de l'image d'origine, on obtient entre 8 et 32 coefficients, qui correspondent au vecteur de caractéristiques utilisés apr le classifieur
- \item Extraction de la base d'apprentissage : Les coefficients des centres de toutes les tumeurs sont extraites des volumes décomposés, et vont former la base d'apprentissage H1 (positifs). 100 voxels sont tirés aléatoirement dans chaque images et leur coefficients sont ajoutés à la base H0 (négatifs).
+ \item Décomposition des images en ondelettes : Pour chaque voxel de l'image d'origine, on obtient entre 8 et 32 coefficients, qui correspondent au vecteur de caractéristiques utilisés par le classifieur
+ \item Extraction de la base d'apprentissage : Les coefficients des centres de toutes les tumeurs sont extraites des volumes décomposés, et vont former la base d'apprentissage H1 (positifs). Un certain nombre de voxels sont tirés aléatoirement dans chaque images et leur coefficients sont ajoutés à la base H0 (négatifs).
  \item Apprentissage : Le classifieur SVM est entraîné sur cette base d'apprentissage pour générer le modèle qui sera utilsé pour le test.
  \item Tests : Le SVM entraîné est utilisé pour classer chaque voxel contenu dans les organes à evaluer (poumon et foie).
+ \item Réduction des Faux-positifs : Les points sont aggrégés en composantes connexes (connexité 27 en 3 dimensions). Chaque aggrégat est testé pour déterminer si il odit être considéré comme un faux positif ou un vrai positif.
 \end{enumerate}
-
-Le nombre de niveau de composition est déterminé par optimisation des paramètres (voir \ref{lab:optim}).
-
-Les points utilisés pour représenter la classe ``non Tumeur'' sont extraits du volume érodé de deux voxels pour faciliter l'apprentissage. Cela pose des problèmes sur les cartes de score finales car les interfaces entre les organes sont fortements bruitées.
-
 
 \section{Optimisation des paramètres du classifieur}
 \label{lab:optim}
 
-Paramètres à  optimiser :
+Les différentes étapes de l'évaluation des performances nécéssitent la fixation d'un grand nombre de paramètres. Tous ceux qui correspondent à l'étape de classification sont adaptés à la modalité à évaluer, tandis que ceux relatifs au processus dans son ensemble sont fixés une seule fois.
+
+\subsection{Paramètres à optimiser pour chaque modalité}
 
 \begin{description}
  \item[C] Le terme de pénalisation des exemples mal classés par le classifieur
@@ -45,12 +43,15 @@ Paramètres à  optimiser :
 J'ai effectué une recherche exaustive par grille avec les paramètres suivants :
 
 \begin{description}
- \item [C] de 1 à 10000 en 10 pas logarithmique
- \item [gamma] de 0.0001 à 1 en 10 pas logarithmique
+ \item [C] de 1 à 10000 en 15 pas logarithmique
+ \item [gamma] de 0.0001 à 1 en 15 pas logarithmique
  \item [j] de 1 à 4, soit de 8 à 32 caractéristiques
 \end{description}
 
-L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa2006} pour chaque modalité. Les performances sont obtenues en réalisant une cross-validation à 5 étapes sur l'ensemble de la base d'apprentissage. Le triplet de paramètre retenu est celui qui maximise la sensibilité.
+L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa2006} pour chaque modalité. Les indicateur de performance (Sensibilité, SPécificité, Précision) sont obtenues en réalisant une cross-validation à 5 étapes sur l'ensemble de la base d'apprentissage. Le triplet de paramètre retenu est celui qui maximise la sensibilité.
+
+J'ai joint pour chaque modalité le front de pareto positionnant chaque triplet dans un espace à deux dimensions (`Sensibilité', 'Spécificité'). Cela permet de vérifier que le crière choisit (maximisation de la sensibilité) ne se fait pas trop au détriment de la spécificité.
+
 % 
 % Paramètres retenus :
 % 
@@ -303,21 +304,7 @@ Cette base contient des données normalisées par la méthode mean avec 200 poin
 \subsubsection{Meilleurs paramètres de classification}
 
 Les paramètres du classifieur sont déterminés par une recherche grille. La performance de chaque triplet (C, $\gamma$, j) est estimée en réalisant une cross-validation à 5 validations sur l'ensemble de la base d'apprentissage.
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams}.a en maximisant la sensibilité.
-
-\begin{itemize}
-\item C = 464.15888336127773	
-\item gamma = 0.005323362023203629	
-\item j = 3
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9754186641496311	
-\item Sensibilité = 0.7462184873949579
-\item Spécificité = 0.9886666666666667
-\end{itemize}
+Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams1}.a en maximisant la sensibilité.
 
 
 \subsection{Base Erosion}
@@ -326,23 +313,8 @@ Cette base contient des données normalisées par la méthode mean/std avec 200 
 
 \subsubsection{Meilleurs paramètres}
 
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams}.b en maximisant la sensibilité.
+Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams1}.b en maximisant la sensibilité.
 
-\includegraphics[width=14cm]{images/pareto_param_erosion.png}
-
-\begin{itemize}
-\item C = 73.56422544596414
-\item gamma = 0.009392560525107726
-\item j = 3
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9836121115775354
-\item Sensibilité = 0.7978151260504203
-\item Spécificité = 0.9943333333333333
-\end{itemize}
 
 \subsection{Base Appauvrie}
 
@@ -350,23 +322,7 @@ Cette base contient des données normalisées par la méthode mean/std avec 100 
 
 \subsubsection{Meilleurs paramètres}
 
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams}.b en maximisant la sensibilité.
-
-\includegraphics[width=14cm]{images/pareto_param_100.png}
-
-\begin{itemize}
-\item C = 5411.6952654646375
-\item gamma = 3.113120996555228E-4
-\item j = 3
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9695129144695682
-\item Sensibilité = 0.8201680672268907
-\item Spécificité = 0.9866666666666667
-\end{itemize}
+Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams2}.b en maximisant la sensibilité.
 
 
 
@@ -377,21 +333,8 @@ Cette base contient des données normalisées par la méthode mean/std avec 1000
 
 \subsubsection{Meilleurs paramètres}
 
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams}.b en maximisant la sensibilité.
+Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams2}.b en maximisant la sensibilité.
 
-\begin{itemize}
-\item C = 5411.6952654646375	
-\item gamma = 0.001709975946676697
-\item j = 4
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9907072291080006	
-\item Sensibilité = 0.6010084033613444
-\item Spécificité = 0.9952
-\end{itemize}
 
 
 
@@ -402,22 +345,9 @@ Cette base contient des données normalisées par la méthode range avec 200 poi
 
 \subsubsection{Meilleurs paramètres}
 
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams}.c en maximisant la sensibilité.
+Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams2}.c en maximisant la sensibilité.
 
 
-\begin{itemize}
-\item C = 10000.0
-\item gamma = 0.051591481967489666
-\item j = 3
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9754176705829753
-\item Sensibilité = 0.7576470588235293
-\item Spécificité = 0.9880000000000001
-\end{itemize}
 
 \subsection{Courbe Free-ROC}
 
@@ -427,7 +357,7 @@ Le maximum de performances est apporté par la combinaison de 200 points avec me
 \begin{figure}[h!]
  
  \begin{center}
-   \includegraphics[width=15cm]{images/JAFROC_param}
+   \includegraphics[width=15cm]{images/FROC_param}
  \end{center}
  \caption{\label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation moyenne et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), sur une base appauvrie (100 points négatifs par image), sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
 
@@ -436,12 +366,19 @@ Le maximum de performances est apporté par la combinaison de 200 points avec me
 
 \subsection{Comparaison des performances JAFROC}
 
-La p-value est de 0.049, ce qui permet pas déclarer que au moins deux paramètres testés sont différents.
-
-\includegraphics[width=15cm]{images/FOM_param}
+La p-value est de 0.049, ce qui permet pas déclarer que au moins deux paramètres testés sont différents. \ref{lab:fom_param}
 
 
-\section{Comparaison des performances des différentes méthodes}
+\begin{figure}[h!]
+ \begin{center}
+   \includegraphics[width=15cm]{images/FOM_param}
+ \end{center}
+ \caption{ \label{lab:fom_param} Les FOM (Figure de Mérite) obetnues pour les différents paramètres}
+\end{figure}
+
+\FloatBarrier
+
+\section{Comparaison des performances des différentes méthodes Poumon}
 
 Les caractéristiques utilisées pour obtenir ces résultats sont les suivants :
 
@@ -475,42 +412,14 @@ Les caractéristiques utilisées pour obtenir ces résultats sont les suivants :
 
 
 
-% Static : 857.6958985908936	0.001709975946676697	32.0	0.9790779315594078	0.6160173160173159	0.992
-% LOR	 : 251.18864315095797	0.005323362023203629	32.0	0.969422309209811	0.5134199134199134	0.9856666666666667 
-% NoCorr : 5411.6952654646375	0.001709975946676697	32.0	0.9417478291936561	0.30779220779220784	0.9643333333333333
-% IM	 : 5411.6952654646375	5.49280271653059E-4	32.0	0.9826195691007659	0.6805194805194804	0.9933333333333334
-\begin{figure}[h!]
-\label{fig:paramsModFoie}
-%	\begin{center}
-		\begin{tabular}{c c c c c c}
-  \hline
-  a	& Base Statique	& Base IM	& Base LOR	& Base NoCorr	\\
-  \hline
- C 	& 858		& 5412		& 251		& 5412		\\
-\hline
-$\gamma$& 0.005		& 0.00055	& 0.0053	& 0.0017	\\
-\hline
-j	& 4		& 4		& 4		& 4		\\
-\hline
-\hline
-Sensibilité& 0.62	& 0.68		& 0.51		& 0.31	\\
-\hline
-Spécificité& 0.99	& 0.99		& 0.99		& 0.96		\\
-\hline
-Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
-\hline
- 		\end{tabular}
 
-%	\end{center}
-\caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
-\end{figure}
 
 
 
 \begin{figure}[h!]
 \label{fig:paramsModPoumon}
 %	\begin{center}
-		\begin{tabular}{c c c c c c}
+		\begin{tabular}{c| c c c c c}
   \hline
   a	& Base Statique	& Base IM	& Base LOR	& Base NoCorr	\\
   \hline
@@ -530,7 +439,7 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
  		\end{tabular}
 
 %	\end{center}
-\caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+\caption{Paramètres sélectionnés pour l'optimisation des performances du Poumon. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
 \end{figure}
 
 
@@ -547,19 +456,7 @@ Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paret
 
 Choisit en maximisant la sensibilité.			
 
-\begin{itemize}
-\item C = 10000.0
-\item gamma = 9.691522339193016E-4
-\item j = 3
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9788857149954048
-\item Sensibilité = 0.809579831932773
-\item Spécificité = 0.9886666666666667
-\end{itemize}
+Voir \ref{fig:paramsModPoumon}
 
 
 \subsection{ET-LOR}
@@ -575,19 +472,7 @@ Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paret
 
 Choisit en maximisant la sensibilité.
 
-\begin{itemize}
-\item C = 10000.0
-\item gamma = 3.113120996555228E-4
-\item j = 4
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9826672296877718
-\item Sensibilité = 0.8152941176470587
-\item Spécificité = 0.9923333333333334
-\end{itemize}
+Voir \ref{fig:paramsModPoumon}
 
 \subsection{ET-NoCorr}
 
@@ -599,41 +484,138 @@ Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paret
 
 \subsubsection{Meilleurs paramètres}
 
-Choisit en maximisant la sensibilité.
-
-\begin{itemize}
-\item C = 10000.0
-\item gamma = 5.49280271653059E-4
-\item j = 3
-\end{itemize}
-
-Résultats :
-
-\begin{itemize}
-\item Précision = 0.9839280657741126
-\item Sensibilité = 0.8272268907563024
-\item Spécificité = 0.993
-\end{itemize}
-
+Voir \ref{fig:paramsModPoumon}
 
 \subsection{Comparaison des performances JAFROC}
 
-La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement les données sont différentes.
+La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{lab:fom_mod19}.
 
-\includegraphics[width=15cm]{images/FOM_mod}
+\begin{figure}[h!]
+ \begin{center}
+   \includegraphics[width=15cm]{images/FOM_mod}
+ \end{center}
+ \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obetnues pour les différentes modalités.}
+\end{figure}
 
 \subsection{Courbes Free-ROC}
 
-Voir figure \ref{lab:froc_comp_static}.
+Voir figure \ref{lab:froc_mod}.
 Le maximum de performances est apporté par les images statiques, suivi par les images ET-IM.
 
 \begin{figure}[h!]
  \begin{center}
-   \includegraphics[width=15cm]{images/JAFROC_mod}
+   \includegraphics[width=15cm]{images/FROC_mod}
  \end{center}
- \caption{ \label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
+ \caption{ \label{lab:froc_mod} Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
 \end{figure}
 
+
+
+
+
+
+
+
+\FloatBarrier
+
+\section{Comparaison des performances des différentes méthodes Foie}
+
+Les caractéristiques utilisées pour obtenir ces résultats sont les suivants :
+
+\begin{itemize}
+ \item 200 points tirés aléatoirement dans le volume de chaque image (hors tumeurs)
+ \item normalisation par moyennage et neutralisation de la variance 
+\end{itemize}
+
+\subsection{Comparaison des performances JAFROC}
+
+La p-value est de 0.1, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{lab:fom_mod19}
+
+
+\begin{figure}[h!]
+ \begin{center}
+   \includegraphics[width=15cm]{images/FOM_mod19}
+ \end{center}
+ \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obetnues pour les différentes modalités.}
+\end{figure}
+
+
+\subsection{Courbes Free-ROC}
+
+Voir figure \ref{lab:froc_mod19}.
+Le maximum de performances est apporté par les images statiques, suivi par les images ET-IM.
+
+\begin{figure}[h!]
+ \begin{center}
+   \includegraphics[width=15cm]{images/FROC_mod19}
+ \end{center}
+ \caption{ \label{lab:froc_mod19} Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
+\end{figure}
+
+
+\begin{figure}[h!]
+
+\begin{center}
+ \includegraphics[width=14cm]{images/pareto_mod_Static19.png}
+
+{\small a) ET-Static}
+\vspace{0.5cm}
+
+ \includegraphics[width=14cm]{images/pareto_mod_IM19.png}
+
+{\small b) ET-IM}
+
+\end{center}
+ \caption{\label{fig:paretoModalite19_1} Fronts de pareto des résultats de la rechdeche des meilleurs paramètres du classifieur pour les différentes modalitées, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-Static, b) les images corrigées du mouvement post-reconstruction.}
+\end{figure}
+
+\begin{figure}[h!]
+
+\begin{center}
+\includegraphics[width=14cm]{images/pareto_mod_LOR19.png}
+ 
+{\small c) ET-LOR}
+\vspace{0.5cm}
+
+\includegraphics[width=14cm]{images/pareto_mod_NoCorr19.png}
+
+{\small d) ET-NoCorr}
+
+\end{center}
+ \caption{\label{fig:paretoModalite19_2} Fronts de pareto des résultats de la rechdeche des meilleurs paramètres du classifieur pour les différentes modalitées, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
+\end{figure}
+
+
+
+% Static : 857.6958985908936	0.001709975946676697	32.0	0.9790779315594078	0.6160173160173159	0.992
+% LOR	 : 251.18864315095797	0.005323362023203629	32.0	0.969422309209811	0.5134199134199134	0.9856666666666667 
+% NoCorr : 5411.6952654646375	0.001709975946676697	32.0	0.9417478291936561	0.30779220779220784	0.9643333333333333
+% IM	 : 5411.6952654646375	5.49280271653059E-4	32.0	0.9826195691007659	0.6805194805194804	0.9933333333333334
+\begin{figure}[h!]
+\label{fig:paramsModFoie}
+%	\begin{center}
+		\begin{tabular}{c| c c c c c}
+  \hline
+  a	& Base Statique	& Base IM	& Base LOR	& Base NoCorr	\\
+  \hline
+ C 	& 858		& 5412		& 251		& 5412		\\
+\hline
+$\gamma$& 0.002		& 0.00055	& 0.0053	& 0.0017	\\
+\hline
+j	& 4		& 4		& 4		& 4		\\
+\hline
+\hline
+Sensibilité& 0.62	& 0.68		& 0.51		& 0.31	\\
+\hline
+Spécificité& 0.99	& 0.99		& 0.99		& 0.96		\\
+\hline
+Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
+\hline
+ 		\end{tabular}
+
+%	\end{center}
+\caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+\end{figure}
 % 
 % Tests en prenant en compte le bord du poumon (sans faire l'érosion de 2 voxels) avec 200 ou 1000 points négatifs par image. Paramètres de SVM par défaut (g=0.001, C=100), images statiques.
 % Cette fois-ci, étant donné le faible nombre de FP, j'ai préféré afficher les performances MAXIMALES obtenues.
