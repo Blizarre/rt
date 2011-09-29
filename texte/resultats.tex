@@ -22,15 +22,15 @@ Le système CAD utilise des informations fréquentielles obtenue par décomposit
 \begin{enumerate}
  \item Décomposition des images en ondelettes : Pour chaque voxel de l'image d'origine, on obtient entre 8 et 32 coefficients, qui correspondent au vecteur de caractéristiques utilisés par le classifieur
  \item Extraction de la base d'apprentissage : Les coefficients des centres de toutes les tumeurs sont extraites des volumes décomposés, et vont former la base d'apprentissage H1 (positifs). Un certain nombre de voxels sont tirés aléatoirement dans chaque images et leur coefficients sont ajoutés à la base H0 (négatifs).
- \item Apprentissage : Le classifieur SVM est entraîné sur cette base d'apprentissage pour générer le modèle qui sera utilsé pour le test.
- \item Tests : Le SVM entraîné est utilisé pour classer chaque voxel contenu dans les organes à evaluer (poumon et foie).
- \item Réduction des Faux-positifs : Les points sont aggrégés en composantes connexes (connexité 27 en 3 dimensions). Chaque aggrégat est testé pour déterminer si il odit être considéré comme un faux positif ou un vrai positif.
+ \item Apprentissage : Le classifieur SVM est entraîné sur cette base d'apprentissage pour générer le modèle qui sera utilisé pour le test.
+ \item Tests : Le SVM entraîné est utilisé pour classer chaque voxel contenu dans les organes à évaluer (poumon et foie).
+ \item Réduction des Faux-positifs : Les points sont agrégés en composantes connexes (connexité 27 en 3 dimensions). Chaque agrégat est testé pour déterminer si il doit être considéré comme un faux positif ou un vrai positif.
 \end{enumerate}
 
 \section{Optimisation des paramètres du classifieur}
 \label{lab:optim}
 
-Les différentes étapes de l'évaluation des performances nécéssitent la fixation d'un grand nombre de paramètres. Tous ceux qui correspondent à l'étape de classification sont adaptés à la modalité à évaluer, tandis que ceux relatifs au processus dans son ensemble sont fixés une seule fois.
+Les différentes étapes de l'évaluation des performances nécessitent la fixation d'un grand nombre de paramètres. Tous ceux qui correspondent à l'étape de classification sont adaptés à la modalité à évaluer, tandis que ceux relatifs au processus dans son ensemble sont fixés une seule fois.
 
 \subsection{Paramètres à optimiser pour chaque modalité}
 
@@ -40,7 +40,7 @@ Les différentes étapes de l'évaluation des performances nécéssitent la fixa
  \item[j] Le niveau de décomposition des images 
 \end{description}
 
-J'ai effectué une recherche exaustive par grille avec les paramètres suivants :
+J'ai effectué une recherche exhaustive par grille avec les paramètres suivants :
 
 \begin{description}
  \item [C] de 1 à 10000 en 15 pas logarithmique
@@ -48,35 +48,31 @@ J'ai effectué une recherche exaustive par grille avec les paramètres suivants 
  \item [j] de 1 à 4, soit de 8 à 32 caractéristiques
 \end{description}
 
-L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa2006} pour chaque modalité. Les indicateur de performance (Sensibilité, SPécificité, Précision) sont obtenues en réalisant une cross-validation à 5 étapes sur l'ensemble de la base d'apprentissage. Le triplet de paramètre retenu est celui qui maximise la sensibilité.
+L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa2006} pour chaque modalité. Les indicateur de performance (Sensibilité, Spécificité, Précision) sont obtenues en réalisant une cross-validation à 5 étapes sur l'ensemble de la base d'apprentissage. Le triplet de paramètre retenu est celui qui maximise la sensibilité.
 
-J'ai joint pour chaque modalité le front de pareto positionnant chaque triplet dans un espace à deux dimensions (`Sensibilité', 'Spécificité'). Cela permet de vérifier que le crière choisit (maximisation de la sensibilité) ne se fait pas trop au détriment de la spécificité.
+J'ai joint pour chaque modalité le front de pareto positionnant chaque triplet dans un espace à deux dimensions (`Sensibilité', 'Spécificité'). Cela permet de vérifier que le critère choisit (maximisation de la sensibilité) ne se fait pas trop au détriment de la spécificité.
 
-% 
-% Paramètres retenus :
-% 
-% \begin{table}[h!]
-% 	\label{lab:resOptim}
-% 	\centering
-% 	\begin{tabular}{|c|c|c|c|}
-% 		\hline
-% 				& C	& gamma		& j\\
-% 		\hline
-% 		ET-Static	& 10000 & $1 \times 10^{-4}$	& 3\\
-% 		\hline
-% 		ET-LOR		& 631	& $2.5 \times 10^{-4}$	& 3\\
-% 		\hline
-% 		ET-IM		& 3981	& $1 \times 10^{-4}$	& 4\\
-% 		\hline
-% 		ET-NoCorr	& 100	& $6.31 \times 10^{-4}$	& 3\\
-% 		\hline
-% 	\end{tabular}
-% 	\caption{Paramètres optimisé pour l'entraînement du système CAD}
-% \end{table}
+\subsection{Paramètres globaux}
+
+Trois paramètres sont appliqués sur toutes les données de la même manière :
+\begin{description}
+ \item[Normalisation :] Les données sont normalisées de manière à ce que la moyenne et l'\emph{écart}-type de chaque caractéristique soit de 1 ($(\mu, \sigma)=(1,1)$) (\emph{moyenne}), ou alors pour que l'ensemble des valeurs soit comprises entre -1 et +1 (\emph{écart}).
+ \item[Nombre de points de la base d'apprentissage :] Le nombre de points extraits de chaque image pour alimenter la base d'exemples normaux peut avoir une influence sur les résultats. Trois valeurs sont testées. 100 pts/im. (soit 1500 pts. négatifs), 200 pts/im. (soit 3000 pts. négatifs) et 1000 pts/im. (soit 15000 pts. négatifs).
+ \item[positions des points extraits :] Les points normaux extraits de la base d'image peuvent être extraits de tout le volume de l'organe hors tumeurs, ou bien extraits préférentiellement des 
+\end{description}
+
+Le but de la normalisation est d'homogénéiser les plages de valeurs des différentes caractéristiques pour faciliter le travail du classifieur, dont les paramètres C et gamma dépendent de la distance entre les points et ne permettent pas de gérer des différences trop importantes d'étendues dans les caractéristiques. La première méthode de normalisation a l'avantage d'être relativement peu sensible aux valeurs extrêmes, contrairement à la seconde.
+
+Le nombre de point de la base d'apprentissage détermine directement la qualité de l'apprentissage. Le nombre de caractéristique est de $8 \times j$, avec $j$ le niveau de décomposition des images. Il n'existe pas de règle définitive pour déterminer le nombre d'exemples nécessaire en fonction du nombre de caractéristiques, mais les SVM sont relativement bon pou éviter le sur-apprentissage. Dans notre cas, il vaudrait donc mieux avoir plus de données. Cependant, le nombre de points notés ``tumeurs'' est limité par le nombre de tumeurs présentes dans la base d'apprentissage (173 tumeurs pour le poumon, 106 pour le foie). Dans ce cas, il y a un risque de déséquilibre de la base d'apprentissage, qui devrait idéalement avoir le même nombre d'exemples ``tumeur'' que ``normales``. Des techniques de correction existent pour les SVM pour contrebalancer ces déséquilibres en indiquant un paramètre C différent pour chaque classe, mais les tests que j'ai réalisé ne montrent pas d'améliorations significatives des performances.
+
+Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatif de l'ensemble des cas rencontrés dans la base de tests, mais les bordures de certains organes peuvent ressembler à des tumeurs, et rendre l'estimation de la surface de séparation plus difficile. J'ai donc voulu évaluer la performance du CAD sur une base dépourvue des données ambigues. Pour cela j'ai réalisé une érosion de 2 voxels sur les le masque des volumes à extraire.
 
 \section{Réduction des faux positifs}
 
-\subsection{Technique simple : Critère basés sur l'intersection}
+\subsection{Création des agrégats}
+
+Les résultats de la classification des images forment des cartes de score, qui sont 
+\subsection{Critère basés sur l'intersection}
 
 Les points classés positifs sont regroupés en amas de points connexes (connexité 27 en 3D). Il y a un ensemble de règles qui vont déterminer si un amas intersectant une lésions représente un vrai positif. Soit $L$ l'ensemble des points de la lésion, $A$ les points correspondant à l'amas candidat.
 
@@ -85,143 +81,14 @@ Les points classés positifs sont regroupés en amas de points connexes (connexi
  \item[$card( L \cap A ) > \beta \times card( A )$]  avec $\beta$ fixé à 0.20 limite l'étendue de l'amas en dehors de la tumeur.
 \end{description}
 
-\subsection{Technique étendue : Basés intersection et étendue spatiale}
-
-Ce second algorithme est basé sur le premier auquel il ajoute deux critères qui limitent la forme de l'amas.
-
-Il faut définir l'étendue maximale de l'amas selon les différentes dimensions $d$ : $\delta_d$. Soit $\delta_d(A) = max_d(A) - min_d(A)$ avec $max_a$ la position la plus 
-
-\begin{description}
- \item[Volume englobant] Le volume du plus petit rectangle englobant l'amas
- \item[]
-\end{description}
-
-$max \left( \frac{\delta_x}{\delta_y}, \frac{\delta_x}{\delta_z}, \frac{\delta_y}{\delta_x}, \frac{\delta_y}{\delta_z}, \frac{\delta_z}{\delta_x}, \frac{\delta_z}{\delta_y} \right)$
-
-
-Une seconde étape a été ajoutée pour limiter l'étalement de certains amas :
-
-Limitations de volume englobant + Limitation des différences d'étendue des amas entres les 3 dimensions.
-
 
 \chapter{Analyse des résultats}
-
-% Je comparerais les performances du système CAD selon les deux techniques de réduction des faux positifs ainsi que sur un CAD optimisé/avec des valeurs par défaut.
-
-% \section{Comparaison des résultats}
-% 
-% Les performances sont évaluées en deux temps : Tout d'abord, je recherche le seuil du classifieur qui engendre 30 Faux positifs (+/- 1). Cela permet de comparer les performances en LLF (analogue à la sensibilité) du classifieur pour un taux de faux positifs donné. Ensuite, je compare les courbres Free-ROC pour voir le comportement des classifieurs sur l'ensemble des NLF (nombre moyen de faux positifs par image).
-% 
-% 
-% \subsection{Classifieur non optimisé pour le poumon}
-% 
-% Résultats fig.\ref{lab:resPerfNonOpt}. Il faut rappeler qu'il y a en tout 173 lésions dans les images simulées, ce qui amène à un score maximal de 56\% obtenu pour Les image non corrigées.
-% 
-% \begin{table}[h!]
-% 
-% \begin{center}\textbf{Classifieur non optimisé} \end{center}
-% 
-%  Avec réduction des faux positifs simple :
-% 
-% \begin{center} 
-% \begin{tabular}{|c|c|c|c|}
-%   \hline
-%   Modalité	& Seuil	& NLF	& Nombre de VP \\
-%   \hline  
-%   ET-Static	& -0.6	& 29.5		& \textbf{72} \\
-%   \hline
-%   ET-LOR	& -0.94	& 30.5		& 59 \\
-%   \hline
-%   ET-IM		& -0.69	& 30.6		& 65 \\
-%   \hline
-%   NoCorr	& 1.3	& 30.5		& 63 \\
-%   \hline
-%  \end{tabular}
-%  \end{center}
-% 
-% \vspace{0.5cm}
-%  Avec réduction des faux positifs étendue :
-%  \begin{center}
-%  \begin{tabular}{|c|c|c|c|}
-%   \hline
-%   Modalité	& Seuil	& NLF	& Nombre de VP \\
-%   \hline  
-%   ET-Static	& 0.89	& 29.8		& 69 \\
-%   \hline
-%   ET-LOR	& 0.04	& 26.7		& 68 \\
-%   \hline
-%   ET-IM		& 0.37	& 29.6		& 82 \\
-%   \hline
-%   NoCorr	& -0.23	& 29.5		& \textbf{97} \\
-%   \hline
-%  \end{tabular}
-%  \end{center}
-% 
-%  \caption{Nombre de Vrai Positifs (VP) obtenu par un CAD non optimisé en acceptant 30 Faux positifs par image (NLF), selon les deux techniques de réduction des faux positifs}
-%  \label{lab:resPerfNonOpt}
-% 
-% \end{table}
-% 
-% 
-% \subsection{Classifieur optimisé pour le poumon}
-% 
-% Résultats présentés \ref{lab:resPerfOpt}. Il faut rappeler qu'il y a en tout 173 lésions dans les images simulées, ce qui amène à un score maximal de 56\% obtenu pour corrigées par ET-IM.
-% 
-% \begin{table}[h!]
-%  
-% 
-% \begin{center}\textbf{Classifieur optimisé} \end{center}
-% 
-%  Avec réduction des faux positifs simple :
-%  \begin{center}
-%  \begin{tabular}{|c|c|c|c|}
-%   \hline
-%   Modalité	& Seuil	& NLF	& Nombre de VP \\
-%   \hline  
-%   ET-Static	& -1.9	& 30.3		& 14 \\
-%   \hline
-%   ET-LOR	& -1.9	& 29.3		& 3 \\
-%   \hline
-%   ET-IM		& -1.4	& 30.5		& \textbf{38} \\
-%   \hline
-%   NoCorr	& -1.5	& 30.3		& 19 \\
-%   \hline
-%  \end{tabular}
-%  \end{center}
-% 
-% \vspace{0.5cm}
-%  Avec réduction des faux positifs étendue :
-% 
-%  \begin{center}
-%  \begin{tabular}{|c|c|c|c|}
-%   \hline
-%   Modalité	& Seuil	& NLF	& Nombre de VP \\
-%   \hline  
-%   ET-Static	& 1.5	& 30		& 70 \\
-%   \hline
-%   ET-LOR	& 0.9	& 30.9		& 76 \\
-%   \hline
-%   ET-IM		& 0.0	& 29.6		& \textbf{98} \\
-%   \hline
-%   NoCorr	& -0.3	& 29.8		& 93 \\
-%   \hline
-%  \end{tabular}
-%  \end{center}
-% 
-%  \caption{Nombre de Vrai Positifs (VP) obtenu par un CAD non optimisé en acceptant 30 Faux positifs par image (NLF), selon les deux techniques de réduction des faux positifs}
-%  \label{lab:resPerfOpt}
-% \end{table}
 
 
 \section{Tests de différents paramètres}
 
 Tests de 3 types de paramètres : 
 
-\begin{description}
- \item[Normalisation :] Les données sont normalisées de manière à ce que la moyenne et l'écart-type de chaque caractéristique soit de 1 ($(\mu, \sigma)=(1,1)$) (mean), ou que l'ensemble des valeurs soit comprises entre -1 et +1 (range).
- \item[Nombre de points de la base d'apprentissage :] Le nombre de points extraits de chaque image pour alimenter la base d'exemples normaux peut avoir une influence sur les résultats. Deux valeurs sont testées. 200 pts/im. (soit 3000 pts. négatifs) et 1000 pts/im. (soit 15000 pts. négatifs)
- \item[positions des points extraits :] Une érosion est réalisée sur les images avant d'extraire les points négatifs. Cele permet de retirer les points de la base d'apprentissage qui pourraient poser des problèmes 
-\end{description}
 
 \begin{figure}[h!]
 \label{fig:paretoParams1}
@@ -243,7 +110,7 @@ Tests de 3 types de paramètres :
 
 
 \end{center}
- \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (1/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a), la base témoin, avec 200 points négatifs par image et une normalisation mean, en b) la base appauvrie avec 100 points négatifs par image et une normalisation mean, et en c) la base enrichie avec 1000 points négatifs par image et une normalisation mean.}
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (1/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a), la base témoin, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base appauvrie avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base enrichie avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
 \end{figure}
 
 
@@ -264,7 +131,7 @@ Tests de 3 types de paramètres :
 
 
 \end{center}
- \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (2/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base normalisation avec 200 points négatifs par image et une normalisation range. En b), la base érodée, avec 200 points négatifs par image et une normalisation mean, en b) la base enrichie avec 1000 points négatifs par image et une normalisation mean. }
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (2/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base normalisation avec 200 points négatifs par image et une normalisation range. En b), la base érodée, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base enrichie avec 1000 points négatifs par image et une normalisation \emph{moyenne}. }
 \end{figure}
 
 
@@ -275,7 +142,7 @@ Tests de 3 types de paramètres :
 %	\begin{center}
 		\begin{tabular}{c c c c c c}
   \hline
-  a	& Base Témoin 	& Base Erosion	& Base appauvrie& Base enrichie & Base normalisée \\
+  a	& Base Témoin 	& Base Érosion	& Base appauvrie& Base enrichie & Base normalisée \\
   \hline
  C 	& 464		& 74		& 5412		& 5412		& 10000 \\
 \hline
@@ -299,54 +166,33 @@ Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
 
 \subsection{Base témoin}
 
-Cette base contient des données normalisées par la méthode mean avec 200 points extraits de chaque image.
+Cette base contient des données normalisées par la méthode \emph{moyenne} avec 200 points extraits de chaque image.
 
 \subsubsection{Meilleurs paramètres de classification}
 
 Les paramètres du classifieur sont déterminés par une recherche grille. La performance de chaque triplet (C, $\gamma$, j) est estimée en réalisant une cross-validation à 5 validations sur l'ensemble de la base d'apprentissage.
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams1}.a en maximisant la sensibilité.
+Les paramètres sont choisis à partir du front de pareto figure \ref{fig:paretoParams1}.a en maximisant la sensibilité.
 
 
-\subsection{Base Erosion}
+\subsection{Base Érosion}
 
-Cette base contient des données normalisées par la méthode mean/std avec 200 points extraits de chaque image érodée (2 voxels).
-
-\subsubsection{Meilleurs paramètres}
-
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams1}.b en maximisant la sensibilité.
+Cette base contient des données normalisées par la méthode \emph{moyenne} avec 200 points extraits de chaque image érodée (2 voxels).
 
 
 \subsection{Base Appauvrie}
 
-Cette base contient des données normalisées par la méthode mean/std avec 100 points extraits de chaque image.
-
-\subsubsection{Meilleurs paramètres}
-
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams2}.b en maximisant la sensibilité.
-
-
+Cette base contient des données normalisées par la méthode \emph{moyenne} avec 100 points extraits de chaque image.
 
 
 \subsection{Base Enrichie}
 
-Cette base contient des données normalisées par la méthode mean/std avec 1000 points extraits de chaque image.
-
-\subsubsection{Meilleurs paramètres}
-
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams2}.b en maximisant la sensibilité.
-
-
+Cette base contient des données normalisées par la méthode \emph{moyenne} avec 1000 points extraits de chaque image.
 
 
 
 \subsection{Base Normalisation}
 
 Cette base contient des données normalisées par la méthode range avec 200 points extraits de chaque image.
-
-\subsubsection{Meilleurs paramètres}
-
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoParams2}.c en maximisant la sensibilité.
-
 
 
 \subsection{Courbe Free-ROC}
@@ -359,7 +205,7 @@ Le maximum de performances est apporté par la combinaison de 200 points avec me
  \begin{center}
    \includegraphics[width=15cm]{images/FROC_param}
  \end{center}
- \caption{\label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation moyenne et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), sur une base appauvrie (100 points négatifs par image), sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
+ \caption{\label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), sur une base appauvrie (100 points négatifs par image), sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
 
 \end{figure}
 
@@ -373,7 +219,7 @@ La p-value est de 0.049, ce qui permet pas déclarer que au moins deux paramètr
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_param}
  \end{center}
- \caption{ \label{lab:fom_param} Les FOM (Figure de Mérite) obetnues pour les différents paramètres}
+ \caption{ \label{lab:fom_param} Les FOM (Figure de Mérite) obtenues pour les différents paramètres}
 \end{figure}
 
 \FloatBarrier
@@ -406,7 +252,7 @@ Les caractéristiques utilisées pour obtenir ces résultats sont les suivants :
 {\small c) ET-NoCorr}
 
 \end{center}
- \caption{\label{fig:paretoModalite} Fronts de pareto des résultats de la rechdeche des meilleurs paramètres du classifieur pour les différentes modalitées, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-IM, b) les images non corrigées du mouvement, et c) les images corrigées par ka méthode LOR.}
+ \caption{\label{fig:paretoModalite} Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-IM, b) les images non corrigées du mouvement, et c) les images corrigées par la méthode LOR.}
 \end{figure}
 
 
@@ -448,43 +294,18 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
 
 Cette base contient des données normalisées par la méthode mean/std. avec 200 points extraits de chaque image.
 
-\subsubsection{Front de pareto}
 
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoModalite}.a en maximisant la sensibilité.
-
-\subsubsection{Meilleurs paramètres}
-
-Choisit en maximisant la sensibilité.			
-
-Voir \ref{fig:paramsModPoumon}
 
 
 \subsection{ET-LOR}
 
 Cette base contient des données normalisées par la méthode mean/std. avec 200 points extraits de chaque image.
 
-\subsubsection{Front de pareto}
-
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoModalite}.b en maximisant la sensibilité.
-
-
-\subsubsection{Meilleurs paramètres}
-
-Choisit en maximisant la sensibilité.
-
-Voir \ref{fig:paramsModPoumon}
 
 \subsection{ET-NoCorr}
 
 Cette base contient des données normalisées par la méthode mean/std. avec 200 points extraits de chaque image.
 
-\subsubsection{Front de pareto}
-
-Les paramètres sont choisits à partir du front de pareto figure \ref{fig:paretoModalite}.c en maximisant la sensibilité.
-
-\subsubsection{Meilleurs paramètres}
-
-Voir \ref{fig:paramsModPoumon}
 
 \subsection{Comparaison des performances JAFROC}
 
@@ -494,7 +315,7 @@ La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement le
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_mod}
  \end{center}
- \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obetnues pour les différentes modalités.}
+ \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obtenues pour les différentes modalités.}
 \end{figure}
 
 \subsection{Courbes Free-ROC}
@@ -508,12 +329,6 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
  \end{center}
  \caption{ \label{lab:froc_mod} Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
 \end{figure}
-
-
-
-
-
-
 
 
 \FloatBarrier
@@ -536,7 +351,7 @@ La p-value est de 0.1, ce qui ne permet pas de déclarer que statistiquement les
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_mod19}
  \end{center}
- \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obetnues pour les différentes modalités.}
+ \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obtenues pour les différentes modalités.}
 \end{figure}
 
 
@@ -566,7 +381,7 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 {\small b) ET-IM}
 
 \end{center}
- \caption{\label{fig:paretoModalite19_1} Fronts de pareto des résultats de la rechdeche des meilleurs paramètres du classifieur pour les différentes modalitées, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-Static, b) les images corrigées du mouvement post-reconstruction.}
+ \caption{\label{fig:paretoModalite19_1} Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-Static, b) les images corrigées du mouvement post-reconstruction.}
 \end{figure}
 
 \begin{figure}[h!]
@@ -582,7 +397,7 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 {\small d) ET-NoCorr}
 
 \end{center}
- \caption{\label{fig:paretoModalite19_2} Fronts de pareto des résultats de la rechdeche des meilleurs paramètres du classifieur pour les différentes modalitées, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
+ \caption{\label{fig:paretoModalite19_2} Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
 \end{figure}
 
 
@@ -616,66 +431,3 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
 %	\end{center}
 \caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
 \end{figure}
-% 
-% Tests en prenant en compte le bord du poumon (sans faire l'érosion de 2 voxels) avec 200 ou 1000 points négatifs par image. Paramètres de SVM par défaut (g=0.001, C=100), images statiques.
-% Cette fois-ci, étant donné le faible nombre de FP, j'ai préféré afficher les performances MAXIMALES obtenues.
-% 
-% Entre parenthèse un seuil alternatif pour pouvoir comparer les performances à NLF comparables.
-% 
-% \begin{tabular}{|c|c|c|c|c|c|c|}
-%  \hline
-% 				& \multicolumn{3}{|c|}{Réduction Simple}& \multicolumn{3}{|c|}{Réduction Étendue} \\
-%  \hline
-%  PNI	& Seuil	& LLF	& NLF	 		& Seuil		& LLF	& NLF	\\
-%  \hline
-% 1000 				&-1.05	& 86	& 20.47 	 	& -1.078	& 84	& 15.8	\\
-%  \hline
-% 200 				& -0.77	(-0.68)& 92 (86)& 26.4 (21.7)	& -0.679 & 84 & 15.7\\
-%  \hline
-% 
-% \end{tabular}
-% 
-% 
-% \subsubsection{Choix de Normalisation}
-% 
-% Test avec 15000 Points négatifs, images statiques
-% 
-% Front de pareto indiquant les performances atteintes (sensib et specif) selon les niveaux de décomposition :
-% 
-% \includegraphics[width=14cm]{images/paretoNorm.png}
-% 
-% Il a été choisit le point haut droit de coordonnées suivantes : 
-% 
-% 
-% \begin{itemize}
-% \item C = 10000.0
-% \item gamma = 0.016572270086699932
-% \item j = 3
-% \end{itemize}
-% 
-% Résultats :
-% \begin{itemize}
-% \item Sensib : 0.993
-% \item Specif : 0.532
-% \item Accuracy : 0.999
-% \end{itemize}
-% 
-% 
-% 
-% \section{Comparaison des performances Free-ROC}
-% 
-% \subsection{Influence des paramètres de l'observateur}
-% 
-% La courbe Free-ROC \ref{fig:JAFROC_Compare_Static} suivante
-% 
-% \begin{figure}[h!]
-% 	\vspace{-0.5cm}	
-% 	\begin{center}
-% 		\begin{tabular}{c c}
-% 			\includegraphics[width=14cm]{images/JAFROC_Compare_Static}
-% 		\end{tabular}
-% 	\end{center}
-% 	\vspace{-1cm}
-% 	\caption{Comparaison des performances du système CAD selon que le classifieur est optimisé (Opt) ou non optimisé (NonOpt) et que l'on utilise le système de réductions de faux positifs simple ou étendu. Réalisé sur des données statiques.}
-% 	\label{fig:JAFROC_Compare_Static}
-% \end{figure}
