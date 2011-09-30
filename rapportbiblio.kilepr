@@ -20,16 +20,16 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=184
+line=202
 open=true
 order=0
 
 [item:main.tex]
 archive=true
-column=43
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=6
+line=142
 open=true
 order=1
 
@@ -38,7 +38,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=Modula-2
-line=24
+line=54
 open=false
 order=0
 
@@ -75,23 +75,23 @@ column=0
 encoding=UTF-8
 highlight=LaTeX
 line=19
-open=false
-order=2
+open=true
+order=3
 
 [item:texte/methodes.tex]
 archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=32
+line=135
 open=false
 order=1
 
 [item:texte/resultats.tex]
 archive=true
-column=13
+column=22
 encoding=UTF-8
 highlight=LaTeX
-line=74
+line=67
 open=true
 order=2

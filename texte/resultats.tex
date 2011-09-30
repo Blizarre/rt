@@ -11,19 +11,32 @@ Les techniques de correction du mouvement implémentées sont les suivantes :
 
 Elles sont comparées avec les images non Corrigées et des images statiques (qui représentent une correction parfaite).
 
-Dans le cas présent, l'objectif est de d'évaluer les performances des techniques de correction du mouvement sur la détection des lésions de faible contraste/faible diamètre. Pour cela, je vais comparer les performances d'un système de détection automatique sur les différents types d'images.
+Dans le cas présent, l'objectif est d'évaluer les performances des techniques de correction du mouvement sur la détection des lésions de faible contraste/faible diamètre. Pour cela, les performances d'un système de détection automatique seront comparées sur les différents types d'images.
 
 \section{Système CAD}
 
-Le système CAD utilise des informations fréquentielles obtenue par décomposition des images en ondelettes Biorthogonale 4.4. Ces données sont utilisées par le système de classification basé sur un SVM travaillant voxel par voxel. Une étape de réduction des faux positifs est ajoutée par la suite.
-
+Le système CAD utilise des informations fréquentielles obtenue par décomposition non décimée des images en ondelettes Biorthogonale 4.4. Ces données sont utilisées par le système de classification basé sur un SVM travaillant voxel par voxel. Une étape de réduction des faux positifs est ajoutée par la suite.
 \'Etant donné le faible nombre de tumeurs présentes dans les organes considérés, la base d'aprentissage est générée à partir des images utilisées pour la base de test. 
+
+\subsection{Vecteur de Caractéristiques}
+
+Nous avons choisi d’utiliser une décomposition en ondelettes 3D par banc de filtres. Dans le cas tridimensionnel, la décomposition par banc de filtre est résumé par la Figure \ref{fig:ondelettes}. L’image de départ est filtrée séparément dans les trois directions de l’espace par un filtre fréquentiel passe-haut correspondant à la fonction d’ondelettes (noté $H$) et passe-bas correspondant à la fonction d’échelle (noté $L$). 
+
+Ainsi sept images de détails (LLL, LLH, \dots) et une image d’approximation (LLL) sont produites pour chaque niveau $j$ de décomposition. Les huit images du niveau suivant $j+1$ sont générées de la même manière, mais en considérant l’image d’approximation $LLL_j$ du niveau précédent comme image de départ. Les caractéristiques des images, rassemblées dans un vecteur descripteur de taille $8\times j$, correspondent ici à l’ensemble de ces coefficients pour chaque voxel  de l’image. 
+
+\begin{figure}
+ \label{fig:ondelettes}
+ \includegraphics[width=15cm]{images/decompHotell}
+ \caption{Décomposition en ondelettes par banc de filtres : Chaque image est filtrée selon les 3 dimensions pour obtenir les coefficients d'ondelettes et d'échelle de chaque voxel de l'image.}
+\end{figure}
 
 \subsection{Classifications}
 
+Ce pseudocode décrit le CAD, de l'importation des images à l'extraction des lésions potentielles:
+
 \begin{enumerate}
  \item Décomposition des images en ondelettes : Pour chaque voxel de l'image d'origine, on obtient entre 8 et 32 coefficients, qui correspondent au vecteur de caractéristiques utilisés par le classifieur
- \item Extraction de la base d'apprentissage : Les coefficients des centres de toutes les tumeurs sont extraites des volumes décomposés, et vont former la base d'apprentissage H1 (positifs). Un certain nombre de voxels sont tirés aléatoirement dans chaque images et leur coefficients sont ajoutés à la base H0 (négatifs).
+ \item Extraction de la base d'apprentissage : Les coefficients des centres de toutes les tumeurs sont extraits des volumes décomposés, et vont former la base d'apprentissage H1 (lésions). Un certain nombre de voxels sont tirés aléatoirement dans les zones normales de chaque images et leur coefficients sont ajoutés à la base H0 (normale).
  \item Apprentissage : Le classifieur SVM est entraîné sur cette base d'apprentissage pour générer le modèle qui sera utilisé pour le test.
  \item Tests : Le SVM entraîné est utilisé pour classer chaque voxel contenu dans les organes à évaluer (poumon et foie).
  \item Réduction des Faux-positifs : Les points sont agrégés en composantes connexes (connexité 27 en 3 dimensions). Chaque agrégat est testé pour déterminer si il doit être considéré comme un faux positif ou un vrai positif.
@@ -36,23 +49,23 @@ Les différentes étapes de l'évaluation des performances nécessitent la fixat
 
 \subsection{Paramètres à optimiser pour chaque modalité}
 
-\begin{description}
- \item[C] Le terme de pénalisation des exemples mal classés par le classifieur
- \item[gamma] La largeur de bande du RBF du noyau du classifieur
- \item[j] Le niveau de décomposition des images 
-\end{description}
+\begin{itemize}
+ \item Le terme de pénalisation des exemples mal classés $C$
+ \item La largeur de bande $\gamma$ du noyau du classifieur (dans notre cas une RBF - Radial Basis Function, ou fonction de base radiale)
+ \item Le niveau de décomposition des images $j$
+\end{itemize}
 
 J'ai effectué une recherche exhaustive par grille avec les paramètres suivants :
 
 \begin{description}
- \item [C] de 1 à 10000 en 15 pas logarithmique
- \item [gamma] de 0.0001 à 1 en 15 pas logarithmique
- \item [j] de 1 à 4, soit de 8 à 32 caractéristiques
+ \item [C :] de 1 à 10000 en 15 pas logarithmique
+ \item [gamma :] de 0.0001 à 1 en 15 pas logarithmique
+ \item [j :] de 1 à 4, soit de 8 à 32 caractéristiques
 \end{description}
 
-L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa2006} pour chaque modalité. Les indicateur de performance (Sensibilité, Spécificité, Précision) sont obtenues en réalisant une cross-validation à 5 étapes sur l'ensemble de la base d'apprentissage. Le triplet de paramètre retenu est celui qui maximise la sensibilité.
+L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa2006} pour chaque modalité. Les indicateurs de performance (Sensibilité, Spécificité, Précision) sont obtenues en réalisant une validation croisée à 5 étapes sur l'ensemble de la base d'apprentissage. Le triplet de paramètre retenu est celui qui maximise la sensibilité.
 
-J'ai joint pour chaque modalité le front de pareto positionnant chaque triplet dans un espace à deux dimensions (`Sensibilité', 'Spécificité'). Cela permet de vérifier que le critère choisit (maximisation de la sensibilité) ne se fait pas trop au détriment de la spécificité.
+Nous avons représenté pour chaque modalité le front de pareto positionnant chaque triplet dans un espace à deux dimensions (`Sensibilité', 'Spécificité'). Cela permet de vérifier que le critère choisit (maximisation de la sensibilité) ne se fait pas trop au détriment de la spécificité.
 
 \subsection{Paramètres globaux}
 
@@ -65,9 +78,9 @@ Trois paramètres sont appliqués sur toutes les données de la même manière :
 
 Le but de la normalisation est d'homogénéiser les plages de valeurs des différentes caractéristiques pour faciliter le travail du classifieur, dont les paramètres C et gamma dépendent de la distance entre les points et ne permettent pas de gérer des différences trop importantes d'étendues dans les caractéristiques. La première méthode de normalisation a l'avantage d'être relativement peu sensible aux valeurs extrêmes, contrairement à la seconde.
 
-Le nombre de point de la base d'apprentissage détermine directement la qualité de l'apprentissage. Le nombre de caractéristique est de $8 \times j$, avec $j$ le niveau de décomposition des images. Il n'existe pas de règle définitive pour déterminer le nombre d'exemples nécessaire en fonction du nombre de caractéristiques, mais les SVM sont relativement bon pou éviter le sur-apprentissage. Dans notre cas, il vaudrait donc mieux avoir plus de données. Cependant, le nombre de points notés ``tumeurs'' est limité par le nombre de tumeurs présentes dans la base d'apprentissage (173 tumeurs pour le poumon, 106 pour le foie). Dans ce cas, il y a un risque de déséquilibre de la base d'apprentissage, qui devrait idéalement avoir le même nombre d'exemples ``tumeur'' que ``normales``. Des techniques de correction existent pour les SVM pour contrebalancer ces déséquilibres en indiquant un paramètre C différent pour chaque classe, mais les tests que j'ai réalisé ne montrent pas d'améliorations significatives des performances.
+Le nombre de point de la base d'apprentissage détermine directement la qualité de l'apprentissage. Le nombre de caractéristique est de $8 \times j$, avec $j$ le niveau de décomposition des images. Il n'existe pas de règle définitive pour déterminer le nombre d'exemples nécessaire en fonction du nombre de caractéristiques, mais les SVM sont relativement bon pou éviter le sur-apprentissage. Dans notre cas, il vaudrait donc mieux avoir plus de données. Cependant, le nombre de points notés ``tumeurs'' est limité par le nombre de tumeurs présentes dans la base d'apprentissage (173 tumeurs pour le poumon, 106 pour le foie). Dans ce cas, il y a un risque de déséquilibre de la base d'apprentissage, qui devrait idéalement avoir le même nombre d'exemples ``tumeur'' que ``normales``. Des techniques de correction existent pour les SVM pour contrebalancer ces déséquilibres en indiquant un paramètre C différent pour chaque classe, mais les tests réalisés ne montrent pas d'améliorations significatives des performances.
 
-Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatif de l'ensemble des cas rencontrés dans la base de tests, mais les bordures de certains organes peuvent ressembler à des tumeurs, et rendre l'estimation de la surface de séparation plus difficile. J'ai donc voulu évaluer la performance du CAD sur une base dépourvue des données ambigues. Pour cela j'ai réalisé une érosion de 2 voxels sur les le masque des volumes à extraire.
+Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatif de l'ensemble des cas rencontrés dans la base de tests, mais les bordures de certains organes peuvent ressembler à des tumeurs, et rendre l'estimation de la surface de séparation plus difficile. J'ai donc voulu évaluer la performance du CAD sur une base dépourvue des données ambigues. Pour cela nous avons réalisé une érosion de 2 voxels sur les le masque des volumes à extraire.
 
 \section{Réduction des faux positifs}
 
@@ -182,23 +195,23 @@ Les paramètres du classifieur sont déterminés par une recherche grille. La pe
 Les paramètres sont choisis à partir du front de pareto figure \ref{fig:paretoParams1}.a en maximisant la sensibilité.
 
 
-\subsection{Base Érosion}
+\emph{Base Érosion}
 
 Cette base contient des données normalisées par la méthode \emph{moyenne} avec 200 points extraits de chaque image érodée (2 voxels).
 
 
-\subsection{Base Appauvrie}
+\emph{Base Appauvrie}
 
 Cette base contient des données normalisées par la méthode \emph{moyenne} avec 100 points extraits de chaque image.
 
 
-\subsection{Base Enrichie}
+\emph{Base Enrichie}
 
 Cette base contient des données normalisées par la méthode \emph{moyenne} avec 1000 points extraits de chaque image.
 
 
 
-\subsection{Base Normalisation}
+\emph{Base Normalisation}
 
 Cette base contient des données normalisées par la méthode range avec 200 points extraits de chaque image.
 
@@ -298,19 +311,19 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
 
 
 
-\subsection{ET-IM}
+\emph{ET-IM}
 
 Cette base contient des données normalisées par la méthode mean/std. avec 200 points extraits de chaque image.
 
 
 
 
-\subsection{ET-LOR}
+\emph{ET-LOR}
 
 Cette base contient des données normalisées par la méthode mean/std. avec 200 points extraits de chaque image.
 
 
-\subsection{ET-NoCorr}
+\emph{ET-NoCorr}
 
 Cette base contient des données normalisées par la méthode mean/std. avec 200 points extraits de chaque image.
 
