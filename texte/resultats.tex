@@ -106,9 +106,7 @@ Les agrégats seront considérés comme des vrai positifs si ils intersectent un
 
 \chapter{Analyse des résultats}
 
-\section{Tests de différents paramètres}
-
-Tests de 3 types de paramètres : 
+\section{Optimisation des paramètres}
 
 
 \begin{figure}[h!]
@@ -152,7 +150,7 @@ Tests de 3 types de paramètres :
 
 
 \end{center}
- \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (2/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base normalisation avec 200 points négatifs par image et une normalisation range. En b), la base érodée, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base enrichie avec 1000 points négatifs par image et une normalisation \emph{moyenne}. }
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (2/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base normalisation avec 200 points négatifs par image et une normalisation +1/-1. En b), la base érodée, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base enrichie avec 1000 points négatifs par image et une normalisation \emph{moyenne}. }
 \end{figure}
 
 
@@ -185,41 +183,50 @@ Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
 \end{figure}
 
 
-\subsection{Base témoin}
-
-Cette base contient des données normalisées par la méthode \emph{moyenne} avec 200 points extraits de chaque image.
-
-\subsubsection{Meilleurs paramètres de classification}
-
-Les paramètres du classifieur sont déterminés par une recherche grille. La performance de chaque triplet (C, $\gamma$, j) est estimée en réalisant une cross-validation à 5 validations sur l'ensemble de la base d'apprentissage.
-Les paramètres sont choisis à partir du front de pareto figure \ref{fig:paretoParams1}.a en maximisant la sensibilité.
-
-
-\emph{Base Érosion}
-
-Cette base contient des données normalisées par la méthode \emph{moyenne} avec 200 points extraits de chaque image érodée (2 voxels).
-
-
-\emph{Base Appauvrie}
-
-Cette base contient des données normalisées par la méthode \emph{moyenne} avec 100 points extraits de chaque image.
-
-
-\emph{Base Enrichie}
-
-Cette base contient des données normalisées par la méthode \emph{moyenne} avec 1000 points extraits de chaque image.
 
 
 
-\emph{Base Normalisation}
 
-Cette base contient des données normalisées par la méthode range avec 200 points extraits de chaque image.
+Nous avons réalisé des mesures de performances pour 5 jeux de paramètres différents présentés ci-après. Les paramètres en \emph{gras} correspondent à ceux utilisés pour la base témoin.
+
+\begin{itemize}
+ \item Nombre de points de la base d'apprentissage (100, \emph{200}, 1000)
+ \item Normalisation des données (\emph{moyenne}, +1/-1)
+ \item Position des points de la base d'apprentissage (\emph{organe}, erosion)
+\end{itemize}
+
+
+\begin{description}
+ \item[Témoin : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe.
+ \item[\'Erosion : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe érodée.
+ \item[Appauvrie : ] contient des données normalisées par la méthode moyenne avec 100 points extraits de chaque organe.
+ \item[Enrichie : ] contient des données normalisées par la méthode moyenne avec 1000 points extraits de chaque organe.
+ \item[Normalisation : ] contient des données normalisées par la méthode +1/1 avec 200 points extraits de chaque organe.
+\end{description}
+
+
+\subsubsection{Sélection des meilleurs paramètres du classifieur}
+
+Les paramètres du classifieur sont déterminés par une recherche par grille. Elle consiste à rechercher l'optimum en évaluant la performance ce chaque jeu de paramètre dans un ensemble déterminé à l'avance pour représenter . La performance de chaque triplet (C, $\gamma$, j) est estimée en réalisant une cross-validation à 5 validations sur l'ensemble de la base d'apprentissage.
+
+Les performances de tous les jeux de paramètres sont représentés sous la forme d'un front de pareto. Ce type de diagramme permet de rechercher un optimum selon plusieurs critères incompatibles. Dans notre cas, nous voulons à la fois une sensibilité et une spécificité importante, sachant qu'il n'existe pas de jeu de paramètres ''parfaits`` qui permettent d'avoir 100\% aux deux. Dans notre cas, le front de pareto va permettre de vérifier que le choix par maximisation de la sensibilité ne se fait pas au détriment de la spécificité.
+
+Les paramètres sont choisis à partir du front de pareto figure \ref{fig:paretoParams1} en maximisant la sensibilité.
+
+Dans l'ensemble, one peut voir clairement que les points correspondant au premier niveau de décomposition (bleu foncé) ont une performance systématiquement inférieure aux autres. Pour la base témoin, la performance maximal est atteinte pour environ 15\% de sensibilité et une spécificité de 93.5\%, ce qui correspond à la valeur de spécificité la plus faible de tous les points de la base témoin. On observe cependant un front de pareto marqué, bien qu'en fort retrait par rapport aux autres niveaux de décomposition. Ce même constat se retrouve pour les bases appauvries et enrichies.
+
+Les deux autres bases ont des comportements différents. Pour la base normalisée, les performances s'effondrent suffisament pour que le classifieur soit quasiment incapable de discerner les classes, avec une sesnsibilité maximale de 1\% environ. Cela indique qu'il ne parvient pas à trouver une surface de séparation des données avec les paramètres indiqués. Puisque la normalisation moyenne parvient à mieux séparer les données pour ce niveau de décomposition, il est probable que la normalisation ne parvienne pas à homogénéiser les différentes dimensions de manière satisfaisante. Dans le cas de la base érodée, la simplification du problème de classification fait que les performances sont nettement en hausse avec des performances de l'ordre de 55\% de sensibilité pour 99.2\% de spécificité, ce qui est le score le plus élevé de toutes les bases.
+
+Les performances du second niveau de décomposition (bleu ciel) sont toujours situées environ au barycentre entre les performances du premier niveau et celles des niveaux 3 et 4.
+
+Les performances des décomposition de niveaux 3 (vert) et 4 (rouge) sont systématiquement meilleures que les autres mais sont entre-mélées. La base Témoin et la base Appauvrie montrent une clair avance tant en terme de sensibilité que de spécificité pour 3 niveaux de décomposition. La base érodée ne montre 
+
 
 
 \subsection{Courbe Free-ROC}
 
 Voir figure \ref{lab:froc_comp_static}
-Le maximum de performances est apporté par la combinaison de 200 points avec mean/std.
+Le maximum de performances est apporté par la combinaison de 200 points avec moyenne.
 
 \begin{figure}[h!]
  
