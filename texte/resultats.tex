@@ -16,7 +16,7 @@ Dans le cas présent, l'objectif est d'évaluer les performances des techniques 
 \section{Système CAD}
 
 Le système CAD utilise des informations fréquentielles obtenue par décomposition non décimée des images en ondelettes Biorthogonale 4.4. Ces données sont utilisées par le système de classification basé sur un SVM travaillant voxel par voxel. Une étape de réduction des faux positifs est ajoutée par la suite.
-\'Etant donné le faible nombre de tumeurs présentes dans les organes considérés, la base d'aprentissage est générée à partir des images utilisées pour la base de test. 
+\'Etant donné le faible nombre de tumeurs présentes dans les organes considérés, la base d'apprentissage est générée à partir des images utilisées pour la base de test. 
 
 \subsection{Vecteur de Caractéristiques}
 
@@ -32,7 +32,7 @@ Ainsi sept images de détails (LLL, LLH, \dots) et une image d’approximation (
 
 \subsection{Classifications}
 
-Ce pseudocode décrit le CAD, de l'importation des images à l'extraction des lésions potentielles:
+Ce pseudo-code décrit le CAD, de l'importation des images à l'extraction des lésions potentielles:
 
 \begin{enumerate}
  \item Décomposition des images en ondelettes : Pour chaque voxel de l'image d'origine, on obtient entre 8 et 32 coefficients, qui correspondent au vecteur de caractéristiques utilisés par le classifieur
@@ -80,7 +80,7 @@ Le but de la normalisation est d'homogénéiser les plages de valeurs des diffé
 
 Le nombre de point de la base d'apprentissage détermine directement la qualité de l'apprentissage. Le nombre de caractéristique est de $8 \times j$, avec $j$ le niveau de décomposition des images. Il n'existe pas de règle définitive pour déterminer le nombre d'exemples nécessaire en fonction du nombre de caractéristiques, mais les SVM sont relativement bon pou éviter le sur-apprentissage. Dans notre cas, il vaudrait donc mieux avoir plus de données. Cependant, le nombre de points notés ``tumeurs'' est limité par le nombre de tumeurs présentes dans la base d'apprentissage (173 tumeurs pour le poumon, 106 pour le foie). Dans ce cas, il y a un risque de déséquilibre de la base d'apprentissage, qui devrait idéalement avoir le même nombre d'exemples ``tumeur'' que ``normales``. Des techniques de correction existent pour les SVM pour contrebalancer ces déséquilibres en indiquant un paramètre C différent pour chaque classe, mais les tests réalisés ne montrent pas d'améliorations significatives des performances.
 
-Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatif de l'ensemble des cas rencontrés dans la base de tests, mais les bordures de certains organes peuvent ressembler à des tumeurs, et rendre l'estimation de la surface de séparation plus difficile. J'ai donc voulu évaluer la performance du CAD sur une base dépourvue des données ambigues. Pour cela nous avons réalisé une érosion de 2 voxels sur les le masque des volumes à extraire.
+Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatif de l'ensemble des cas rencontrés dans la base de tests, mais les bordures de certains organes peuvent ressembler à des tumeurs, et rendre l'estimation de la surface de séparation plus difficile. J'ai donc voulu évaluer la performance du CAD sur une base dépourvue des données ambiguës. Pour cela nous avons réalisé une Érosion de 2 voxels sur les le masque des volumes à extraire.
 
 \section{Réduction des faux positifs}
 
@@ -88,7 +88,7 @@ Les points normaux extraits des images pour alimenter la base vont avoir une inf
 
 Les résultats de la classification des images forment des cartes de score, qui représentent le résultat de la classification pour chaque voxel de l'image source. Ce résultat est donné sous la forme d'un nombre correspondant à la distance entre le vecteur de caractéristique et la surface de séparation. Nous avons choisit une approche par agrégats plutôt que par voxels car elle est plus proche de la réalité de la routine clinique, car le praticien ne travaille pas voxel par voxel mais en indiquant des zones dans l'image.
 
-Les voxels dépassants un seuil prédeterminé sont regroupés selon une connexité 28 ($3\times3\times3$ en 3D). 
+Les voxels dépassants un seuil prédéterminé sont regroupés selon une connexité 28 ($3\times3\times3$ en 3D). 
 
 
 \subsection{Critères de sélection des agrégats}
@@ -103,8 +103,31 @@ Les agrégats seront considérés comme des vrai positifs si ils intersectent un
  \item[$card( L \cap A ) > \beta \times card( A )$]  avec $\beta$ fixé à 0.20 limite l'étendue de l'amas en dehors de la tumeur.
 \end{description}
 
+\section{Réalisation des courbes Free-ROC}
+
+La réalisation d'une courbe Free-ROC se fait en trois étapes. Tout d'abord, le CAD doit sélectionner un ensemble d'agrégats dans l'image et associer à chacun un score. Ensuite, à partir de la vérité terrain, nous allons déterminer quels agrégats correspondent réellement à une tumeur, ainsi que ceux qui sont de faux positifs. Enfin, la courbe Free-ROC sera tracée en prenant en compte pour chaque niveau de seuil uniquement les agrégats qui sont en dessous de ce seuil.
+
+\subsection{Sélection des clusters candidats}
+
+Les clusters candidats donnés par le CAD sont sélectionnés en binarisant la carte de score pour plusieurs seuils. Le seuil qui permettra d'obtenir la meilleure sensibilité sera sélectionnée.
+
+Cette sélection est réalisée selon l'algorithme suivant :
+
+\begin{itemize}
+ \item \emph{Sensibilité} := Dictionnaire vide
+ \item Pour chaque seuil \emph{s} entre -2 et +2 (40 pas), faire :
+ \item \hspace{1cm}\emph{CarteSeuillée} := Seuiller \emph{carte de Score} au seuil \emph{s}
+ \item \hspace{1cm}\emph{Agrégats} := Calcul des agrégats de \emph{CarteSeuillée} (Score, classe, étendue).
+ \item \hspace{1cm}Sensibilité[s] := Calcul Sensibilité(Agrégats)
+ \item fin faire
+ \item \emph{Seuil Optimal} := Seuil qui maximise la Sensibilité
+\end{itemize}
+
+Ce critère de sélection va naturellement engendrer un grand nombre de faux positifs, mais il faut garder à l'esprit qu'il sera utilisé pour réaliser des courbes F-ROC, qui indiquent une spécificité pour chaque nombre de faux positif en jouant sur le seuil.
 
 \chapter{Analyse des résultats}
+
+Dans ce chapitre je vais détailler les résultats obtenus par les méthodes présentées précédemment. Je commencerais par présenter les courbes obtenues lors de l'étape d'optimisation et d'adaptation du CAD aux données, puis je parlerais des résultats obtenus par ce CAD pour les différentes modalités.
 
 \section{Optimisation des paramètres}
 
@@ -192,7 +215,7 @@ Nous avons réalisé des mesures de performances pour 5 jeux de paramètres diff
 \begin{itemize}
  \item Nombre de points de la base d'apprentissage (100, \emph{200}, 1000)
  \item Normalisation des données (\emph{moyenne}, +1/-1)
- \item Position des points de la base d'apprentissage (\emph{organe}, erosion)
+ \item Position des points de la base d'apprentissage (\emph{organe}, Érosion)
 \end{itemize}
 
 
@@ -213,34 +236,50 @@ Les performances de tous les jeux de paramètres sont représentés sous la form
 
 Les paramètres sont choisis à partir du front de pareto figure \ref{fig:paretoParams1} en maximisant la sensibilité.
 
-Dans l'ensemble, one peut voir clairement que les points correspondant au premier niveau de décomposition (bleu foncé) ont une performance systématiquement inférieure aux autres. Pour la base témoin, la performance maximal est atteinte pour environ 15\% de sensibilité et une spécificité de 93.5\%, ce qui correspond à la valeur de spécificité la plus faible de tous les points de la base témoin. On observe cependant un front de pareto marqué, bien qu'en fort retrait par rapport aux autres niveaux de décomposition. Ce même constat se retrouve pour les bases appauvries et enrichies.
+Dans l'ensemble, on peut voir clairement que les points correspondant au premier niveau de décomposition (bleu foncé) ont une performance systématiquement inférieure aux autres. Pour la base témoin, la performance maximal est atteinte pour environ 15\% de sensibilité et une spécificité de 93.5\%, ce qui correspond à la valeur de spécificité la plus faible de tous les points de la base témoin. On observe cependant un front de pareto marqué, bien qu'en fort retrait par rapport aux autres niveaux de décomposition. Ce même constat se retrouve pour les bases appauvries et enrichies.
 
-Les deux autres bases ont des comportements différents. Pour la base normalisée, les performances s'effondrent suffisament pour que le classifieur soit quasiment incapable de discerner les classes, avec une sesnsibilité maximale de 1\% environ. Cela indique qu'il ne parvient pas à trouver une surface de séparation des données avec les paramètres indiqués. Puisque la normalisation moyenne parvient à mieux séparer les données pour ce niveau de décomposition, il est probable que la normalisation ne parvienne pas à homogénéiser les différentes dimensions de manière satisfaisante. Dans le cas de la base érodée, la simplification du problème de classification fait que les performances sont nettement en hausse avec des performances de l'ordre de 55\% de sensibilité pour 99.2\% de spécificité, ce qui est le score le plus élevé de toutes les bases.
+Les deux autres bases ont des comportements différents. Pour la base normalisée, les performances s'effondrent suffisamment pour que le classifieur soit quasiment incapable de discerner les classes, avec une sensibilité maximale de 1\% environ. Cela indique qu'il ne parvient pas à trouver une surface de séparation des données avec les paramètres indiqués. Puisque la normalisation moyenne parvient à mieux séparer les données pour ce niveau de décomposition, il est probable que la normalisation ne parvienne pas à homogénéiser les différentes dimensions de manière satisfaisante. Dans le cas de la base érodée, la simplification du problème de classification fait que les performances sont nettement en hausse avec des performances de l'ordre de 55\% de sensibilité pour 99.2\% de spécificité, ce qui est le score le plus élevé de toutes les bases.
 
 Les performances du second niveau de décomposition (bleu ciel) sont toujours situées environ au barycentre entre les performances du premier niveau et celles des niveaux 3 et 4.
 
-Les performances des décomposition de niveaux 3 (vert) et 4 (rouge) sont systématiquement meilleures que les autres mais sont entre-mélées. La base Témoin et la base Appauvrie montrent une clair avance tant en terme de sensibilité que de spécificité pour 3 niveaux de décomposition. La base érodée ne montre 
+Les performances des décomposition de niveaux 3 (vert) et 4 (rouge) sont systématiquement meilleures que les autres mais sont entremêlées. La base Témoin et la base Appauvrie montrent une claire avance tant en terme de sensibilité que de spécificité pour 3 niveaux de décomposition. La base érodée ne montre quand à elle aucune différence de spécificité entre ces deux niveaux de décomposition, mais montre cependant une faible amélioration de la sensibilité pour les 4 niveaux (de 0.5\%). Quand à la base normalisée, on n'observe pas de réelles différences entre les deux niveaux de décomposition.
 
+La figure \ref{fig:paramsParams} référence tous les paramètres sélectionnés à partir des courbes de pareto. On peut observer que la sensibilité la plus importante est atteinte pour la base appauvrie, avec 82\% de bonne détection. Ce taux est sensiblement le même que celui de la base Érosion (80\%). Ces valeurs importantes par rapport aux autres peuvent s'expliquer par le fait que ces deux bases proposent un problème simplifié. Dans le cas de la base Érosion, les cas litigieux (discontinuités proches des bords des organes) ont été retirés de la base, ce qui simplifie le problème, tandis que pour la base appauvrie, c'est le nombre de points ''sain`` plus faible de la base d'apprentissage (1500 contre 3000) qui permet de rendre le problème plus simple à traiter au détriment de la généralisation du résultat trouvé aux images complètes.
 
+Il est intéressant de constater que les performances en sensibilité pour les bases Appauvrie, Témoin et Enrichie sont inversement proportionnels à la taille de la base. En effet, plus la complexité de la base est importante, plus il devient difficile de trouver une surface de séparation efficace. Cependant, une base trop simpliste va engendrer une solution qui sera sans rapport avec la réalité, comme nous le verrons plus tard avec les courbes F-ROC.
+
+Les valeurs de spécificité sont toutes très supérieures à 99\%, ce qui montre que le classifieur n'a pas de problèmes pour classer correctement les points sains. En effet, la base étant très déséquilibrée, avec un rapport de 17 points sains pour 1 point ''lésion`` dans la base témoin, il est normal il est normal que le classifieur favorise la classification des points ''sain''. Il existe des techniques permettant de compenser ce déséquilibre lors de l'apprentissage, mais tous les tests que nous avons réalisés n'ont pas montrés d'amélioration du résultat. En effet, l'étape de sélection du seuil (voir section suivante) permet de compenser ces différences.
 
 \subsection{Courbe Free-ROC}
 
-Voir figure \ref{lab:froc_comp_static}
-Le maximum de performances est apporté par la combinaison de 200 points avec moyenne.
+Les courbes Free-ROC de la figure \ref{lab:froc_comp_static} permettent de comparer les performances du CAD sur les différentes bases d'apprentissage. Les courbes ont volontairement été tronquées à 40 faux positifs par image, car ce nombre est déjà trop important pour un système CAD.
+
+On peut observer que les courbes correspondants aux bases Témoin et Enrichie atteignent leur maximum de performances pour un nombre de faux positifs relativement faible par rapport aux autres bases : entre 17 et 20 faux positifs pour ces bases, contre plus de 40 pour les bases Appauvrie et \'Erosion. Cela tends à montrer que le système CAD est plus performant pour ces bases car il crée moins d'agrégats là ou il n'y a pas de lésions.
+
+En ce qui concerne la sensibilité maximale obtenue sur les courbes, elle est atteinte pour la base témoin avec environ 62\% de sensibilité, suivie par la base appauvrie avec 60\%, mais pour un nombre de faux positifs beaucoup plus important (38 contre 18 pour la base Témoin). La troisième courbe est la courbe Normalisation, suivie par la base enrichie puis la base \'Erosion. Il est important de noter que les sensibilités maximales observées sont très proches, entre 55\% et 62\%, ce qui indique que la qualité de la base d'apprentissage n'a pas d'impact réel sur la sensibilité maximale atteinte par le CAD, mais qu'il pourra être plus ou moins difficile pour ce dernier de différencier les lésions du bruit de fond. 
+
+En pratique, on choisira le seuil pour avoir la certitude d'avoir un nombre de faux positifs ``raisonnable'' par image. Dans notre cas, les images contiennent environ 10 lésions par image. Il peut être intéressant de comparer les performances des bases pour ratio de 1 faux positif par lésion, soit pour 10 faux positifs. Dans ce cas, la base Témoin est au coude à coude avec la base Enrichie, à environ 55\%, ce qui est déjà très proche de leur performances maximales. La base Normalisation et la base Appauvrie sont quand à elles à 40\% de sensibilité, tandis que la base Érosion atteint 35\%.
+
+Dans tous les cas, nous avons donc vu que le maximum de performances est apporté par la base Témoin.
 
 \begin{figure}[h!]
  
  \begin{center}
    \includegraphics[width=15cm]{images/FROC_param}
  \end{center}
- \caption{\label{lab:froc_comp_static} Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), sur une base appauvrie (100 points négatifs par image), sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
+ \label{lab:froc_comp_static}
+ \caption{Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), sur une base appauvrie (100 points négatifs par image), sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
 
 \end{figure}
 
 
 \subsection{Comparaison des performances JAFROC}
 
-La p-value est de 0.049, ce qui permet pas déclarer que au moins deux paramètres testés sont différents. \ref{lab:fom_param}
+La comparaison des performances obtenues par l'algorithme JAFROC\cite{chakraborty1990free} nous montre les FDM (Figure de Mérite) obtenues pour les différentes bases. La FDM des bases Témoin, Érosion et Enrichie sont quasiment au même niveau à 0.18, mais les barres d'erreurs semblent montrer un léger avantage pour la base Témoin\ref{lab:fom_param}.
+
+Les bases Normalisation et Appauvrie quand à elles ont une FDM de 0.1 environ, ce qui indique une performance plus faible que les autres.
+
+D'un point de vue statistique, La p-value fournie par le logiciel est de 0.049, ce qui ne permet pas de pouvoir annoncer avec une fiabilité de 95\% que le test est significatif, c-à-d que les FDM sont effectivement toutes différentes. Cela se vérifie aisément en regardant l'étendue des barres d'erreur. Mais il faut noter que cette FDM est basée sur une méthode avec une puissance statistique faible, ce qui signifie qu'elle sous-estime la p-value.
 
 
 \begin{figure}[h!]
@@ -343,7 +382,7 @@ La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement le
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_mod}
  \end{center}
- \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obtenues pour les différentes modalités.}
+ \caption{ \label{lab:fom_mod19} Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
 \end{figure}
 
 \subsection{Courbes Free-ROC}
@@ -379,7 +418,7 @@ La p-value est de 0.1, ce qui ne permet pas de déclarer que statistiquement les
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_mod19}
  \end{center}
- \caption{ \label{lab:fom_mod19} Les FOM (Figure de Mérite) obtenues pour les différentes modalités.}
+ \caption{ \label{lab:fom_mod19} Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
 \end{figure}
 
 
