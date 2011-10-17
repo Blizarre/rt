@@ -15,11 +15,11 @@ Dans le cas présent, l'objectif est d'évaluer les performances des techniques 
 
 \section{Système CAD} % 11.1
 
-Le système CAD que nous utilisons a été développé à l'origine pendant les travaux de thèse de Sandrine Tomei ainsi que mes travaux de master~\cite{tomei2008automatic,lartizien2010impact}. Nous l'avons amélioré et adapté aux besoins de cette étude, notamment en développant les mesures de performances.
+Le système CAD que nous utilisons a été développé à l'origine pendant les travaux de thèse de Sandrine Tomeï ainsi que mes travaux de master~\cite{tomei2008automatic,lartizien2010impact}. Nous l'avons amélioré et adapté aux besoins de cette étude, notamment en développant les mesures de performances.
 
 
 Le CAD utilise des informations fréquentielles obtenue par décomposition non décimée des images en ondelettes Biorthogonale 4.4. Ces données sont utilisées par le système de classification basé sur un SVM travaillant voxel par voxel. Une étape de réduction des faux positifs est ajoutée par la suite.
-\'Etant donné le faible nombre de tumeurs présentes dans les organes considérés, la base d'apprentissage est générée à partir des images utilisées pour la base de test. 
+Étant donné le faible nombre de tumeurs présentes dans les organes considérés, la base d'apprentissage est générée à partir des images utilisées pour la base de test. 
 
 \subsection{Vecteur de Caractéristiques}
 
@@ -35,7 +35,7 @@ Ainsi sept images de détails (HHH, LLH, \dots) et une image d’approximation (
 
 
 \subsection{Génération de la base d'apprentissage}
-Les données générées par la décomposition en ondelette de chaque image se présentent sous la forme de volumes 4D, indiquant pour chaque voxels de l'image 3D l'ensemble des coefficients associés.
+Les données générées par la décomposition en ondelettes de chaque image se présentent sous la forme de volumes 4D, indiquant pour chaque voxels de l'image 3D l'ensemble des coefficients associés.
 
 La base d'apprentissage sert à entraîner le classifieur dans un processus de classification supervisée, en lui fournissant un ensemble d'exemples avec leur classes associées (voir figure \ref{fig:fonctClassif}) page \pageref{fig:fonctClassif}).
 
@@ -55,13 +55,13 @@ Une fois le classifieur entraîné, on lui soumettra les voxels des images pour 
 
 Cette carte de score est ensuite seuillée pour fournir une carte binaire, indiquant pour chaque voxel la classe fournie par le SVM. Le mécanisme de sélection du seuil est défini plus tard. 
 
-A cette étape, le résultat est sous forme ``voxels``, et non ''région''. Nous avons choisit de travailler sur des aggrégats de points plutôt que directement sur les voxels car les cartes binarisées sont très bruitées, et donc non directement exploitables. Les voxels ``pathologiques'' sont donc aggrégés selon une connexité 26 (3x3x3). Un score est associé à chaque  aggrégat, correspondant au score le plus important observé dans l'aggrégat.
+A cette étape, le résultat est sous forme ``voxels``, et non ''région''. Nous avons choisit de travailler sur des agrégats de points plutôt que directement sur les voxels car les cartes binarisées sont très bruitées, et donc non directement exploitables. Les voxels ``pathologiques'' sont donc agrégés selon une connexité 26 (3x3x3). Un score est associé à chaque  agrégat, correspondant au score le plus important observé dans l'agrégat.
 
 \subsection{Évaluation du résultat}
 
-Pour évaluer le résultat, nous avons mis au point des règles permettant de classer les aggrégats si nous avons accès à la vérité terrain. Ce sont ces algorithmes qui sont utilisés dans les évaluateurs de performance présentés ci-après.
+Pour évaluer le résultat, nous avons mis au point des règles permettant de classer les agrégats si nous avons accès à la vérité terrain. Ce sont ces algorithmes qui sont utilisés dans les évaluateurs de performance présentés ci-après.
 
-Les aggrégats sont classés en LL (Lésion localisée) et NL (Lésion Non Localisée) selon qu'ils peuvent être considérés comme des vrai positifs ou des faux positifs :
+Les agrégats sont classés en LL (Lésion localisée) et NL (Lésion Non Localisée) selon qu'ils peuvent être considérés comme des vrai positifs ou des faux positifs :
 
 Soit $L$ l'ensemble des points de la lésion, $A$ les points correspondant à l'amas candidat.
 
@@ -83,7 +83,7 @@ Ce pseudo-code décrit le CAD, de l'importation des images à l'extraction des l
  \item Apprentissage : Le classifieur SVM est entraîné sur cette base d'apprentissage pour générer le modèle qui sera utilisé pour le test.
  \item Tests : Le SVM entraîné est utilisé pour classer chaque voxel contenu dans les organes à évaluer (poumon et foie).
  \item Réduction des Faux-positifs : Les points sont agrégés en composantes connexes (connexité 26 en 3 dimensions).
- \item Évaluation : Si nous avons accès à la vérité terrain, il est possible d'évaluer les performances du CAD en classant les aggrégats en LL (Lésion Localisée) et LN (Lésion Non Localisée).
+ \item Évaluation : Si nous avons accès à la vérité terrain, il est possible d'évaluer les performances du CAD en classant les agrégats en LL (Lésion Localisée) et LN (Lésion Non Localisée).
 \end{enumerate}
 
 
@@ -124,7 +124,7 @@ Le classifieur (SVM) va récupérer en entrée les données d'apprentissage form
 
 \subsection{Méthodes d'optimisation}
 
-La sélection des deux types de paramètres vu précedemment est obtenue à l'aide des algorithmes présentés ci-après. 
+La sélection des deux types de paramètres vu précédemment est obtenue à l'aide des algorithmes présentés ci-après. 
 
 \subsubsection{Choix des paramètres du classifieur}
 
@@ -136,7 +136,7 @@ Les critères de performance que nous avons sélectionner sont la sensibilité e
 
 \begin{figure}[h!]
  \includegraphics[width=15cm]{images/crossValid}
- \caption{Réalisation d'une validation croisée à $n$ éléments (ici 4) : La base d'exemples d'origine est décomposée en $n$ parts égales. La mesure de performance se fait $n$ fois, avec à chaque foit un aprentissage sur $n-1$ éléments et un test sur l'élément restant. La mesure de performance est réalisée sur les résultats des $n$ tests.}
+ \caption{Réalisation d'une validation croisée à $n$ éléments (ici 4) : La base d'exemples d'origine est décomposée en $n$ parts égales. La mesure de performance se fait $n$ fois, avec à chaque fois un apprentissage sur $n-1$ éléments et un test sur l'élément restant. La mesure de performance est réalisée sur les résultats des $n$ tests.}
  \label{fig:crossValid}
 \end{figure}
 
@@ -160,9 +160,9 @@ De ce nuage de point nous pouvons voir le front de pareto. Ce type de diagramme 
 
 La mesure de performance décrite ici permet de sélectionner les meilleurs paramètres de génération de la base d'apprentissage, mais aussi une fois ces paramètres sélectionnés, de comparer les différentes techniques de correction du mouvement respiratoire. La recherche des meilleurs paramètres de la base d'apprentissage seront réalisés sur la base d'images Statiques afin de ne pas être influencé par les éventuels artefacts des autres modalités.
 
-Pour un seuil donné, Le CAD va générer un ensemble d'aggrégats associés à un score, comme présenté en \ref{lab:aggregatsCAD}. Il est ensuite possible d'évaluer la performance de ce CAD à l'aide de courbes F-ROC décrites en \ref{lab:FROC} en connaissant la vérité terrain.
+Pour un seuil donné, Le CAD va générer un ensemble d'agrégats associés à un score, comme présenté en \ref{lab:aggregatsCAD}. Il est ensuite possible d'évaluer la performance de ce CAD à l'aide de courbes F-ROC décrites en \ref{lab:FROC} en connaissant la vérité terrain.
 
-Le seuil sélectionné pour générer les aggrégats sera celui qui va maximiser la LLF (Fraction de Localisation de Lésion), c'est à dire celui qui va permettre de détecter un maximum de lésions. 
+Le seuil sélectionné pour générer les agrégats sera celui qui va maximiser la LLF (Fraction de Localisation de Lésion), c'est à dire celui qui va permettre de détecter un maximum de lésions. 
 
 Cette sélection est réalisée selon l'algorithme suivant :
 
@@ -176,7 +176,7 @@ Cette sélection est réalisée selon l'algorithme suivant :
  \item \emph{Seuil Optimal} := Seuil qui maximise la Sensibilité
 \end{itemize}
 
-Ce critère de sélection va naturellement engendrer un grand nombre de faux positifs, mais il faut garder à l'esprit qu'il sera utilisé pour réaliser des courbes F-ROC, qui indiquent une spécificité pour chaque nombre de faux positif en jouant sur un second seuil, toujours supérieur à celui retenu pour extraire les aggrégats.
+Ce critère de sélection va naturellement engendrer un grand nombre de faux positifs, mais il faut garder à l'esprit qu'il sera utilisé pour réaliser des courbes F-ROC, qui indiquent une spécificité pour chaque nombre de faux positif en jouant sur un second seuil, toujours supérieur à celui retenu pour extraire les agrégats.
 
 Le second critère utilisé pour pour comparer les bases d'apprentissage est la figure de mérite décrite en \ref{lab:AFROC}. Elle va comparer les scores des faux positifs de plus fort score pour chaque image avec les score  des vrais positifs de l'image.
 
@@ -221,7 +221,7 @@ Dans ce chapitre je vais détailler les résultats obtenus par les méthodes pr�
 
 \includegraphics[width=14cm]{images/pareto_param_erosion.png}
 
-{\small b) Base \'Erodée}
+{\small b) Base Érodée}
 
  \includegraphics[width=14cm]{images/pareto_param_200_2.png}
 
@@ -249,7 +249,7 @@ Nous avons réalisé des mesures de performances pour 5 jeux de paramètres diff
 
 \begin{description}
  \item[Témoin : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe.
- \item[\'Erosion : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe érodée. C'est la seule base pour laquelle nous n'avons pas utilisé l'ensemble de l'organe hors tumeurs pour l'extraction des points.
+ \item[Érosion : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe érodée. C'est la seule base pour laquelle nous n'avons pas utilisé l'ensemble de l'organe hors tumeurs pour l'extraction des points.
  \item[Appauvrie : ] contient des données normalisées par la méthode moyenne avec 100 points extraits de chaque organe.
  \item[Enrichie : ] contient des données normalisées par la méthode moyenne avec 1000 points extraits de chaque organe.
  \item[Normalisation : ] contient des données normalisées par la méthode +1/1 avec 200 points extraits de chaque organe.
@@ -282,7 +282,7 @@ Les valeurs de spécificité sont toutes très supérieures à 99\%, ce qui mont
 Il est intéressant d'observer que les fronts de pareto de la base Témoin 2 sont très semblables à ceux de la base Témoin pour une décomposition au troisième niveau. Des disparités sont apparues Cela semble indiquer que la base est stable avec un nombre de points suffisant.
 
 \begin{table}[h!]
-%	\begin{center}
+	\begin{center}
 		\begin{tabular}{c c c c c c}
   \hline
   a	& Base Témoin 	& Base Érosion	& Base appauvrie& Base enrichie & Base normalisée \\
@@ -302,8 +302,8 @@ Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
 \hline
  		\end{tabular}
 
-%	\end{center}
-\caption{Paramètres sélectionnés pour l'optimisation des performances. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+	\end{center}
+\caption{Paramètres sélectionnés pour l'optimisation des performances sur les différentes bases. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
 \label{fig:paramsParams}
 \end{table}
 
@@ -313,9 +313,9 @@ Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
 
 Les courbes Free-ROC de la figure \ref{lab:froc_comp_static} permettent de comparer les performances du CAD sur les différentes bases d'apprentissage. Les courbes ont volontairement été tronquées à 40 faux positifs par image, car ce nombre est déjà trop important pour un système CAD.
 
-On peut observer que les courbes correspondants aux bases Témoin et Enrichie atteignent leur maximum de performances pour un nombre de faux positifs relativement faible par rapport aux autres bases : entre 17 et 20 faux positifs pour ces bases, contre plus de 40 pour les bases Appauvrie et \'Erosion. Cela tends à montrer que le système CAD est plus performant pour ces bases car il crée moins d'agrégats là ou il n'y a pas de lésions.
+On peut observer que les courbes correspondants aux bases Témoin et Enrichie atteignent leur maximum de performances pour un nombre de faux positifs relativement faible par rapport aux autres bases : entre 17 et 20 faux positifs pour ces bases, contre plus de 40 pour les bases Appauvrie et Érosion. Cela tends à montrer que le système CAD est plus performant pour ces bases car il crée moins d'agrégats là ou il n'y a pas de lésions.
 
-En ce qui concerne la sensibilité maximale obtenue sur les courbes, elle est atteinte pour la base témoin avec environ 62\% de sensibilité, suivie par la base appauvrie avec 60\%, mais pour un nombre de faux positifs beaucoup plus important (38 contre 18 pour la base Témoin). La troisième courbe est la courbe Normalisation, suivie par la base enrichie puis la base \'Erosion. Il est important de noter que les sensibilités maximales observées sont très proches, entre 55\% et 62\%, ce qui indique que la qualité de la base d'apprentissage n'a pas d'impact réel sur la sensibilité maximale atteinte par le CAD, mais qu'il pourra être plus ou moins difficile pour ce dernier de différencier les lésions du bruit de fond. 
+En ce qui concerne la sensibilité maximale obtenue sur les courbes, elle est atteinte pour la base témoin avec environ 62\% de sensibilité, suivie par la base appauvrie avec 60\%, mais pour un nombre de faux positifs beaucoup plus important (38 contre 18 pour la base Témoin). La troisième courbe est la courbe Normalisation, suivie par la base enrichie puis la base Érosion. Il est important de noter que les sensibilités maximales observées sont très proches, entre 55\% et 62\%, ce qui indique que la qualité de la base d'apprentissage n'a pas d'impact réel sur la sensibilité maximale atteinte par le CAD, mais qu'il pourra être plus ou moins difficile pour ce dernier de différencier les lésions du bruit de fond. 
 
 En pratique, on choisira le seuil pour avoir la certitude d'avoir un nombre de faux positifs ``raisonnable'' par image. Dans notre cas, les images contiennent environ 10 lésions par image. Il peut être intéressant de comparer les performances des bases pour ratio de 1 faux positif par lésion, soit pour 10 faux positifs. Dans ce cas, la base Témoin est au coude à coude avec la base Enrichie, à environ 55\%, ce qui est déjà très proche de leur performances maximales. La base Normalisation et la base Appauvrie sont quand à elles à 40\% de sensibilité, tandis que la base Érosion atteint 35\%.
 
@@ -348,9 +348,9 @@ D'un point de vue statistique, La p-value fournie par le logiciel est de 0.049, 
 
 \subsection{Conclusion}
 
-Nous avons vu que tous les indicateurs indiquent que le maximum de performance est apporté apr la base Témoin. De plus, les  performances relativement proches de la seconde base semblent indiquer que le sperformances sont stables. Nous allons donc ocnserver les paramètres de cette base pour les comparaison futures entre les modalités :
+Nous avons vu que tous les indicateurs indiquent que le maximum de performance est apporté apr la base Témoin. De plus, les  performances relativement proches de la seconde base semblent indiquer que le performances sont stables. Nous allons donc conserver les paramètres de cette base pour les comparaison futures entre les modalités :
 
-Pas d'érosion, une normalisation visant à ramener la moyenne et l'écrat-type sur les caractéristiques à 1, et 200 points extraits de chaque images de la base d'apprentissage.
+Pas d'érosion, une normalisation visant à ramener la moyenne et l'écart-type sur les caractéristiques à 1, et 200 points extraits de chaque images de la base d'apprentissage.
  
 
 \FloatBarrier
@@ -398,7 +398,7 @@ Quatre modalités seront comparées. ET-Static correspond aux images de la ``vé
 
 
 \begin{table}[h!]
-%	\begin{center}
+	\begin{center}
 		\begin{tabular}{c| c c c c c}
   \hline
   a	& Base Statique	& Base IM	& Base LOR	& Base NoCorr	\\
@@ -418,7 +418,7 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
 \hline
  		\end{tabular}
 
-%	\end{center}
+	\end{center}
 \caption{Paramètres sélectionnés pour l'optimisation des performances du Poumon. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
 \label{fig:paramsModPoumon}
 \end{table}
@@ -429,20 +429,22 @@ De la même manière que pour la sélection de la méthode de génération de la
 
 La figure \ref{fig:paretoModalite} montre les nuages de points associés aux différents triplets de paramètres (C, $\gamma$, $j$) pour chaque modalité. La référence sera toujours la base Témoin de la figure \ref{fig:paretoParams1}.a, car elle correspond à la vérité terrain.
 
-Il est étonnant de constater que la base \ref{fig:paretoParams1}.a, qui correspond à la modalité statique, ou vérité terrain, offre les pires performances pour la décomposition de niveau 1 (17\% de sensibilité) de toutes les modalités, avec la base non corrigée. La mauvaise performance de cette base d'apprentissage se retrouve pour tous les niveaux de décomposition. A l'inverse, tous les nuages de points ont la même répartition que ceux de la base Statique, par opposition aux distributions des bases érodées ou normalisées vues dans la partie précédente.
+%%%%%%%%% ?????????????? %%%%%%%%%%%%%
+Il est étonnant de constater que la base \ref{fig:paretoParams1}.a, qui correspond à la modalité statique, offre les plus mauvaises performances pour la décomposition de niveau 1 (17\% de sensibilité) de toutes les modalités. La mauvaise performance de cette base d'apprentissage se retrouve pour tous les niveaux de décomposition. A l'inverse, Les nuages de points des autres modalités ont la même répartition que ceux de la base Statique, par opposition aux distributions des bases érodées ou normalisées vues dans la partie précédente. 
 
+On peut observer qu'il y a une forte corrélation entre la sensibilité et la spécificité des points pour toutes les modalités au premier niveau de décomposition.
 
-La modalité ayant les meilleures performances pour la décomposition de niveau 2 est ET-IM, avec plus de 70\% de sensibilté, comparés aux 60\% de la base Statique. 
+La modalité ayant les meilleures performances pour la décomposition de niveau 2 est ET-IM, avec plus de 70\% de sensibilité, comparés aux 60\% de la base Statique. 
 
 Les meilleures performances du CAD sont atteintes pour le troisième niveau de décomposition pour toutes les modalités sauf ET-LOR, avec une sensibilité d'environ 81 à 84\% excepté pour ET-Static avec 75\%, confirmant la tendance observée au premier niveau de décomposition.
 
-La spécificité observée pour les meilleurs jeux de paramètres est sensiblement la même quelquesoit la modalité, entre 99\% et 99.5\%.
+La spécificité observée pour les meilleurs jeux de paramètres est sensiblement la même quelque soit la modalité, entre 99\% et 99.5\%.
 
 \subsection{Courbes Free-ROC}
 
 Les courbes F-ROC obtenues sur les différentes modalités sont présentées dans la figure \ref{fig:froc_mod}. 
 
-Toutes les courbes on une NLF (Nombre de faux positifs moyen par image) à peut près équivalente entre 20 et 24 , excepté ET-LOR avec une NLF de 34. Cependant, les performances en LLF (proportion des lésions localisées) de ET-LOR sont constantes à partir d'une LNF de 20 environ. 
+Toutes les courbes on une NLF (Nombre de faux positifs moyen par image) à peut près équivalente entre 20 et 24 , excepté ET-LOR avec une NLF de 34. Cependant, les performances en LLF (proportion des lésions localisées) de ET-LOR sont constantes à partir d'une NLF de 20 environ. 
 
 L'ordre des courbes est constant pour tous les NLF à partir de 5 faux positifs par image. Au delà de cette limite, les performances des images statiques sont supérieures à celles de ET-IM de 1 à 5\%, tandis que ET-IM a des performances supérieures de 3 à 10\% à celles des images non Corrigées et de ET-LOR. Ces deux dernières modalités ont des performances quasiment identiques.
 
@@ -462,9 +464,7 @@ Dans sa globalité, le graphique montre que le maximum de performances est appor
 
 \subsection{Comparaison des performances JAFROC}
 
-Je vais comparer les différentes modalités à partir du résultat de l'analyse JAFROC.
-
-La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{fig:fom_mod}. Cependant, on observe une tendance proche de celle observée sur les courbes F-ROC pour la modalité Statique : Ces images sont en tête suivies par ET-IM. Il est intéressant de noter que les valeurs de ET-IM et ET-LOR sont relativement proches, y compris leurs mesures d'erreur, ce qui indique que l'algorithme JAFROC peine à les distinguer l'une de l'autre. ET-NoCorr est quand à lui nettement en retrait. 
+Les Figures de mérite obtenues par l'algorithme de JAFROC sont présentées dans la figure \ref{fig:fom_mod}. Cependant, on observe une tendance proche de celle observée sur les courbes F-ROC pour la modalité Statique : Ces images sont en tête suivies par ET-IM. Il est intéressant de noter que les valeurs de ET-IM et ET-LOR sont relativement proches, y compris leurs mesures d'erreur, ce qui indique que l'algorithme JAFROC peine à les distinguer l'une de l'autre. ET-NoCorr est quand à lui nettement en retrait. 
 
 \begin{figure}[h!]
  \begin{center}
@@ -486,39 +486,17 @@ Les résultats présentés précédemment indiquent que les techniques de correc
 
 \subsection{Sélection des meilleurs paramètres du classifieur}
 
-Les différents graphiques nous montrent une répartition des performances très différente de celle observée précedemment pour les travaux sur la base Poumon. 
-
-Pour le premier niveau de décomposition, ET-Static, ET-IM et ET-LOR montrent une très grande dispersion des valeurs de performances. ET-NoCorr par contre montre des points plus proches, mais avec des sensibilités très faibles (inférieures à 15\%).
-
-\subsection{Comparaison des performances JAFROC}
-
-La p-value est de 0.1, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{fig:fom_mod19}
-Il n'est pas étonnant de constater que les FOM sont plus élevées que précédemment car le nombre de faux positifs est pratiquement deux fois inférieur à celui obtenu pour le poumon, ce qui est le signe que le classifieur réussi mieux à discerner les vrai positifs.
-
-On observe que les images statiques ont un score supérieur de 60\% environ à celui des images Non corrigées. Par contre, il est surprenant de constater que les deux techniques de correction du mouvement respiratoire ont un score égal ou plus faible que les images non corrigées, en contradiction avec les résultats de l'analyse F-ROC. Cependant, la proximité des valeurs ne permet pas de montrer une réelle hiérarchie entre les modalités. Tout au plus pourrait-on observer que l'étendue des barres d'erreur semble indiquer que ET-IM aurait de meilleures performances que les images non Corrigées, elles-mêmes suérieures uax images ET-LOR, mais sans aucune certitude.
-
-\begin{figure}[h!]
- \begin{center}
-   \includegraphics[width=15cm]{images/FOM_mod19}
- \end{center}
- \caption{Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
- \label{fig:fom_mod19} 
-\end{figure}
 
 
-\subsection{Courbes Free-ROC}
+Les différents graphiques nous montrent une répartition des performances très différente de celle observée précédemment pour les travaux sur la base Poumon. 
 
-Voir figure \ref{fig:froc_mod19}.
-Le maximum de performances est apporté par les images statiques, suivi par les images ET-IM.
+Pour le premier niveau de décomposition, ET-Static, ET-IM et ET-LOR montrent une très grande dispersion des valeurs de performances. ET-NoCorr par contre montre des points plus proches, mais avec des sensibilités très faibles (inférieures à 15\%). Cette dispersion montre une rupture par rapport à la corrélation observée sur les bases du foie.
 
-\begin{figure}[h!]
- \begin{center}
-   \includegraphics[width=15cm]{images/FROC_mod19}
- \end{center}
- \caption{Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
-\label{fig:froc_mod19}
-\end{figure}
+De la même manière que sur les données ne contenant que le premier niveau de décomposition, les performances obtenues pour $j=2$ montrent une dispersion très importante des points de donnée pour ET-Static et ET-IM. Le nuage de points correspondant à ET-LOR est plus proche de ceux observés précédemment. ET-NoCorr est clairement en difficulté car l'apport des informations du second niveau de décomposition diminue les performances maximales du CAD en sensibilité.
 
+En ajoutant les informations des niveaux de décomposition supérieurs, on observe une amélioration nette des performances, surtout pour ET-NoCorr. Toutes les modalités bénéficie des informations ajoutées par le 4è niveau de décomposition. Cela semble indiquer que le classifieur est moins adapté pour gérer ces données. 
+
+ Comme pour la base Poumon, ET-IM est la modalité ayant la sensibilité la plus forte avec 68\% (voir tableau \ref{fig:paramsModFoie}). Et cette fois ci, ET-Statique est seconde avec 62\% , 
 
 \begin{figure}[h!]
 
@@ -554,14 +532,12 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 \label{fig:paretoModalite19_2} 
 \end{figure}
 
-
-
 % Static : 857.6958985908936	0.001709975946676697	32.0	0.9790779315594078	0.6160173160173159	0.992
 % LOR	 : 251.18864315095797	0.005323362023203629	32.0	0.969422309209811	0.5134199134199134	0.9856666666666667 
 % NoCorr : 5411.6952654646375	0.001709975946676697	32.0	0.9417478291936561	0.30779220779220784	0.9643333333333333
 % IM	 : 5411.6952654646375	5.49280271653059E-4	32.0	0.9826195691007659	0.6805194805194804	0.9933333333333334
 \begin{table}[h!]
-%	\begin{center}
+\begin{center}
 		\begin{tabular}{c| c c c c c}
   \hline
   a	& Base Statique	& Base IM	& Base LOR	& Base NoCorr	\\
@@ -581,7 +557,53 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
 \hline
  		\end{tabular}
 
-%	\end{center}
-\caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+\end{center}
+\caption{Paramètres sélectionnés pour l'optimisation des performances du CAD sur la base Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
 \label{fig:paramsModFoie}
 \end{table}
+
+
+\subsection{Comparaison des performances JAFROC}
+
+\begin{figure}[h!]
+ \begin{center}
+   \includegraphics[width=15cm]{images/FOM_mod19}
+ \end{center}
+ \caption{Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
+ \label{fig:fom_mod19} 
+\end{figure}
+
+
+Les Figures de mérite obtenues par l'algorithme de JAFROC sont présentées dans la figure \ref{fig:fom_mod19}. La p-value est de 0.1, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : 
+Il n'est pas étonnant de constater que les FOM sont plus élevées que précédemment car le nombre de faux positifs est pratiquement deux fois inférieur à celui obtenu pour le poumon, ce qui est le signe que le classifieur réussi mieux à discerner les vrai positifs.
+
+On observe que les images statiques ont un score supérieur de 60\% environ à celui des images Non corrigées. Par contre, il est surprenant de constater que les deux techniques de correction du mouvement respiratoire ont un score égal ou plus faible que les images non corrigées, en contradiction avec les résultats de l'analyse F-ROC. Cependant, la proximité des valeurs ne permet pas de montrer une réelle hiérarchie entre les modalités. Tout au plus pourrait-on observer que l'étendue des barres d'erreur semble indiquer que ET-IM aurait de meilleures performances que les images non Corrigées, elles-mêmes supérieures aux images ET-LOR, mais il est n'est pas possible de se prononcer de manière définitive à partir de ces données. 
+
+
+
+\subsection{Courbes Free-ROC}
+
+\begin{figure}[h!]
+ \begin{center}
+   \includegraphics[width=15cm]{images/FROC_mod19}
+   \vspace{-0.3cm}
+ \end{center}
+ \caption{Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
+\label{fig:froc_mod19}
+\end{figure}
+
+
+Les courbes Free-ROC de la figure \ref{fig:froc_mod19} montrent un ordre différent de celui présenté par l'analyse JAFROC.
+
+Le maximum de performances est apporté par les images statiques, suivi par les images ET-IM, puis ET-LOR et enfin ET-NoCorr. Contrairement au poumon, les courbes sont relativement bien séparées avec une différence de sensibilité de 20\% entre les images non corrigées et statiques. 
+
+Il est étonnant d'observer que les images statiques et ET-LOR ont tous les deux un NLF maximum d'environ 17, très supérieur à celui de ET-IM et des images non corrigées qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images Statiques, au contraire de ET-LOR où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NLF de 11.5 . 
+
+Les performances sont globalement en retrait par rapport à celles du poumon. 
+
+
+
+
+
+
+
