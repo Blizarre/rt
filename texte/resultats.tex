@@ -187,6 +187,28 @@ Dans ce chapitre je vais détailler les résultats obtenus par les méthodes pr�
 
 \section{Optimisation des paramètres}
 
+Nous avons réalisé des mesures de performances pour 5 jeux de paramètres différents présentés ci-après. Les paramètres en \emph{italique} correspondent à ceux utilisés pour la base témoin.
+
+
+\begin{itemize}
+ \item Nombre de points de la base d'apprentissage (100, \emph{200}, 1000)
+ \item Normalisation des données (\emph{moyenne}, +1/-1)
+ \item Position des points de la base d'apprentissage (\emph{organe}, Érosion)
+\end{itemize}
+
+
+\begin{description}
+ \item[Témoin : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe.
+ \item[Érosion : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe érodée. C'est la seule base pour laquelle nous n'avons pas utilisé l'ensemble de l'organe hors tumeurs pour l'extraction des points.
+ \item[Appauvrie : ] contient des données normalisées par la méthode moyenne avec 100 points extraits de chaque organe.
+ \item[Enrichie : ] contient des données normalisées par la méthode moyenne avec 1000 points extraits de chaque organe.
+ \item[Normalisation : ] contient des données normalisées par la méthode +1/1 avec 200 points extraits de chaque organe.
+\end{description}
+
+Pour vérifier que les paramètres du classifieur sont stables, une nouvelle base Témoin (Témoin 2) a été générée avec les données de seulement 14 images sur les 15 que nous avons simulé. Les points ''normaux`` ne sont pas non plus extraits aux mêmes endroits que pour la base Témoin. Nous allons donc vérifier que les paramètres optimaux du CAD ne sont pas dépendant de la base mais de ses paramètres.
+
+
+\subsection{Sélection des meilleurs paramètres du classifieur}
 \begin{figure}[h!]
 \begin{center}
  \includegraphics[width=14cm]{images/pareto_param_200.png}
@@ -232,33 +254,6 @@ Dans ce chapitre je vais détailler les résultats obtenus par les méthodes pr�
 \label{fig:paretoParams2}
 \end{figure}
 
-
-
-
-
-
-Nous avons réalisé des mesures de performances pour 5 jeux de paramètres différents présentés ci-après. Les paramètres en \emph{italique} correspondent à ceux utilisés pour la base témoin.
-
-
-\begin{itemize}
- \item Nombre de points de la base d'apprentissage (100, \emph{200}, 1000)
- \item Normalisation des données (\emph{moyenne}, +1/-1)
- \item Position des points de la base d'apprentissage (\emph{organe}, Érosion)
-\end{itemize}
-
-
-\begin{description}
- \item[Témoin : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe.
- \item[Érosion : ] contient des données normalisées par la méthode moyenne avec 200 points extraits de chaque organe érodée. C'est la seule base pour laquelle nous n'avons pas utilisé l'ensemble de l'organe hors tumeurs pour l'extraction des points.
- \item[Appauvrie : ] contient des données normalisées par la méthode moyenne avec 100 points extraits de chaque organe.
- \item[Enrichie : ] contient des données normalisées par la méthode moyenne avec 1000 points extraits de chaque organe.
- \item[Normalisation : ] contient des données normalisées par la méthode +1/1 avec 200 points extraits de chaque organe.
-\end{description}
-
-Pour vérifier que les paramètres du classifieur sont stables, une nouvelle base Témoin (Témoin 2) a été générée avec les données de seulement 14 images sur les 15 que nous avons simulé. Les points ''normaux`` ne sont pas non plus extraits aux mêmes endroits que pour la base Témoin. Nous allons donc vérifier que les paramètres optimaux du CAD ne sont pas dépendant de la base mais de ses paramètres.
-
-
-\subsection{Sélection des meilleurs paramètres du classifieur}
 
 Les paramètres du classifieur sont déterminés par une recherche par grille. Elle consiste à rechercher l'optimum en évaluant la performance ce chaque jeu de paramètre dans un ensemble déterminé à l'avance pour représenter . La performance de chaque triplet (C, $\gamma$, j) est estimée en réalisant une cross-validation à 5 validations sur l'ensemble de la base d'apprentissage.
 
@@ -429,7 +424,6 @@ De la même manière que pour la sélection de la méthode de génération de la
 
 La figure \ref{fig:paretoModalite} montre les nuages de points associés aux différents triplets de paramètres (C, $\gamma$, $j$) pour chaque modalité. La référence sera toujours la base Témoin de la figure \ref{fig:paretoParams1}.a, car elle correspond à la vérité terrain.
 
-%%%%%%%%% ?????????????? %%%%%%%%%%%%%
 Il est étonnant de constater que la base \ref{fig:paretoParams1}.a, qui correspond à la modalité statique, offre les plus mauvaises performances pour la décomposition de niveau 1 (17\% de sensibilité) de toutes les modalités. La mauvaise performance de cette base d'apprentissage se retrouve pour tous les niveaux de décomposition. A l'inverse, Les nuages de points des autres modalités ont la même répartition que ceux de la base Statique, par opposition aux distributions des bases érodées ou normalisées vues dans la partie précédente. 
 
 On peut observer qu'il y a une forte corrélation entre la sensibilité et la spécificité des points pour toutes les modalités au premier niveau de décomposition.
@@ -486,15 +480,13 @@ Les résultats présentés précédemment indiquent que les techniques de correc
 
 \subsection{Sélection des meilleurs paramètres du classifieur}
 
-
-
 Les différents graphiques nous montrent une répartition des performances très différente de celle observée précédemment pour les travaux sur la base Poumon. 
 
-Pour le premier niveau de décomposition, ET-Static, ET-IM et ET-LOR montrent une très grande dispersion des valeurs de performances. ET-NoCorr par contre montre des points plus proches, mais avec des sensibilités très faibles (inférieures à 15\%). Cette dispersion montre une rupture par rapport à la corrélation observée sur les bases du foie.
+Pour le premier niveau de décomposition, ET-Static, ET-IM et ET-LOR montrent une très grande dispersion des valeurs de performances. ET-NoCorr par contre montre des points plus proches, mais avec des sensibilités très faibles (inférieures à 15\%). Cette dispersion montre une rupture par rapport à la corrélation observée sur les bases du poumon.
 
-De la même manière que sur les données ne contenant que le premier niveau de décomposition, les performances obtenues pour $j=2$ montrent une dispersion très importante des points de donnée pour ET-Static et ET-IM. Le nuage de points correspondant à ET-LOR est plus proche de ceux observés précédemment. ET-NoCorr est clairement en difficulté car l'apport des informations du second niveau de décomposition diminue les performances maximales du CAD en sensibilité.
+De la même manière que sur les données ne contenant que le premier niveau de décomposition, les performances obtenues pour $j=2$ montrent une dispersion très importante des points de donnée pour les images statiques et ET-IM. Le nuage de points correspondant à ET-LOR est plus proche de ceux observés précédemment. La base non corrigée est clairement en difficulté car l'apport des informations du second niveau de décomposition diminue les performances maximales du CAD en sensibilité.
 
-En ajoutant les informations des niveaux de décomposition supérieurs, on observe une amélioration nette des performances, surtout pour ET-NoCorr. Toutes les modalités bénéficie des informations ajoutées par le 4è niveau de décomposition. Cela semble indiquer que le classifieur est moins adapté pour gérer ces données. 
+En ajoutant les informations des niveaux de décomposition supérieurs, on observe une amélioration nette des performances, surtout pour la base non corrigée. Toutes les modalités bénéficient des informations ajoutées par le 4è niveau de décomposition. Cela semble indiquer que le classifieur est moins adapté pour gérer ces données. 
 
  Comme pour la base Poumon, ET-IM est la modalité ayant la sensibilité la plus forte avec 68\% (voir tableau \ref{fig:paramsModFoie}). Et cette fois ci, ET-Statique est seconde avec 62\% , 
 
@@ -599,9 +591,13 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 
 Il est étonnant d'observer que les images statiques et ET-LOR ont tous les deux un NLF maximum d'environ 17, très supérieur à celui de ET-IM et des images non corrigées qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images Statiques, au contraire de ET-LOR où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NLF de 11.5 . 
 
-Les performances sont globalement en retrait par rapport à celles du poumon. 
+Si l'on se contente de comparer les courbes F-ROC pour un NLF donné de 9, la base d'images statiques a la meilleur sensibilté avec 58\%, suivie par ET-IM avec 53\% et ET-LOR avec 48\%. Les images non corrigées sont en net retrait avec seulement 37\% de sensibilité.
 
+Les performances sont globalement en retrait par rapport à celles du poumon, mais l'ordre des courbe reste cohérent avec celui observé sur le poumon.
 
+\subsection{Conclusion}
+
+Les résultats des mesures de performance sur le Foie sont contrastées. Les courbes F-ROC montrent un clair avantage des techniques de correction du mouvement respiratoire, surtout pour ET-IM aux niveaux de NLF disponibles pour toutes les modalités. Par contre, les Figures de Mérite obtenues par JAFROC montrent à l'inverse que ET-IM et ET-LOR sont au même niveau que les images non corrigées du mouvement, en net retrait par rapport aux images Statiques.
 
 
 

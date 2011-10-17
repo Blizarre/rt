@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=texte/resultats.tex
+lastDocument=main.tex
 masterDocument=
 name=rapportBiblio
 pkg_extIsRegExp=false
@@ -21,17 +21,17 @@ column=0
 encoding=UTF-8
 highlight=LaTeX
 line=135
-open=true
+open=false
 order=2
 
 [item:main.tex]
 archive=true
-column=0
+column=1
 encoding=UTF-8
 highlight=LaTeX
-line=154
+line=24
 open=true
-order=3
+order=1
 
 [item:planRapport.md]
 archive=true
@@ -75,7 +75,7 @@ column=584
 encoding=UTF-8
 highlight=LaTeX
 line=6
-open=true
+open=false
 order=0
 
 [item:texte/methodes.tex]
@@ -84,14 +84,14 @@ column=0
 encoding=UTF-8
 highlight=LaTeX
 line=141
-open=true
+open=false
 order=1
 
 [item:texte/resultats.tex]
 archive=true
-column=279
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=13
+line=601
 open=true
-order=4
+order=0
