@@ -92,6 +92,7 @@ Cependant, bien que cette technique prenne en compte l'information de localisati
 
 
 \subsection{Courbes Free-ROC}
+\label{lab:FROC}
 
 les courbes F-ROC~\cite{bunch1978free} sont une généralisation des courbes ROC aux cas où l'on évalue la capacité de l'observateur à détecter un ensemble de lésions dans une série d'images. Chaque image pouvant contenir un nombre indéfini de lésions. L'observateur va donc devoir pointer sur l'image l'ensemble des sites suspects et y associer une note.
 
@@ -114,7 +115,7 @@ Les courbes F-ROC n'ayant pas de bornes sur l'axes des abscisses, il est impossi
 Les courbes A-FROC~\cite{chakraborty1990free} sont des extensions des courbes Free-ROC présentées précédemment mais qui ne prennent en compte que le faux positif de plus haut score par image, ce qui ne pénalise pas le cas où un observateur indique un grand nombre de localisations sans lésions.
 
 \subsection{Comparaison des courbes}
-
+\label{lab:AFROC}
 Plusieurs techniques ont été développées pour permettre de réaliser des comparaisons. De la même manière que pour les courbe ROC, il est possible de comparer les courbes F-ROC en fonction de la FLL pour un nombre de faux positifs donnés. Cependant, étant donné que les courbes F-ROC n'ont pas de fin déterminée, il n'est pas possible d'utiliser l'aire sous la courbe. JAFROC\cite{chakraborty2004observer} (JAcknife Free Receiver Operating Curve) est un algorithme et un logiciel développé par Chakraborty et se base sur une FDM non liée directement à la courbe. 
 
 Cette mesure de performance utilise un algorithme dérivé des études A-FROC, ce qui signifie qu'il n'utilise pas l'ensemble des informations disponibles dans les courbes Free-ROC. Il va comparer les scores des faux positifs de plus forte note pour chaque image avec les notes des vrais positifs. La FDM mesure la probabilité d'avoir un score de vrai positif supérieur à celui d'un faux positif (de n'importe quelle image).
@@ -172,7 +173,7 @@ Les classifieurs supervisés nécessitent une connaissance a priori des classes.
 \end{figure}
 
 		\subsubsection{Machines à vecteur de support (SVM)}
-
+\label{lab:SVM}
 La ``Machine à Vecteur de Support'', aussi appelée ``Séparateur à Vaste Marge'', ou ``Support Vector Machines'' en Anglais, est un classifieur qui comme son nom l'indique vise à maximiser la marge\cite{boser1992training}, qui est la distance entre les points des données et la surface spéaratrice (voir figure \ref{fig:SVM}).
 
 \begin{figure}[h]
