@@ -28,9 +28,9 @@ Nous avons choisi d’utiliser une décomposition en ondelettes 3D non décimée
 Ainsi sept images de détails (HHH, LLH, \dots) et une image d’approximation (LLL) sont produites pour chaque niveau $j$ de décomposition. Les huit images du niveau suivant $j+1$ sont générées de la même manière, mais en considérant l’image d’approximation $LLL_j$ du niveau précédent comme image de départ. Les caractéristiques des images, rassemblées dans un vecteur descripteur de taille $8\times j$, correspondent ici à l’ensemble de ces coefficients pour chaque voxel  de l’image. 
 
 \begin{figure}
- \label{fig:ondelettes}
  \includegraphics[width=15cm]{images/decompHotell}
  \caption{Décomposition en ondelettes par banc de filtres : Chaque image est filtrée selon les 3 dimensions pour obtenir les coefficients d'ondelettes et d'échelle de chaque voxel de l'image.}
+ \label{fig:ondelettes}
 \end{figure}
 
 
@@ -110,7 +110,7 @@ Le but de la normalisation est d'homogénéiser les plages de valeurs des diffé
 
 Le nombre de point de la base d'apprentissage détermine directement la qualité de l'apprentissage. Le nombre de caractéristique est de $8 \times j$, avec $j$ le niveau de décomposition des images. Il n'existe pas de règle définitive pour déterminer le nombre d'exemples nécessaire en fonction du nombre de caractéristiques, mais les SVM sont relativement bon pour éviter le sur-apprentissage. Dans notre cas, il vaudrait donc mieux avoir plus de données. Cependant, le nombre de points notés ``tumeurs'' est limité par le nombre de tumeurs présentes dans la base d'apprentissage (173 tumeurs pour le poumon, 106 pour le foie). Il y a donc un risque de déséquilibre de la base d'apprentissage, qui devrait idéalement avoir le même nombre d'exemples ``tumeur'' que ``normales``. Des techniques de correction existent pour les SVM pour contrebalancer ces déséquilibres en indiquant un paramètre C différent pour chaque classe, mais les tests que nous avons réalisés ne montrent pas d'améliorations significatives des performances.
 
-Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatif de l'ensemble des cas rencontrés dans la base de tests, mais les bordures de certains organes peuvent ressembler à des tumeurs, et rendre l'estimation de la surface de séparation plus difficile. J'ai donc voulu évaluer la performance du CAD sur une base dépourvue de ces données ambiguës. Pour cela nous avons réalisé une Érosion de 2 voxels sur les le masque des volumes à extraire.
+Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatif de l'ensemble des cas rencontrés dans la base de tests, mais les bordures de certains organes peuvent ressembler à des tumeurs, et rendre l'estimation de la surface de séparation plus difficile. J'ai donc voulu évaluer la performance du CAD sur une base dépourvue de ces données ambiguës. Pour cela nous avons réalisé une Érosion de 2 voxels sur les masques des volumes à extraire.
 
 \subsubsection{Paramètres du classifieur}
 
@@ -135,9 +135,9 @@ Par exemple, si j'ai deux paramètres A et B, et que je recherche le meilleur je
 Les critères de performance que nous avons sélectionner sont la sensibilité et la spécificité obtenue pour une validation croisée à 5 éléments réalisée sur la base d'apprentissage comme présenté sur la figure \ref{fig:crossValid}. La validation croisée est une technique permettant de minimiser le biais sur les performances.
 
 \begin{figure}[h!]
- \label{fig:crossValid}
  \includegraphics[width=15cm]{images/crossValid}
  \caption{Réalisation d'une validation croisée à $n$ éléments (ici 4) : La base d'exemples d'origine est décomposée en $n$ parts égales. La mesure de performance se fait $n$ fois, avec à chaque foit un aprentissage sur $n-1$ éléments et un test sur l'élément restant. La mesure de performance est réalisée sur les résultats des $n$ tests.}
+ \label{fig:crossValid}
 \end{figure}
 
 
@@ -160,7 +160,7 @@ De ce nuage de point nous pouvons voir le front de pareto. Ce type de diagramme 
 
 La mesure de performance décrite ici permet de sélectionner les meilleurs paramètres de génération de la base d'apprentissage, mais aussi une fois ces paramètres sélectionnés, de comparer les différentes techniques de correction du mouvement respiratoire. La recherche des meilleurs paramètres de la base d'apprentissage seront réalisés sur la base d'images Statiques afin de ne pas être influencé par les éventuels artefacts des autres modalités.
 
-Pour un seuil donné, Le CAD va générer un ensemble d'aggrégats associés à un score\ref{lab:aggregatsCAD}. Il est ensuite possible d'évaluer la performance de ce CAD à l'aide de courbes F-ROC décrites en \ref{lab:FROC} en connaissant la vérité terrain.
+Pour un seuil donné, Le CAD va générer un ensemble d'aggrégats associés à un score, comme présenté en \ref{lab:aggregatsCAD}. Il est ensuite possible d'évaluer la performance de ce CAD à l'aide de courbes F-ROC décrites en \ref{lab:FROC} en connaissant la vérité terrain.
 
 Le seuil sélectionné pour générer les aggrégats sera celui qui va maximiser la LLF (Fraction de Localisation de Lésion), c'est à dire celui qui va permettre de détecter un maximum de lésions. 
 
@@ -188,7 +188,6 @@ Dans ce chapitre je vais détailler les résultats obtenus par les méthodes pr�
 \section{Optimisation des paramètres}
 
 \begin{figure}[h!]
-\label{fig:paretoParams1}
 \begin{center}
  \includegraphics[width=14cm]{images/pareto_param_200.png}
 
@@ -199,21 +198,18 @@ Dans ce chapitre je vais détailler les résultats obtenus par les méthodes pr�
 
 {\small b) Base appauvrie}
 
-
  \includegraphics[width=14cm]{images/pareto_param_1000.png}
  
 {\small c) Base enrichie}
 
-
-
 \end{center}
  \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (1/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a), la base témoin, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base appauvrie avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base enrichie avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
+\label{fig:paretoParams1}
 \end{figure}
 
 
 
 \begin{figure}[h!]
-\label{fig:paretoParams2}
 \begin{center}
 
 
@@ -230,11 +226,10 @@ Dans ce chapitre je vais détailler les résultats obtenus par les méthodes pr�
  \includegraphics[width=14cm]{images/pareto_param_200_2.png}
 
 {\small c) Base Témoin 2}
-\vspace{0.5cm}
-
 
 \end{center}
  \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur (2/2). Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base normalisation avec 200 points négatifs par image et une normalisation +1/-1. En b), la base érodée, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en c) la base Témoin 2, réalisée de la même manière que la base témoin mais en retirant une image.. }
+\label{fig:paretoParams2}
 \end{figure}
 
 
@@ -242,7 +237,7 @@ Dans ce chapitre je vais détailler les résultats obtenus par les méthodes pr�
 
 
 
-Nous avons réalisé des mesures de performances pour 5 jeux de paramètres différents présentés ci-après. Les paramètres en \emph{gras} correspondent à ceux utilisés pour la base témoin.
+Nous avons réalisé des mesures de performances pour 5 jeux de paramètres différents présentés ci-après. Les paramètres en \emph{italique} correspondent à ceux utilisés pour la base témoin.
 
 
 \begin{itemize}
@@ -263,12 +258,12 @@ Nous avons réalisé des mesures de performances pour 5 jeux de paramètres diff
 Pour vérifier que les paramètres du classifieur sont stables, une nouvelle base Témoin (Témoin 2) a été générée avec les données de seulement 14 images sur les 15 que nous avons simulé. Les points ''normaux`` ne sont pas non plus extraits aux mêmes endroits que pour la base Témoin. Nous allons donc vérifier que les paramètres optimaux du CAD ne sont pas dépendant de la base mais de ses paramètres.
 
 
-\subsubsection{Sélection des meilleurs paramètres du classifieur}
+\subsection{Sélection des meilleurs paramètres du classifieur}
 
 Les paramètres du classifieur sont déterminés par une recherche par grille. Elle consiste à rechercher l'optimum en évaluant la performance ce chaque jeu de paramètre dans un ensemble déterminé à l'avance pour représenter . La performance de chaque triplet (C, $\gamma$, j) est estimée en réalisant une cross-validation à 5 validations sur l'ensemble de la base d'apprentissage.
 
 
-Les paramètres sont choisis à partir du front de pareto figure \ref{fig:paretoParams1} en maximisant la sensibilité.
+Les paramètres sont choisis à partir du front de pareto figures \ref{fig:paretoParams1} et \ref{fig:paretoParams2} en maximisant la sensibilité.
 
 Dans l'ensemble, on peut voir clairement que les points correspondant au premier niveau de décomposition (bleu foncé) ont une performance systématiquement inférieure aux autres. Pour la base témoin, la performance maximal est atteinte pour environ 15\% de sensibilité et une spécificité de 93.5\%, ce qui correspond à la valeur de spécificité la plus faible de tous les points de la base témoin. On observe cependant un front de pareto marqué, bien qu'en fort retrait par rapport aux autres niveaux de décomposition. Ce même constat se retrouve pour les bases appauvries et enrichies.
 
@@ -287,7 +282,6 @@ Les valeurs de spécificité sont toutes très supérieures à 99\%, ce qui mont
 Il est intéressant d'observer que les fronts de pareto de la base Témoin 2 sont très semblables à ceux de la base Témoin pour une décomposition au troisième niveau. Des disparités sont apparues Cela semble indiquer que la base est stable avec un nombre de points suffisant.
 
 \begin{table}[h!]
-\label{fig:paramsParams}
 %	\begin{center}
 		\begin{tabular}{c c c c c c}
   \hline
@@ -310,6 +304,7 @@ Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
 
 %	\end{center}
 \caption{Paramètres sélectionnés pour l'optimisation des performances. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+\label{fig:paramsParams}
 \end{table}
 
 \FloatBarrier
@@ -330,9 +325,8 @@ En pratique, on choisira le seuil pour avoir la certitude d'avoir un nombre de f
  \begin{center}
    \includegraphics[width=15cm]{images/FROC_param}
  \end{center}
- \label{lab:froc_comp_static}
  \caption{Courbe Free-ROC comparant les performances du CAD sur une base témoin (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base enrichie (1000 points négatifs par image), sur une base appauvrie (100 points négatifs par image), sur une base normalisée différemment (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
-
+ \label{lab:froc_comp_static}
 \end{figure}
 
 
@@ -348,7 +342,8 @@ D'un point de vue statistique, La p-value fournie par le logiciel est de 0.049, 
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_param}
  \end{center}
- \caption{ \label{lab:fom_param} Les FOM (Figure de Mérite) obtenues pour les différents paramètres}
+ \caption{Les FOM (Figure de Mérite) obtenues pour les différents paramètres}
+ \label{lab:fom_param}
 \end{figure}
 
 \subsection{Conclusion}
@@ -391,7 +386,8 @@ Quatre modalités seront comparées. ET-Static correspond aux images de la ``vé
 {\small c) ET-NoCorr}
 
 \end{center}
- \caption{\label{fig:paretoModalite} Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-IM, b) les images non corrigées du mouvement, et c) les images corrigées par la méthode LOR.}
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-IM, b) les images non corrigées du mouvement, et c) les images corrigées par la méthode LOR.}
+\label{fig:paretoModalite} 
 \end{figure}
 
 
@@ -402,7 +398,6 @@ Quatre modalités seront comparées. ET-Static correspond aux images de la ``vé
 
 
 \begin{table}[h!]
-\label{fig:paramsModPoumon}
 %	\begin{center}
 		\begin{tabular}{c| c c c c c}
   \hline
@@ -425,9 +420,10 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
 
 %	\end{center}
 \caption{Paramètres sélectionnés pour l'optimisation des performances du Poumon. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+\label{fig:paramsModPoumon}
 \end{table}
 
-\subsubsection{Sélection des meilleurs paramètres du classifieur}
+\subsection{Sélection des meilleurs paramètres du classifieur}
 
 De la même manière que pour la sélection de la méthode de génération de la base d'apprentissage, il faut adapter les paramètres du classifieur aux différentes bases d'apprentissage.
 
@@ -444,7 +440,7 @@ La spécificité observée pour les meilleurs jeux de paramètres est sensibleme
 
 \subsection{Courbes Free-ROC}
 
-Les courbes F-ROC obtenues sur les différentes modalités sont présentées dans la figure \ref{lab:froc_mod}. 
+Les courbes F-ROC obtenues sur les différentes modalités sont présentées dans la figure \ref{fig:froc_mod}. 
 
 Toutes les courbes on une NLF (Nombre de faux positifs moyen par image) à peut près équivalente entre 20 et 24 , excepté ET-LOR avec une NLF de 34. Cependant, les performances en LLF (proportion des lésions localisées) de ET-LOR sont constantes à partir d'une LNF de 20 environ. 
 
@@ -459,7 +455,8 @@ Dans sa globalité, le graphique montre que le maximum de performances est appor
  \begin{center}
    \includegraphics[width=13cm]{images/FROC_mod}
  \end{center}
- \caption{ \label{lab:froc_mod} Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
+ \caption{Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
+ \label{fig:froc_mod}
 \end{figure}
 
 
@@ -467,13 +464,14 @@ Dans sa globalité, le graphique montre que le maximum de performances est appor
 
 Je vais comparer les différentes modalités à partir du résultat de l'analyse JAFROC.
 
-La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{lab:fom_mod}. Cependant, on observe une tendance proche de celle observée sur les courbes F-ROC pour la modalité Statique : Ces images sont en tête suivies par ET-IM. Il est intéressant de noter que les valeurs de ET-IM et ET-LOR sont relativement proches, y compris leurs mesures d'erreur, ce qui indique que l'algorithme JAFROC peine à les distinguer l'une de l'autre. ET-NoCorr est quand à lui nettement en retrait. 
+La p-value est de 0.10, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{fig:fom_mod}. Cependant, on observe une tendance proche de celle observée sur les courbes F-ROC pour la modalité Statique : Ces images sont en tête suivies par ET-IM. Il est intéressant de noter que les valeurs de ET-IM et ET-LOR sont relativement proches, y compris leurs mesures d'erreur, ce qui indique que l'algorithme JAFROC peine à les distinguer l'une de l'autre. ET-NoCorr est quand à lui nettement en retrait. 
 
 \begin{figure}[h!]
  \begin{center}
    \includegraphics[width=13cm]{images/FOM_mod}
  \end{center}
- \caption{ \label{lab:fom_mod} Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
+ \caption{Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
+ \label{fig:fom_mod}
 \end{figure}
 
 \subsection{Conclusion}
@@ -486,7 +484,7 @@ Les résultats présentés précédemment indiquent que les techniques de correc
 \section{Comparaison des performances des différentes méthodes Foie}
 
 
-\subsubsection{Sélection des meilleurs paramètres du classifieur}
+\subsection{Sélection des meilleurs paramètres du classifieur}
 
 Les différents graphiques nous montrent une répartition des performances très différente de celle observée précedemment pour les travaux sur la base Poumon. 
 
@@ -494,29 +492,31 @@ Pour le premier niveau de décomposition, ET-Static, ET-IM et ET-LOR montrent un
 
 \subsection{Comparaison des performances JAFROC}
 
-La p-value est de 0.1, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{lab:fom_mod19}
-Il n'est pas étonnant de constater que les FOM sont plus élevées que précédemment car le nombre de faux positifs est pratiquement deux fois inférieur à celui obtenu pour le poumon.
+La p-value est de 0.1, ce qui ne permet pas de déclarer que statistiquement les données sont différentes : \ref{fig:fom_mod19}
+Il n'est pas étonnant de constater que les FOM sont plus élevées que précédemment car le nombre de faux positifs est pratiquement deux fois inférieur à celui obtenu pour le poumon, ce qui est le signe que le classifieur réussi mieux à discerner les vrai positifs.
 
-Mais on observe par contre que les images ET-NoCorr sont
+On observe que les images statiques ont un score supérieur de 60\% environ à celui des images Non corrigées. Par contre, il est surprenant de constater que les deux techniques de correction du mouvement respiratoire ont un score égal ou plus faible que les images non corrigées, en contradiction avec les résultats de l'analyse F-ROC. Cependant, la proximité des valeurs ne permet pas de montrer une réelle hiérarchie entre les modalités. Tout au plus pourrait-on observer que l'étendue des barres d'erreur semble indiquer que ET-IM aurait de meilleures performances que les images non Corrigées, elles-mêmes suérieures uax images ET-LOR, mais sans aucune certitude.
 
 \begin{figure}[h!]
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_mod19}
  \end{center}
- \caption{ \label{lab:fom_mod19} Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
+ \caption{Les FDM (Figure de Mérite) obtenues pour les différentes modalités.}
+ \label{fig:fom_mod19} 
 \end{figure}
 
 
 \subsection{Courbes Free-ROC}
 
-Voir figure \ref{lab:froc_mod19}.
+Voir figure \ref{fig:froc_mod19}.
 Le maximum de performances est apporté par les images statiques, suivi par les images ET-IM.
 
 \begin{figure}[h!]
  \begin{center}
    \includegraphics[width=15cm]{images/FROC_mod19}
  \end{center}
- \caption{ \label{lab:froc_mod19} Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
+ \caption{Courbe Free-ROC comparant les performances du CAD selon les modalités de correction du mouvement respiratoire.}
+\label{fig:froc_mod19}
 \end{figure}
 
 
@@ -533,7 +533,8 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 {\small b) ET-IM}
 
 \end{center}
- \caption{\label{fig:paretoModalite19_1} Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-Static, b) les images corrigées du mouvement post-reconstruction.}
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image ET-Static, b) les images corrigées du mouvement post-reconstruction.}
+\label{fig:paretoModalite19_1}
 \end{figure}
 
 \begin{figure}[h!]
@@ -549,7 +550,8 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 {\small d) ET-NoCorr}
 
 \end{center}
- \caption{\label{fig:paretoModalite19_2} Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
+ \caption{Fronts de pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différentes modalités, avec 200 points négatifs par image. Pour chaque triplet de paramètres (C, $\gamma$, j), la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
+\label{fig:paretoModalite19_2} 
 \end{figure}
 
 
@@ -559,7 +561,6 @@ Le maximum de performances est apporté par les images statiques, suivi par les 
 % NoCorr : 5411.6952654646375	0.001709975946676697	32.0	0.9417478291936561	0.30779220779220784	0.9643333333333333
 % IM	 : 5411.6952654646375	5.49280271653059E-4	32.0	0.9826195691007659	0.6805194805194804	0.9933333333333334
 \begin{table}[h!]
-\label{fig:paramsModFoie}
 %	\begin{center}
 		\begin{tabular}{c| c c c c c}
   \hline
@@ -582,4 +583,5 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
 
 %	\end{center}
 \caption{Paramètres sélectionnés pour l'optimisation des performances du Foie. Sont indiqués pour chaque base le triplet de paramètres sélectionné ainsi que sa position sur le front de pareto.}
+\label{fig:paramsModFoie}
 \end{table}
