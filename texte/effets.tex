@@ -10,16 +10,16 @@ Ce mouvement est la succession d'une phase inspiratoire, suivi d'une phase expir
  \item en cas d'inspiration forcée, action des pectoraux
 \end{enumerate}
 
+La figure \ref{fig:respiXCAT} représente 3 instants du cycle respiratoire utilisé dans le NCAT, un modèle de corps humain respirant. On voit clairement tous les effets présentés précédemment, notamment le relèvement des côtes et du sternum à l'aides des guides présents sur les images.
+
 \begin{figure}[h!]
     \begin{center}
-	\begin{tabular}{c c c}
-        \includegraphics[width=4cm]{images/resp1} & \includegraphics[width=4cm]{images/resp3} & \includegraphics[width=4cm]{images/resp5} \\
-	\includegraphics[width=4cm]{images/resp7} & \includegraphics[width=4cm]{images/resp9} & \includegraphics[width=4cm]{images/resp11}\\
-	\end{tabular}
+            \includegraphics[width=10cm]{images/mvtRespi} \\
     \end{center}
-    \caption{Modélisation de la respiration par le fantôme XCAT.}
+    \caption{Modèle de mouvement intégré dans le fantôme NCAT. La ligne pointillée rouge sert de référence pour la position d'une des côtes du modèle en expiration. L'image (a) correspond à l'expiration complète, et la (c) à la fin de l'inspiration. (b) correspond à un instant intermédiaire du cycle. }
     \label{fig:respiXCAT}
 \end{figure}
+
 
 La variabilité inter et intra-patient de ce mouvement est très importante : le volume d'air inspiré peut varier de 500mL à 1200mL selon que la personne a une respiration normale ou profonde. Pour ces deux extrêmes, la fréquence respiratoire varie de 5 cycles/min. à 20 cycles/min.~\cite{sherwood2006fundamentals}.
 
@@ -29,12 +29,17 @@ Je vais tout d'abord introduire les effets visibles sur les images, puis je m'at
 
 \section{Localisation et Volume}
 
+
+La localisation et le volume des tumeurs peuvent être modifiés par le mouvement engendré par la respiration (voir figure \ref{fig:effetMvt}). D'après~\cite{lamare2007respiratory}, réalisé sur des simulations monte-Carlo à l'aide du logiciel de simulation Geant4\cite{jan2004gate} en utilisant le modèle NCAT\cite{segars2001These}, la largeur à mi-hauteur des lésions peut être modifiée de 48\% (equation \ref{eq:PRD} : Percent relative difference) dans le cas d'une lésion de 7mm de diamètre dans la partie basse du poumon. L'imprécision axiale sur le positionnement de la tumeur peut atteindre 9\% dans les mêmes conditions.
+
 \begin{equation}
 \%PRD= \left| \frac{Image~non~corrig\acute{e}e - Image~de~r\acute{e}f\acute{e}rence}{Image~de~r\acute{e}f\acute{e}rence} \right|
 \label{eq:PRD}
 \end{equation}
 
-La localisation et le volume des tumeurs peuvent être modifiés par le mouvement engendré par la respiration (voir figure \ref{fig:effetMvt}). D'après~\cite{lamare2007respiratory}, réalisé sur des simulations monte-Carlo à l'aide du logiciel de simulation Geant4\cite{jan2004gate} en utilisant le modèle NCAT\cite{segars2001These}, la largeur à mi-hauteur des lésions peut être modifiée de 48\% (equation \ref{eq:PRD} : Percent relative difference) dans le cas d'une lésion de 7mm de diamètre dans la partie basse du poumon. L'imprécision axiale sur le positionnement de la tumeur peut atteindre 9\% dans les mêmes conditions.
+
+
+
 
 \begin{figure}[h!]
     \begin{center}
@@ -47,9 +52,7 @@ La localisation et le volume des tumeurs peuvent être modifiés par le mouvemen
 
 \section{Mesure de l'activité des tumeurs}
 
-Le contraste des tumeurs par rapport au fond est un critère important pour déterminer la malignité des tumeurs~\cite{dimitrakopoulou2002role}~\cite{krak2005effects}. Mais il va aussi directement déterminer si la tumeur est détectable ou non.
-
-L'article de \cite{GuopingChang2010Implementation} est une évaluation clinique réalisée sur 13 patients (21 tumeurs au total).
+Le contraste des tumeurs par rapport au fond est un critère important pour déterminer la malignité des tumeurs~\cite{dimitrakopoulou2002role, krak2005effects}. Mais ce contraste joue ausi un rôle important sur la détectabilité de la tumeur en facilitant sa détection, comme nous allons le voir ci-après.
 
 L'activité peut être influencée par la respiration de deux manières : par un mauvais ajustement de la carte d'atténuation, et par le moyennage de la position de la tumeur.
 
@@ -57,17 +60,30 @@ L'activité peut être influencée par la respiration de deux manières : par un
 
 La carte d'atténuation utilisée pour corriger les images reconstruites est basée sur une image TDM prise à un instant donné du cycle. Or l'atténuation de la zone correspondant à une tumeur peut être différente de celle du tissus environnant.
 
+D'après l'étude~\cite{erdi2004ct} réalisée sur cinq patients, on peut observer des variations très importante de $SUV_{max}$ (voir eq. \ref{eq:varSUV}) sur les images TEP reconstruites. L'étude a été réalisée sur 5 patients totalisant 8 lésions. L'acquisition TDM 4D a été synchronisée sur le mouvement d'un dispositif placé sur l'abdomen du patient. Ce dispositif était constitué 2 marqueurs réfléchissant les ondes Infra-rouge, placés dans le champ de vue d'une caméra. Les données synchronisées acquises en TDM 4D ont été utilisées pour générer un cycle de 10 images TDM qui ont été adaptés comme carte d'atténuation pour la reconstruction des images TEP.
+
+Les données TEP reconstruites à partir des 10 images ont montrés de grande différences en terme de SUV selon l'instant du cycle à partir duquel les lésions ont été extraites.
+Ces variations allant jusqu'à 24\% pour une lésion ($19.8 mm^3$ dans l'espace mediastinal) entre une reconstruction TEP réalisée à partir d'une image TDM de fin d'expiration et une image TDM de fin d'expiration. En recherchant la variation la plus grande sur l'ensemble du cycle (en non pas en se limitant aux extrèmes), la variation peut atteindre 30\%.
+
+La figure \ref{fig:lesionEnFctPhaseTDM} présente la variation de $SUV_max$ en fonction de la phase de utilisée pour la reconstruction.
+
 \begin{equation}
 \label{eq:varSUV}
  \%~variation~SUV_{max} = 100 \times \frac{ | SUV_1 - SUV_2 | }{ (SUV_1 + SUV_2) / 2 }
 \end{equation}
 
-D'après l'étude~\cite{erdi2004ct} réalisée sur cinq patients, on peut observer des variations de $SUV_{max}$ (voir eq. \ref{eq:varSUV}) allant jusqu'à 24\% selon que la correction d'atténuation est réalisée à partir d'une image TDM en fin d'expiration ou d'inspiration. Sur l'ensemble du cycle, la variation peut atteindre 30\%.
+\begin{figure}[h!]
+	\vspace{0.5cm}
+	\centering
+			\includegraphics[width=10cm]{images/lesionEnFctPhaseTDM}
+	\vspace{-0.5cm}
+	\caption{A) Représente une vue coronale d'un patient avec une lésion clairement visible en haut à droite (flèche noire). Le graphique B) représente le $SUV_max$ observé sur les images reconstruites en fonction de l'image TDM utilisée pour la reconstruction. Le nombre en abscisse représente la position dans le cycle respiratoire en pourcentage} 
+	\label{fig:lesionEnFctPhaseTDM}
+\end{figure}
 
+\subsection{Artefacts TEP dûs aux artefacts TDM}
 
-\subsubsection{Artefacts dûs à l'utilisation de l'image TDM}
-
-On peut voir sur les images de la figure \ref{fig:artefactsCT} des artefacts présents sur les images TDM utilisées pour la correction d'atténuation. Ces artefacts proviennent de la manière dont les images sont acquises : la caméra tourne autour du sujet dans un mouvement hélicoïdal, et l'algorithme de reconstruction va ensuite utiliser les acquisitions pour reconstruire une image complète. Or en cas de respiration rapide, des incohérences peuvent survenir quand le mouvement du diaphragme est tellement rapide qu'il va plus vite que la caméra. Ce type d'artefacts va créer des incohérences dans les images TEP reconstruites.
+On peut voir sur les images de la figure \ref{fig:artefactsCT} des artefacts présents sur les images TDM utilisées pour la correction d'atténuation. Ces artefacts proviennent de la manière dont les images sont acquises : la caméra tourne autour du sujet dans un mouvement hélicoïdal, et l'algorithme de reconstruction va ensuite utiliser les acquisitions pour reconstruire une image complète. Or en cas de respiration rapide, des incohérences peuvent survenir quand le mouvement du diaphragme est plus important que celui de la caméra. Ce type d'artefacts peut créer des incohérences dans les images TEP reconstruites.
 
 \begin{figure}[h!]
 	\begin{center}

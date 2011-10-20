@@ -55,9 +55,10 @@ Le mouvement respiratoire corps entier est complexe et nécéssite des modèles 
 
 
 \subsubsection{imagerie TEP avec gating}
+\label{lab:correctionDawood2008}
 
 L`'acquisition TEP est réalisée en conservant les informations temporelles associées 
-Les premiers algorithmes étaient utilisés en imagerie cardiaque~\cite{klein2002four} avec des transformations simples (affines), puis d'autres algorithmes plus adaptés aux images corps entier ont été utilisées, comme les flux optiques~\cite{dawood2006lung}, ou l'interpolation par B-spline~\cite{bai2009regularized}. 
+Les premiers algorithmes étaient utilisés en imagerie cardiaque~\cite{klein2002four} avec des transformations simples (affines), puis d'autres algorithmes plus adaptés aux images corps entier ont été utilisées, comme les flux optiques~\cite{dawood2006lung, dawood2006lung}, ou l'interpolation par B-spline~\cite{bai2009regularized}. 
 
 
 \subsubsection{imagerie CT 4D}
@@ -67,6 +68,7 @@ Dawood a réalisé plusieurs publications sur le sujet en utilisant le flux opti
 
 
 \section{Correction pré-reconstruction}
+
 
 Les méthodes de correction du mouvement pré-reconstruction modifient les positions des Lignes de réponse (LDR) fournies par le scanner.
 Ce recalage des LDR correspond à un déplacement des lignes de réponse dans l'espace du détecteur (voir fig. \ref{fig:recalageLOR}) en fonction du mouvement respiratoire. La limitation principale de ce type de méthode est que le champ de mouvement ne peut pas être élastique.

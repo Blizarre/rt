@@ -1,0 +1,3 @@
+Bins : Phases
+H1 : Pathologique
+H0 : Sain
