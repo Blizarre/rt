@@ -51,8 +51,7 @@ Les premières publications décrivant cette technique l'utilisaient notamment p
 
 \subsection{Estimation du mouvement respiratoire corps entier}
 
-Le mouvement respiratoire corps entier est complexe et nécéssite des modèles élastiques \todo{continuer}. cependant, cette complexité nécessite de réaliser l'estimation sur des images 3D du patient, et donc d'estimer les mouvemnts internes. Pour cela, on peut utiliser les deux modélités disopnibles lors d'un examen TEP/CT :
-
+L'estimation du champ de mouvement interne se fait à l'aide d'une des techniques présentées précédemment en \ref{lab:estimChamp}.
 
 \subsubsection{imagerie TEP avec gating}
 \label{lab:correctionDawood2008}
@@ -141,3 +140,13 @@ Dans la publication~\cite{lamare2007list}, deux variantes de cette technique son
 Cette technique qui est peu décrite en ~\cite{naqa2006deblurring} utilise une connaissance du mouvement respiratoire acquise à partir d'une image TDM 4D pour déduire un filtrage appellé TLP (\textit{Tumor Location Probability}) qui correspond à la dégradation dû au mouvement respiratoire.
 
 L'image est ensuite déconvoluée pour corriger les effets du mouvement respiratoire. Cette méthode a été évaluée sur un fantôme physique et des patients réels à l'aide d'un grand nombre de critères provenant pour partie de la TEP (sous-estimation de l'activité de la tumeur, exemples d'images), et pour partie du domaine de la déconvolution (entropie, ``rugosité'').
+
+Les résultats présentés en \ref{fig:performanceDeconvolution} montrent une nette amélioration des performances sur des fantômes, pour un déplacement simple de 20mm.
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=12cm]{images/performanceDeconvolution}
+	\end{center}
+	\caption{Comparaison de l'erreur de sous-estimation de l'activité des lésions en fonction de l'algorithme de déconvolution utilisé sur des fantômes. En a) la lésion a un activité moyenne, tandis qu'en b) l'activité de la lésion est faible par rapport au fond. Le déplacement de la lésion est le même dans les deux cas (2cm)} 
+	\label{fig:performanceDeconvolution}
+\end{figure}

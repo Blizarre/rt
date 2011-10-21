@@ -1,6 +1,6 @@
-\section{Capteurs externes}
+\section{Estimation du signal respiratoire}
 
-Ces capteurs fournissent un signal qui sera corrélé avec la respiration. Ils vont permettre par la suite de faire correspondre les données acquises avec une phase particulière du mouvement respiratoire.
+Le signal respiratoire est une grandeur qui permet de positionner le cycle entre la fin d'inspiration et la fin d'expiration. Il est habituellement fourni par des capteurs externes qui génèrent un signal qui sera corrélé avec la respiration. Cela permet de faire correspondre les données acquises par un imageur avec une phase particulière du mouvement respiratoire.
 
 \subsection{Spiromètre}
 
@@ -40,7 +40,7 @@ Ces techniques ont l'avantage d'être moins invasives et plus facilement accept�
 
 \subsection{Techniques basées sur les images TEP}
 \label{lab:estimMvtTEP}
-En TEP, la publication de Bundschuh et al.~\cite{bundschuh2007postacquisition} utilise les données dynamiques pour estimer le signal respiratoire. Ce processus est réalisé en 5 étapes : 
+En TEP, la publication de Bundschuh et al.~\cite{bundschuh2007postacquisition} utilise les données dynamiques pour estimer le signal respiratoire sans avoir besoin de capteur externes . Ce processus est réalisé en 5 étapes : 
 
 \begin{enumerate}
  \item Les données TEP sont acquises en mode séquentiel : toutes les désintégrations détectées sont enregistrées dans un fichier de manière séquentielles  
@@ -55,6 +55,8 @@ Cette technique est intéressante mais contrainte par la qualité de l'image TEP
 
 
 \section{Estimation du champ de mouvement}
+\label{lab:estimChamp}
+Le champ de mouvement est une information beaucoup plus riche que le signal respiratoire car il permet de suivre les déplacements des organes et des lésions à l'intérieur du corps du patient à l'intérieur d'un cycle respiratoire.
 
 Le signal respiratoire acquis par les méthodes précédemment cités est utilisé pour décomposer les données acquises en TDM ou TEP en plusieurs phases, chacune correspondant à un instant du cycle. Ces informations sont utilisées pour assembler les données acquises pour chaque phase, reconstruites indépendamment. Ces reconstructions vont être utilisées pour estimer les champ de mouvements à l'aide de techniques de recalage.
 
@@ -98,7 +100,7 @@ Des algorithmes de recalage sont utilisés de manière à déduire le champ de m
  \item Une dose de radiation émise plus importante. Bien que les technologies récentes permettent de réduire les doses de manière importante pour l'acquisition dynamique, elles restent tout de même plus importante que pour un CT 3D.
 \end{itemize}
 
-Il faut noter qye plusieurs publications basées sur des simulations se servent des cartes de labels utilisées pour la simulation pour réaliser les estimation de mouvements~\cite{lamare2007list}. Cela donne une estimation dans le ``meilleur des cas'', où l'image TDM est parfaitement en phase avec les images TEP.
+Il faut noter que plusieurs publications basées sur des simulations se servent des cartes de labels utilisées pour la simulation pour réaliser les estimation de mouvements~\cite{lamare2007list}. Cela donne une estimation dans le ``meilleur des cas'', où l'image TDM est parfaitement en phase avec les images TEP.
 
 
 

@@ -98,7 +98,7 @@ On peut voir sur les images de la figure \ref{fig:artefactsCT} des artefacts pr�
 
 \subsection{Déplacement de la tumeur au cours du cycle}
 
-Le mouvement respiratoire va avoir pour effet de déplacer la tumeur pendant l'acquisition, ce qui va moyenner la quantité de radioactivité sur l'ensemble du cycle. Si le déplacement de la tumeur est suffisamment grand par rapport à son diamètre, la réduction de radioactivité va être importante.
+Le mouvement respiratoire va avoir pour effet de déplacer la tumeur pendant l'acquisition, ce qui va moyenner la quantité de radioactivité sur l'ensemble du cycle, comme indiqué sur la figure \ref{fig:effetMvt}. Si le déplacement de la tumeur est suffisamment grand par rapport à son diamètre, la réduction de radioactivité va être importante.
 
 L'étude \cite{boucher2004respiratory} montre que sur des fantomes, un déplacement d'une source radioactive de 6mm sur un cycle respiratoire moyen entraîne une sous-estimation de l'activité maximale de la tumeur de 41\% pour une lésion de 1.2mL et de 21\% pour une sphère de 19.4mL.
 
@@ -144,8 +144,14 @@ Mais il est difficile d'évaluer de manière précise l'apport des méthodes de 
 
 \subsection{Chang 2010}
 
-Cette publication utilise entre autres le rapport signal sur bruit pour évaluer l'amélioration de la visibilité des lésions. Son interêt est qu'elle est réalisée sur 13 patients et compare les performances sur 21 tumeurs au total.
+Cette publication est une implémentation clinique d'un système de découpage automatique du signal respiratoire par amplitude. Elle est basée sur 13 patients totalisant 21 tumeurs du poumon. Le signal respiratoire est acquis à l'aide d'un dispositif propriétaire (Anzai AZ-733V) basé sur une ceinture abdominale avec capteur de pression. Seuls les données TEP acquises autour d'une amplitude pré-sélectionnée (+/-10\% de l'amplitude correspondant à l'acquisition TDM) sont utilisées pour la reconstruction des images corrigées. 
 
-Ils ont calculés le rapport signal sur bruit (SNR) en divisant le SUV moyen de la tumeur par l'écart-type d'une zone d'interêt dans le poumon. On observe une amélioration moyenne de 26\% du SNR sur les tumeurs, et pouvant atteindre 66\%.
+Le jeu d'images ``témoin'', non corrigées, est réalisé en extrayant des données acquises la même quantité de données que pour les images corrigées, mais sans synchronisation.
+
+L'auteur compare le $SUV_{max}$, $SUV_{moyen}$, Rapport Signal/Bruit (SNR) et volume apparent de la lésion pour les deux jeu d'images. Le volume de la lésion et le $SUV _{moyen}$ sont calculés sur une région d'interêt correspondant à 40\% du $SUV_{max}$ de la lésion. Le SNR est calculé en divisant le SUV moyen de la tumeur par l'écart-type d'une zone d'interêt dans le poumon, dont la taille ni la localisation ne sont précisées. 
+
+Les résultats présentés montrent une amélioration importante des valeurs du SNR pour les images corrigées du mouvement par rapport aux images témoin. En moyenne, cette augmentation est de 26.3\%, mais deux tumeurs sur les 21 de l'étude voient leur SNR augmenter de plus de 66\%. 
+
+Il est étonnant de constater que les mesures de $SUV_{max}$ et $SUV_{moyen}$ voient leurs valeurs augmenter respectivement de 26.8\% et 26\%, ce qui est tout à fait semblable avec l'augmentation de SNR. Cependant, les valeurs individuelles d'amélioration  pour chaque tumeur ne montrent pas de corrélation.
 
 Il est intéressant de constater qu'il y a un point où le SNR diminue de 3.4\%, mais que le $SUV_{max}$ et le $SUV_{moyen}$ augmentent tout de même de presque 18\%. Cela semble indiquer une erreur car le SUV de la zone d'interêt n'est pas censé changer de manière importante.
