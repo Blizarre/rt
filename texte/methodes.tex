@@ -1,22 +1,37 @@
 \label{lab:corrMvt}
+
+\section{Introduction}
+
+Nous allons maintenant présenter les techniques de correction du mouvement respiratoire présentées dans la littérature. 
+
+Deux approches existent pour la correction du mouvement : les techniques dites prospectives, qui consistent à réaliser la correction pendant l'acquisition en sélectionnant les données à conserver, et rétrospectives, qui réalisent la correction à postériori, après l'acquisition des données. Actuellement, les techniques les plus prometteuses sont rétrospectivces, car elles permettent d'utiliser l'ensemble des données du cycle respiratoire.
+
 \section{Synchronisation respiratoire}
 
-La synchronisation respiratoire correspond à un découpage du cycle respiratoire en plusieurs phases (voir Fig.\ref{fig:gatingRespi}). Une seule d'entre elles sera utilisée pour la reconstruction. En théorie cela permet d'avoir le meilleur résultat, car il est possible de sélectionner les évènements correspondants à la phase où a été acquise la carte d'atténuation.
+La synchronisation respiratoire correspond à un découpage du cycle respiratoire selon la phase (voir Fig.\ref{fig:gatingRespi}) ou l'amplitude (voir figure \ref{fig:gatingRespiAmplitude}). Une seule des phases ou amplitude sera sélectionnée pour la reconstruction. En théorie cela permet d'avoir le meilleur résultat, car il est possible de sélectionner les évènements correspondants à la phase ou l'amplitude où a été acquise la carte d'atténuation.
 
 
 \begin{figure}[h!]
 	\begin{center}
 		\includegraphics[width=12cm]{images/ET-IM}
 	\end{center}
-	\caption{Illustration de la synchronisation respiratoire : Le cycle est découpé en plusieurs phases} 
+	\caption{Illustration de la synchronisation respiratoire en phase : Le cycle respiratoire acquis est découpé selon la position du signal acquis dans le cycle. Le signal est analysé pour déterminer les débuts et fins de cycles. Chaque cycle est découpé en un nombre déterminé de phases égales.} 
 	\label{fig:gatingRespi}
 \end{figure}
 
 
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=12cm]{images/gatingAmplitude}
+	\end{center}
+	\caption{Illustration de la synchronisation respiratoire en amplitude : Le cycle respiratoire acquis est découpé selon son amplitude.} 
+	\label{fig:gatingRespiAmplitude}
+\end{figure}
 
-Cette technique est notamment présentée dans~\cite{nehmeh2002effect}, où le signal respiratoire est estimé par une caméra qui suit un marqueur placé sur le torse du patient. L'auteur annonce une réduction du volume des tumeurs pouvant aller jusqu'à 34\%, avec une augmentation du $SUV_{max}$ de 160\%. 
 
-Une autre publication~\cite{boucher2004respiratory} utilise un thermomètre détectant l'air chaud émis en début de cycle respiratoire pour réaliser la synchronisation. Les différentes reconstructions issues de l'expérience sont visibles figure \ref{fig:boucher2004}.
+Cette technique est notamment présentée dans~\cite{nehmeh2002effect}, où le signal respiratoire est estimé par une caméra qui suit un marqueur placé sur le torse du patient (système RPM de Varian Medical Systems). L'étude a été réalisée sur 5 patients volontaires comme suit : un scan de transmission de 3 minutes, suivi d'une acquisition avec correction de 10 minutes, puis d'une acquisition témoin non corrigée de 3 minutes. La décomposition du cycle s'effectue en fonction de la phase. L'auteur annonce une réduction du volume des tumeurs pouvant aller jusqu'à 34\%, avec une augmentation du $SUV_{max}$ de 160\%. 
+
+Une autre publication~\cite{boucher2004respiratory} utilise un thermomètre détectant l'air chaud émis en début de cycle respiratoire pour réaliser la synchronisation. Les différentes reconstructions issues de l'expérience sont visibles figure \ref{fig:boucher2004}. Il faut noter que la partie clinique de cette étude a été réalisée sur 10 patients sains, et qu'il n'y a donc pas de mesures de performance de la correction du mouvement sur les lésions. 
 
 \begin{figure}[h!]
 	\begin{center}
@@ -26,9 +41,11 @@ Une autre publication~\cite{boucher2004respiratory} utilise un thermomètre dét
 	\label{fig:boucher2004}
 \end{figure}
 
-Une variante de cette technique ne nécessitant pas de capteur est décrite dans~\cite{nehmeh2003reduction}. Un point faiblement radioactif est fixé au-dessus du torse du patient. Les acquisitions de l'imageur sont ensuite enregistrées par blocs temporels de 1 seconde, et une zone d'interêt est reconstruite dans chacune des images. Les données où le point source est dans cette zone d'interêt sont sommées et l'image finale reconstruite.
+Une variante de cette technique ne nécessitant pas de capteur est décrite dans~\cite{nehmeh2003reduction}. Un point faiblement radioactif est fixé au-dessus du torse du patient. Les acquisitions de l'imageur sont ensuite enregistrées par blocs temporels de 1 seconde, et une zone d'interêt est reconstruite dans chacune des images. Les données reconstruites montrant le point source dans cette zone d'interêt sont sommées et l'image finale reconstruite. 
 
-Guoping et al.~\cite{GuopingChang2010Implementation} réalisent la carte d'atténuation à partir d'une image TDM réalisée en respiration libre, et reconstruisent les données TEP acquises lorsque l'amplitude respiratoire est proche de celle utilisée pour l'acquisition TDM (voir exemples figure \ref{fig:chang2010}. Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
+Cette technique a été comparée avec celle présentée précédemment basée sur le système RPM. Ces deux techniques n'ont été testée cliniquement que sur un patient mais ont montrés des performances tout à fait semblables (6\% de différence dans les activités et 2\% pour le volume de la lésion).
+
+Cependant ces techniques n'utilisent pas une carte d'atténuation optimisée pour la position du cycle correspondant aux acquisitions TEP.  Guoping et al.~\cite{GuopingChang2010Implementation} réalisent la carte d'atténuation à partir d'une image TDM réalisée en respiration libre synchronisée, et reconstruisent les données TEP acquises lorsque l'amplitude respiratoire est proche de celle utilisée pour l'acquisition TDM (voir exemples figure \ref{fig:chang2010}. Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -45,24 +62,27 @@ Le principal problème de ces techniques est qu'elles demandent un temps d'acqui
 \section{Synchronisation respiratoire avec recalage}
 \label{lab:corrPostRecon}
 
+Dans cette section, nous allons détailler la technique consistant à corriger  le mouvement en déformant les images reconstruites.
+
 Pour réaliser cela, les différentes techniques se basent sur une estimation préalable du mouvement respiratoire. Les images de chaque phase sont reconstruites indépendamment, puis recalées sur une phase de référence grâce au champ de mouvement. Enfin, les images déformées sont sommées. La difficulté se situe dans l'estimation du champ de mouvement interne lors de la respiration, car ce mouvement est complexe.
 
 Les premières publications décrivant cette technique l'utilisaient notamment pour réaliser de l'imagerie cardiaque en TEP~\cite{klein19973d}. Cette publication démontre la faisabilité du procédé sur un animal en utilisant des techniques de flux optique pour estimer le champs de mouvement. En effet le coeur a l'avantage d'avoir une activité métabolique intense, ce qui rend l'estimation de son mouvement aisée même sur des images avec une faible statistique.
 
 \subsection{Estimation du mouvement respiratoire corps entier}
 
-L'estimation du champ de mouvement interne se fait à l'aide d'une des techniques présentées précédemment en \ref{lab:estimChamp}.
+L'estimation du champ de mouvement interne se fait à l'aide d'une des techniques présentées précédemment en \ref{lab:estimChamp}. Elles sont rappelées brièvement :
 
 \subsubsection{imagerie TEP avec gating}
 \label{lab:correctionDawood2008}
 
-L`'acquisition TEP est réalisée en conservant les informations temporelles associées 
+L`'acquisition TEP est réalisée en même temps que le signale respiratoire. Une image est reconstruite par phase du signal respiratoire, puis un algorithme d'estimation de mouvement est utilisé pour calculer le champ de mouvement entre les instants du cycle.
+
 Les premiers algorithmes étaient utilisés en imagerie cardiaque~\cite{klein2002four} avec des transformations simples (affines), puis d'autres algorithmes plus adaptés aux images corps entier ont été utilisées, comme les flux optiques~\cite{dawood2006lung, dawood2006lung}, ou l'interpolation par B-spline~\cite{bai2009regularized}. 
 
 
 \subsubsection{imagerie CT 4D}
 
-Les images CT 4D peuvent être utilisées pour réaliser l'estimation du mouvement respiratoire. Cela nécessite par contre une dose plus importante et un temps d'acquisition plus long.
+Les images CT 4D peuvent être utilisées pour réaliser l'estimation du mouvement respiratoire au lieu des données TEP. Cela nécessite par contre une dose plus importante et un temps d'acquisition plus long.
 Dawood a réalisé plusieurs publications sur le sujet en utilisant le flux optique pour l'estimation du champ de mouvement~\cite{dawood2006lung, dawood2008respiratory}. L'algorithme a été étudié sur des images de patients réels. Une autre publication~\cite{thorndyke2006reducing} indique une amélioration du rapport de contraste sur bruit (CNR) d'un facteur 3 grâce à la correction.
 
 
@@ -99,6 +119,8 @@ Cette technique de correction du mouvement a été utilisée pour la correction 
 Ces résultats ont été améliorés par l'utilisation de la technique suivante qui permettait la prise en compte d'un mouvement élastique.
 
 \section{Correction pendant la reconstruction}
+
+\todo{Plus d'infos ici !!! Courage, plus que ça à faire}
 
 Plusieurs auteurs ont présentés des méthodes permettant de réaliser la correction de mouvement pendant la reconstruction. Qiao et al.\cite{qiao2006motion} et Lamare et al.~\cite{lamare2007list} ont proposés une méthode de correction du mouvement respiratoire basé sur une modification de la matrice de sensibilité lors de la reconstruction pour prendre en compte le mouvement. Tous les deux utilisent un champ de mouvement élastique estimé en utilisant un champ interpolé par B-splines.
 
@@ -137,16 +159,24 @@ Dans la publication~\cite{lamare2007list}, deux variantes de cette technique son
 
 \section{Déconvolution de l'image}
 
-Cette technique qui est peu décrite en ~\cite{naqa2006deblurring} utilise une connaissance du mouvement respiratoire acquise à partir d'une image TDM 4D pour déduire un filtrage appellé TLP (\textit{Tumor Location Probability}) qui correspond à la dégradation dû au mouvement respiratoire.
+Cette technique décrite en ~\cite{naqa2006deblurring} utilise une connaissance du mouvement respiratoire acquise à partir d'une image TDM 4D pour déduire un filtrage appellé TLP (\textit{Tumor Location Probability}) qui correspond à la dégradation dû au mouvement respiratoire.
 
 L'image est ensuite déconvoluée pour corriger les effets du mouvement respiratoire. Cette méthode a été évaluée sur un fantôme physique et des patients réels à l'aide d'un grand nombre de critères provenant pour partie de la TEP (sous-estimation de l'activité de la tumeur, exemples d'images), et pour partie du domaine de la déconvolution (entropie, ``rugosité'').
 
-Les résultats présentés en \ref{fig:performanceDeconvolution} montrent une nette amélioration des performances sur des fantômes, pour un déplacement simple de 20mm.
+Les résultats présentés en \ref{fig:performanceDeconvolution} montrent une nette amélioration des performances sur des fantômes, pour un déplacement axial simple de 20mm. L'activité des lésions de fort diamètre est correctement récupérée quelquesoit l'algorithme utilisée, mais il n'a pratiquement pas d'effets sur les lésions de 1cm de diamètre.
+
+Ce type d'algorithme est peu présenté dans la littérature. 
 
 \begin{figure}[h!]
 	\begin{center}
-		\includegraphics[width=12cm]{images/performanceDeconvolution}
+		\includegraphics[width=10cm]{images/performanceDeconvolution}
 	\end{center}
 	\caption{Comparaison de l'erreur de sous-estimation de l'activité des lésions en fonction de l'algorithme de déconvolution utilisé sur des fantômes. En a) la lésion a un activité moyenne, tandis qu'en b) l'activité de la lésion est faible par rapport au fond. Le déplacement de la lésion est le même dans les deux cas (2cm)} 
 	\label{fig:performanceDeconvolution}
 \end{figure}
+
+
+Un autre article utilisant aussi des alrgorithmes de déconvolution a été présenté par wiemker~\cite{wiemker2008combined}. Cependant il ne cherche pas à corriger le mouvement respiratoire sur l'ensemble de l'image mais seulement sur une lésion. 
+
+La lésion est tout d'abord contouré sur une image TDM, 
+

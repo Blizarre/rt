@@ -1,3 +1,7 @@
 Bins : Phases
 H1 : Pathologique
 H0 : Sain
+Statique: Statique 
+Non Corrigé: NoCorr
+Post-Recon: TE-IM (Transfo. élastique Images)
+Matrice Syst. : TE-MS (Transfo élastique Matrice Système)
