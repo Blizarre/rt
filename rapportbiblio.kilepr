@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=texte/methodes.tex
+lastDocument=texte/resultats.tex
 masterDocument=
 name=rapportBiblio
 pkg_extIsRegExp=false
@@ -17,21 +17,21 @@ QuickBuild=
 
 [item:../../../../documentation/Thèse/rapportBiblio/texte/eval.tex]
 archive=true
-column=1
+column=19
 encoding=UTF-8
 highlight=LaTeX
-line=1
+line=78
 open=true
-order=0
+order=1
 
 [item:main.tex]
 archive=true
-column=23
+column=24
 encoding=UTF-8
 highlight=LaTeX
-line=125
-open=false
-order=1
+line=24
+open=true
+order=0
 
 [item:nomenclature.txt]
 archive=true
@@ -75,32 +75,32 @@ column=0
 encoding=UTF-8
 highlight=LaTeX
 line=154
-open=true
+open=false
 order=2
 
 [item:texte/estimation.tex]
 archive=true
-column=114
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=18
-open=true
-order=1
+line=15
+open=false
+order=2
 
 [item:texte/methodes.tex]
 archive=true
-column=29
+column=12
 encoding=UTF-8
 highlight=LaTeX
-line=122
+line=156
 open=true
-order=3
+order=2
 
 [item:texte/resultats.tex]
 archive=true
-column=18
+column=553
 encoding=UTF-8
 highlight=LaTeX
-line=577
-open=false
-order=0
+line=276
+open=true
+order=3

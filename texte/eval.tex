@@ -2,7 +2,7 @@
 \label{lab:chapCAD}
 	\section{Généralités}
 
-En oncologie, la détection des site tumoraux est une étape capitale dans la prise en charge des patients. Elle permet l'évaluation de l'état d'avancement de la maladie, ou encore d'étudier la réponse à un traitement~\cite{dimitrakopoulou2002role}. Cette détection se fait actuellement par le médecin qui va observer les images TEP/TDM acquises à la recherche de fixations anormales. Cependant, ces fixations peuvent provenir d'autres facteurs, tels que la ``graisse brune'', des muscles activés ou encore une inflammation locale~\cite{bordessoule2006impact}. Associés aux limites de l'imageur, surtout au niveau du rapport signal sur bruit des volumes reconstruits, il est donc possible qu'il y ait une erreur lors du diagnostique.
+En oncologie, la détection des sites tumoraux est une étape capitale dans la prise en charge des patients. Elle permet l'évaluation de l'état d'avancement de la maladie, ou encore d'étudier la réponse à un traitement~\cite{dimitrakopoulou2002role}. Cette détection se fait actuellement par le médecin qui va observer les images TEP/TDM acquises à la recherche de fixations anormales. Cependant, ces fixations peuvent provenir d'autres facteurs, tels que la ``graisse brune'', des muscles activés ou encore une inflammation locale~\cite{bordessoule2006impact}. Associés aux limites de l'imageur, surtout au niveau du rapport signal sur bruit des volumes reconstruits, il est donc possible qu'il y ait une erreur lors du diagnostique.
 
 Dans cette partie, je vais détailler les techniques qui permettent de comparer les performances de plusieurs observateurs (médecins ou algorithmes) face aux mêmes images, ou alors du même observateur face à plusieurs types d'images différentes.
 
@@ -48,9 +48,9 @@ Les techniques de comparaisons d'organes de décision comme les ROC (Receiver-Op
 
 Les ROC \cite{swets1982evaluation}\cite{metz1986roc} sont des courbes indiquant la spécificité et la sensibilité du modèle de classification pour différents niveaux de certitudes. Elles fournissent une mesure objective des performances d'un observateur dans une tâche de discrimination entre deux classes. 
 
-Elles peuvent être utilisée pour comparer les performances relatives de différents observateurs ou pour déterminer leurs paramètres optimaux 
+Elles peuvent être utilisées pour comparer les performances relatives de différents observateurs ou pour déterminer leurs paramètres optimaux 
 
-l'évaluation d'un observateur par la méthode ROC implique de créer un jeu de données de données labellisé en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: pas du tout pathologique, 1: potentiellement pathologique, 3:équivoque, 6: certainement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain.
+L’évaluation d'un observateur par la méthode ROC implique de créer un jeu de données de données labellisé en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: pas du tout pathologique, 1: potentiellement pathologique, 3:équivoque, 6: certainement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain.
 
 L'observateur peut être un humain ou un algorithme, et les notes peuvent être discrètes ou continues.
 
@@ -76,7 +76,8 @@ Un ensemble d'indicateurs permettent de comparer les performances de classifieur
 
 IL est important lors du calcul de la FDM d'avoir une estimation de l'erreur. Il est possible de l'estimer en ajustant une courbe théorique (répondant à la loi théorique de la figure \ref{fig:loiROC}). Plusieurs logiciels ont été développés pour estimer les paramètres, qui ont été comparés dans la publication \cite{CarstenStephan03012003} (AccuROC, Analyse-It, CMDT, GraphROC, MedCalc, mROC, ROCKIT, and SPSS).
 
-Une grandeur souvent utilisée dans la littérature pour évaluer la pertinence d'un résultat est la \emph{p-valeur}. Elle représente la probabilité d'obtenir un résultat au moins aussi extrème que le résultat obtenu (dans notre cas, la courbe ROC), en prenant en compte l'hypothèse selon laquelle le classifieur est aléatoire. Elle permet de vérifier si le test est statistiquement significatif.
+\label{lab:p-valeur}
+Une grandeur souvent utilisée dans la littérature pour évaluer la pertinence d'un résultat est la \emph{p-valeur}. Elle représente la probabilité d'obtenir un résultat au moins aussi extrême que le résultat obtenu (dans notre cas, la courbe ROC), en prenant en compte l'hypothèse selon laquelle le classifieur est aléatoire. Elle permet de vérifier si le test est statistiquement significatif.
 
 Le problème des courbes ROC est que l'observateur ne donne pas d'information de localisation du problème dans l'image. Dans notre cas, nous voulons comparer des classifieurs qui détectent les tumeurs dans l'image. Il faut non seulement savoir si des lésions sont présentes, mais aussi avoir leur nombre et leur localisation. Cela est plus proche du travail en routine clinique qui consiste à évaluer l'étendue et le nombre des lésions pour déterminer l'efficacité d'un traitement par exemple. 
 
@@ -86,7 +87,7 @@ Pour éviter cette limitation, plusieurs extensions à la méthodologie \ROC son
 
 L'analyse L-ROC~\cite{farquhar1999roc} ajoute l'information de localisation lors de la décision. L'observateur doit indiquer sur l'image qu'il considère comme pathologique la localisation de la lésion la plus probable. Elle est considérée comme un vrai positif si la distance entre la localisation indiquée et la localisation réelle de la lésion est inférieur à une certaine distance.
 
-Cependant, bien que cette technique prenne en compte l'information de localisation, elle ne permet pas de traiter de manière satisfaisante les cas multi-lesions. 
+Cependant, bien que cette technique prenne en compte l'information de localisation, elle ne permet pas de traiter de manière satisfaisante les cas multi-lésions. 
 
 
 \section{F-ROC}	
@@ -109,7 +110,7 @@ On utilise les termes de LL (Localisation de Lésion) et NL (Non-Lésion) en lie
 	\caption{Courbe Free ROC}
 \end{figure}
 
-Les courbes F-ROC n'ayant pas de bornes sur l'axes des abscisses, il est impossible de comparer plusieurs courbes à partir de l'aire sous la courbe. Il reste cependant possible de comparer la sensibilité pour un nombre de faux positifs donnés, mais on retrouve les mêmes problèmes que pour l'analyse ROC : il faut choisir un paramètre.
+Les courbes F-ROC n'ayant pas de bornes sur l’axe des abscisses, il est impossible de comparer plusieurs courbes à partir de l'aire sous la courbe. Il reste cependant possible de comparer la sensibilité pour un nombre de faux positifs donnés, mais on retrouve les mêmes problèmes que pour l'analyse ROC : il faut choisir un paramètre.
 
 \subsection{Courbes Alternative Free-ROC}
 
@@ -117,7 +118,7 @@ Les courbes A-FROC~\cite{chakraborty1990free} sont des extensions des courbes Fr
 
 \subsection{Comparaison des courbes}
 \label{lab:AFROC}
-Plusieurs techniques ont été développées pour permettre de réaliser des comparaisons. De la même manière que pour les courbe ROC, il est possible de comparer les courbes F-ROC en fonction de la FLL pour un nombre de faux positifs donnés. Cependant, étant donné que les courbes F-ROC n'ont pas de fin déterminée, il n'est pas possible d'utiliser l'aire sous la courbe. JAFROC\cite{chakraborty2004observer} (JAcknife Free Receiver Operating Curve) est un algorithme et un logiciel développé par Chakraborty et se base sur une FDM non liée directement à la courbe. 
+Plusieurs techniques ont été développées pour permettre de réaliser des comparaisons. De la même manière que pour les courbes ROC, il est possible de comparer les courbes F-ROC en fonction de la FLL pour un nombre de faux positifs donnés. Cependant, étant donné que les courbes F-ROC n'ont pas de fin déterminée, il n'est pas possible d'utiliser l'aire sous la courbe. JAFROC\cite{chakraborty2004observer} (JAcknife Free Receiver Operating Curve) est un algorithme et un logiciel développé par Chakraborty et se base sur une FDM non liée directement à la courbe. 
 
 Cette mesure de performance utilise un algorithme dérivé des études A-FROC, ce qui signifie qu'il n'utilise pas l'ensemble des informations disponibles dans les courbes Free-ROC. Il va comparer les scores des faux positifs de plus forte note pour chaque image avec les notes des vrais positifs. La FDM mesure la probabilité d'avoir un score de vrai positif supérieur à celui d'un faux positif (de n'importe quelle image).
 
@@ -144,7 +145,7 @@ $X_i$ le score du plus haut Faux positif de l'image $i$, $Y_{jk}$ est la note de
 
 Les poids $W_{jk}$ correspondent à l'importance relative de détecter la lésion $k$ dans l'image $j$ pour le diagnostique. Pour chaque image, la somme des poids doit être égale à 1.
 
-Une seconde version de JAfroc existe avec un pouvoir statistique plus important, mais elle nécessite de disposer d'un grand nombre de cas non pathologiques. La formule est la même que celle précédente (eq. \ref{eq:JAFROC1}). La seule différence est que la première sommation se fait sur l'ensemble des cas non pathologiques $N_N$ (eq. \ref{eq:JAFROC2}).
+Une seconde version de JAFROC existe avec un pouvoir statistique plus important, mais elle nécessite de disposer d'un grand nombre de cas non pathologiques. La formule est la même que celle précédente (eq. \ref{eq:JAFROC1}). La seule différence est que la première sommation se fait sur l'ensemble des cas non pathologiques $N_N$ (eq. \ref{eq:JAFROC2}).
 
 \begin{equation}
 \label{eq:JAFROC2}
@@ -156,7 +157,7 @@ Une seconde version de JAfroc existe avec un pouvoir statistique plus important,
 
 	\section{Les CAD en TEP}
 
-Les systèmes CAD (Computer-Aided-Detection) sont des algorithmes permettant d'assister le praticien dans la détection des lésions ou le classement des images images médicales. Dans le cadre de l'imagerie TEP oncologique, le besoin principal est celui du suivi thérapeutique. Pour cela, il est important de détecter d'éventuelles lésions résiduelles. Pour cela, il faut que le système CAD soit particulièrement adapté à la recherche de petites lésions de faible contraste qui pourraient échapper au médecin. Cependant, le diagnostique, qui consiste à évaluer la dangerosité des lésions, et leur caractère pathologique est une tâche plus complexe qui relève plus des système d'aide au diagnostique, qui ne seront pas traités ici.
+Les systèmes CAD (Computer-Aided-Detection) sont des algorithmes permettant d'assister le praticien dans la détection des lésions ou le classement des images médicales. Dans le cadre de l'imagerie TEP oncologique, le besoin principal est celui du suivi thérapeutique. Pour cela, il est important de détecter d'éventuelles lésions résiduelles. Pour cela, il faut que le système CAD soit particulièrement adapté à la recherche de petites lésions de faible contraste qui pourraient échapper au médecin. Cependant, le diagnostique, qui consiste à évaluer la dangerosité des lésions, et leur caractère pathologique est une tâche plus complexe qui relève plus des systèmes d'aide au diagnostique, qui ne seront pas traités ici.
 
 Le développement des systèmes CAD a débuté dans les années 1980~\cite{chan1987image}, notamment pour détecter les micro calcifications en mammographie. Bien qu'il existe plusieurs systèmes CAD commerciaux pour l'imagerie TDM (xLNA pour philips par exemple), aucun CAD commercial pour la TEP n'existe à ma connaissance.
 
@@ -175,7 +176,7 @@ Les classifieurs supervisés nécessitent une connaissance a priori des classes.
 
 		\subsubsection{Machines à vecteur de support (SVM)}
 \label{lab:SVM}
-La ``Machine à Vecteur de Support'', aussi appelée ``Séparateur à Vaste Marge'', ou ``Support Vector Machines'' en Anglais, est un classifieur qui comme son nom l'indique vise à maximiser la marge\cite{boser1992training}, qui est la distance entre les points des données et la surface spéaratrice (voir figure \ref{fig:SVM}).
+La ``Machine à Vecteur de Support'', aussi appelée ``Séparateur à Vaste Marge'', ou ``Support Vector Machines'' en Anglais, est un classifieur qui comme son nom l'indique vise à maximiser la marge\cite{boser1992training}, qui est la distance entre les points des données et la surface séparatrice (voir figure \ref{fig:SVM}).
 
 \begin{figure}[h]
 	\label{fig:SVM}
@@ -187,7 +188,7 @@ La ``Machine à Vecteur de Support'', aussi appelée ``Séparateur à Vaste Marg
 
 		\subsection{non supervisée - méthodologie}
 
-Dans le système de classification non supervisé, on fourni directement au classifieur l'ensemble des données à traiter. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes \ref{fig:fonctionnementClassifNonSup}.
+Dans le système de classification non supervisé, le classifieur ne reçoit directement l'ensemble des données à traiter, sans informations supplémentaires. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes \ref{fig:fonctionnementClassifNonSup}.
 
 La classification nom supervisée repose sur une méthode statistique utilisant une fonction de proximité.
 
@@ -201,11 +202,38 @@ La classification nom supervisée repose sur une méthode statistique utilisant 
 
 	\section{classifieurs}
 
-		CROSS-VALIDATION 
+		\subsection{SVM (Séparateur à Vaste Marge)}
 
-		\subsection{SVM (Separateur à Vaste Marge)}
+Les SVM sont des classifieurs supervisés qui cherchent à maximiser la séparation entre chaque classe. L'idée sous-jacente aux SVM est de trouver l'hyperplan optimal de séparation, et non pas n'importe quel hyperplan qui permettrais de séparer correctement les données d'apprentissage (figure \ref{fig:multiPlansSeparationSVM}). 
 
-Ce type de classifieur se base sur 
+
+
+\begin{figure}[h]
+	\label{fig:multiPlansSeparationSVM}
+	\begin{center}
+	\includegraphics[width=15cm]{images/multiPlansSeparationSVM}
+	\end{center}
+	\caption{Illustration du principe d'optimisation de la marge sur un cas à deux classes et deux caractéristiques : Il existe une infinité d'hyperplan qui séparent correctement les classes ``étoile vertes'' et ``ronds rouge'', représentés par les traits fins en pointillé. Cependant, il existe seulement une seule solution qui va maximiser la marge. Cette solution est représentée en trait plein, avec la marge $\frac{1}{||\omega||}$. Les points entourés en noir sont les points support utilisés pour contraindre l'hyperplan. }
+\end{figure}
+
+
+L'hyperplan optimal au sens des SVM est celui qui maximise la marge, c'est à dire qui maximise la distance entre l'hyperplan et les vecteurs de caractéristiques les plus proches. La définition de cette marge et de l'hyperplan se fait à partir des vecteurs de support. Ils correspondent aux cas extrêmes des deux classes qui pourraient éventuellement poser des problèmes de classification.
+
+Dans le cas où l'hyperplan de séparation ne pourrait pas être défini par une équation linéaire, des fonctions à noyaux sont utilisées pour projeter les points dans un espace de plus grande dimensions où le problème devient linéaire (voir figure \ref{fig:kernelTrick}). Cependant, la transformation n'est jamais réalisée explicitement, ce qui permet d'avoir certains noyaux, dont les RBF (Fonctions à base radiales) qui ont un espace d'arrivée de dimensions infinies.
+
+\begin{figure}[h]
+	\label{fig:kernelTrick}
+	\begin{center}
+	\includegraphics[width=15cm]{images/kernelTrick}
+	\end{center}
+	\caption{Illustration du principe du changement de base : Des données non séparables dans le repère original peuvent devenir séparables en utilisant les noyaux. Dans ce cas, le passage des coordonnées cartésiennes aux coordonnées polaires permet de rendre le problème original linéairement séparable.}
+\end{figure}
+
+
+Grâce à la maximisation de la marge, les SVM sont performants dans le cas où l'on ne dispose que de faible quantités de données. De plus, ils sont relativement résistants aux phénomènes de sur-apprentissage, qui
+
+Comme indiqué dans le schéma \todo{refSchema}
+
 
 		\subsection{LDA}
 
