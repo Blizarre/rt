@@ -43,7 +43,7 @@ Une autre publication~\cite{boucher2004respiratory} utilise un thermomètre dét
 
 Une variante de cette technique ne nécessitant pas de capteur est décrite dans~\cite{nehmeh2003reduction}. Un point faiblement radioactif est fixé au-dessus du torse du patient. Les acquisitions de l'imageur sont ensuite enregistrées par blocs temporels de 1 seconde, et une zone d'intérêt est reconstruite dans chacune des images. Les données reconstruites montrant le point source dans cette zone d'intérêt sont sommées et l'image finale reconstruite. 
 
-Cette technique a été comparée avec celle présentée précédemment basée sur le système RPM. Ces deux techniques n'ont été testée cliniquement que sur un patient mais ont montrés des performances tout à fait semblables (6\% de différence dans les activités et 2\% pour le volume de la lésion).
+Cette technique a été comparée avec celle présentée précédemment basée sur le système RPM. Ces deux techniques n'ont été testées cliniquement que sur un patient mais ont montrés des performances tout à fait semblables (6\% de différence dans les activités et 2\% pour le volume de la lésion).
 
 Cependant ces techniques n'utilisent pas une carte d'atténuation optimisée pour la position du cycle correspondant aux acquisitions TEP.  Guoping et al.~\cite{GuopingChang2010Implementation} réalisent la carte d'atténuation à partir d'une image TDM réalisée en respiration libre synchronisée, et reconstruisent les données TEP acquises lorsque l'amplitude respiratoire est proche de celle utilisée pour l'acquisition TDM (voir exemples figure \ref{fig:chang2010}. Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
 
@@ -66,7 +66,7 @@ Dans cette section, nous allons détailler la technique consistant à corriger  
 
 Pour réaliser cela, les différentes techniques se basent sur une estimation préalable du mouvement respiratoire. Les images de chaque phase sont reconstruites indépendamment, puis recalées sur une phase de référence grâce au champ de mouvement. Enfin, les images déformées sont sommées. La difficulté se situe dans l'estimation du champ de mouvement interne lors de la respiration, car ce mouvement est complexe.
 
-Les premières publications décrivant cette technique l'utilisaient notamment pour réaliser de l'imagerie cardiaque en TEP~\cite{klein19973d}. Cette publication démontre la faisabilité du procédé sur un animal en utilisant des techniques de flux optique pour estimer le champs de mouvement. En effet le coeur a l'avantage d'avoir une activité métabolique intense, ce qui rend l'estimation de son mouvement aisée même sur des images avec une faible statistique.
+Les premières publications décrivant cette technique l'utilisaient notamment pour réaliser de l'imagerie cardiaque en TEP~\cite{klein19973d}. Cette publication démontre la faisabilité du procédé sur un animal en utilisant des techniques de flux optique pour estimer le champ de mouvement. En effet le coeur a l'avantage d'avoir une activité métabolique intense, ce qui rend l'estimation de son mouvement aisée même sur des images avec une faible statistique.
 
 \subsection{Estimation du mouvement respiratoire corps entier}
 
@@ -109,7 +109,7 @@ Dans le cadre du mouvement respiratoire du thorax, l'approche de recalage par LD
 	\begin{center}
 		\includegraphics[width=6cm]{images/bloomfield2003design} \includegraphics[width=3cm]{images/livieratos2005rigid}
 	\end{center}
-	\caption{Résultats de l'algorithme de recalage des LOR sur des images de patients utilisant le radio-traceur [$^{11}$C]raclopride. (a) montre une image non corrigée du mouvement et (b) une image corrigée. On peut noter que les éléments interne du cerveau sont beaucoup mieux définis. (c) représente une coupe du coeur petit axe non corrigée (en haut) et corrigée (en bas). On peut voir une amélioration de la définition de l'image.} 
+	\caption{Résultats de l'algorithme de recalage des LOR sur des images de patients utilisant le radio-traceur [$^{11}$C]raclopride. (a) montre une image non corrigée du mouvement et (b) une image corrigée. On peut noter que les éléments internes du cerveau sont beaucoup mieux définis. (c) représente une coupe du coeur petit axe non corrigée (en haut) et corrigée (en bas). On peut voir une amélioration de la définition de l'image.} 
 	\label{fig:ameliorationLOR}
 \end{figure}
  
@@ -145,7 +145,7 @@ $S$ est la matrice de sensibilité :
  S=\frac{1}{N_{frames}} \sum_{t=1}^{N_{frames}} P_t^T N A_t 
 \end{equation}
 
- $A_t$ est la matrice permettant de corriger les effets de l'atténuation au temps $t$ et $N$ est la matrice de normalisation qui compense l'in-homogénéité spatiale de la sensibilité.
+ $A_t$ est la matrice permettant de corriger les effets de l'atténuation au temps $t$ et $N$ est la matrice de normalisation qui compense l'inhomogénéité spatiale de la sensibilité.
 
 Dans la publication~\cite{lamare2007list}, deux variantes de cette technique sont comparées avec la correction par synchronisation respiratoire avec recalage présentée précédemment ainsi que la correction pré-reconstruction. Les résultats présentés montrent un clair avantage pour la correction pendant la reconstruction, avec des performances couramment améliorées d'un facteur 2. 
 
@@ -183,11 +183,11 @@ Ce type d'algorithme est peu présenté dans la littérature.
 	\begin{center}
 		\includegraphics[width=10cm]{images/performanceDeconvolution}
 	\end{center}
-	\caption{Comparaison de l'erreur de sous-estimation de l'activité des lésions en fonction de l'algorithme de déconvolution utilisé sur des fantômes. En a) la lésion a un activité moyenne, tandis qu'en b) l'activité de la lésion est faible par rapport au fond. Le déplacement de la lésion est le même dans les deux cas (2cm)} 
+	\caption{Comparaison de l'erreur de sous-estimation de l'activité des lésions en fonction de l'algorithme de déconvolution utilisé sur des fantômes. En a) la lésion a une activité moyenne, tandis qu'en b) l'activité de la lésion est faible par rapport au fond. Le déplacement de la lésion est le même dans les deux cas (2cm)} 
 	\label{fig:performanceDeconvolution}
 \end{figure}
 
 
 Un autre article utilisant aussi des algorithmes de déconvolution a été présenté par wiemker~\cite{wiemker2008combined}. Cependant il ne cherche pas à corriger le mouvement respiratoire sur l'ensemble de l'image mais principalement à améliorer la mesure du SUV sur une lésion. Pour cela, il réalise une estimation de la fonction d'étalement du point (FEP) de l'imageur TEP au niveau de la lésion à l'aide d'un contourage de la lésion réalisé préalablement dur une image TDM. L'estimation de la FEP permet de prendre en compte à la fois les effets du mouvement respiratoire et ceux de la FEP intrinsèque à l'imageur TEP. 
 
-Cependant, cette technique est inapplicable dans notre cas car les lésions doivent être suffisamment importante et homogène pour pouvoir les délimiter de manière fiables sur les images TDM, ce qui n'est pas notre cas.
+Cependant, cette technique est inapplicable dans notre cas car les lésions doivent être suffisamment importantes et homogènes pour pouvoir les délimiter de manière fiable sur les images TDM, ce qui n'est pas notre cas.

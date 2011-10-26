@@ -4,7 +4,7 @@ Le signal respiratoire est une grandeur qui permet de positionner le cycle entre
 
 \subsection{Spiromètre}
 
-Le spiromètre est un capteur externe placé sur la bouche du patient et qui permet de mesurer les déplacements d'air dans le système respiratoire~\cite{guivarc2004synchronization}. Les spiromètres mesurent un débit ou un volume d'air inspiré/expiré (voir illustration figure \ref{fig:spirometre}). A partir de l'une des grandeur, il est possible d'estimer l'autre facilement. L'avantage du spiromètre est qu'il permet d'accéder à une mesure caractérisant directement la respiration du patient, et n'est pas sujet à des perturbations externes (mouvements involontaires par exemple). Par contre cela demande un appareillage qui peut être assez invasif pour le patient.
+Le spiromètre est un capteur externe placé sur la bouche du patient et qui permet de mesurer les déplacements d'air dans le système respiratoire~\cite{guivarc2004synchronization}. Les spiromètres mesurent un débit ou un volume d'air inspiré/expiré (voir illustration figure \ref{fig:spirometre}). A partir de l'une des grandeurs, il est possible d'estimer l'autre facilement. L'avantage du spiromètre est qu'il permet d'accéder à une mesure caractérisant directement la respiration du patient, et n'est pas sujet à des perturbations externes (mouvements involontaires par exemple). Par contre cela demande un appareillage qui peut être assez invasif pour le patient.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -18,9 +18,9 @@ Le spiromètre est un capteur externe placé sur la bouche du patient et qui per
 
 Pour mesurer le signal respiratoire, il est possible d'utiliser un capteur qui va mesurer le périmètre du thorax. L'extension de cette ceinture va correspondre aux mouvements de la cage thoracique et de l'abdomen pendant la respiration du patient. C'est une mesure indirecte de l'amplitude du mouvement respiratoire utilisée couramment en routine clinique. 
 
-Différentes technologies existent pour mesurer cette informations (RespiTrace R250 de Studley. Data Systems, Respiratory Belt Transducer de ADInstruments, ...). Elles sont basées sur plusieurs effets (résisitif, inductif...) et ont l'avantage d'avoir un faible coût et de ne pas perturber le patient.
+Différentes technologies existent pour mesurer cette information (RespiTrace R250 de Studley. Data Systems, Respiratory Belt Transducer de ADInstruments, ...). Elles sont basées sur plusieurs effets (résisitif, inductif...) et ont l'avantage d'avoir un faible coût et de ne pas perturber le patient.
 
-Bien qu'elles puissent être influencée par les mouvements involontaires du patient, il a été montré dans \cite{Guivarch2004Sync} que les données acquises selon les méthodes par respiromètre et par ceinture sont équivalentes.
+Bien qu'elles puissent être influencées par les mouvements involontaires du patient, il a été montré dans \cite{Guivarch2004Sync} que les données acquises selon les méthodes par respiromètre et par ceinture sont équivalentes.
 
 \subsection{Basés caméras}
 
@@ -32,18 +32,18 @@ Une autre technique consiste à installer un marqueur sur le corps du patient et
 	\begin{center}
 		\includegraphics[width=12cm]{images/varian}
 	\end{center}
-	\caption{Photographie du système RGS de Varian medical Systems en action : une caméra va détecter le déplacement d'une zone du thorax en mesurant le déplacement de marqueurs placés sur un bloc plastique. } 
+	\caption{Photographie du système RGS de Varian medical Systems en action : une caméra va détecter le déplacement d'une zone du thorax en mesurant le déplacement de marqueurs placés sur un bloc plastique.} 
 	\label{fig:RGSdeVarian}
 \end{figure}
 
-Ces techniques ont l'avantage d'être moins invasives et plus facilement acceptées par le patient. Cependant, elles sont beaucoup plus sensibles aux mouvements involontaires du patient. Pour l'acquisition d'image TDM ce ce risque est faible car elles sont de faible durée (inférieures à la minute), mais il devient important pour les acquisitions TEP qui peuvent durer en tout plusieurs dizaine de minutes. Ces mouvements n'étant probablement pas corrélés avec le mouvement respiratoire, ils vont perturber le signal obtenu. 
+Ces techniques ont l'avantage d'être moins invasives et plus facilement acceptées par le patient. Cependant, elles sont beaucoup plus sensibles aux mouvements involontaires du patient. Pour l'acquisition d'image TDM ce risque est faible car elles sont de faible durée (inférieures à la minute), mais il devient important pour les acquisitions TEP qui peuvent durer en tout plusieurs dizaine de minutes. Ces mouvements n'étant probablement pas corrélés avec le mouvement respiratoire, ils vont perturber le signal obtenu. 
 
 \subsection{Techniques basées sur les images TEP}
 \label{lab:estimMvtTEP}
 En TEP, la publication de Bundschuh et al.~\cite{bundschuh2007postacquisition} utilise les données dynamiques pour estimer le signal respiratoire sans avoir besoin de capteur externes . Ce processus est réalisé en 5 étapes : 
 
 \begin{enumerate}
- \item Les données TEP sont acquises en mode séquentiel : toutes les désintégrations détectées sont enregistrées dans un fichier de manière séquentielles  
+ \item Les données TEP sont acquises en mode séquentiel : toutes les désintégrations détectées sont enregistrées dans un fichier de manière séquentielle  
  \item L'image TEP statique est reconstruite. Elle permet de localiser une lésion dans l'image qui servira d'amer pour l'estimation du mouvement respiratoire.
  \item Une image TEP est reconstruite pour chaque intervalle temporel de 0.5 secondes.
  \item La zone d'intérêt sélectionnée précédemment est sélectionnée dans chaque image reconstruite. La position axiale du barycentre à chaque instant temporel va donner une estimation du mouvement respiratoire pour le volume donné.
@@ -58,14 +58,14 @@ Cette technique est intéressante mais contrainte par la qualité de l'image TEP
 \label{lab:estimChamp}
 Le champ de mouvement est une information beaucoup plus riche que le signal respiratoire car il permet de suivre les déplacements des organes et des lésions à l'intérieur du corps du patient à l'intérieur d'un cycle respiratoire.
 
-Le signal respiratoire acquis par les méthodes précédemment cités est utilisé pour décomposer les données acquises en TDM ou TEP en plusieurs phases, chacune correspondant à un instant du cycle. Ces informations sont utilisées pour assembler les données acquises pour chaque phase, reconstruites indépendamment. Ces reconstructions vont être utilisées pour estimer les champ de mouvements à l'aide de techniques de recalage.
+Le signal respiratoire acquis par les méthodes précédemment cités est utilisé pour décomposer les données acquises en TDM ou TEP en plusieurs phases, chacune correspondant à un instant du cycle. Ces informations sont utilisées pour assembler les données acquises pour chaque phase, reconstruites indépendamment. Ces reconstructions vont être utilisées pour estimer le champ de mouvements à l'aide de techniques de recalage.
 
 
 \subsection{Image TEP 4D}
 
 L'estimation du champ de mouvement respiratoire peut être fait à partir des données TEP, comme il a été montré par \cite{dawood2008respiratory, dawood2006lung}. 
 
-Les techniques utilisées sont analogues à celle présentée en \ref{lab:estimMvtTEP}. Elles consistent à réaliser une acquisition list-mode des données en même temps qu'une acquisition du signal respiratoire, puis à réorganiser les données acquises pour reconstruire les différents instants du cycles indépendamment et sans correction d'atténuation. Le mouvement sera estimé à partir de ces images.
+Les techniques utilisées sont analogues à celle présentée en \ref{lab:estimMvtTEP}. Elles consistent à réaliser une acquisition list-mode des données en même temps qu'une acquisition du signal respiratoire, puis à réorganiser les données acquises pour reconstruire les différents instants du cycle indépendamment et sans correction d'atténuation. Le mouvement sera estimé à partir de ces images.
 
 La publication de \cite{dawood2008respiratory} cherche à corriger le mouvement respiratoire, et pour cela fait une estimation préliminaire de ce mouvement. 
 
@@ -73,7 +73,7 @@ Pour obtenir le signal respiratoire, dawood utilise une caméra qui enregistre l
 
 La synchronisation avec l'acquisition PET est réalisée à l'aide d'une LED dans le champ de vue de la caméra qui s'allume lors du début de l'acquisition. Une fois l'acquisition réalisée, le signal respiratoire obtenu est utilisé pour répartir les évènements acquis par l'imageur sur un seul cycle respiratoire. Ce cycle est décomposé en 8 parties qui seront reconstruites séparément, sans correction d'atténuation. 
 
-Les auteurs utilisent ensuite un algorithme de flux optique 3D présenté dans \cite{dawood2006lung} et \cite{horn1981determining} pour déterminer le champ de mouvement : Ils estiment un déplacement entre chaque image du cycle et l'image de référence (la 4è dans le cas de cet article). Les résultat de l'algorithme sera donc une séquence de champ de mouvement formant un champ de déformation 4D.
+Les auteurs utilisent ensuite un algorithme de flux optique 3D présenté dans \cite{dawood2006lung} et \cite{horn1981determining} pour déterminer le champ de mouvement : Ils estiment un déplacement entre chaque image du cycle et l'image de référence (la 4è dans le cas de cet article). Le résultat de l'algorithme sera donc une séquence de champ de mouvement formant un champ de déformation 4D.
 
 L'algorithme a été testé sur le fantôme XCAT ainsi que sur les données de 16 patients. La performance de l'estimation de mouvement a été évaluée selon trois critères, évalués sur les images corrigées : la correction du déplacement axial du coeur, le coefficient de corrélation des images corrigées du mouvement, ainsi que le bruit obtenu. Je présenterais ces résultats dans la présentation de cet article dans la partie \ref{lab:correctionDawood2008}.
 
@@ -85,7 +85,7 @@ Un exemple de champ de déformation obtenu est présenté en \ref{fig:champMouve
 	\begin{center}
 		\includegraphics[width=12cm]{images/champDeformBai2}
 	\end{center}
-	\caption{Champ de déformation calculé à l'aide de la méthode présenté en \cite{bai2009regularized}. a) représente l'image TEP obtenue à partir des données de la phase de référence  (mi-expiration), b) correspond à l'image reconstruite pour les donnée d'expiration complète, et c) le résultat du recalage de l'image de fin d'expiration sur l'image de référence. d) représente le champ de mouvement résultat. Les traits rouge représentent l'extension axiale de la tumeur dans l'image de référence.} 
+	\caption{Champ de déformation calculé à l'aide de la méthode présenté en \cite{bai2009regularized}. a) représente l'image TEP obtenue à partir des données de la phase de référence  (mi-expiration), b) correspond à l'image reconstruite pour les donnée d'expiration complète, et c) le résultat du recalage de l'image de fin d'expiration sur l'image de référence. d) représente le champ de mouvement résultat. Les traits rouges représentent l'extension axiale de la tumeur dans l'image de référence.} 
 	\label{fig:champMouvementBai}
 \end{figure}
 
@@ -97,14 +97,14 @@ Des algorithmes de recalage sont utilisés de manière à déduire le champ de m
 
 \begin{itemize}
  \item Une possible incohérence entre le cycle acquis en TDM 4D et la respiration du patient en TEP. Bien que les imageurs TEP/TDM couplent les deux imageurs sur la même machine, de manière à éviter les mouvements du patients entre les acquisitions, le cycle acquis en TDM ne représente qu'un cycle, tandis que l'acquisition TEP va donner un ``cycle moyen`` plus proche de la réalité.
- \item Une dose de radiation émise plus importante. Bien que les technologies récentes permettent de réduire les doses de manière importante pour l'acquisition dynamique, elles restent tout de même plus importante que pour un CT 3D.
+ \item Une dose de radiation émise plus importante. Bien que les technologies récentes permettent de réduire les doses de manière importante pour l'acquisition dynamique, elles restent tout de même plus importantes que pour un CT 3D.
 \end{itemize}
 
 Il faut noter que plusieurs publications basées sur des simulations se servent des cartes de labels utilisées pour la simulation pour réaliser les estimation de mouvements~\cite{lamare2007list}. Cela donne une estimation dans le ``meilleur des cas'', où l'image TDM est parfaitement en phase avec les images TEP.
 
 \section{Modèle}
 
-Une autre voie est en cours de développement basée sur la création d'un modèle de respiration qui est adapté adapté à chaque patient à partir d'une quantité réduite de données. Fayad \cite{fayad2010application} propose un modèle basée sur l'analyse en composantes principales. 
+Une autre voie est en cours de développement basée sur la création d'un modèle de respiration qui est adapté à chaque patient à partir d'une quantité réduite de données. Fayad \cite{fayad2010application} propose un modèle basée sur l'analyse en composantes principales. 
 
 Ce modèle est adapté à un patient à partir de deux images TDM prises à des instants différents du cycle, et d'un maillage dynamique de la surface du corps du patient obtenue pendant un cycle respiratoire complet. Dans son implémentation, le maillage est obtenu à l'aide d'une caméra temps de vol.
 
