@@ -2,11 +2,12 @@
 \label{lab:chapCAD}
 	\section{Généralités}
 
-En oncologie, la détection des sites tumoraux est une étape capitale dans la prise en charge des patients. Elle permet l'évaluation de l'état d'avancement de la maladie, ou encore d'étudier la réponse à un traitement~\cite{dimitrakopoulou2002role}. Cette détection se fait actuellement par le médecin qui va observer les images TEP/TDM acquises à la recherche de fixations anormales. Cependant, ces fixations peuvent provenir d'autres facteurs, tels que la ``graisse brune'', des muscles activés ou encore une inflammation locale~\cite{bordessoule2006impact}. Associés aux limites de l'imageur, surtout au niveau du rapport signal sur bruit des volumes reconstruits, il est donc possible qu'il y ait une erreur lors du diagnostique.
+En oncologie, la détection des sites tumoraux est une étape capitale dans la prise en charge des patients. Elle permet l'évaluation de l'état d'avancement de la maladie, ou encore d'étudier la réponse à un traitement~\cite{dimitrakopoulou2002role}. Cette détection se fait actuellement par le médecin qui va observer les images TEP/TDM acquises à la recherche de fixations anormales. Cependant, ces fixations peuvent provenir d'autres facteurs, tels que la ``graisse brune'', des muscles activés ou encore une inflammation locale~\cite{bordessoule2006impact}. Du fait des limites de l'imageur au niveau du rapport signal sur bruit des volumes reconstruits, il est possible qu'il y ait une erreur de diagnostique.
 
 Dans cette partie, je vais détailler les techniques qui permettent de comparer les performances de plusieurs observateurs (médecins ou algorithmes) face aux mêmes images, ou alors du même observateur face à plusieurs types d'images différentes.
 
-Pour l'instant le problème va être simplifié au cas où un observateur doit classer un signal en ``Sain'' (normal, HO) ou ``Pathologique'' (anormal, H1).
+Pour cette section, le problème va être simplifié au cas où un observateur doit classer un signal en ``Sain'' (normal, HO) ou ``Pathologique'' (anormal, H1). 
+
 Les performances d'un classifieur sont indiquées par la matrice de confusion (table~\ref{tab:confusion}), qui recense les signaux correctement et incorrectement classés 
 
 \begin{table}[h]
@@ -14,7 +15,7 @@ Les performances d'un classifieur sont indiquées par la matrice de confusion (t
 	\begin{tabular}{cc c|c|}
 		& & \multicolumn{2}{c}{Classe estimée} \\
 		\cline{3-4}	
-		& & \multicolumn{1}{|c|}{Sain} & pathologique \\ 
+		& & \multicolumn{1}{|c|}{Sain} & Pathologique \\ 
 		\cline{2-4}
 		\multicolumn{1}{c|}{\multirow{2}{*}{Classe réelle}} & \multicolumn{1}{|c|}{Sain} & VN (\emph{Vrai Négatif}) & FP (\emph{Faux Positif})\\
 		\cline{2-4}
@@ -26,35 +27,44 @@ Les performances d'un classifieur sont indiquées par la matrice de confusion (t
 
 On utilise habituellement deux grandeurs pour mesurer les performances d'un classifieur :
 
-La \emph{sensibilité} (eq. \ref{eq:sensib}) correspond à la proportion d'images correctement évaluées pathologiques par l'observateur par rapport au nombre total d'images réellement pathologiques. Elle donne une information sur la capacité du classifieur à détecter les cas pathologiques.
-
+La \emph{sensibilité} (voir l'équation \ref{eq:sensib}) correspond à la proportion d'images correctement évaluées pathologiques par l'observateur par rapport au nombre total d'images réellement pathologiques. Elle donne une information sur la capacité du classifieur à détecter les cas pathologiques.
+\label{lab:pressensib}
 \begin{equation}
 	\label{eq:sensib}
-	Sensibilite = \frac{VP}{VP + FN}
+	Sensibilit\acute{e} = \frac{VP}{VP + FN}
 \end{equation}
 
-La \emph{spécificité} (eq. \ref{eq:specif}) représente le même type de grandeur, mais cette-fois ci appliquée aux cas non pathologiques : elle correspond à la capacité du test à donner un résultat négatif lorsque l'image est non pathologique.
+La \emph{spécificité} (voir équation \ref{eq:specif}) représente le même type de grandeur, mais cette-fois ci appliquée aux cas non pathologiques : elle correspond à la capacité du test à donner un résultat négatif lorsque l'image est non pathologique.
 
 \begin{equation}
 	\label{eq:specif}
-	Specificite = \frac{VN}{VN + FP}
+	Sp\acute{e}cificit\acute{e} = \frac{VN}{VN + FP}
 \end{equation}
 
-Ces deux grandeurs sont complémentaires mais ne permettent pas à elle seules de comparer des classifieurs. En effet, un  utilisateur va donner des notes, qui vont indiquer son degré de certitude sur la présence de la pathologie (à ne pas confondre avec des notations sur la gravité des lésions, comme les techniques de gradation de~\cite{genestie1998comparison}).
+Ces deux grandeurs sont complémentaires mais ne permettent pas à elle seules de comparer des classifieurs. En effet, un  utilisateur va souvent donner des notes, qui vont indiquer son degré de certitude sur la présence de la pathologie (à ne pas confondre avec des notations sur la gravité des lésions, comme les techniques de gradation de~\cite{genestie1998comparison}).
 
-Les techniques de comparaisons d'organes de décision comme les ROC (Receiver-Operating Curve) permettent de prendre en compte ces incertitudes. Elles proviennent à l'origine du domaine des télécommunications pendant la seconde guerre mondial, où il fallait une métrique permettant de tester les performances des systèmes RADAR~\cite{zou2007receiver} pour la détection des avions ennemis. Les courbes ROC servent donc à évaluer la capacité de un ou plusieurs ``observateurs'' à discriminer des signaux entre deux classes ``normal'' et ``anormal''. Les informations de sensibilité et de spécificité se limitent à comparer les performances pour un niveau de détection donné.
+Les techniques de comparaisons de systèmes de décision comme les ROC (Receiver-Operating Curve) permettent de prendre en compte ces incertitudes. Elles proviennent à l'origine du domaine des télécommunications pendant la seconde guerre mondial, où il fallait une métrique permettant de tester les performances des systèmes RADAR~\cite{zou2007receiver} pour la détection des avions ennemis. Les courbes ROC servent donc à évaluer la capacité de un ou plusieurs ``observateurs'' à discriminer des signaux entre deux classes ``normal'' et ``anormal''. Les informations de sensibilité et de spécificité se limitent à comparer les performances pour un niveau de détection donné.
+
 
 	\section{Méthodologie ROC - Receiver-Operating Curve}
 
 Les ROC \cite{swets1982evaluation}\cite{metz1986roc} sont des courbes indiquant la spécificité et la sensibilité du modèle de classification pour différents niveaux de certitudes. Elles fournissent une mesure objective des performances d'un observateur dans une tâche de discrimination entre deux classes. 
 
-Elles peuvent être utilisées pour comparer les performances relatives de différents observateurs ou pour déterminer leurs paramètres optimaux 
+Elles peuvent être utilisées pour comparer les performances relatives de différents observateurs ou pour déterminer leurs paramètres optimaux. L’évaluation d'un observateur par la méthode ROC nécéssite la création d'un jeu de données de données labellisé en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: pas du tout pathologique, 1: potentiellement pathologique, 3:équivoque, 6: certainement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain. 
 
-L’évaluation d'un observateur par la méthode ROC implique de créer un jeu de données de données labellisé en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: pas du tout pathologique, 1: potentiellement pathologique, 3:équivoque, 6: certainement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain.
 
-L'observateur peut être un humain ou un algorithme, et les notes peuvent être discrètes ou continues.
+\begin{figure}[h]
+	\label{fig:illustrationROC}
+	\begin{center}
+	\includegraphics[width=10cm]{images/illustrationROC}
+%	\vspace{-0.5cm} % Ugly Moche Hideux
+	\end{center}
+	\caption{Exemple de courbe ROC. La courbe $A$ représente le résultat d'une évaluation ROC avec un barème à 6 niveaux. Pour chaque note du barème, le point correspondant est affiché en reportant la spécificité et la sensibilité(représentés par les croix). La courbe $B$ représente une autre évaluation , avec des performances inférieures : Pour chaque niveau de ``1-Spécificité'', la sensibilité de la courbe $B$ est inférieure à celle de la courbe $A$. Le courbe $C$ représente le d'un classifieur qui donne ses réponses de manière aléatoire.}
+\end{figure}
 
-Le tracé de la courbe ROC se fait en reportant la sensibilité et la valeur "1-spécificité" du classifieur pour différents seuils. Par construction, la courbe va commencer au point $(0,0)$ (tous les points sont marqués négatifs) et se terminer au point de coordonnée $(1,1)$ (tous les points sont marqués positifs).
+L'observateur peut être un humain ou un algorithme, et les notes peuvent être discrètes ou continues. 
+
+Le tracé de la courbe ROC se fait en reportant la sensibilité et la valeur "1-spécificité" du classifieur pour différents seuils de décision. Par construction, la courbe va commencer au point $(0,0)$ (tous les points sont diagnostiqués négatifs) et se terminer au point de coordonnée $(1,1)$ (tous les points sont diagnostiqués positifs). Deux exemples de courbes ROC sont présentés sur la figure \ref{fig:illustrationROC}.
 
 
 Le formalisme ROC considère que les distributions de probabilité des notes des cas H0 et H1 suivent une loi gaussienne (voir fig. \ref{fig:loiROC}). Ce modèle de décision suppose que l'ensemble des valeurs de $\lambda$ évaluées sur des cas H0 (sain) suit une distribution de probabilité $P(\lambda_0, \sigma_0)$ de valeur moyenne $\lambda_0$ et d'écart-type $\sigma_0$. De même, les valeurs de $\lambda$ évaluées sur des cas H1 (pathologiques), suivent une distribution de probabiilité $P(\lambda_1, \sigma_1)$. Le mécanisme de décision se base sur le choix d'une valeur de seuil $\lambda_s$ au-delà de laquelle les observations sont considérées comme pathologiques.
@@ -72,25 +82,45 @@ Le formalisme ROC considère que les distributions de probabilité des notes des
 Ce seuil permet de modifier de manière dynamique la répartition des observations dans la matrice de confusion.  Cela permet d'enrichir la comparaison des observateurs par rapport au couple (sensibilité/spécificité) seul.
 
 
-Un ensemble d'indicateurs permettent de comparer les performances de classifieurs à partir des courbes ROC. La performance est représentée par une FDM (Figure De Mérite). La FDM la plus simple consiste à choisir un niveau de spécificité (noté $\alpha$) et à comparer les sensibilités des différents classifieurs. L'avantage de ce système est qu'il permet de comparer les performances dans des conditions proches de la réalité, où l'on cherche à rester dans un taux de spécificité données. Cependant, les résultats vont dépendre du paramètre $\alpha$. Une métrique plus globale est l'aire sous la courbe ROC. \'Etant donné que la courbe sera nécessairement comprise dans un carré unitaire, la valeur de l'aire sera comprise entre 0 (le classifieur donne systématiquement les mauvaises réponses), 0.5 (le classifieur donne des réponses aléatoires) et 1 (le classifieur donne toujours la bonne réponse)\cite{nie2006integrating}.
+Un ensemble d'indicateurs permettent de comparer les performances de classifieurs à partir des courbes ROC. La performance est représentée par une Figure de Mérite (FDM). La FDM la plus simple consiste à choisir un niveau de spécificité (noté $\alpha$) et à comparer les sensibilités des différents classifieurs. L'avantage de ce système est qu'il permet de comparer les performances dans des conditions proches de la réalité, où l'on cherche à rester dans un taux de spécificité données. Cependant, les résultats vont dépendre du paramètre $\alpha$. Une métrique plus globale est l'aire sous la courbe ROC. \'Etant donné que la courbe sera nécessairement comprise dans un carré unitaire, la valeur de l'aire sera comprise entre 0 (le classifieur donne systématiquement les mauvaises réponses), 0.5 (le classifieur donne des réponses aléatoires) et 1 (le classifieur donne toujours la bonne réponse)\cite{nie2006integrating}.
 
 IL est important lors du calcul de la FDM d'avoir une estimation de l'erreur. Il est possible de l'estimer en ajustant une courbe théorique (répondant à la loi théorique de la figure \ref{fig:loiROC}). Plusieurs logiciels ont été développés pour estimer les paramètres, qui ont été comparés dans la publication \cite{CarstenStephan03012003} (AccuROC, Analyse-It, CMDT, GraphROC, MedCalc, mROC, ROCKIT, and SPSS).
 
 \label{lab:p-valeur}
 Une grandeur souvent utilisée dans la littérature pour évaluer la pertinence d'un résultat est la \emph{p-valeur}. Elle représente la probabilité d'obtenir un résultat au moins aussi extrême que le résultat obtenu (dans notre cas, la courbe ROC), en prenant en compte l'hypothèse selon laquelle le classifieur est aléatoire. Elle permet de vérifier si le test est statistiquement significatif.
 
-Le problème des courbes ROC est que l'observateur ne donne pas d'information de localisation du problème dans l'image. Dans notre cas, nous voulons comparer des classifieurs qui détectent les tumeurs dans l'image. Il faut non seulement savoir si des lésions sont présentes, mais aussi avoir leur nombre et leur localisation. Cela est plus proche du travail en routine clinique qui consiste à évaluer l'étendue et le nombre des lésions pour déterminer l'efficacité d'un traitement par exemple. 
+Le problème des courbes ROC est que l'observateur ne donne pas d'information de localisation de la pathologie dans l'image. Dans notre cas, nous voulons comparer des classifieurs qui détectent les tumeurs dans l'image. Il faut non seulement savoir si des lésions sont présentes, mais aussi avoir leur nombre et leur localisation. Cela est proche du travail en routine clinique, qui consiste à évaluer l'étendue et le nombre des lésions pour déterminer l'efficacité d'un traitement par exemple. 
 
 Pour éviter cette limitation, plusieurs extensions à la méthodologie \ROC sont décrites dans la littérature : L-ROC, AF-ROC ou encore F-ROC. Les L-ROC sont décrites ci-après, tandis que les AF-ROC et F-ROC seront décrites dans la section suivante.
 
-\subsection{Courbes Localization ROC (L-ROC)}
+\subsection{Courbes ``Localization ROC'' (L-ROC)}
 
 L'analyse L-ROC~\cite{farquhar1999roc} ajoute l'information de localisation lors de la décision. L'observateur doit indiquer sur l'image qu'il considère comme pathologique la localisation de la lésion la plus probable. Elle est considérée comme un vrai positif si la distance entre la localisation indiquée et la localisation réelle de la lésion est inférieur à une certaine distance.
 
-Cependant, bien que cette technique prenne en compte l'information de localisation, elle ne permet pas de traiter de manière satisfaisante les cas multi-lésions. 
+Cependant, bien que cette technique prenne en compte l'information de localisation, elle ne permet pas de traiter de manière satisfaisante les cas de lésions multiples.
 
 
-\section{F-ROC}	
+\section{Courbes Free ROC}	
+
+Les courbes Free-ROC permettent de prendre en compte plus d'informations que les courbes vu précédemment car elles utilisent non seulement les informations de localisation, mais prennent aussi en compte le concept de faux positifs de manière plus approfondie, avec la possibilité d'avoir à la fois des faux positifs et des vrai positifs dans une même image.
+
+\subsection{Définition d'un Vrai positif / Faux positif}
+
+En général, les systèmes CAD génèrent des cartes paramétriques, sur lesquels les voxels ou des groupements de voxels recoivent une valeur correspondant à leur classe. 
+
+Afin de déterminer si l'élément (voxel ou groupement de voxels) noté ``anormal'' fait effectivement partie d'une lésion, sa  position est généralement comparée à celle des lésions de la vérité terrain. Une distance d'acceptation est utilisée pour prendre en compte une éventuelle imprécision du système CAD. Par exemple, \cite{paik2004surface} considère que l'élément est un vrai positif si il est contenu dans la tumeur de la vérité terrain.
+
+Cependant, il existe plusieurs stratégies pour compter les FP :
+\begin{itemize}
+ \item Par voxel ou groupe de voxel (3D)
+ \item Par coupe (2D)
+\end{itemize}
+
+Ces deux techniques vont très fortement influer sur le nombre de faux positifs pour le même système CAD. En effet, dans le cas où le comptage des FP est réalisé sur l'ensemble de l'image, chaque groupement ou voxel ne correspondant pas à une lésion est noté FP. Par exemple, \cite{paik2004surface} indique 165 faux positifs par images TDM pour une sensibilité de 100\%. De même, \cite{zhao2003automatic} montre une sensibilité de 94\% avec 906 faux positifs par image TDM pour la détection du cancer du poumon. 
+
+Ces résultats montrent des nombre de faux positifs très importants, mais ne peuvent pas être comparés avec ceux utilisant un chiffrage des FP par coupe. En effet, dans ce cas, ``FP'' correspond au nombre de coupes contenant au moins un élément n'étant pas une tumeur. Le nombre de faux positifs est donc borné par le nombre de coupes, et ne fait pas de différences entre des coupes contenant un grand nombre de lésions et celles n'en contenant qu'une. 
+
+Dans le reste du document, nous considèrerons le premier système de comptage des Faux positifs : Tout élément n'étant pas en contact avec une tumeur sera compté comme un faux positif.
 
 
 \subsection{Courbes Free-ROC}
@@ -100,7 +130,7 @@ les courbes F-ROC~\cite{bunch1978free} sont une généralisation des courbes ROC
 
 Dans ce cas, on ne peut pas utiliser le formalisme ROC car le terme de spécificité n'est pas directement calculable pour chaque niveau de confiance. On utilise à sa place le nombre moyen de faux positifs par image pour un seuil donné (voir fig.\ref{fig:courbeFROC}).
 
-On utilise les termes de LL (Localisation de Lésion) et NL (Non-Lésion) en lieu et place des informations de vrai positifs et faux positifs sur les courbes ROC. De la même manière, la sensibilité et la spécificité sont respectivement FLL (Fraction de localisation de lésion) et FNL (Fraction des Non-Lésions).
+On utilise les termes de LL (Lésion localisée) et NL (Non-Lésion) en lieu et place des informations de vrai positifs et faux positifs sur les courbes ROC. De la même manière, la sensibilité et la spécificité sont respectivement FLL (Fraction de localisation de lésion) et FNL (Fraction des Non-Lésions).
 
 \begin{figure}[h]
 	\label{fig:courbeFROC}
@@ -159,53 +189,70 @@ Une seconde version de JAFROC existe avec un pouvoir statistique plus important,
 
 Les systèmes CAD (Computer-Aided-Detection) sont des algorithmes permettant d'assister le praticien dans la détection des lésions ou le classement des images médicales. Dans le cadre de l'imagerie TEP oncologique, le besoin principal est celui du suivi thérapeutique. Pour cela, il est important de détecter d'éventuelles lésions résiduelles. Pour cela, il faut que le système CAD soit particulièrement adapté à la recherche de petites lésions de faible contraste qui pourraient échapper au médecin. Cependant, le diagnostique, qui consiste à évaluer la dangerosité des lésions, et leur caractère pathologique est une tâche plus complexe qui relève plus des systèmes d'aide au diagnostique, qui ne seront pas traités ici.
 
-Le développement des systèmes CAD a débuté dans les années 1980~\cite{chan1987image}, notamment pour détecter les micro calcifications en mammographie. Bien qu'il existe plusieurs systèmes CAD commerciaux pour l'imagerie TDM (xLNA pour philips par exemple), aucun CAD commercial pour la TEP n'existe à ma connaissance.
+Le développement des systèmes CAD a débuté dans les années 1980~\cite{chan1987image}, notamment pour détecter les micro calcifications en mammographie. Bien qu'il existe plusieurs systèmes CAD commerciaux pour l'imagerie TDM (xLNA pour philips par exemple), aucun CAD commercial pour la TEP n'existe à notre connaissance.
+
+Cependant, plusieurs CAD sur des images TEP ont été décrits dans des travaux académiques, tels que~\cite{guan2006automatic}, qui recherche des anomalies dans le corps entier. Cependant, ils ne donnent pas de mesures de performances quantitatives. La publication de~\cite{Kanakatte2008pulmonary} utilise des systèmes de classification supervisés (K plus proches voisins et SVM décrits en \ref{lab:SVM}). Un seuillage est réalisé, puis les candidats sont classés en utilisant des caractéristiques fréquentielles et les moments statistiques. 
+
+Cependant les systèmes de classifications existants se concentrent en général sur la délimitation de lésions de fort contraste, ce qui ne correspond pas à notre problématique de détection. 
 
 	\section{Types de classification}
-		\subsection{supervisée - méthodologie}
 
-Les classifieurs supervisés nécessitent une connaissance a priori des classes. On entraîne le classifieur en lui fournissant des \emph{exemples} de cas avec l'étiquette associée. A partir de cette base de données d'entraînement, le classifieur va générer un \emph{modèle} predictif permettant de classer de futurs exemples non encore connus.
-
-\begin{figure}[h]
-	\label{fig:fonctClassif}
-	\begin{center}
-	\includegraphics[width=15cm]{images/fonctionnementClassif}
-	\end{center}
-	\caption{Fonctionnement d'un classifieur supervisé : Les données d'apprentissage servent à entraîner le classifieur pour générer un modèle. Ce modèle permettra de rattacher des observations aux classes apprises.}
-\end{figure}
-
-		\subsubsection{Machines à vecteur de support (SVM)}
-\label{lab:SVM}
-La ``Machine à Vecteur de Support'', aussi appelée ``Séparateur à Vaste Marge'', ou ``Support Vector Machines'' en Anglais, est un classifieur qui comme son nom l'indique vise à maximiser la marge\cite{boser1992training}, qui est la distance entre les points des données et la surface séparatrice (voir figure \ref{fig:SVM}).
-
-\begin{figure}[h]
-	\label{fig:SVM}
-	\begin{center}
-	\includegraphics[width=12cm]{images/SVM}
-	\end{center}
-	\caption{Machine à Vecteur de Support : Les points vecteur de support (entourés de bleu) sont les seuls utilisés pour calculer la surface de séparation d'équation $\vec w . x + b = 0$. Le vecteur $\vec w$ est normal à la surface de séparation et permet de calculer la marge $\frac{1}{\Vert w \Vert}$.}
-\end{figure}
+Dans cette section je vais décrire les deux principales classes de techniques de classification : supervisée et non supervisée.
 
 		\subsection{non supervisée - méthodologie}
 
-Dans le système de classification non supervisé, le classifieur ne reçoit directement l'ensemble des données à traiter, sans informations supplémentaires. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes \ref{fig:fonctionnementClassifNonSup}.
+Dans le système de classification non supervisé, le classifieur reçoit directement l'ensemble des données à traiter, sans informations supplémentaires. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes \ref{fig:fonctionnementClassifNonSup}.
 
-La classification nom supervisée repose sur une méthode statistique utilisant une fonction de proximité.
+La classification non supervisée repose sur une méthode statistique utilisant une fonction de proximité. Toutes les observations d'une même classes devront être proches au sens de cette fonction. Le partitionnement idéal est obtenu lorsque la covariance intraclasse est minimisée, ce qui implique que les classe sont le plus homogène possible, et que la distance entre les classes est maximisée, pour que les classe ssoient le plus différencié possible.
+
+Plusieurs algorithmes sont décrits dans la littérature pour réaliser des classifications non supervisées :
+
+\begin{description}
+ \item[K-moyennes : ] c'est un algorithme itératif qui associe à chaque point la classe dont le barycentre est le plus proche, puis remet à jour le centre des classes à la prochaine itération~\cite{herwig1999large}.
+ \item[Cartes auto-adaptatives : ] Cet algorithme utilise des techniques dérivées des graphes pour partitionner les données~\cite{kohonen1982self}.
+ \item[Regroupement ascendant hiérarchique : ] Cet algorithme utilise une mesure de dissimilarité pour regrouper les observations. A la première itération, chaque observation dispose de sa propre classe. A chaque itération suivante, les deux classes contenant les observations les plus proches vont être regroupées, jusqu'à obtenir la classification finale~\cite{ward1963hierarchical}.
+\end{description}
+
 
 \begin{figure}[h]
-	\label{fig:fonctionnementClassifNonSup}
 	\begin{center}
 	\includegraphics[width=15cm]{images/fonctionnementClassifNonSup}
 	\end{center}
 	\caption{Fonctionnement d'un classifieur non supervisé : Les données brutes sont envoyées au classifieur qui va les regrouper en classes en fonction de leur répartition dans l'espace des caractéristiques.}
+	\label{fig:fonctionnementClassifNonSup}
 \end{figure}
 
-	\section{classifieurs}
 
-		\subsection{SVM (Séparateur à Vaste Marge)}
+		\subsection{supervisée - méthodologie}
+
+La classification supervisée vise à étiqueter des observations à partir de connaissances acquises à priori.
+
+Les classifieurs supervisés nécessitent une connaissance a priori des classes. On entraîne le classifieur en lui fournissant des \emph{exemples} de cas avec l'étiquette associée. A partir de cette base de données d'entraînement, le classifieur va générer un \emph{modèle} predictif permettant de classer de futurs exemples non encore connus.
+
+\begin{figure}[h]
+	\begin{center}
+	\includegraphics[width=15cm]{images/fonctionnementClassif}
+	\end{center}
+	\caption{Fonctionnement d'un classifieur supervisé : Les données d'apprentissage servent à entraîner le classifieur pour générer un modèle. Ce modèle permettra de rattacher des observations aux classes apprises.}
+	\label{fig:fonctClassif}
+\end{figure}
+
+
+	\section{Machines à vecteur de support}
+
+\label{lab:SVM}
+La ``Machine à Vecteur de Support'', aussi appelée ``Séparateur à Vaste Marge'', ou ``Support Vector Machines'' en Anglais, est un classifieur qui comme son nom l'indique vise à maximiser la marge~\cite{boser1992training}, qui est la distance entre les points des données et la surface séparatrice (voir figure \ref{fig:SVM}).
+
+\begin{figure}[h]
+	\begin{center}
+	\includegraphics[width=12cm]{images/SVM}
+	\end{center}
+	\caption[Machine à Vecteur de Support]{Machine à Vecteur de Support : Les points vecteur de support (entourés de bleu) sont les seuls utilisés pour calculer la surface de séparation d'équation $w . x + b = 0$. Le vecteur $w$ est normal à la surface de séparation et permet de calculer la marge $\frac{1}{\Vert w \Vert}$.}
+	\label{fig:SVM}
+\end{figure}
+
 
 Les SVM sont des classifieurs supervisés qui cherchent à maximiser la séparation entre chaque classe. L'idée sous-jacente aux SVM est de trouver l'hyperplan optimal de séparation, et non pas n'importe quel hyperplan qui permettrais de séparer correctement les données d'apprentissage (figure \ref{fig:multiPlansSeparationSVM}). 
-
 
 
 \begin{figure}[h]
@@ -213,29 +260,46 @@ Les SVM sont des classifieurs supervisés qui cherchent à maximiser la séparat
 	\begin{center}
 	\includegraphics[width=15cm]{images/multiPlansSeparationSVM}
 	\end{center}
-	\caption{Illustration du principe d'optimisation de la marge sur un cas à deux classes et deux caractéristiques : Il existe une infinité d'hyperplan qui séparent correctement les classes ``étoile vertes'' et ``ronds rouge'', représentés par les traits fins en pointillé. Cependant, il existe seulement une seule solution qui va maximiser la marge. Cette solution est représentée en trait plein, avec la marge $\frac{1}{||\omega||}$. Les points entourés en noir sont les points support utilisés pour contraindre l'hyperplan. }
+	\caption[Illustration du principe d'optimisation de la marge sur le SVM]{Illustration du principe d'optimisation de la marge sur un cas à deux classes et deux caractéristiques : Il existe une infinité d'hyperplan qui séparent correctement les classes ``étoile vertes'' et ``ronds rouge'', représentés par les traits fins en pointillé. Cependant, il existe seulement une seule solution qui va maximiser la marge. Cette solution est représentée en trait plein, avec la marge $\frac{1}{||w||}$. Les points entourés en noir sont les points support utilisés pour contraindre l'hyperplan. }
 \end{figure}
 
 
-L'hyperplan optimal au sens des SVM est celui qui maximise la marge, c'est à dire qui maximise la distance entre l'hyperplan et les vecteurs de caractéristiques les plus proches. La définition de cette marge et de l'hyperplan se fait à partir des vecteurs de support. Ils correspondent aux cas extrêmes des deux classes qui pourraient éventuellement poser des problèmes de classification.
+La définition de la marge et de l'hyperplan se fait à partir des vecteurs de support. Ils correspondent aux cas extrêmes des deux classes qui pourraient éventuellement poser des problèmes de classification.
 
-Dans le cas où l'hyperplan de séparation ne pourrait pas être défini par une équation linéaire, des fonctions à noyaux sont utilisées pour projeter les points dans un espace de plus grande dimensions où le problème devient linéaire (voir figure \ref{fig:kernelTrick}). Cependant, la transformation n'est jamais réalisée explicitement, ce qui permet d'avoir certains noyaux, dont les RBF (Fonctions à base radiales) qui ont un espace d'arrivée de dimensions infinies.
+
+Soit $\{(x_i, y_i) | x_i \in \mathbf{R}^p , y_i \in \{ -1, 1 \} \}$ un ensemble de points étiquetés correspondant à la base d'apprentissage. $x_i$ correspond au vecteur caractéristique, tandis que $y_i$ correspond à la classe du point.
+
+Tout hyperplan dans l'espace des caractéristiques $\mathbf{R}^p$ peut être écrit $w . x - b = 0$, avec $w$ la normale à l'hyperplan et $\frac{b}{ ||w|| }$ le décalage de l'hyperplan par rapport à l'origine. 
+
+La contrainte principale sur $w$ et $b$ est de classer correctement les données. Pour cela, les points vecteur de support devront respecter la contrainte $y_i ( w . x_i - b ) >= 1$. Par construction, les vecteurs de support correspondent aux points où l'égalité stricte est observée : $y_i ( w . x_i - b ) = 1$, comme indiqué sur la figure~\ref{fig:SVM}.
+
+La seconde contrainte est la maximisation de la marge, qui correspond à  $\frac{2}{||w||}$, ce qui revient à minimiser $||w||$
+
+La solution de ce problème d'optimisation est apporté par l'algorithme des multiplicateurs de lagrange. 
+
+Cependant, il peut arriver que les classe ne soient pas séparables. Ce problème est résolu par l'autorisation d'une erreur~\cite{cortes1995support} $\xi_i$  que l'on cherchera à minimiser : $( w . x_i - b ) >= 1 - \xi_i $. Cela engendre l'ajout d'un paramètre du classifieur $C$ utilisé dans le lagrangien pour pénaliser plus ou moins les erreurs.
+
+Dans le cas où l'hyperplan de séparation ne pourrait pas être défini par une équation linéaire, des fonctions à noyaux sont utilisées pour projeter les points dans un espace de plus grande dimensions où le problème devient linéaire (voir figure \ref{fig:kernelTrick}). Cependant, la transformation n'est jamais réalisée explicitement car en pratique, le changement de dimensions est utilisé uniquement lors de la comparaison entre les points. On utilise donc des fonctions de comparaison modifiées, appellées noyaux. Le plus courament utilisé est le RBF (Fonctions à base radiales) qui a un espace d'arrivée de dimensions infinies :
+
+\[ 
+k(x_i,x_j)=e^{-\gamma||x_i-x_j||^2}  
+\]
 
 \begin{figure}[h]
-	\label{fig:kernelTrick}
 	\begin{center}
 	\includegraphics[width=15cm]{images/kernelTrick}
 	\end{center}
-	\caption{Illustration du principe du changement de base : Des données non séparables dans le repère original peuvent devenir séparables en utilisant les noyaux. Dans ce cas, le passage des coordonnées cartésiennes aux coordonnées polaires permet de rendre le problème original linéairement séparable.}
+	\caption[Changement de base pour les SVM]{Illustration du principe du changement de base : Des données non séparables dans le repère original peuvent devenir séparables en utilisant les noyaux. Dans ce cas, le passage des coordonnées cartésiennes aux coordonnées polaires permet de rendre le problème original linéairement séparable.}
+	\label{fig:kernelTrick}
 \end{figure}
 
 
-Grâce à la maximisation de la marge, les SVM sont performants dans le cas où l'on ne dispose que de faible quantités de données. De plus, ils sont relativement résistants aux phénomènes de sur-apprentissage, qui
+Grâce à la maximisation de la marge, les SVM sont performants dans le cas où l'on ne dispose que de faible quantités de données.
 
-Comme indiqué dans le schéma \todo{refSchema}
+\subsection{Autres classifieurs supervisés}
 
+De nombreux classfieurs supervisés ont été développés :
 
-		\subsection{LDA}
+Le classifieur LDA\cite{fisher1936use} approxime les deux classes en supposant qu'elles ont une distribution gaussienne de covariance égale. Seul la moyenne de chaque distribution varie, et tout nouveau point est classé en fonction de sa distance à l'une ou l'autre des classes. Bien qu'il soit très rapide, ce classifieur ne fonctionne que dans le cas linéaire et fait une approximation difficile à atteindre. 
 
-	\section{Systèmes humain}
-	% besoin d'avoir des données fiables ?
+Les réseaux de neurones~\cite{haykin1999neural} sont un classifieur non linéaire qui se base sur un fonctionnement simplifié des neurones du cerveau humain. il est constitué de neurones artificiels qui miment les réactions des neurones biologiques. Un neurone applique une fonction à la combinaison linéaire de ses stimulus d'entrée. Chaque élément du vectuer de caractéristique est entré dans un neurone, qui ira stimuler un ou plusieurs autres neurone. L'information se propage jusqu'à un neurone terminal qui donnera le résultat. Les réseaux de neurones sont très performants, mais souffrent de difficultés de mise en place à cause de leur grand nombre de paramètres et des temps d'apprentissage.
