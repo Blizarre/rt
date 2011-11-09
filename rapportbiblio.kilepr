@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=texte/eval.tex
+lastDocument=texte/basedonnee.tex
 masterDocument=
 name=rapportBiblio
 pkg_extIsRegExp=false
@@ -17,10 +17,10 @@ QuickBuild=
 
 [item:../../../../documentation/Thèse/rapportBiblio/texte/eval.tex]
 archive=true
-column=7
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=29
+line=305
 open=false
 order=0
 
@@ -29,7 +29,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=80
+line=120
 open=false
 order=0
 
@@ -69,6 +69,15 @@ line=0
 open=false
 order=6
 
+[item:texte/basedonnee.tex]
+archive=true
+column=141
+encoding=UTF-8
+highlight=LaTeX
+line=163
+open=true
+order=0
+
 [item:texte/effets.tex]
 archive=true
 column=0
@@ -80,27 +89,36 @@ order=4
 
 [item:texte/estimation.tex]
 archive=true
-column=0
+column=37
 encoding=UTF-8
 highlight=LaTeX
-line=111
+line=0
 open=false
 order=5
 
 [item:texte/methodes.tex]
 archive=true
-column=338
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=177
+line=118
 open=false
 order=2
 
 [item:texte/resultats.tex]
 archive=true
-column=125
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=307
+line=37
 open=false
 order=1
+
+[item:texte/simulations.tex]
+archive=true
+column=0
+encoding=UTF-8
+highlight=LaTeX
+line=32
+open=false
+order=-1

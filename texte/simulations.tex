@@ -1,0 +1,36 @@
+\chapter{Simulations}
+	\section{principe des simulations}
+		\subsection{monte carlo}
+
+Les simulations Monte-Carlo correspondent à une finesse la plus importatnre de la réalité.
+
+
+		\subsection{analytiques}
+		\subsection{MC accélérés}
+
+	\section{simulateurs disponibles}
+
+
+
+	\section{processus de simulation avec SORTEO}
+
+Pour reproduire les données fournies par les systèmes cliniques TEP, les simulateurs Monte-Carlo simulent les désintégrations une par une et suivent les sous-produits dans les tissus jusqu'aux détecteurs. Étant donné qu'un examen TEP génère plusieurs millions de désintégrations, les temps de simulations deviennent très rapidement insurmontables. PET-SORTEO dispose de plusieurs heuristiques qui permettent d'accélérer les simulations. Cependant il faut tout de même plusieurs dizaines d'heures pour simuler une image.
+
+Le logiciel PET-SORTEO réalise une simulation TEP accélérée afin de conserver des temps de calculs raisonnables. Il réalise tout d'abord une simulation Monte-Carlo réaliste à faible statistique, dont il se se sert pour estimer le taux de photons émis par une région et arrivant sur un détecteur. Cela permet de prendre en compte les effets du temps mort dans les simulations (photons non pris en compte par les détecteurs à cause d'une saturation du capteur) sans réaliser une simulation complète. Cette information permet par la suite de ne plus simuler de manière exacte les chemins des photons. Les photons diffusés et directs seront par exemple simulés séparément. De cette manière, pendant la simulation des directs, si un des photons est atténué, l'autre peut être détruit directement.
+
+Puis il réalise les simulations proprement dites en simplifiant les interactions : par exemple, si un des deux photons est absorbé, l'autre est détruit et une nouvelle désintégration est générée.
+
+	\section{Contribution à SORTEO}
+
+\begin{itemize}
+    \item Le code original du simulateur SORTEO n'étais pas adapté aux architectures réseau du centre de calcul de l'in2p3 : Le système de communication entre les processus consommait trop de ressources réseau. J'ai donc réalisé des modifications en profondeur du code pour séparer le simulateur en plusieurs entités, chacune réalisant une seule partie du travail :
+
+    \begin{enumerate}
+        \item Estimation des paramètres nécessaires à la simulation accélérée par simulation Monte-Carlo pur (lancé pour chaque processus)
+        \item Combinaison des résultats Monte-Carlo
+        \item Simulation simplifiée des désintégrations (lancé pour chaque processus)
+        \item Combinaison des désintégrations détectées pour chaque processus dans un seul fichier de données
+    \end{enumerate}
+
+    \item Le code original ne permettait pas la sauvegarde de l'information temporelle de chaque évènement détecté. Or cette information est nécessaire aux méthodes de correction du mouvement du mouvement respiratoire telles que celles proposées par F. Lamare. Le format d'enregistrement des simulations par défaut est le sinogramme, qui est une matrice 3D indiquant pour chaque ligne de réponse le nombre de désintégrations détectées. Il a donc fallu reprendre le code source du logiciel PET-SORTEO pour l'adapter à un format de sortie compatible. 
+\end{itemize}

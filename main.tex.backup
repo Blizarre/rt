@@ -3,20 +3,26 @@
 
 
 %% Packages %%
+\usepackage{breakcites}
 \usepackage{ucs}
+\usepackage{placeins} % donne \FloatBarrier pour forcer l'affichage de toutes les figures
 \usepackage[utf8x]{inputenc}
 \usepackage[francais]{babel}
 %\usepackage{fullpage}
-\usepackage{mathpple}  % Pour la police
+%\usepackage{mathpple}  % Pour la police
 \usepackage{graphicx}
+\usepackage{mathpazo}  % Pour la police
+
+\usepackage{multirow} % lignes soudées
+
 \usepackage{hyperref}
-\usepackage{amsmath}   % Pour numberwithin
-\usepackage{tocloft}   % pour cftsecaftersnumb ***
+%\usepackage{amsmath}   % Pour numberwithin
+%\usepackage{tocloft}   % pour cftsecaftersnumb ***
 %\usepackage{spacing} \begin{spacing}{0.8} toto \end{spacing}
 %\makeatletter \renewcommand{\numwidth}{9.55em plus1fil} \makeatother
 \usepackage{fullpage}
 
-
+%\setcounter{tocdepth}{2}
 
 %%%%%%%%%%%%%%% Modification de la taille des captions
 \newcommand{\captionfonts}{\small\itshape}
@@ -52,14 +58,15 @@
 
 \addtolength{\parskip}{0.5em}
 
-\numberwithin{section}{part} 
+%\numberwithin{section}{part} 
 %%%%%%% pour éloigner le texte de la tables des matières des nombres
-\renewcommand{\cftsecaftersnumb}{\hspace{1em}}
-\renewcommand{\cftsubsecaftersnumb}{\hspace{1em}}
-\renewcommand{\cftsubsubsecaftersnumb}{\hspace{1em}}
+%\renewcommand{\cftsecaftersnumb}{\hspace{1em}}
+%\renewcommand{\cftsubsecaftersnumb}{\hspace{1em}}
+%\renewcommand{\cftsubsubsecaftersnumb}{\hspace{1em}}
 
-
-\newcommand{\verrous}{\textbf{Verrous levés}}
+% ############################# Paramètres PERSO
+\def\FROC{Free-ROC}
+\def\ROC{ROC}
 
 \newcommand{\todo}[1]{
 \addcontentsline{toc}{subsection}{\textbf{Todo:} #1}
@@ -93,21 +100,7 @@ $\|$\textbf{A Faire : }#1$\|$
 \part{Introduction}
 
 \part{Imagerie TEP}
-	\input{ImagerieTEP.tex}	
-\chapter{Principe Physique}
-		\section{Généralités}
-		\section{Diffusions}
-		\section{Attenuation}
-
-	\chapter{Déroulement d'une acquisition}
-		\section{2D / 3D}
-		\section{list-mode}
-
-	\chapter{Algorithmes de reconstruction}
-		\section{Itératifs}
-			\subsection{EM}
-			\subsection{OSEM}
-		\section{Analytiques}
+	\input{texte/ImagerieTEP}	
 			
 %	\chapter{Imagerie TDM}
 
@@ -125,24 +118,16 @@ $\|$\textbf{A Faire : }#1$\|$
 	\input{texte/methodes.tex}
 
 \part{Evaluation des performances de diagnostique}
-	\chapter{Problématique de la détection}
-		\section{Historique}
-		\section{courbes ROC}
-		\section{Free-ROC}	
-	
-	\chapter{Systèmes de détection}
-		\section{Les CAD en TEP}
-		\section{Types de classification}
-			\subsection{supervisée - méthodologie}
-			\subsection{non supervisée - méthodologie}
-		\section{classifieurs}
-			\subsection{SVM}
-			\subsection{LDA}
-		\section{Systèmes humain}
-		% besoin d'avoir des données fiables ?
+	\input{texte/eval}
+
 
 
 \part{Simulation et base de données (MIC 2011)}
+	\input{texte/simulations}
+
+	\input{texte/basedonnee}
+
+	\label{lab:bdd}
 	\chapter{Simulations}
 		\section{principe des simulations}
 			\subsection{monte carlo}
@@ -160,13 +145,16 @@ $\|$\textbf{A Faire : }#1$\|$
 
 
 \part{Résultats}
-	\chapter{méthodes (MIC 2010)}
-        \chapter{analyse critique des résultats}
+	\input{texte/resultats}
+
 
 \part{Conclusion}
 
+\part{Tables}
 
+\listoffigures
 
+\listoftables
 
 \part{Bibliographie}
 \bibliographystyle{apalike}

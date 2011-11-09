@@ -1,4 +1,4 @@
-\chapter{Performance des outils de détection }
+\chapter{Performance des outils de détection}
 \label{lab:chapCAD}
 	\section{Généralités}
 
@@ -50,7 +50,7 @@ Les techniques de comparaisons de systèmes de décision comme les ROC (Receiver
 
 Les ROC \cite{swets1982evaluation}\cite{metz1986roc} sont des courbes indiquant la spécificité et la sensibilité du modèle de classification pour différents niveaux de certitudes. Elles fournissent une mesure objective des performances d'un observateur dans une tâche de discrimination entre deux classes. 
 
-Elles peuvent être utilisées pour comparer les performances relatives de différents observateurs ou pour déterminer leurs paramètres optimaux. L’évaluation d'un observateur par la méthode ROC nécéssite la création d'un jeu de données de données labellisé en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: pas du tout pathologique, 1: potentiellement pathologique, 3:équivoque, 6: certainement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain. 
+Elles peuvent être utilisées pour comparer les performances relatives de différents observateurs ou pour déterminer leurs paramètres optimaux. L’évaluation d'un observateur par la méthode ROC nécessite la création d'un jeu de données de données labellisé en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: pas du tout pathologique, 1: potentiellement pathologique, 3:équivoque, 6: certainement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain. 
 
 
 \begin{figure}[h]
@@ -59,7 +59,7 @@ Elles peuvent être utilisées pour comparer les performances relatives de diff�
 	\includegraphics[width=10cm]{images/illustrationROC}
 %	\vspace{-0.5cm} % Ugly Moche Hideux
 	\end{center}
-	\caption{Exemple de courbe ROC. La courbe $A$ représente le résultat d'une évaluation ROC avec un barème à 6 niveaux. Pour chaque note du barème, le point correspondant est affiché en reportant la spécificité et la sensibilité(représentés par les croix). La courbe $B$ représente une autre évaluation , avec des performances inférieures : Pour chaque niveau de ``1-Spécificité'', la sensibilité de la courbe $B$ est inférieure à celle de la courbe $A$. Le courbe $C$ représente le d'un classifieur qui donne ses réponses de manière aléatoire.}
+	\caption{Exemple de courbe ROC. La courbe $A$ représente le résultat d'une évaluation ROC avec un barème à 6 niveaux. Pour chaque note du barème, le point correspondant est affiché en reportant la spécificité et la sensibilité (représentés par les croix). La courbe $B$ représente une autre évaluation, avec des performances inférieures : Pour chaque niveau de ``1-Spécificité'', la sensibilité de la courbe $B$ est inférieure à celle de la courbe $A$. Le courbe $C$ représente le d'un classifieur qui donne ses réponses de manière aléatoire.}
 \end{figure}
 
 L'observateur peut être un humain ou un algorithme, et les notes peuvent être discrètes ou continues. 
@@ -67,7 +67,7 @@ L'observateur peut être un humain ou un algorithme, et les notes peuvent être 
 Le tracé de la courbe ROC se fait en reportant la sensibilité et la valeur "1-spécificité" du classifieur pour différents seuils de décision. Par construction, la courbe va commencer au point $(0,0)$ (tous les points sont diagnostiqués négatifs) et se terminer au point de coordonnée $(1,1)$ (tous les points sont diagnostiqués positifs). Deux exemples de courbes ROC sont présentés sur la figure \ref{fig:illustrationROC}.
 
 
-Le formalisme ROC considère que les distributions de probabilité des notes des cas H0 et H1 suivent une loi gaussienne (voir fig. \ref{fig:loiROC}). Ce modèle de décision suppose que l'ensemble des valeurs de $\lambda$ évaluées sur des cas H0 (sain) suit une distribution de probabilité $P(\lambda_0, \sigma_0)$ de valeur moyenne $\lambda_0$ et d'écart-type $\sigma_0$. De même, les valeurs de $\lambda$ évaluées sur des cas H1 (pathologiques), suivent une distribution de probabiilité $P(\lambda_1, \sigma_1)$. Le mécanisme de décision se base sur le choix d'une valeur de seuil $\lambda_s$ au-delà de laquelle les observations sont considérées comme pathologiques.
+Le formalisme ROC considère que les distributions de probabilité des notes des cas H0 et H1 suivent une loi gaussienne (voir fig. \ref{fig:loiROC}). Ce modèle de décision suppose que l'ensemble des valeurs de $\lambda$ évaluées sur des cas H0 (sain) suit une distribution de probabilité $P(\lambda_0, \sigma_0)$ de valeur moyenne $\lambda_0$ et d'écart-type $\sigma_0$. De même, les valeurs de $\lambda$ évaluées sur des cas H1 (pathologiques), suivent une distribution de probabilité $P(\lambda_1, \sigma_1)$. Le mécanisme de décision se base sur le choix d'une valeur de seuil $\lambda_s$ au-delà de laquelle les observations sont considérées comme pathologiques.
 
 \begin{figure}[h]
 	
@@ -76,7 +76,7 @@ Le formalisme ROC considère que les distributions de probabilité des notes des
 	\includegraphics[width=10cm]{images/loiROC}
 	\vspace{-0.5cm} % Ugly Moche Hideux
 	\end{center}
-	\caption{Modèle de la distribution de probabilité de la variable de décision dans pour les populations H0 ($P(\lambda_0, \mu_0)$) et H1 ($P(\lambda_1, \mu_1)$) dans les études ROC. $\lambda_s$ repésente le seuil à partir duquel une observation sera catégorisée H0 ou H1.}
+	\caption{Modèle de la distribution de probabilité de la variable de décision dans pour les populations H0 ($P(\lambda_0, \mu_0)$) et H1 ($P(\lambda_1, \mu_1)$) dans les études ROC. $\lambda_s$ représente le seuil à partir duquel une observation sera catégorisée H0 ou H1.}
 \end{figure}
 
 Ce seuil permet de modifier de manière dynamique la répartition des observations dans la matrice de confusion.  Cela permet d'enrichir la comparaison des observateurs par rapport au couple (sensibilité/spécificité) seul.
@@ -106,7 +106,7 @@ Les courbes Free-ROC permettent de prendre en compte plus d'informations que les
 
 \subsection{Définition d'un Vrai positif / Faux positif}
 
-En général, les systèmes CAD génèrent des cartes paramétriques, sur lesquels les voxels ou des groupements de voxels recoivent une valeur correspondant à leur classe. 
+En général, les systèmes CAD génèrent des cartes paramétriques, sur lesquels les voxels ou des groupements de voxels reçoivent une valeur correspondant à leur classe. 
 
 Afin de déterminer si l'élément (voxel ou groupement de voxels) noté ``anormal'' fait effectivement partie d'une lésion, sa  position est généralement comparée à celle des lésions de la vérité terrain. Une distance d'acceptation est utilisée pour prendre en compte une éventuelle imprécision du système CAD. Par exemple, \cite{paik2004surface} considère que l'élément est un vrai positif si il est contenu dans la tumeur de la vérité terrain.
 
@@ -116,11 +116,11 @@ Cependant, il existe plusieurs stratégies pour compter les FP :
  \item Par coupe (2D)
 \end{itemize}
 
-Ces deux techniques vont très fortement influer sur le nombre de faux positifs pour le même système CAD. En effet, dans le cas où le comptage des FP est réalisé sur l'ensemble de l'image, chaque groupement ou voxel ne correspondant pas à une lésion est noté FP. Par exemple, \cite{paik2004surface} indique 165 faux positifs par images TDM pour une sensibilité de 100\%. De même, \cite{zhao2003automatic} montre une sensibilité de 94\% avec 906 faux positifs par image TDM pour la détection du cancer du poumon. 
+Ces deux techniques vont très fortement influer sur le nombre de faux positifs pour le même système CAD. En effet, dans le cas où le comptage des FP est réalisé sur l'ensemble de l'image, chaque groupement ou voxel ne correspondant pas à une lésion est noté FP. Par exemple, \cite{paik2004surface} indique 165 faux positifs par images TDM pour une sensibilité de 100\%. De même, \cite{zhao2003automatic} montre une sensibilité de 94\% avec 906 faux positifs par image TDM pour la détection du cancer du poumon.  
 
 Ces résultats montrent des nombre de faux positifs très importants, mais ne peuvent pas être comparés avec ceux utilisant un chiffrage des FP par coupe. En effet, dans ce cas, ``FP'' correspond au nombre de coupes contenant au moins un élément n'étant pas une tumeur. Le nombre de faux positifs est donc borné par le nombre de coupes, et ne fait pas de différences entre des coupes contenant un grand nombre de lésions et celles n'en contenant qu'une. 
 
-Dans le reste du document, nous considèrerons le premier système de comptage des Faux positifs : Tout élément n'étant pas en contact avec une tumeur sera compté comme un faux positif.
+Dans le reste du document, nous considèrerons le premier système de comptage des Faux positifs : Tout élément du volume à observer n'étant pas en contact avec une tumeur sera compté comme un faux positif.
 
 
 \subsection{Courbes Free-ROC}
@@ -203,7 +203,7 @@ Dans cette section je vais décrire les deux principales classes de techniques d
 
 Dans le système de classification non supervisé, le classifieur reçoit directement l'ensemble des données à traiter, sans informations supplémentaires. Il devra de lui-même les classer par similitude en groupes. On utilise ce type de classifieur si on ne connaît pas a priori les classes \ref{fig:fonctionnementClassifNonSup}.
 
-La classification non supervisée repose sur une méthode statistique utilisant une fonction de proximité. Toutes les observations d'une même classes devront être proches au sens de cette fonction. Le partitionnement idéal est obtenu lorsque la covariance intraclasse est minimisée, ce qui implique que les classe sont le plus homogène possible, et que la distance entre les classes est maximisée, pour que les classe ssoient le plus différencié possible.
+La classification non supervisée repose sur une méthode statistique utilisant une fonction de proximité. Toutes les observations d'une même classe devront être proches au sens de cette fonction. Le partitionnement idéal est obtenu lorsque la covariance intraclasse est minimisée, ce qui implique que les classe sont le plus homogène possible, et que la distance entre les classes est maximisée, pour que les classe soient le plus différencié possible.
 
 Plusieurs algorithmes sont décrits dans la littérature pour réaliser des classifications non supervisées :
 
@@ -227,7 +227,7 @@ Plusieurs algorithmes sont décrits dans la littérature pour réaliser des clas
 
 La classification supervisée vise à étiqueter des observations à partir de connaissances acquises à priori.
 
-Les classifieurs supervisés nécessitent une connaissance a priori des classes. On entraîne le classifieur en lui fournissant des \emph{exemples} de cas avec l'étiquette associée. A partir de cette base de données d'entraînement, le classifieur va générer un \emph{modèle} predictif permettant de classer de futurs exemples non encore connus.
+Les classifieurs supervisés nécessitent une connaissance a priori des classes. On entraîne le classifieur en lui fournissant des \emph{exemples} de cas avec l'étiquette associée. A partir de cette base de données d'entraînement, le classifieur va générer un \emph{modèle} prédictif permettant de classer de futurs exemples non encore connus.
 
 \begin{figure}[h]
 	\begin{center}
@@ -275,11 +275,11 @@ La contrainte principale sur $w$ et $b$ est de classer correctement les données
 
 La seconde contrainte est la maximisation de la marge, qui correspond à  $\frac{2}{||w||}$, ce qui revient à minimiser $||w||$
 
-La solution de ce problème d'optimisation est apporté par l'algorithme des multiplicateurs de lagrange. 
+La solution de ce problème d'optimisation est apportée par l'algorithme des multiplicateurs de lagrange. 
 
-Cependant, il peut arriver que les classe ne soient pas séparables. Ce problème est résolu par l'autorisation d'une erreur~\cite{cortes1995support} $\xi_i$  que l'on cherchera à minimiser : $( w . x_i - b ) >= 1 - \xi_i $. Cela engendre l'ajout d'un paramètre du classifieur $C$ utilisé dans le lagrangien pour pénaliser plus ou moins les erreurs.
+Cependant, il peut arriver que les classes ne soient pas séparables. Ce problème est résolu par l'autorisation d'une erreur~\cite{cortes1995support} $\xi_i$  que l'on cherchera à minimiser : $( w . x_i - b ) >= 1 - \xi_i $. Cela engendre l'ajout d'un paramètre du classifieur $C$ utilisé dans le lagrangien pour pénaliser plus ou moins les erreurs.
 
-Dans le cas où l'hyperplan de séparation ne pourrait pas être défini par une équation linéaire, des fonctions à noyaux sont utilisées pour projeter les points dans un espace de plus grande dimensions où le problème devient linéaire (voir figure \ref{fig:kernelTrick}). Cependant, la transformation n'est jamais réalisée explicitement car en pratique, le changement de dimensions est utilisé uniquement lors de la comparaison entre les points. On utilise donc des fonctions de comparaison modifiées, appellées noyaux. Le plus courament utilisé est le RBF (Fonctions à base radiales) qui a un espace d'arrivée de dimensions infinies :
+Dans le cas où l'hyperplan de séparation ne pourrait pas être défini par une équation linéaire, des fonctions à noyaux sont utilisées pour projeter les points dans un espace de plus grande dimensions où le problème devient linéaire (voir figure \ref{fig:kernelTrick}). Cependant, la transformation n'est jamais réalisée explicitement car en pratique, le changement de dimensions est utilisé uniquement lors de la comparaison entre les points. On utilise donc des fonctions de comparaison modifiées, appelées noyaux. Le noyau le plus couramment utilisé est le RBF (Fonctions à base radiales) qui a un espace d'arrivée de dimensions infinies :
 
 \[ 
 k(x_i,x_j)=e^{-\gamma||x_i-x_j||^2}  
@@ -294,12 +294,12 @@ k(x_i,x_j)=e^{-\gamma||x_i-x_j||^2}
 \end{figure}
 
 
-Grâce à la maximisation de la marge, les SVM sont performants dans le cas où l'on ne dispose que de faible quantités de données.
+Grâce à la maximisation de la marge, les SVM sont performants dans le cas où l'on ne dispose que de faibles quantités de données.
 
 \subsection{Autres classifieurs supervisés}
 
-De nombreux classfieurs supervisés ont été développés :
+De nombreux classifieurs supervisés ont été développés :
 
-Le classifieur LDA\cite{fisher1936use} approxime les deux classes en supposant qu'elles ont une distribution gaussienne de covariance égale. Seul la moyenne de chaque distribution varie, et tout nouveau point est classé en fonction de sa distance à l'une ou l'autre des classes. Bien qu'il soit très rapide, ce classifieur ne fonctionne que dans le cas linéaire et fait une approximation difficile à atteindre. 
+Le classifieur LDA\cite{fisher1936use} approxime les deux classes en supposant qu'elles ont une distribution gaussienne de covariance égale. Seule la moyenne de chaque distribution varie, et tout nouveau point est classé en fonction de sa distance à l'une ou l'autre des classes. Bien qu'il soit très rapide, ce classifieur ne fonctionne que dans le cas linéaire et fait une approximation difficile à atteindre. 
 
-Les réseaux de neurones~\cite{haykin1999neural} sont un classifieur non linéaire qui se base sur un fonctionnement simplifié des neurones du cerveau humain. il est constitué de neurones artificiels qui miment les réactions des neurones biologiques. Un neurone applique une fonction à la combinaison linéaire de ses stimulus d'entrée. Chaque élément du vectuer de caractéristique est entré dans un neurone, qui ira stimuler un ou plusieurs autres neurone. L'information se propage jusqu'à un neurone terminal qui donnera le résultat. Les réseaux de neurones sont très performants, mais souffrent de difficultés de mise en place à cause de leur grand nombre de paramètres et des temps d'apprentissage.
+Les réseaux de neurones~\cite{haykin1999neural} sont un classifieur non linéaire qui se base sur un fonctionnement simplifié des neurones du cerveau humain. il est constitué de neurones artificiels qui miment les réactions des neurones biologiques. Un neurone applique une fonction à la combinaison linéaire de ses stimuli d'entrée. Chaque élément du vecteur de caractéristique est entré dans un neurone, qui ira stimuler un ou plusieurs autres neurones. L'information se propage jusqu'à un neurone terminal qui donnera le résultat. Les réseaux de neurones sont très performants, mais souffrent de difficultés de mise en place à cause de leur grand nombre de paramètres et de temps d'apprentissage très importants.
