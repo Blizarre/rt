@@ -1,11 +1,23 @@
 \chapter{Simulations}
 	\section{principe des simulations}
-		\subsection{monte carlo}
-
-Les simulations Monte-Carlo correspondent à une finesse la plus importatnre de la réalité.
-
 
 		\subsection{analytiques}
+
+Les simulateurs Analytiques ne simulent pas de manière réaliste le déplacement des particules mais  utilisent des approximation fortes pour résoudre les problèmes de manière analytiques..
+
+Dans le cas de l'imagerie TEP, la simulation analytique revient à réaliser des projections du volume TEP dans l'espace du sinogramme en utilisant les pour simuler les désintégrations 
+
+		\subsection{monte carlo}
+
+Les simulations Monte-Carlo vont avoir une approche probabiliste en modélisant la trajectoire de chaque photon indépendamment. Le nom de Monte-Carlo fait allusion aux jeux de hasards pratiqués dans la ville du même nom.
+
+Dans le cadre de l'imagerie TEP, le modèle probabiliste est appliqué depuis l'émission puis le parcours du positon, l'annihilation, ainsi que les interactions et la probabilité de détection des photons dans les détecteurs. 
+
+Le simulateur le plus connu actuellement est GATE~\cite{jan2004gate}, qui se base sur le jeu d'outils de simulation d'interactions particule/matière geant4~\cite{allison2006geant4}. L'utilisation de cette librairie très pointue permet à GATE de prendre en compte avec une grande précision l'ensemble des phénomènes physiques. Cependant, cela se fait au détriment des temps de calculs. Une nouvelle version de GATE est en cours de développement pour accélérer les temps de simulation.<Voir>
+
+
+
+
 		\subsection{MC accélérés}
 
 	\section{simulateurs disponibles}
