@@ -1,8 +1,15 @@
 
-\chapter{Principe Physique}
-
 \label{lab:chapPET}
 La Tomographie par \'Emission de Positons (TEP) est une modalité d'imagerie fonctionnelle utilisant la désintégration d'un traceur radioactif pour mettre en valeur les zones de forte activité métaboliques. Elle est principalement utilisée en imagerie cérébrale, oncologie et cardiologie.
+
+Dans ces trois courts chapitres, nous allons tout d'abord détailler rapidement les principes physiques amenant à la création des images TEP, de la désintégration du traceur radioactif à la détection des photons émis lorsqu'ils atteignent un capteur. 
+
+Ensuite, nous parlerons des solutions techniques mises en place pour réaliser les images TEP, avec les différents types d'acquisitions.
+
+Enfin, nous détaillerons les algorithmes utilisés pour reconstruire les images TEP.
+
+ 
+\chapter{Principe Physique}
 
 
 	\section{Généralités}
@@ -16,9 +23,9 @@ Pour cela, on lui injecte un ``traceur'' contenant une particule radioactive. Ce
 	\label{eq:loidecradioact}
 \end{equation}
 
-$N$ représente le nombre le particules radioactives présentes dans le corps du patient. $dN$ représente la variation de ce nombre de particules (le nombre de désintégrations par $dt$) et $\lambda$ est une constante dépendant de l'élément radioactif.
+$N$ représente le nombre de particules radioactives présentes dans le corps du patient. $dN$ représente la variation de ce nombre de particules (le nombre de désintégrations par $dt$) et $\lambda$ est une constante dépendant de l'élément radioactif.
 
-Chaque désintégration d'un élément radioactif va déclencher l'émission d'une particule chargée $\beta^+$, aussi appellée positon. En oncologie, on utilise le Fluor $^{18}F$ qui se désintégre en Oxygène $^{18}O$ en émettant le positon. Cette particule va parcourir quelques mm avant de s'annihiler avec un élection en émettant 2 photons dans deux directions opposées avec une énergie de 511 KeV.
+Chaque désintégration d'un élément radioactif va déclencher l'émission d'une particule chargée $\beta^+$, aussi appelée positon. En oncologie, on utilise le Fluor $^{18}F$ qui se désintègre en Oxygène $^{18}O$ en émettant le positon. Cette particule va parcourir quelques mm avant de s'annihiler avec un élection en émettant 2 photons dans deux directions opposées avec une énergie de 511 KeV.
 
 Ce seront ces photons qui vont être détectés par l'imageur TEP. Ils représentent une coïncidence, car l'instant d'arrivée et leur énergie sont semblables. L'ensemble des ``Lignes de réponse'' (LDR) correspondant aux coïncidences détectées est utilisée pour reconstruire les images.
 
@@ -50,17 +57,19 @@ Le positon va alors s'annihiler avec un électron après un parcours de quelques
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/annihilation}
-\caption[\'Emission des photons]{\'Emission des photons~\cite{Langner2008ad} : Le radiotraceur de désintègre en émettant un neutrino et un positron. Après un parcours de quelques mm dans les tissus, ce dernier s'annihile avec un électron. Cette réaction provoque la création de deux photons d'énergie 511 keV partant dans deux directions opposées.}
+\caption[\'Emission des photons]{\'Emission des photons~\cite{Langner2008ad} : Le radio traceur se désintègre en émettant un neutrino et un positron. Après un parcours de quelques mm dans les tissus, ce dernier s'annihile avec un électron. Cette réaction provoque la création de deux photons d'énergie 511 keV partant dans deux directions opposées.}
 \label{fig:Langner2008ad}
 \end{figure}
 
 	\subsection{Détection des photons}
 
-Les détecteurs utilisés en TEP sont constitués d'un matériau photomultiplicateur placé devant un photodetecteur. Chaque photon absorbé par le matériau photomultiplicateur va entraîner une réaction en chaîne qui qui va déclencher une émission lumineuse. Le capteur situé derrière va convertir cette émission lumineuse en charge électrique.
+Les détecteurs utilisés en TEP sont constitués d'un matériau photomultiplicateur placé devant un photodetecteur. Chaque photon absorbé par le matériau photomultiplicateur va entraîner une réaction en chaîne qui va déclencher une émission lumineuse. Le capteur situé derrière va convertir cette émission lumineuse en charge électrique.
 
-Un système électronique placé à proximité de l'imageur va ensuite apparier les photons détectés pour retrouver la ligne de réponse (LDR) sur laquelle la désintégration a eu lieu. les paires de photon assemblées correspondent à des coïncidence.
+Un système électronique placé à proximité de l'imageur va ensuite apparier les photons détectés pour retrouver la ligne de réponse (LDR) sur laquelle la désintégration a eu lieu. Les paires de photon assemblées correspondent à des coïncidences.
 
-Les coïncidences vraies Figure \ref{fig:schemaDetections}(a) correspondent aux cas où les deux détections appairées correspondent bien à une seule désintégration et où aucun des photons n'a été dévié. Les coïncidences fortuites Figure \ref{fig:schemaDetections}(b) correspondent à deux désintégrations simultanées qui sont considérées comme étant une seule désintégration. Enfin, les coïncidences diffusées Figure \ref{fig:schemaDetections}(c) sont le résultat de la déviation d'un des deux photons produit. Pour éliminer ces erreurs, un certains nombre de méthodes ont été implémentées, dont le filtrage en énergie et en temps au niveau matériel : ne sont prises en compte que les paires d'évènements arrivant dans une fenêtre temporelle et énergétique définie. En effet, les photons déviés vont perdre de l'énergie, ce qui va entraîner leur élimination.
+	\subsection{Types de coïncidences}
+
+Les coïncidences vraies Figure \ref{fig:schemaDetections}(a) correspondent aux cas où les deux détections appariées correspondent bien à une seule désintégration et où aucun des photons n'a été dévié. Les coïncidences fortuites Figure \ref{fig:schemaDetections}(b) correspondent à deux désintégrations simultanées qui sont considérées comme étant une seule désintégration, par exemple à cause de l’absorption d’un des photons d’une désintégration par les tissus. Enfin, les coïncidences diffusées Figure \ref{fig:schemaDetections}(c) sont le résultat de la déviation d'un des deux photons produit. Pour éliminer ces erreurs, un certains nombre de méthodes ont été implémentés, dont le filtrage en énergie et en temps au niveau matériel : ne sont prises en compte que les paires d'évènements arrivant dans une fenêtre temporelle et énergétique définie. En effet, les photons déviés vont perdre de l'énergie, ce qui va entraîner leur élimination.
 
 \begin{figure}
 \centering
@@ -73,11 +82,11 @@ Les coïncidences vraies Figure \ref{fig:schemaDetections}(a) correspondent aux 
 
 	\section{perturbation trajet du photon}
 
-Les deux interactions les plus importantes que peuvent avoir les photons avec les tissus sont la diffusion compton et l'absorption photoélectrique.
+Les deux interactions les plus importantes que peuvent avoir les photons avec les tissus sont la diffusion compton et l'absorption photoélectrique. L'effet Rayleigh, qui correspond à la diffusion du photon sur un atome, est peu présent aux énergies concernées par la TEP. 
 
-La diffusion compton corresponds à l'interaction entre le photon émis et un électron du milieu. L'énergie cinétique de l'électron sera augmentée, tandis que le photon sera dévié. Il est intéressant de noter qu'une déviation de 25° engendre une perte d'énergie du photon de seulement 10\%~\cite{evans1955atomic}.
+La diffusion compton correspond à l'interaction entre le photon émis et un électron du milieu. L'énergie cinétique de l'électron sera augmentée, tandis que le photon sera dévié. Il est intéressant de noter qu'une déviation de 25° engendre une perte d'énergie du photon de seulement 10\%~\cite{evans1955atomic}.
 
-L'absorbtion photo-électrique correspond quand à elle à l'interaction entre un noyau atomique et un des photon. L'énergie du photon sera absorbré par le noyau et transmis à un de ses électrons. Cet effet est praticulièrement important en TEP, car il génère des artefacts très visibles, qui doivent être corrigés à partir d'une carte d'atténuation, déduite d'un examen de Tomodensitométrie (Tomographie par rayons X) ou d'une carte de transmission, comme indiqué en~\ref{fig:schemaAtt}.
+L'absorption photo-électrique correspond quand à elle à l'interaction entre un noyau atomique et un des photons. L'énergie du photon sera absorbée par le noyau et transmis à un de ses électrons. Cet effet est particulièrement important en TEP, car il génère des artefacts très visibles, qui doivent être corrigés à partir d'une carte d'atténuation, déduite d'un examen de Tomodensitométrie (Tomographie par rayons X) ou d'une carte de transmission, comme indiqué en~\ref{fig:schemaAtt}.
 
 L'atténuation augmente exponentiellement avec la longueur du trajet dans les tissus selon la loi de Beer-Lambert :
 \begin{equation}
@@ -86,25 +95,24 @@ I = I_0 e^{-\mu l}
 
 Avec $I_0$ la quantité originale de photons, $I$ le nombre de photons qui traverseront le milieu, $\mu$ le coefficient d'atténuation du milieu et $l$ la longueur du trajet. 
 
-Dans le cas où le milieu est complexe, et si l'on connaît l'atténuation $\mu(x)$ en chaque point $x$ du trajet :
+Dans le cas où le milieu est complexe, et si l'on connaît l'atténuation $\mu(x)$ en chaque point $x$ du trajet, on peut connaître précisément l'atténuation subie selon chaque ligne de réponse :
 
 \begin{equation}
 I = I_0 e^{- \int\limits^L_0 \mu(l) dl}
 \end{equation}
 
 
-
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/attenuationNonAtt}
-\caption[Effet de l'atténuation sur les images TEP]{Effets de l'atténuation sur des images TEP : L'image de gauche correspond à la distribution de radioactivité reçue par les détecteurs. On peu observer une perte progressive de l'activité vers l'intérieur des tissus, cars le photons on plus de chances d'intéragir avec la matière. L'image TDM au centre est utilisée pour estimer l'atténuation des tissus et prendre en compte cette atténuation lors de la reconstruction de l'image de droite.}
+\caption[Effet de l'atténuation sur les images TEP]{Effets de l'atténuation sur des images TEP : L'image de gauche correspond à la distribution de radioactivité reçue par les détecteurs. On peu observer une perte progressive de l'activité vers l'intérieur des tissus, cars le photons on plus de chances d'interagir avec la matière. L'image TDM au centre est utilisée pour estimer l'atténuation des tissus et prendre en compte cette atténuation lors de la reconstruction de l'image de droite.}
 \label{fig:schemaAtt}
 \end{figure}
 
 
 \chapter{Déroulement d'une acquisition}
 
-Nous allons maintenant décrire répidement quelques points techniques permettant de mieux comprendre comment sont réalisées les acquisitions. Nous y parlerons de la méthode utilisée pour réaliser des acquisitions corps entier alors que l'imageur a un champ de vue faible et des contraintes associées, mais aussi du format des données et de ce que cela implique.
+Nous allons maintenant décrire rapidement quelques points techniques permettant de mieux comprendre comment sont réalisées les acquisitions. Nous y parlerons de la méthode utilisée pour réaliser des acquisitions corps entier alors que l'imageur a un champ de vue faible et des contraintes associées, mais aussi du format des données et de ce que cela implique.
 
 	\section{Acquisitions corps entier}
 
@@ -113,7 +121,7 @@ Les acquisitions TEP réalisées pour l'oncologie sont habituellement des acquis
 
 Or le champ de vue axial d'une caméra TEP est de quelques centimètres seulement (18 cm pour le Philips Gemini GXL). En routine clinique, les patients sont placés sur des lits qui se déplacent par incréments successifs lors de l'acquisition.
 
-Le nombre de lits est déterminé par la taille du patient ainsi que par le champ de vue du tomographe. Chaque lit est reconstruit séparément puis assemblé avec les lits suivants et précédents, comme indiqué dans la figure \ref{fig:multilits}. \'Etant donné que les caméra TEP ont une sensibilité plus faible à leur extrémités, on introduit un chevauchement plus ou moins important dans les lits.
+Le nombre de lits est déterminé par la taille du patient ainsi que par le champ de vue du tomographe. Chaque lit est reconstruit séparément puis assemblé avec les lits suivants et précédents, comme indiqué dans la figure \ref{fig:multilits}. \'Etant donné que les caméras TEP ont une sensibilité plus faible à leurs extrémités, on introduit un chevauchement plus ou moins important dans les lits.
 
 \begin{figure}
 \centering
@@ -122,19 +130,19 @@ Le nombre de lits est déterminé par la taille du patient ainsi que par le cham
 \label{fig:multilits}
 \end{figure}
 
-Les acquisitions corps entier utilisent typiquement 6 à 7 lits pour une caméra siemens, ce qui demande un temps considérable. Il faut donc faire des compromis entre le temps d'acquisition et la qualité des images. Sachant que les examens TEP sont coûteux et que l'immobilité est inconfortable pour les patients, le temps d'acquisition est calibré pour durer moins d'une heure au total. Les nouvelles génération d'imageurs permettent cependant de réduire les temps d'acquisition à qualité équivalente.
+Les acquisitions corps entier utilisent typiquement 6 à 7 lits pour une caméra siemens, ce qui demande un temps considérable. Il faut donc faire des compromis entre le temps d'acquisition et la qualité des images. Sachant que les examens TEP sont coûteux et que l'immobilité est inconfortable pour les patients, le temps d'acquisition est calibré pour durer moins d'une heure au total. Les nouvelles générations d'imageurs permettent cependant de réduire les temps d'acquisition à qualité équivalente.
 
 	\section{Acquisition en mode 2D ou 3D}
 
 Historiquement, les données étaient acquises par coupe : des septas (plaque destinées à absorber les photons) étaient placés entre les détecteur de manière à éliminer les photons qui n'étaient pas émis dans le plan (voir figure \ref{fig:2D3D}. De la même manière, les coïncidences étaient recherchées par plan uniquement.
 
-Cependant, bien que le nombre de coïncidences fortuites est peu élevé suite à la réduction du flux de photons, la quantité de données acquise est plus faible, ce qui a amené aux acquisitions 3D, où les septas sont retirés et où les photons peuvent être détectés selon des angles plus larges.
+Cependant, bien que le nombre de coïncidences fortuites soit peu élevé suite à la réduction du flux de photons, la quantité de données acquise est plus faible, ce qui a amené aux acquisitions 3D, où les septas sont retirés et où les photons peuvent être détectés selon des angles plus larges.
 
 
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/2D3D}
-\caption[Acquisitions 2D et 3D en TEP]{Illustration des différences entre l'acquisition 2D et 3D en TEP. Les deux images représentent un imageur vu en coupe axiale. les rectangles blancs représentent les détecteurs et les rectangles noirs les septas destinés à bloquer les photons. }
+\caption[Acquisitions 2D et 3D en TEP]{Illustration des différences entre l'acquisition 2D et 3D en TEP. Les deux images représentent un imageur vu en coupe axiale. Les rectangles blancs représentent les détecteurs et les rectangles noirs les septas destinés à bloquer les photons. }
 \label{fig:2D3D}
 \end{figure}
 
@@ -143,13 +151,11 @@ Cependant, bien que le nombre de coïncidences fortuites est peu élevé suite �
 
 \label{CorrectionAttenuation}
 
-Le patient passe tout d'abord un exament TDM sur les scanner couplés TEP/TDM. Les valeurs des coefficients hounsfield correspondant à l'atténuation des rayons X sont transformés pour correspondre à l'atténuation des photons de 511keV de la TEP. Ce sera cette image qui sera utilisée pour réaliser la correction d'atténuation. 
+Le patient passe tout d'abord un examen TDM sur les scanner couplés TEP/TDM. Les valeurs des coefficients Hounsfield correspondant à l'atténuation des rayons X sont transformés pour correspondre à l'atténuation des photons de 511keV de la TEP. Ce sera cette image qui sera utilisée pour réaliser la correction d'atténuation. 
 
-Il est cependant possible d'utiliser une image en transmission, où une source radioactive est placé dans l'imageur et tourne autour du patient. L'activité de la source étant connue, la quantité de photons reçue par les détecteur situés derrière le patient permet de générer la carte d'atténuation du corps du patient, de la même manière que pour l'imagerie TDM. Cependant, la généralisation des scanner couplées TEP/TDM limite l'utilisation de cette technique.
+Il est cependant possible d'utiliser une image en transmission, où une source radioactive est placée dans l'imageur et tourne autour du patient. L'activité de la source étant connue, la quantité de photons reçue par les détecteurs situés derrière le patient permet de générer la carte d'atténuation du corps du patient, de la même manière que pour l'imagerie TDM. Cependant, la généralisation des scanner couplées TEP/TDM limite l'utilisation de cette technique.
 
 
-
-Lors de l'appariment des photons, 
 
 
 	\section{Format des données}
@@ -158,11 +164,11 @@ Les données acquises par une caméra TEP peuvent être stockées sous deux form
 
 Ce format correspond à un enregistrement ``brut'' des données issues de l'électronique de la caméra.
 
-Ce format de fichier est en fait un enregistrement séquentiel des évènements, dans leur ordre de détection. On peut enregistrer chaque photon détecté indépendamment, ou encore uniquement les coïncidences. Chaque évènement est daté, ce qui permet de conserver l'informations temporelle, qui est utilisé notamment pour synchroniser les données acquises avec le temps, pour la correction de mouvement par exemple.
+Ce format de fichier est en fait un enregistrement séquentiel des évènements, dans leur ordre de détection. On peut enregistrer chaque photon détecté indépendamment, ou encore uniquement les coïncidences. Chaque évènement est daté, ce qui permet de conserver l’information temporelle, qui est utilisé notamment pour synchroniser les données acquises avec le temps, pour la correction de mouvement par exemple, ou pour observer comment se répartit le radio traceur au cours du temps.
 
 Il existe plusieurs formats de fichiers pour le stockage de ces données, notamment le format LMF (List-Mode Format) développé pour le projet ClearPET et le format ROOT développé par le CERN. 
 
-L'avantage de ces formats est qu'ils permettent de conserver les informations sur la dynamique de l'acquisition, mais aussi qu'ils permettent le stockage de métadonnées utiles en simulations, notamment le nombre de diffusions, ou de marquer les coincidences fortuites.
+L'avantage de ces formats est qu'ils permettent de conserver les informations sur la dynamique de l'acquisition, mais aussi qu'ils permettent le stockage de métadonnées utiles en simulations, notamment le nombre de diffusions, ou de marquer les coïncidences fortuites et diffusés.
 
 Cependant ce format consomme une très grande quantité de mémoire, étant donné qu'un examen PET est constitué de plusieurs millions d'évènements.
 
@@ -175,7 +181,7 @@ Le principal avantage du sinogramme est qu'il permet de stocker les données acq
 
 \chapter{Algorithmes de reconstruction}
 
-La reconstruction des images TEP corresponds à un problème inverse : à partir de l'ensemble des lignes de réponse, il faut déduire la répartition du radiotraceur dans l'organisme du patient. Deux classes d'algorithme existent pour résoudre ce type de problèmes, mais actuellement seul les algorithmes itératifs sont utilisés en oncologie clinique. 
+La reconstruction des images TEP correspond à un problème inverse : à partir de l'ensemble des lignes de réponse, il faut déduire la répartition du radio traceur dans l'organisme du patient. Deux classes d'algorithme existent pour résoudre ce type de problèmes, mais actuellement seuls les algorithmes itératifs sont utilisés en oncologie clinique. 
 
 	\section{Itératifs}
 
@@ -202,12 +208,12 @@ En pratique, la matrice de $H$ correspond à la matrice vu $R$ précédemment ma
 \end{equation}
 
 
-Le nombre d'itérations à réaliser avant d'atteindre la convregence dépend de l'image, mais il est couramment d'environ 20 à 50. Il existe plusieurs publications proposant un critère d'arrêt~\cite{bissantz2006multi}, mais en pratique la reconstruction est souvent réalisée pour un nombre d'itérations fixées~\cite{bailey2005positron} et  suivi d'un filtrage passe-bas~\cite{daube2001application}. Cet algorithme de reconstruction prends un temps important car il faut réaliser l'opération de projection et de retroprojection sur l'ensemble des données à chaque itération.
+Le nombre d'itérations à réaliser avant d'atteindre la convergence dépend de l'image, mais il est couramment d'environ 20 à 50. Il existe plusieurs publications proposant un critère d'arrêt~\cite{bissantz2006multi}, mais en pratique la reconstruction est souvent réalisée pour un nombre d'itérations fixées~\cite{bailey2005positron} et  suivi d'un filtrage passe-bas~\cite{daube2001application}. Cet algorithme de reconstruction prend un temps important car il faut réaliser l'opération de projection et de rétroprojection sur l'ensemble des données à chaque itération.
 
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/MLEM}
-\caption[Schéma de principe de l'algorithme MLEM]{Schéma décrivant l'alorithme itératif ML-EM. $\hat{f}^{(n)}_j$ est l'estimation du voxel $j$ de l'image à l'itération $n$. $H_{ij}$ est la matrice système, et représente la probabilité de détecter une désintégration dans le voxel $j$ à la ligne de réponse $i$.}
+\caption[Schéma de principe de l'algorithme MLEM]{Schéma décrivant l'algorithme itératif ML-EM. $\hat{f}^{(n)}_j$ est l'estimation du voxel $j$ de l'image à l'itération $n$. $H_{ij}$ est la matrice système, et représente la probabilité de détecter une désintégration dans le voxel $j$ à la ligne de réponse $i$.}
 \label{fig:schemaMLEM}
 \end{figure}
 
@@ -216,13 +222,14 @@ Le nombre d'itérations à réaliser avant d'atteindre la convregence dépend de
 
 L'algorithme OS-EM est une évolution de l'algorithme ML-EM  qui permet une accélération substantielle de la convergence en réalisant les itérations de l'équation \ref{eq:MLEM} sur des sous-ensemble des données acquises~\cite{hudson1994accelerated}. 
 
-Ces sous-ensemble de données sont réalisés en échantillonant de manière régulière les lignes de réponses. Leur nombre est un des paramètres de l'algorithme, mais la convergence n'est plus garantie contrairement à ML-EM. En pratique, l'image converge toujours, et un nombre pré-déterminé d'itérations est déterminé de manière empirique~\cite{bailey2005positron}. Des évolutions de OS-EM ont été réalisées pour garantir une convergence, notamment l'algorithme Row-Action Maximum Likelihood (RAMLA)~\cite{browne1996row, chiang2004clinical}.
+Ces sous-ensemble de données sont réalisés en échantillonnant de manière régulière les lignes de réponses. Leur nombre est un des paramètres de l'algorithme, mais la convergence n'est plus garantie contrairement à ML-EM. En pratique, l'image converge toujours approximativement, et le nombre d'itérations est déterminé de manière empirique~\cite{bailey2005positron}. Des évolutions de OS-EM ont été réalisées pour garantir une convergence, notamment l'algorithme Row-Action Maximum Likelihood (RAMLA)~\cite{browne1996row, chiang2004clinical}.
 
 Le principal avantage de OS-EM est qu'il permet d'augmenter la vitesse de la reconstruction d'un facteur correspondant au nombre de sous-ensembles utilisés.
 
 	\subsection{Cas des acquisitions en mode Séquentiel}
+\label{lab:OPLEM}
 
-Les acquisitions en mode séquentiel génèrent une suite d'enregistrements correspondant aux évènements détectés par l'imageur. Le parcours de tous ces évènements un par un demande des temps de calculs extrèmement importants, c'est pourquoi Reader~\cite{reader2002one} a proposé une adaptation de l'OS-EM au mode séquentiel appellée One-Pass List-Mode EM (OPL-EM). L'algorithme proposé est conçu pour ne parcourir qu'une seule fois la liste des évènements. Comme pour OS-EM, les données sont groupées en sous-ensemble, qui sont utilisés les uns après les autres pour chaque itération, comme indiqué dans la figure suivante :
+Les acquisitions en mode séquentiel génèrent une suite d'enregistrements correspondant aux évènements détectés par l'imageur. Le parcours de tous ces évènements un par un demande des temps de calculs extrêmement importants, c'est pourquoi Reader~\cite{reader2002one} a proposé une adaptation de l'OS-EM au mode séquentiel appellée One-Pass List-Mode EM (OPL-EM). L'algorithme proposé est conçu pour ne parcourir qu'une seule fois la liste des évènements. Comme pour OS-EM, les données sont groupées en sous-ensemble, qui sont utilisés les uns après les autres pour chaque itération, comme indiqué dans la figure suivante :
 
 \begin{equation}
 	f_j^{(n+1)}=\frac{\hat{f}_j^{(n)}}{\sum\limits_{i'}H_{i'j}}\sum\limits_{i \in T^n}H_{ij}\frac{1}{\sum\limits_{k}H_{ik}\hat{f}_k^{(n)}}
@@ -233,6 +240,6 @@ La différence avec OS-EM est que la sommation des différences est réalisée s
 		
 	\section{Analytiques}
 
-Les reconstructions analytiques utilisent le théorème de la coupe centrale pour réaliser la rétroprojection de données. Ce théorème permet de lier les transformée de fourier des projections avec celles de l'image d'origine. 
+Les reconstructions analytiques utilisent le théorème de la coupe centrale pour réaliser la rétroprojection de données. Ce théorème permet de lier les transformée de Fourier des projections avec celles de l'image d'origine. 
  
 Ces algorithmes sont supplantés en oncologie par les algorithmes itératifs qui sont jugés plus performants sur l'évaluation du SUV et moins bruités~\cite{schoder2004clinical}.
