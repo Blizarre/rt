@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=texte/simulations.tex
+lastDocument=texte/ImagerieTEP.tex
 masterDocument=
 name=rapportBiblio
 pkg_extIsRegExp=false
@@ -17,20 +17,20 @@ QuickBuild=
 
 [item:../../../../documentation/Thèse/rapportBiblio/texte/eval.tex]
 archive=true
-column=0
+column=379
 encoding=UTF-8
 highlight=LaTeX
-line=305
-open=false
-order=0
+line=323
+open=true
+order=2
 
 [item:main.tex]
 archive=true
-column=0
+column=46
 encoding=UTF-8
 highlight=LaTeX
-line=120
-open=false
+line=119
+open=true
 order=0
 
 [item:nomenclature.txt]
@@ -62,21 +62,30 @@ order=-1
 
 [item:texte/ImagerieTEP.tex]
 archive=true
-column=0
+column=207
 encoding=UTF-8
 highlight=LaTeX
-line=230
+line=183
 open=true
-order=2
+order=3
 
 [item:texte/basedonnee.tex]
 archive=true
-column=0
+column=32
 encoding=UTF-8
 highlight=LaTeX
-line=181
-open=true
+line=21
+open=false
 order=0
+
+[item:texte/discussion.tex]
+archive=true
+column=156
+encoding=UTF-8
+highlight=LaTeX
+line=36
+open=true
+order=1
 
 [item:texte/effets.tex]
 archive=true
@@ -93,32 +102,32 @@ column=7
 encoding=UTF-8
 highlight=LaTeX
 line=64
-open=true
+open=false
 order=4
 
 [item:texte/methodes.tex]
 archive=true
-column=0
+column=311
 encoding=UTF-8
 highlight=LaTeX
-line=118
+line=123
 open=false
 order=2
 
 [item:texte/resultats.tex]
 archive=true
-column=0
+column=199
 encoding=UTF-8
 highlight=LaTeX
-line=0
-open=true
+line=471
+open=false
 order=3
 
 [item:texte/simulations.tex]
 archive=true
-column=0
+column=29
 encoding=UTF-8
 highlight=LaTeX
-line=96
-open=true
+line=98
+open=false
 order=1

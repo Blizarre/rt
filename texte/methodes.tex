@@ -120,8 +120,7 @@ En effet, \cite{lamare2007respiratory} réalise une estimation du mouvement affi
 Ces résultats ont été améliorés par l'utilisation de la technique suivante qui permettait la prise en compte d'un mouvement élastique.
 
 \section{Correction pendant la reconstruction}
-
-
+\label{lab:CorrpendantRecon}
 Plusieurs auteurs ont présentés des méthodes permettant de réaliser la correction de mouvement pendant la reconstruction. Qiao et al.\cite{qiao2006motion} et Lamare et al.~\cite{lamare2007list} ont proposé une méthode de correction du mouvement respiratoire basé sur une modification de la matrice de sensibilité lors de la reconstruction pour prendre en compte le mouvement. Tous les deux utilisent un champ de mouvement élastique estimé en utilisant un champ interpolé par B-splines.
 
 L'algorithme original utilisé est basé sur OPL-EM~\cite{reader2002one} qui organise les données en ``sous-ensemble'' de la même manière que OS-EM~\cite{hudson1994accelerated} mais en utilisant les informations list-mode. Le principe de la reconstruction avec correction du mouvement respiratoire est décrit par la formule suivante :

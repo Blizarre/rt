@@ -1,6 +1,6 @@
 
 \label{lab:chapPET}
-La Tomographie par \'Emission de Positons (TEP) est une modalité d'imagerie fonctionnelle utilisant la désintégration d'un traceur radioactif pour mettre en valeur les zones de forte activité métaboliques. Elle est principalement utilisée en imagerie cérébrale, oncologie et cardiologie.
+La Tomographie par \'Emission de Positons (TEP) est une modalité d'imagerie fonctionnelle utilisant la désintégration d'un traceur radioactif pour mettre en valeur les zones de forte activité métabolique. Elle est principalement utilisée en imagerie cérébrale, oncologie et cardiologie.
 
 Dans ces trois courts chapitres, nous allons tout d'abord détailler rapidement les principes physiques amenant à la création des images TEP, de la désintégration du traceur radioactif à la détection des photons émis lorsqu'ils atteignent un capteur. 
 
@@ -10,7 +10,6 @@ Enfin, nous détaillerons les algorithmes utilisés pour reconstruire les images
 
  
 \chapter{Principe Physique}
-
 
 	\section{Généralités}
 
@@ -25,7 +24,7 @@ Pour cela, on lui injecte un ``traceur'' contenant une particule radioactive. Ce
 
 $N$ représente le nombre de particules radioactives présentes dans le corps du patient. $dN$ représente la variation de ce nombre de particules (le nombre de désintégrations par $dt$) et $\lambda$ est une constante dépendant de l'élément radioactif.
 
-Chaque désintégration d'un élément radioactif va déclencher l'émission d'une particule chargée $\beta^+$, aussi appelée positon. En oncologie, on utilise le Fluor $^{18}F$ qui se désintègre en Oxygène $^{18}O$ en émettant le positon. Cette particule va parcourir quelques mm avant de s'annihiler avec un élection en émettant 2 photons dans deux directions opposées avec une énergie de 511 KeV.
+Chaque désintégration d'un élément radioactif va déclencher l'émission d'une particule chargée $\beta^+$, aussi appelée positon. En oncologie, on utilise le Fluor $^{18}F$ qui se désintègre en Oxygène $^{18}O$ en émettant le positon. Cette particule va parcourir quelques mm avant de s'annihiler avec un électron en émettant 2 photons dans deux directions opposées avec une énergie de 511 KeV.
 
 Ce seront ces photons qui vont être détectés par l'imageur TEP. Ils représentent une coïncidence, car l'instant d'arrivée et leur énergie sont semblables. L'ensemble des ``Lignes de réponse'' (LDR) correspondant aux coïncidences détectées est utilisée pour reconstruire les images.
 
@@ -40,14 +39,14 @@ Ce seront ces photons qui vont être détectés par l'imageur TEP. Ils représen
 
 Nous allons maintenant détailler le processus qui déclenche l'émission des photons détectés par l'imageur, présenté dans la figure~\ref{fig:Langner2008ad}.
 
-Les émetteurs de positons utilisés en TEP sont des isotopes radioactifs présentant un excès de charge positive, ou proton, dans leurs noyaux. Un processus de désintégration $\beta^+$, correspondant à la transformation d’un proton $p$ en un neutron $n$, leur permet de migrer vers un état stable. Cette désintégration résulte en l’émission d’un neutrino $\nu$ et d’un positron $e^+$ selon l’équation \ref{eq:desinteg}. Le positron est une particule de même masse que l’électron mais de charge opposée.
+Les émetteurs de positons utilisés en TEP sont des isotopes radioactifs présentant un excès de charge positive, ou proton, dans leurs noyaux. Un processus de désintégration $\beta^+$, correspondant à la transformation d’un proton $p$ en un neutron $n$, leur permet de migrer vers un état stable. Cette désintégration résulte en l’émission d’un neutrino $\nu$ et d’un positon $e^+$ selon l’équation \ref{eq:desinteg}. Le positon est une particule de même masse que l’électron mais de charge opposée.
 
 \begin{equation}
  p~\rightarrow~n + e^+ + \nu
 \label{eq:desinteg}
 \end{equation}
 
-Le positon va alors s'annihiler avec un électron après un parcours de quelques millimètres en émettant deux photons de même énergie (511 keV) comme indiqué dans l'équation~\ref{eq:annihilation}. L'angle d'émission des photons est approximé en supposant qu'ils sont émis à $180°$ l'un de l'autre, alors qu'en réalité il existe une incertitude de $\pm 0.25°$~\cite{bailey2005positron}.
+Le positon va alors s'annihiler avec un électron après un parcours de quelques millimètres en émettant simultanément deux photons de même énergie (511 keV) comme indiqué dans l'équation~\ref{eq:annihilation}. L'angle d'émission des photons est de $180°$ avec une incertitude de $\pm 0.25°$~\cite{bailey2005positon}.
 
 \begin{equation}
  e^+ + e^-~\rightarrow~\gamma + \gamma
@@ -57,7 +56,7 @@ Le positon va alors s'annihiler avec un électron après un parcours de quelques
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/annihilation}
-\caption[\'Emission des photons]{\'Emission des photons~\cite{Langner2008ad} : Le radio traceur se désintègre en émettant un neutrino et un positron. Après un parcours de quelques mm dans les tissus, ce dernier s'annihile avec un électron. Cette réaction provoque la création de deux photons d'énergie 511 keV partant dans deux directions opposées.}
+\caption[\'Emission des photons]{\'Emission des photons~\cite{Langner2008ad} : Le radio traceur se désintègre en émettant un neutrino et un positon. Après un parcours de quelques mm dans les tissus, ce dernier s'annihile avec un électron. Cette réaction provoque la création de deux photons d'énergie 511 keV partant dans deux directions opposées.}
 \label{fig:Langner2008ad}
 \end{figure}
 
@@ -69,7 +68,9 @@ Un système électronique placé à proximité de l'imageur va ensuite apparier 
 
 	\subsection{Types de coïncidences}
 
-Les coïncidences vraies Figure \ref{fig:schemaDetections}(a) correspondent aux cas où les deux détections appariées correspondent bien à une seule désintégration et où aucun des photons n'a été dévié. Les coïncidences fortuites Figure \ref{fig:schemaDetections}(b) correspondent à deux désintégrations simultanées qui sont considérées comme étant une seule désintégration, par exemple à cause de l’absorption d’un des photons d’une désintégration par les tissus. Enfin, les coïncidences diffusées Figure \ref{fig:schemaDetections}(c) sont le résultat de la déviation d'un des deux photons produit. Pour éliminer ces erreurs, un certains nombre de méthodes ont été implémentés, dont le filtrage en énergie et en temps au niveau matériel : ne sont prises en compte que les paires d'évènements arrivant dans une fenêtre temporelle et énergétique définie. En effet, les photons déviés vont perdre de l'énergie, ce qui va entraîner leur élimination.
+La figure \ref{fig:schemaDetections} représente les différents types de coïncidences rencontrés en TEP.
+
+Les coïncidences vraies (\ref{fig:schemaDetections}.a) correspondent aux cas où les deux détections appariées correspondent bien à une seule désintégration et où aucun des photons n'a été dévié. Les coïncidences fortuites (\ref{fig:schemaDetections}.b) correspondent à deux désintégrations simultanées qui sont considérées comme étant une seule désintégration, par exemple à cause de l’absorption d’un des photons d’une désintégration par les tissus. Enfin, les coïncidences diffusées (\ref{fig:schemaDetections}.c) sont le résultat de la déviation d'un des deux photons produit. Pour éliminer ces erreurs, un certains nombre de méthodes ont été implémentés, dont le filtrage en énergie et en temps au niveau matériel : ne sont prises en compte que les paires d'évènements arrivant dans une fenêtre temporelle et énergétique définie. En effet, les photons déviés vont perdre de l'énergie, ce qui va entraîner leur élimination.
 
 \begin{figure}
 \centering
@@ -80,13 +81,15 @@ Les coïncidences vraies Figure \ref{fig:schemaDetections}(a) correspondent aux 
 
 
 
-	\section{perturbation trajet du photon}
+	\section{Perturbation du trajet du photon}
 
 Les deux interactions les plus importantes que peuvent avoir les photons avec les tissus sont la diffusion compton et l'absorption photoélectrique. L'effet Rayleigh, qui correspond à la diffusion du photon sur un atome, est peu présent aux énergies concernées par la TEP. 
 
 La diffusion compton correspond à l'interaction entre le photon émis et un électron du milieu. L'énergie cinétique de l'électron sera augmentée, tandis que le photon sera dévié. Il est intéressant de noter qu'une déviation de 25° engendre une perte d'énergie du photon de seulement 10\%~\cite{evans1955atomic}.
 
 L'absorption photo-électrique correspond quand à elle à l'interaction entre un noyau atomique et un des photons. L'énergie du photon sera absorbée par le noyau et transmis à un de ses électrons. Cet effet est particulièrement important en TEP, car il génère des artefacts très visibles, qui doivent être corrigés à partir d'une carte d'atténuation, déduite d'un examen de Tomodensitométrie (Tomographie par rayons X) ou d'une carte de transmission, comme indiqué en~\ref{fig:schemaAtt}.
+
+\todo{citer des publis pour les 3 effets !}
 
 L'atténuation augmente exponentiellement avec la longueur du trajet dans les tissus selon la loi de Beer-Lambert :
 \begin{equation}
@@ -105,14 +108,14 @@ I = I_0 e^{- \int\limits^L_0 \mu(l) dl}
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/attenuationNonAtt}
-\caption[Effet de l'atténuation sur les images TEP]{Effets de l'atténuation sur des images TEP : L'image de gauche correspond à la distribution de radioactivité reçue par les détecteurs. On peu observer une perte progressive de l'activité vers l'intérieur des tissus, cars le photons on plus de chances d'interagir avec la matière. L'image TDM au centre est utilisée pour estimer l'atténuation des tissus et prendre en compte cette atténuation lors de la reconstruction de l'image de droite.}
+\caption[Effet de l'atténuation sur les images TEP]{Effets de l'atténuation sur des images TEP : L'image de gauche correspond à la distribution de radioactivité reçue par les détecteurs. On peu observer une perte progressive de l'activité vers l'intérieur des tissus, car les photons ont plus de chances d'interagir avec la matière. L'image TDM au centre est utilisée pour estimer une carte de l'atténuation des tissus et prendre en compte cette atténuation lors de la reconstruction de l'image TEP.}
 \label{fig:schemaAtt}
 \end{figure}
 
 
 \chapter{Déroulement d'une acquisition}
 
-Nous allons maintenant décrire rapidement quelques points techniques permettant de mieux comprendre comment sont réalisées les acquisitions. Nous y parlerons de la méthode utilisée pour réaliser des acquisitions corps entier alors que l'imageur a un champ de vue faible et des contraintes associées, mais aussi du format des données et de ce que cela implique.
+Nous allons maintenant décrire rapidement quelques points techniques permettant de mieux comprendre comment sont réalisées les acquisitions. Nous y parlerons de la méthode utilisée pour réaliser des acquisitions corps entier alors que l'imageur a un champ de vue faible et des contraintes associées. ENfin nous aborderons la problématique du format des données ses implications.
 
 	\section{Acquisitions corps entier}
 
@@ -130,14 +133,19 @@ Le nombre de lits est déterminé par la taille du patient ainsi que par le cham
 \label{fig:multilits}
 \end{figure}
 
-Les acquisitions corps entier utilisent typiquement 6 à 7 lits pour une caméra siemens, ce qui demande un temps considérable. Il faut donc faire des compromis entre le temps d'acquisition et la qualité des images. Sachant que les examens TEP sont coûteux et que l'immobilité est inconfortable pour les patients, le temps d'acquisition est calibré pour durer moins d'une heure au total. Les nouvelles générations d'imageurs permettent cependant de réduire les temps d'acquisition à qualité équivalente.
+\todo{combien de lits cam' philips ?}
 
-	\section{Acquisition en mode 2D ou 3D}
+Les acquisitions corps entier utilisent typiquement 10 lits sur la caméra philips Gemini, ce qui demande un temps considérable. Il faut donc faire des compromis entre le temps d'acquisition et la qualité des images. Sachant que les examens TEP sont coûteux et que l'immobilité est inconfortable pour les patients, le temps d'acquisition est calibré pour durer moins d'une heure au total. Les nouvelles générations d'imageurs permettent cependant de réduire les temps d'acquisition à qualité équivalente.
 
-Historiquement, les données étaient acquises par coupe : des septas (plaque destinées à absorber les photons) étaient placés entre les détecteur de manière à éliminer les photons qui n'étaient pas émis dans le plan (voir figure \ref{fig:2D3D}. De la même manière, les coïncidences étaient recherchées par plan uniquement.
+\todo{Temps d'acquisition nouvelles caméra ?}
 
-Cependant, bien que le nombre de coïncidences fortuites soit peu élevé suite à la réduction du flux de photons, la quantité de données acquise est plus faible, ce qui a amené aux acquisitions 3D, où les septas sont retirés et où les photons peuvent être détectés selon des angles plus larges.
+	\section{Acquisition en mode 3D}
 
+Historiquement, les données étaient acquises par coupe : des septas (plaque destinées à absorber les photons) étaient placés entre les détecteurs de manière à éliminer les photons qui n'étaient pas émis dans le plan (voir figure \ref{fig:2D3D}). 
+
+Cependant, bien que le nombre de coïncidences fortuites soit peu élevé suite à la réduction du flux de photons, la quantité de données acquise est plus faible, ce qui limite le rapport signal sur bruit et augmente les temps d'acquisition avec les matériels modernes. => acquisitions 3D, où les septas sont retirés et où les photons peuvent être détectés selon des angles plus larges.
+
+\todo{mettre illustration camera philips gemini - vérifier 3D baisse perfs}
 
 \begin{figure}
 \centering
@@ -147,36 +155,46 @@ Cependant, bien que le nombre de coïncidences fortuites soit peu élevé suite 
 \end{figure}
 
 
-	\section{Corrections de l'atténuation}
+	\section{Correction de l'atténuation}
 
 \label{CorrectionAttenuation}
 
 Le patient passe tout d'abord un examen TDM sur les scanner couplés TEP/TDM. Les valeurs des coefficients Hounsfield correspondant à l'atténuation des rayons X sont transformés pour correspondre à l'atténuation des photons de 511keV de la TEP. Ce sera cette image qui sera utilisée pour réaliser la correction d'atténuation. 
 
-Il est cependant possible d'utiliser une image en transmission, où une source radioactive est placée dans l'imageur et tourne autour du patient. L'activité de la source étant connue, la quantité de photons reçue par les détecteurs situés derrière le patient permet de générer la carte d'atténuation du corps du patient, de la même manière que pour l'imagerie TDM. Cependant, la généralisation des scanner couplées TEP/TDM limite l'utilisation de cette technique.
+Une technique plus ancienne d'estimation de la carte d'atténuation est basée sur une image acquise en transmission, où une source radioactive est placée dans l'imageur et tourne autour du patient. Une acquisition  préalable est réalisée ``à blanc'', sans le patient. Le rapport entre la quantité de photons reçue par les détecteurs avec et sans le patient permet de générer la carte d'atténuation du corps du patient, de la même manière que pour l'imagerie TDM. Cependant, la généralisation des scanner couplées TEP/TDM limite l'utilisation de cette technique.
 
+I = I0 exp blabla
 
+\todo{datailler correction atténuation}
 
 
 	\section{Format des données}
-Les données acquises par une caméra TEP peuvent être stockées sous deux formes principales : Sinogramme et séquentiel.
+Les données acquises par une caméra TEP peuvent être stockées sous deux formes principales : séquentiel et sinogramme.
+
 		\subsection{Séquentiel}
 
-Ce format correspond à un enregistrement ``brut'' des données issues de l'électronique de la caméra.
+Ce format correspond à un enregistrement ``brut'' des données issues de l'électronique de la caméra. Il est aussi appellé mode liste.
 
-Ce format de fichier est en fait un enregistrement séquentiel des évènements, dans leur ordre de détection. On peut enregistrer chaque photon détecté indépendamment, ou encore uniquement les coïncidences. Chaque évènement est daté, ce qui permet de conserver l’information temporelle, qui est utilisé notamment pour synchroniser les données acquises avec le temps, pour la correction de mouvement par exemple, ou pour observer comment se répartit le radio traceur au cours du temps.
+Ce format de fichier est en fait un enregistrement séquentiel des évènements, dans leur ordre de détection. On peut enregistrer chaque photon détecté indépendamment, ou encore uniquement les coïncidences. Chaque évènement est daté, ce qui permet de conserver l’information temporelle, qui est utilisé notamment pour synchroniser les données acquises avec le temps, pour la correction de mouvement par exemple, ou pour observer comment se répartit le radio-traceur au cours du temps.
 
 Il existe plusieurs formats de fichiers pour le stockage de ces données, notamment le format LMF (List-Mode Format) développé pour le projet ClearPET et le format ROOT développé par le CERN. 
 
 L'avantage de ces formats est qu'ils permettent de conserver les informations sur la dynamique de l'acquisition, mais aussi qu'ils permettent le stockage de métadonnées utiles en simulations, notamment le nombre de diffusions, ou de marquer les coïncidences fortuites et diffusés.
 
-Cependant ce format consomme une très grande quantité de mémoire, étant donné qu'un examen PET est constitué de plusieurs millions d'évènements.
+Cependant, ce format consomme une très grande quantité de ressources, étant donné qu'un examen PET est constitué de plusieurs millions d'évènements. Cela engendre de fortes contraintes en espace disque et complique de beaucoup la manipulation des données. 
 
 		\subsection{Sinogramme}
 
-Le sinogramme est une matrice indiquant pour chaque ligne de réponse le nombre de détections réalisées. Dans le cas d'acquisitions en mode 2D, où chaque coupe est séparée des autres par un blindage, on empile typiquement les sinogrammes des coupes. Dans le mode 3D, le blindage est retiré, ce qui permet de détecter des paires de photon qui ne sont pas directement dans le plan du détecteur. Dans ce cas, une dimension supplémentaire est ajoutée pour prendre en compte cet effet.
+Le sinogramme est une matrice indiquant pour chaque ligne de réponse le nombre de détections réalisées, comme présenté dans la figure \ref{fig:sino}. En ordonnés sont représentés les angles de la ligne de réponse, et en abscisse leur distance au centre du détecteur\cite{fahey2002data}. Dans le cas d'acquisitions en mode 2D, où chaque coupe est séparée des autres par un blindage, on empile typiquement les sinogrammes des coupes. Dans le mode 3D, le blindage est retiré, ce qui permet de détecter des paires de photon qui ne sont pas directement dans le plan du détecteur. Dans ce cas, une dimension supplémentaire est ajoutée pour prendre en compte cet effet.
 
 Le principal avantage du sinogramme est qu'il permet de stocker les données acquises lors d'un examen TEP de manière beaucoup plus compacte que le format séquentiel. Cependant, il ne conserve aucune information temporelle.
+
+\begin{figure}
+\centering
+\includegraphics[width=11cm]{images/sino}
+\caption[Principe du sinogramme]{Exemple de sinogramme: chaque ligne corresponds à une projection de l'image selon un angle $\theta$ correspondant à la position de la ligne dans le sinogramme.}
+\label{fig:sino}
+\end{figure}
 
 
 \chapter{Algorithmes de reconstruction}
@@ -188,17 +206,17 @@ La reconstruction des images TEP correspond à un problème inverse : à partir 
 La relation liant l'image TEP $f$ et les projections sur les détecteurs $p$ est la suivante :
 
 \begin{equation}
-	p = R f + n
+	p = R f + e
 \end{equation}
 
-Avec $H$ la matrice de projection et $n$ les erreurs provenant des erreurs dans les données. On considère que les comptages des lignes de réponses $p_i$ sont indépendants et bruités selon une loi de poisson. Ce problèmes est mal posé, et nécessite donc l'utilisation d'algorithmes spécialisés. 
+Avec $R$ la matrice de projection et $e$ correspondant aux phénomènes parasites. On considère que les comptages des lignes de réponses $p_i$ sont indépendants et bruités selon une loi de poisson. Ce problème est mal posé, et nécessite donc l'utilisation d'algorithmes spécialisés. 
 
-Des techniques existent pour corriger les données des effets vu dans la figure \ref{fig:schemaDetections}, notamment l'implantation d'une ligne à retard pour estimer les coïncidences aléatoires puis les retirer du sinogramme.
+Des techniques existent pour corriger les données des effets vus dans la figure \ref{fig:schemaDetections}, notamment l'implantation d'une ligne à retard pour estimer les coïncidences aléatoires puis les retirer du sinogramme.
 
-		\subsection{Maximum Likelihood Expectation Maximisation (ML-EM) }
+		\subsection{Algorithme ML-EM (Maximum Likelihood Expectation Maximisation) }
 
 
-L'algorithme ML-EM est initialisé avec une image de départ $f_0$. Il se déroule en deux phases principales : une phase de comparaison de l'image au niveau $n$ avec les lignes de réponses observées, puis une phase de mise à jour de l'image pour prendre en compte les différences calculées à l'étape précédente, comme présenté dans la figure \ref{fig:schemaMLEM}.
+L'algorithme ML-EM~\cite{shepp1982maximum} est initialisé avec une image de départ $f_0$. Il se déroule en deux phases principales : une phase de comparaison de l'image au niveau $n$ avec les lignes de réponses observées, puis une phase de mise à jour de l'image pour prendre en compte les différences calculées à l'étape précédente, comme présenté dans la figure \ref{fig:schemaMLEM}.
 
 En pratique, la matrice de $H$ correspond à la matrice vu $R$ précédemment mais inclus des informations supplémentaires pour corriger les différences de sensibilité entre les différents capteurs, mais aussi réaliser la correction des diffusés~\cite{shepp1982maximum,chornoboy1990evaluation}. Cette matrice peut aussi être utilisée pour corriger l'atténuation des tissus. En pratique, cette matrice ``système'' $H_ij$ indique la probabilité de détecter une désintégration au voxel $j$ de l'image dans la ligne de réponse $i$ :
 
@@ -218,11 +236,11 @@ Le nombre d'itérations à réaliser avant d'atteindre la convergence dépend de
 \end{figure}
 
 
-	\subsection{Ordered Subset Expectation Maximisation (OS-EM)}
+	\subsection{Algorithme OM-EM (Ordered Subset Expectation Maximisation)}
 
 L'algorithme OS-EM est une évolution de l'algorithme ML-EM  qui permet une accélération substantielle de la convergence en réalisant les itérations de l'équation \ref{eq:MLEM} sur des sous-ensemble des données acquises~\cite{hudson1994accelerated}. 
 
-Ces sous-ensemble de données sont réalisés en échantillonnant de manière régulière les lignes de réponses. Leur nombre est un des paramètres de l'algorithme, mais la convergence n'est plus garantie contrairement à ML-EM. En pratique, l'image converge toujours approximativement, et le nombre d'itérations est déterminé de manière empirique~\cite{bailey2005positron}. Des évolutions de OS-EM ont été réalisées pour garantir une convergence, notamment l'algorithme Row-Action Maximum Likelihood (RAMLA)~\cite{browne1996row, chiang2004clinical}.
+Ces sous-ensemble de données sont réalisés en échantillonnant de manière régulière les lignes de réponses. Leur nombre est un des paramètres de l'algorithme, mais la convergence n'est plus garantie contrairement à ML-EM. En pratique, l'image converge toujours approximativement, et le nombre d'itérations est déterminé de manière empirique~\cite{bailey2005positon}. Des évolutions de OS-EM ont été réalisées pour garantir une convergence, notamment l'algorithme Row-Action Maximum Likelihood (RAMLA)~\cite{browne1996row, chiang2004clinical}.
 
 Le principal avantage de OS-EM est qu'il permet d'augmenter la vitesse de la reconstruction d'un facteur correspondant au nombre de sous-ensembles utilisés.
 

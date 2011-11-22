@@ -25,14 +25,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.6118431"
-     inkscape:cx="244.26905"
-     inkscape:cy="65.413089"
+     inkscape:cx="274.26931"
+     inkscape:cy="148.08229"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      units="cm"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
+     inkscape:window-width="1440"
+     inkscape:window-height="829"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1">
@@ -46,6 +46,19 @@
   </sodipodi:namedview>
   <defs
      id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path3940"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
     <pattern
        inkscape:collect="always"
        xlink:href="#Wavy"
@@ -727,7 +740,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -778,8 +791,8 @@
        d="m 210.15952,211.9896 c 3.83333,-0.0351 7.66667,-0.0891 11.50001,-0.20356 3.83333,-0.11438 7.66665,-0.28721 11.49999,-0.61652 3.83334,-0.32929 7.66667,-0.81345 11.5,-1.64813 3.83334,-0.83468 7.66668,-2.02191 11.5,-3.88034 3.83333,-1.85844 7.66666,-4.39882 11.5,-8.01909 3.83334,-3.62026 7.66668,-8.34276 11.50001,-14.47599 3.83333,-6.13324 7.66665,-13.70567 11.49998,-22.65513 3.83333,-8.94946 7.66667,-19.2942 11.50001,-30.352 3.83333,-11.05781 7.66667,-22.81794 11.49998,-33.994936 3.83334,-11.176989 7.66668,-21.726666 11.50002,-30.180414 3.83333,-8.453726 7.66666,-14.754088 11.5,-17.919897 3.83334,-3.165827 7.66666,-3.159691 11.49999,0 3.83334,3.159673 7.66667,9.470342 11.50001,17.919897 3.83333,8.449573 7.66667,19.004665 11.50001,30.180414 3.83332,11.175756 7.66666,22.935806 11.49998,33.994936 3.83334,11.05912 7.66668,21.39987 11.50002,30.352 3.83332,8.95212 7.66666,16.51911 11.49998,22.65513 3.83334,6.136 7.66668,10.85356 11.50001,14.47599 3.83334,3.62245 7.66667,6.15928 11.50001,8.01909 3.83333,1.85979 7.66664,3.04493 11.49998,3.88034 3.83334,0.83539 7.66667,1.31852 11.5,1.64813 3.83334,0.32963 7.66668,0.50196 11.50002,0.61652 3.83331,0.11462 7.66665,0.16852 11.49998,0.20356 3.83334,0.0352 7.66668,0.0498 11.50001,0.0595 3.83334,0.009 7.66667,0.013 11.49999,0.0148 3.83333,0.002 7.66667,0.004 11.50001,0.004"
        style="fill:none;stroke:#000000;stroke-width:1.3195343;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1.08145714;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1.0814572, 3.24437159;stroke-dashoffset:0"
-       d="m 297.51666,212.0814 0,-210.518931 0,0 0,0"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1,3;stroke-dashoffset:0"
+       d="m 297.51666,212.0814 0,-175.143404 0,0 0,0"
        id="path8277" />
     <path
        style="fill:url(#pattern19879);fill-opacity:1;stroke:#000000;stroke-width:1.08145714px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -806,7 +819,7 @@
     <g
        ns0:text="{\\tiny $P(\\lambda_0, \\mu_0)$}"
        ns0:preamble=""
-       transform="matrix(3,0,0,3.2920653,-462.68697,-449.73351)"
+       transform="matrix(3,0,0,3.2920653,-468.68697,-464.74867)"
        id="g13705">
       <defs
          id="defs13707">
@@ -989,7 +1002,7 @@
     </g>
     <g
        id="g14980"
-       transform="matrix(3,0,0,3.508649,-372.26509,-453.12777)"
+       transform="matrix(3,0,0,3.508649,-366.26509,-493.12777)"
        ns0:preamble=""
        ns0:text="{\\tiny $P(\\lambda_1, \\mu_1)$}">
       <defs
@@ -1173,7 +1186,7 @@
     </g>
     <g
        id="g15913"
-       transform="matrix(3,0,0,3.2920653,-430.92134,-343.65102)"
+       transform="matrix(3,0,0,3.2920653,-431.54175,-343.65102)"
        ns0:preamble=""
        ns0:text="{\\tiny H0}">
       <defs
@@ -1234,7 +1247,7 @@
     <g
        ns0:text="{\\tiny H1}"
        ns0:preamble=""
-       transform="matrix(3,0,0,3.2920653,-340.92134,-343.65102)"
+       transform="matrix(3,0,0,3.2920653,-342.78257,-343.65102)"
        id="g16365">
       <defs
          id="defs16367">
@@ -1775,6 +1788,62 @@
              xlink:href="#textext-1d882e6e-5"
              width="501.1004"
              height="233.93735" />
+        </g>
+      </g>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.78655368;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend)"
+       d="m 253.78219,6.937996 87,0"
+       id="path3145" />
+    <path
+       id="path4581"
+       d="m 253.51666,212.0814 0,-210.518931 0,0 0,0"
+       style="fill:none;stroke:#000000;stroke-width:1.08145714;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3.24437141,3.24437141;stroke-dashoffset:0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.08145714;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3.24437141,3.24437141;stroke-dashoffset:0"
+       d="m 342.43096,212.0814 0,-210.518931 0,0 0,0"
+       id="path4583" />
+    <g
+       id="g5718"
+       transform="matrix(1.4785479,0,0,1.7292352,-43.674895,-212.53011)"
+       ns0:preamble=""
+       ns0:text="$d$">
+      <defs
+         id="defs5720">
+        <g
+           id="g5722">
+          <symbol
+             id="textext-72f9cd52-0"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path5725"
+               d=""
+               style="stroke:none" />
+          </symbol>
+          <symbol
+             id="textext-72f9cd52-1"
+             overflow="visible"
+             style="overflow:visible">
+            <path
+               id="path5728"
+               d="m 5.140625,-6.8125 c 0,0 0,-0.109375 -0.125,-0.109375 -0.15625,0 -1.09375,0.09375 -1.265625,0.109375 -0.078125,0.015625 -0.140625,0.0625 -0.140625,0.1875 0,0.125 0.09375,0.125 0.234375,0.125 0.484375,0 0.5,0.0625 0.5,0.171875 L 4.3125,-6.125 3.71875,-3.765625 C 3.53125,-4.140625 3.25,-4.40625 2.796875,-4.40625 c -1.15625,0 -2.390625,1.46875 -2.390625,2.921875 0,0.9375 0.546875,1.59375 1.3125,1.59375 0.203125,0 0.703125,-0.046875 1.296875,-0.75 0.078125,0.421875 0.4375,0.75 0.90625,0.75 0.359375,0 0.578125,-0.234375 0.75,-0.546875 0.15625,-0.359375 0.296875,-0.96875 0.296875,-0.984375 0,-0.109375 -0.09375,-0.109375 -0.125,-0.109375 -0.09375,0 -0.109375,0.046875 -0.140625,0.1875 -0.171875,0.640625 -0.34375,1.234375 -0.75,1.234375 -0.28125,0 -0.296875,-0.265625 -0.296875,-0.453125 0,-0.25 0.015625,-0.3125 0.046875,-0.484375 l 1.4375,-5.765625 z m -2.0625,5.625 C 3.015625,-1 3.015625,-0.984375 2.875,-0.8125 2.4375,-0.265625 2.03125,-0.109375 1.75,-0.109375 c -0.5,0 -0.640625,-0.546875 -0.640625,-0.9375 0,-0.5 0.3125,-1.71875 0.546875,-2.1875 0.3125,-0.578125 0.75,-0.953125 1.15625,-0.953125 0.640625,0 0.78125,0.8125 0.78125,0.875 0,0.0625 -0.015625,0.125 -0.03125,0.171875 L 3.078125,-1.1875 z m 0,0"
+               style="stroke:none" />
+          </symbol>
+        </g>
+      </defs>
+      <g
+         id="textext-72f9cd52-2">
+        <g
+           id="g5731"
+           style="fill:#000000;fill-opacity:1">
+          <use
+             id="use5733"
+             y="134.765"
+             x="223.43201"
+             xlink:href="#textext-72f9cd52-1"
+             width="501.56876"
+             height="273.32419" />
         </g>
       </g>
     </g>

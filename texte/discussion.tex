@@ -1,0 +1,46 @@
+\section{FDM}
+
+Faire la distribution des scores de FP et des VP pour comparer les méthodes et avoir quelquechose de plus eprtinent que la FDM
+De plus, utilise le MAX !
+
+ET-IM et ET-LOR ont des performances plus faibles à chaque fois. Cela pourrait s'expliquer par le fait que les lissages vont réduire la réponse fréquentielle et ainsi réduire la réponse du classifieur ?
+
+\section{base d'apprentissage}
+
+Idéalement, il faudrait utiliser une métrique type Free-ROC pour estimaer les perfs de chaque jeu de param (=> sur-apprentissage !!)
+De plus, si base App != FROC : base app = perfs au 0
+
+\section{Base de donnée}
+
+Voir la thèse de simon studt, où il démonte l'approche modèle pour en extraire les limitations :
+
+- Trop d'homogénéité
+
+Mais pleins d'avantages (respirant)
+
+\subsection{Paramètres}
+
+Une étude de ce type demande  la fixation d'un nombre très important de paramètres. 
+Dire que les paramètres peuvent encore être mieux sélectionnés maintenant que la chaine complète est réalisée.
+
+Partie champ de mouvement (ET-LOR pas terrible) : pas spécialiste, a améliorer.
+
+
+\section{SimuTDM}
+
+Actuellement toutes les acquisitions sont réalisées en TEP/TDM. Avons tenté de générer base TEP/TDM, mais sans succès. Problème de qualité de simulation. Modèle trop pauvre, => images trop parfaites => plus besoin de la TEP
+
+Grosse perte de temps, avec évaluation et prise en main simulateur TDM, embauche d'un stagiaire, etc.
+mais cependant travail dans projet européen VIP, avec l'intégration de SINDBAD ainsi que de SORTEO. VIP va permettre de générer des bases de données plus réalistes.
+Approche modèle (VIP) bien, mais demande modèles + complexes (thésard avec textures)
+
+Détection => cas de tumeurs sphériques dans notre cas, mais pas une limitation, seulement un choix. Citer Travaux d'amandine sur la simulation => puis onco\_PET
+
+
+
+AAAAAAAAAAATTTTTTTTTENNNNTION
+
+Approche cluster -> originale, pas satisfait des ROC ou juste sensib/specif, => FROC, même si pas idéal. Avoir une réflexion sur les matriques, et les paramètres.
+
+
+A valider par des observateurs humains
