@@ -1,3 +1,11 @@
+\section{Résultats}
+
+Les résultats que nous avons présentés montrent une différence nette de détectabilité des lésions entre les images corrigées et les images statiques selon tous les critères utilisés.
+
+Les images corrigées ont, de leur coté, montrés des performances intermédiaires, ce qui renforce  <validité méthode>
+
+Il est intéressant de constater que les deux métriques que nous avons utilisé (courbes Free-ROC ainsi du FDM) montrent des résultats parfois contradictoires (foie). Cela pourrait s'expliquer par la nature de leurs évaluation. En effet, ces métriques sont complémentaires, et ne réprésentent pas les mêmes informations. La figure de mérite, par exemple, n'utilise pour chaque image que le faux positif de plus haut score. Cela ajoute une part d'incertitude, représentée par les barres d'erreurs.
+
 \section{FDM}
 
 Faire la distribution des scores de FP et des VP pour comparer les méthodes et avoir quelquechose de plus eprtinent que la FDM
@@ -7,10 +15,22 @@ ET-IM et ET-LOR ont des performances plus faibles à chaque fois. Cela pourrait 
 
 \section{base d'apprentissage}
 
+Nous avons présenté notre méthodologie pour la création de la base d'apprentissage. Nous avons retenu le jeu de paramètres qui maximise la sensibilité, mais comme nous l'avons signalé dans la partie correspondante, nous utilisons les mêmes données pour estimer les paramètres de la base d'apprentissage et pour réaliser la mesures de performances finales. Cela crée un biais positif, et il serait intéressant de disposer de plus de données pour pouvoir réduire ce biais ou le mesurer.
+
+De plus, les métriques utilisées pour choisir les paramètres et pour mesurer les performances finales des jeux d'images sont relativement différentes. La première métrique est réalisée à partir des centres des voxels, tandis que la seconde se base sur un critère basé sur une approche région. Bien que au final ces métriques soient 
+
+
 Idéalement, il faudrait utiliser une métrique type Free-ROC pour estimaer les perfs de chaque jeu de param (=> sur-apprentissage !!)
 De plus, si base App != FROC : base app = perfs au 0
 
 \section{Base de donnée}
+
+Pour la base de données que nous avons réalisé, nous avons privilégié l'approche modèles, qui a plusieurs limitations, notamment le manque d'inhomogéniété dans les tissus, contrairement à des approches basées sur des images réelles TEP. 
+
+Cependant, ces inconvénients ont, dans notre casa, été réduit par les avantages (donc interface avec les simulateur, et surtout respi très difficile à implémenter.
+
+Par contre, ces limitations sont en passe d'être levées par les avancées du projet ViP.
+
 
 Voir la thèse de simon studt, où il démonte l'approche modèle pour en extraire les limitations :
 
@@ -28,11 +48,23 @@ Partie champ de mouvement (ET-LOR pas terrible) : pas spécialiste, a améliorer
 
 \section{SimuTDM}
 
+En routine clinique, les acquisitions sont maintenant réalisées conjointement avec la TDM. Nous aviosn prévu au début de la thèse d'inclure les images TDM lors de la simulation. 
+
+Un partenariat avait été mis en polace avec le LeTi (CEA grenoble) pour utiliser leur simulateur. Nous avons passé plusieurs mois à évaluer le simulateur et à adapter nos données pour le valider. Un stagiaire a essayé de valider les simulations apr rapport à des mesures réelles sur des fantômes. 
+
+Mais les images que nous sommes parvenus à simuler étaient trop parfaites pour pouvoir être utilisées avec les images TEP. En effet, le modèle que nous utilisons (XCAT) est tro ppeu détaillé pour une modalité comme la TDM, qui dispose d'une résolution inférieure au mm. Les inclusions étaient beaucoup trop visibles dans les tissus, car ils n'étaient pas assez complexes pour pouvoir lesdiddimuler. Malgré notre travail avec l'auteur du modèle, il n'a pas été possible d'améliorer suffisament la complexité du modèle pour obtenir des résultats satisfaisants.
+
+
 Actuellement toutes les acquisitions sont réalisées en TEP/TDM. Avons tenté de générer base TEP/TDM, mais sans succès. Problème de qualité de simulation. Modèle trop pauvre, => images trop parfaites => plus besoin de la TEP
 
 Grosse perte de temps, avec évaluation et prise en main simulateur TDM, embauche d'un stagiaire, etc.
+
+Cette étape nous a fait perdre beaucoup de temps, mais a permis l'inclusion dusimulateur dans le projet ViP, où le travail porte actuellement 
+
 mais cependant travail dans projet européen VIP, avec l'intégration de SINDBAD ainsi que de SORTEO. VIP va permettre de générer des bases de données plus réalistes.
 Approche modèle (VIP) bien, mais demande modèles + complexes (thésard avec textures)
+
+Dans la base de donnée que nous avons simulé, nous nous sommes restreints à utiliser des lésions sphériques de petit diamètre. Cependant cette limite est uniquement liée à notre choix de simulateur.
 
 Détection => cas de tumeurs sphériques dans notre cas, mais pas une limitation, seulement un choix. Citer Travaux d'amandine sur la simulation => puis onco\_PET
 
@@ -44,3 +76,5 @@ Approche cluster -> originale, pas satisfait des ROC ou juste sensib/specif, => 
 
 
 A valider par des observateurs humains
+
+L'approche région que nous avons utilisé lors de notre estimation est originale, dans le sens où elle se rapproche beaucoup des problématiques des médecins. Cependant, du travail doit encore être fait pour formaliser la sélection des paramètres, et améliorer les métriques que nous utilisons.
