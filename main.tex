@@ -22,41 +22,45 @@
 %\makeatletter \renewcommand{\numwidth}{9.55em plus1fil} \makeatother
 \usepackage{fullpage}
 
+%\usepackage{textcomp}
+\usepackage[font={it}]{caption}
+
 %\setcounter{tocdepth}{2}
 
 %%%%%%%%%%%%%%% Modification de la taille des captions
-\newcommand{\captionfonts}{\small\itshape}
-
-\makeatletter  % Allow the use of @ in command names
-\long\def\@makecaption#1#2{%
-  \vskip\abovecaptionskip
-  \sbox\@tempboxa{{\captionfonts #1: #2}}%
-  \ifdim \wd\@tempboxa >\hsize
-    {\captionfonts #1: #2\par}
-  \else
-    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
-  \fi
-  \vskip\belowcaptionskip}
-\makeatother   % Cancel the effect of \makeatletter
+% \newcommand{\captionfonts}{\small\itshape}
+% 
+% \makeatletter  % Allow the use of @ in command names
+% \long\def\@makecaption#1#2{%
+%   \vskip\abovecaptionskip
+%   \sbox\@tempboxa{{\captionfonts #1: #2}}%
+%   \ifdim \wd\@tempboxa >\hsize
+%     {\captionfonts #1: #2\par}
+%   \else
+%     \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+%   \fi
+%   \vskip\belowcaptionskip}
+% \makeatother   % Cancel the effect of \makeatletter
 %%%%%%%%%%%%%%% Find de la modification
 
 
 %% Metadata %%
-\title{\Huge{Rapport bibliographique}\\\Large{Correction du mouvement respiratoire en TEP}}
+\title{\Huge{Manuscrit de Thèse}\\\Large{Correction du mouvement respiratoire en TEP}}
 \author{
-        \vspace{2cm}
+        %\vspace{1cm}
         Simon Marache-Francisco \\
-        Laboratoire CREATIS/LRMN - Philips Medisys\\
-        \vspace{2cm}
+        Laboratoire CREATIS/LRMN - Philips Medisys
+        %\vspace{1cm}
 }
 \date{\today}
-
 
 
 %% Data %%
 \begin{document}
 
+% espace interr-paragraphe un peu plus grand
 \addtolength{\parskip}{0.5em}
+
 
 %\numberwithin{section}{part} 
 %%%%%%% pour éloigner le texte de la tables des matières des nombres
@@ -65,8 +69,6 @@
 %\renewcommand{\cftsubsubsecaftersnumb}{\hspace{1em}}
 
 % ############################# Paramètres PERSO
-\def\FROC{Free-ROC}
-\def\ROC{ROC}
 
 \newcommand{\todo}[1]{
 \addcontentsline{toc}{subsection}{\textbf{Todo:} #1}
@@ -74,30 +76,28 @@ $\|$\textbf{A Faire : }#1$\|$
 }
 
 
+
 \maketitle
+
 \thispagestyle{empty}
 
-\begin{center}
-	\begin{tabular}{c c}
-		\includegraphics[width=5cm]{images/logoPhilips} & \includegraphics[width=5cm]{images/logoCREATIS}
-	\end{tabular}
-\end{center}
+%\begin{center}ù
+%	\begin{tabular}{c c}
+%		\includegraphics[width=5cm]{images/logoPhilips} & \includegraphics[width=5cm]{images/logoCREATIS}
+%	\end{tabular}
+%\end{center}
 
+%\vfill
 
-\vfill
-
-\textbf{A destination de :}
-\begin{itemize}
-    \item Jean-Michel Rouet, Philips Medisys
-    \item Carole Lartizien, CREATIS/LRMN
-    \item Rémy Prost, CREATIS/LRMN
-\end{itemize}
 \newpage
 
 \tableofcontents
 
 
-\part{Introduction}
+%\part{Introduction}
+\newpage
+\addcontentsline{toc}{part}{Introduction}
+\input{texte/introduction}	
 
 \part{Imagerie TEP}
 	\input{texte/ImagerieTEP}	
@@ -109,23 +109,23 @@ $\|$\textbf{A Faire : }#1$\|$
 %	\input{texte/modalites}
 
 	\chapter{Respiration et influence sur les acquisitions TEP/TDM}
-	\input{texte/effets.tex}
+	\input{texte/mvt-respi}
 	
 	\chapter{Processus d'estimation du mouvement}
-	\input{texte/estimation.tex}
+	\input{texte/mvt-estimation}
 	
 	\chapter{Correction du mouvement respiratoire}
-	\input{texte/methodes.tex}
+	\input{texte/mvt-correction}
 
 \part{Evaluation des performances de détection}
-	\input{texte/eval}
+	\input{texte/eval-perf}
 
 
 
 \part{Simulation et base de données}
-	\input{texte/simulations}
+	\input{texte/sim-simulation}
 
-	\input{texte/basedonnee}
+	\input{texte/sim-BD}
 
 
 
@@ -134,16 +134,28 @@ $\|$\textbf{A Faire : }#1$\|$
 
 
 \part{Discussions}
+
 	\input{texte/discussion}
 
 
-\part{Tables}
+\newpage
+\addcontentsline{toc}{part}{Conclusion}
+\input{texte/conclusion}
+
+%\part{Tables}
+
+\addcontentsline{toc}{part}{Liste des figures}
 
 \listoffigures
 
+\addcontentsline{toc}{part}{Liste des tables}
+
 \listoftables
 
-\part{Bibliographie}
+%\part{Bibliographie}
+
+\addcontentsline{toc}{part}{Bibliographie}
+
 \bibliographystyle{apalike}
 \bibliography{biblio}
 

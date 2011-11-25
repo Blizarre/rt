@@ -185,7 +185,7 @@ Les meilleurs coefficients $c_j$ sont obtenus à l'aide d'une optimisation multi
 
 Les images correspondant à chaque instant respiratoire sont reconstruites séparément, avec des paramètres différents de ceux utilisés pour reconstruire les images complètes. En effet, la quantité de données disponible pour la reconstruction est 8 fois plus faible que celle utilisée pour réaliser les reconstructions d'images complètes. De plus, nous cherchons à optimiser la qualité de l'estimation de mouvement. C'est pour ces raisons que nous avons réalisé une autre étude pour estimer les paramètres de reconstruction optimaux. 
 
-Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la vérité terrain pour créer une image d'évaluation pour l'image de référence, ainsi qu'une autre pour l'image ``respirante``. Les images d'évaluations sont crées à partir des fantômes de référence en assignant aux organes étudiés (foie et poumon) une valeur de 1, et une valeur plus importante pour les lésions, comme indiqué dans la figure~\ref{lab:perfsFctIterReg}.a). 
+Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la vérité terrain pour créer une image d'évaluation pour l'image de référence, ainsi qu'une autre pour l'image ``respirante``. Les images d'évaluations sont crées à partir des fantômes de référence en assignant aux organes étudiés (foie et poumon) une valeur de 1, et une valeur plus importante pour les lésions, comme indiqué dans la figure~\ref{lab:illustrationRecalage}.a). 
 
 \begin{figure}
 \centering
@@ -194,10 +194,10 @@ Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la
 	a) Cartes non recalées				& b) Cartes recalées
 \end{tabular}
 \caption[Illustration du recalage obtenu]{Illustration de la pertinence du recalage obtenu à partir de l'estimation de mouvement réalisée sur les images. En vert l'image de référence et en gris l'image correspondant au temps correspondant à la différence la plus importante. }
-\label{lab:perfsFctIterReg}
+\label{lab:illustrationRecalage}
 \end{figure}
 
-L'image d'évaluation correspondant à l'image ''respirante`` est alors recalées sur l'image de référence à l'aide du champ de mouvement élastique calculé précédemment. J'évalue ensuite la qualité du recalage en réalisant une somme des différences au carré entre les deux images d'évaluation~\ref{lab:perfsFctIterReg}.b).
+L'image d'évaluation correspondant à l'image ''respirante`` est alors recalées sur l'image de référence à l'aide du champ de mouvement élastique calculé précédemment. J'évalue ensuite la qualité du recalage en réalisant une somme des différences au carré entre les deux images d'évaluation~\ref{lab:illustrationRecalage}.b).
 
 
 \subsubsection{Optimisation des paramètres de reconstruction}
