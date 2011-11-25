@@ -1,16 +1,17 @@
 \section{Discussion des Résultats}
 
-Les résultats que nous avons présentés montrent une différence nette de détectabilité des lésions entre les images corrigées et les images statiques selon tous les critères utilisés, ``ce qui est normal.''
+Les résultats que nous avons présentés montrent une différence nette de détectabilité des lésions entre les images corrigées et les images statiques selon tous les critères utilisés, ce qui tends à valider l'approche retenue.
 
 Les détections réalisées sur les images corrigées montrent des performances intermédiaires dans la majorité des cas, avec notamment pour le poumon les courbes Free-ROC qui montrent que la détectabilité des lésions est bien récupérée pour la correction TE-IM, mais peu pour TE-MS. Les FDM par contre montrent une amélioration semblable pour les deux techniques de correction du mouvement. 
 
-Pour le foie, les courbes F-ROC montrent que les techniques de correction du mouvement respiratoire arrivent à se situer de manière générale au milieu des courbes des images statiques et non corrigées. Cependant, la FDM ne montre pas d'améliorations notables de la correction par rapport aux images non corrigées.
+Pour le foie, les courbes F-ROC montrent que les techniques de correction du mouvement respiratoire arrivent à se situer de manière générale au milieu des courbes des images statiques et non corrigées. Cependant, la FDM ne montre pas d'améliorations notables de la correction par rapport aux images non corrigées. Les performances observées sont différentes de celles du poumon, notamment le nombre de faux positif moyen est beaucoup plus faible que lors de notre étude sur le poumon. Cette différence pourrait être expliquée par une plus grande difficulté intrinsèque à la détection des lésions dans le foie.
 
-Il est intéressant de constater que les deux métriques que nous avons utilisé (courbes Free-ROC ainsi du FDM) montrent des résultats parfois contradictoires. Cela pourrait s'expliquer par la nature de leurs évaluations. En effet, ces métriques sont complémentaires, et ne représentent pas les mêmes informations. La figure de mérite ne prend pas en compte que le faux positif de plus haut score par image, tandis que le nombre de faux positif, et non leur score, est la quantité utilisée par les courbes F-ROC. Les FDM sont naturellement plus difficiles à interpréter, et sont par plus sensibles au bruit car  elles utilisent un maximum par image au lieu d’une moyenne. Cependant, les résultats renseignent sur la « distance » entre les vrai  positifs en général et les pire faux positifs. C’est une métrique qui a toute sa place, bien qu’elle soit handicapée par la faible  quantité d’exemples à disposition, comme le montrent les barres d’erreur.
+Il est intéressant de constater que les deux métriques que nous avons utilisé (courbes Free-ROC ainsi du FDM) montrent des résultats parfois contradictoires. Cela pourrait s'expliquer par la nature de leurs évaluations. En effet, ces métriques sont complémentaires, et ne représentent pas les mêmes informations. La figure de mérite ne prend en compte que le faux positif de plus haut score par image, tandis que le nombre de faux positif, et non leur score, est la valeur utilisée par les courbes F-ROC. Les FDM sont naturellement plus difficiles à interpréter, et sont par nature plus sensibles au bruit car  elles utilisent un maximum par image au lieu d’une moyenne. Cependant, elles renseignent sur la différence de détectabilité entre les vrai  positifs en général et les pire faux positifs. C’est une métrique qui a toute sa place, bien qu’elle soit handicapée par la faible  quantité d’exemples à disposition, comme le montrent les barres d’erreur.
 
-Les résultats que nous avons obtenus montrent de toute façon sans ambiguïté que la détectabilité des lésions est améliorée par la correction du mouvement respiratoire, notamment en utilisant la correction TE-IM. La détectabilité de lésions indiquées par la courbe F-ROC est systématiquement supérieure pou les images corrigées par rapport aux images non corrigées.
+Les résultats que nous avons obtenus montrent de toute façon sans ambiguïté que la détectabilité des lésions est améliorée par la correction du mouvement respiratoire, notamment en utilisant la correction TE-IM. La détectabilité des lésions indiquées par la courbe F-ROC est systématiquement supérieure sur les images corrigées par rapport aux images non corrigées.
 
-Cependant la correction TE-MS a des performances inférieures à celles observées pour TE-IM, ce qui est en contradiction avec les résultats présentés dans la littérature sur la quantification des lésions. Il faut noter que nous n'avons pas réalisé notre étude sur les mêmes bases, en privilégiant une approche détection sur la quantification. De plus, nous n'avons pas utilisé la même implémentation de l'estimateur de mouvement et du correcteur d'image que l'auteur, ce qui pourrait expliquer les différences observées.
+Cependant la correction TE-MS a des performances inférieures à celles observées pour TE-IM, ce qui est en contradiction avec les résultats présentés dans la littérature sur la quantification des lésions. Il faut noter que nous n'avons pas réalisé notre étude sur les mêmes principes, en privilégiant une approche détection sur la quantification. De plus, nous n'avons pas utilisé la même implémentation de l'estimateur de mouvement et du correcteur d'image que l'auteur, ce qui pourrait expliquer les différences observées.
+
 
 % \section{FDM}
 % 
@@ -24,7 +25,7 @@ Cependant la correction TE-MS a des performances inférieures à celles observé
 
 \section{Perspectives de la base d'apprentissage}
 
-Nous avons présenté notre méthodologie pour la création de la base d'apprentissage. Nous avons retenu le jeu de paramètres qui maximise la sensibilité, mais comme nous l'avons signalé dans la partie correspondante, nous utilisons les mêmes données pour estimer les paramètres de la base d'apprentissage et pour réaliser la mesure de performances finales. Cela crée un biais positif, et il serait intéressant de disposer de plus de données pour pouvoir réduire ce biais ou le mesurer.
+%Nous avons présenté notre méthodologie pour la création de la base d'apprentissage. Nous avons retenu le jeu de paramètres qui maximise la sensibilité, mais comme nous l'avons signalé dans la partie correspondante, nous utilisons les mêmes données pour estimer les paramètres de la base d'apprentissage et pour réaliser la mesure de performances finales. Cela crée un biais positif, et il serait intéressant de disposer de plus de données pour pouvoir réduire ce biais ou le mesurer.
 
 De plus, les métriques utilisées pour choisir les paramètres et pour mesurer les performances finales des jeux d'images sont relativement différentes. La première métrique est réalisée à partir des centres des lésions, tandis que la seconde se base sur un critère utilisant une approche région. Enfin, les métriques FDM et Free-ROC utilisent des seuils variables pour déterminer la performance de chaque technique, tandis que la sensibilité est mesurée seulement pour le seuil par défaut de ``0''.
 
@@ -37,18 +38,18 @@ Mais dans tous les cas, la quantité de données simulées devra être plus impo
 
 \section{Perspectives base de donnée}
 
-Nous avons réalisés notre base de données à partir du modèle anthropomorphique XCAT de Paul Segars, principalement pour la possibilité de l'adapter à des morphologies différentes et sa prise en charge native d'un modèle respiratoire complexe.
+Nous avons réalisés notre base de données à partir du modèle anthropomorphique XCAT de Paul Segars, principalement pour sa capacité à s'adapter à des morphologies différentes et sa prise en charge native d'un modèle respiratoire complexe.
 
 Cependant, cette approche par modèle a des limitations connues, notamment l'homogénéisation forcée de l'activité des organes. En effet, contrairement à l'imagerie TDM où les coefficients d'atténuations sont relativement constants dans les tissus et entre les patients, en TEP l'activité mesurée pour un même organe varie entre les patients, et n'est pas constante à l'intérieur d'un même organe. Les différences d'activités entre les patients s'expliquent par la quantité de traceur injecté, d'éventuelles inflammations, ou encore la durée écoulée depuis l'injection. 
 
 Nous avions prévu au début de la création de la base d'intégrer une variabilité de captation inter-patient, mais nous avons dû la retirer par manque de temps. Cependant, incorporer la variabilité à l'intérieur de l'organe d'un patient n'aurait pas été possible car le modèle utilisé est trop simpliste. 
 
-Dans la base de donnée que nous avons simulé, nous nous sommes restreint à utiliser des lésions sphériques de petit diamètre. Aux résolutions permises par la TEP, cette approximation est suffisante pour modéliser correctement les fixations observées en clinique. Cependant cette limite est uniquement liée à notre choix de sujet, et n'est pas représentative des possibilités du simulateur. Nous avons notamment travaillé sur des lésions de formes différentes dans le cadre de la publication~\cite{le2009incorporating}. 
+Dans la base de donnée que nous avons simulé, nous nous sommes restreint à utiliser des lésions sphériques de petit diamètre. Aux résolutions permises par la TEP, cette approximation est suffisante pour modéliser correctement les fixations observées en clinique. Cependant cette limite est uniquement liée à notre choix de sujet, et n'est pas représentative des possibilités du simulateur. Nous avons notamment travaillé sur des lésions de formes différentes dans le cadre de la publication de~\cite{le2009incorporating}. 
 
 
 \subsection{Paramètres}
 
-Une étude de ce type demande  la fixation d'un nombre très important de paramètres, qui peuvent interférer avec les résultats. Nous avons justifié le choix d'un maximum d'entre eux, mais ils sont souvent interdépendants, ce qui engendre des problèmes impossibles à optimiser de manière réaliste. 
+Une étude de ce type demande  la fixation d'un nombre très important de paramètres, qui ont tous une action sur les résultats. Nous avons justifié le choix d'un maximum d'entre eux, mais ils sont souvent interdépendants, ce qui engendre des problèmes impossible à optimiser de manière exhaustive. 
 
 Une évolution de nos travaux pourrait être de mettre en place une réflexion et une refonte du système d'optimisation des paramètres en se basant sur la théorie des plans d'expériences. Cela demanderait cependant des travaux supplémentaires pour évaluer de manière précise les interactions entre chaque type de paramètre et son implication dans le résultat final.
 
@@ -87,6 +88,8 @@ Le but de ce projet est de réaliser une interface commune pour plusieurs simula
 
 \section{Conclusion}
 
-L'approche région que nous avons utilisé lors de notre estimation est originale, dans le sens où nous avons cherché à créer un estimateur se proche dans le principe au système d'évaluation utilisé par les médecins. Cependant, il reste de nombreuses possibilités d'amélioration, notamment au niveau de la complexité du modèle utilisé et de la sélection des paramètres.
+L'étude que nous avons réalisé a montré une amélioration globale de la détectabilité des lésions, apportée par les techniques de correction d'images. Cependant, les résultats sont parfois contrastés selon les techniques de correction du mouvement respiratoire, notamment pour le poumon, ce qui semble indiquer que les organes réagissent différemment à ces corrections.
 
-Cependant, la référence sera toujours l'observateur humain, et les résultats que nous avons observés doivent être comparés avec les performances d'un observateur humain, et validé sur des données cliniques. Cependant, nous avons montré qu'il était possible de répondre à la problématique uniquement à partir de données simulées et d'observateurs informatiques.
+L'approche région que nous avons utilisé lors de notre estimation est originale, dans le sens où nous avons appliqué un estimateur région qui se rapproche du principe de détection humain. Cependant, il reste de nombreuses possibilités d'amélioration, notamment au niveau de la complexité du modèle utilisé et de la sélection des paramètres. 
+
+Cependant, la référence sera toujours l'observateur humain, et les résultats que nous avons observés doivent être comparés avec les performances d'un observateur humain, et validé sur des données cliniques. Nous avons montré qu'il était possible de répondre à la problématique uniquement à partir de données simulées et d'observateurs informatiques.
