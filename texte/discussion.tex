@@ -1,80 +1,92 @@
-\section{Résultats}
+\section{Discussion des Résultats}
 
-Les résultats que nous avons présentés montrent une différence nette de détectabilité des lésions entre les images corrigées et les images statiques selon tous les critères utilisés.
+Les résultats que nous avons présentés montrent une différence nette de détectabilité des lésions entre les images corrigées et les images statiques selon tous les critères utilisés, ``ce qui est normal.''
 
-Les images corrigées ont, de leur coté, montrés des performances intermédiaires, ce qui renforce  <validité méthode>
+Les détections réalisées sur les images corrigées montrent des performances intermédiaires dans la majorité des cas, avec notamment pour le poumon les courbes Free-ROC qui montrent que la détectabilité des lésions est bien récupérée pour la correction TE-IM, mais peu pour TE-MS. Les FDM par contre montrent une amélioration semblable pour les deux techniques de correction du mouvement. 
 
-Il est intéressant de constater que les deux métriques que nous avons utilisé (courbes Free-ROC ainsi du FDM) montrent des résultats parfois contradictoires (foie). Cela pourrait s'expliquer par la nature de leurs évaluation. En effet, ces métriques sont complémentaires, et ne réprésentent pas les mêmes informations. La figure de mérite, par exemple, n'utilise pour chaque image que le faux positif de plus haut score. Cela ajoute une part d'incertitude, représentée par les barres d'erreurs.
+Pour le foie, les courbes F-ROC montrent que les techniques de correction du mouvement respiratoire arrivent à se situer de manière générale au milieu des courbes des images statiques et non corrigées. Cependant, la FDM ne montre pas d'améliorations notables de la correction par rapport aux images non corrigées.
 
-\section{FDM}
+Il est intéressant de constater que les deux métriques que nous avons utilisé (courbes Free-ROC ainsi du FDM) montrent des résultats parfois contradictoires. Cela pourrait s'expliquer par la nature de leurs évaluations. En effet, ces métriques sont complémentaires, et ne représentent pas les mêmes informations. La figure de mérite ne prend pas en compte que le faux positif de plus haut score par image, tandis que le nombre de faux positif, et non leur score, est la quantité utilisée par les courbes F-ROC. Les FDM sont naturellement plus difficiles à interpréter, et sont par plus sensibles au bruit car  elles utilisent un maximum par image au lieu d’une moyenne. Cependant, les résultats renseignent sur la « distance » entre les vrai  positifs en général et les pire faux positifs. C’est une métrique qui a toute sa place, bien qu’elle soit handicapée par la faible  quantité d’exemples à disposition, comme le montrent les barres d’erreur.
 
-Faire la distribution des scores de FP et des VP pour comparer les méthodes et avoir quelquechose de plus eprtinent que la FDM
-De plus, utilise le MAX !
+Les résultats que nous avons obtenus montrent de toute façon sans ambiguïté que la détectabilité des lésions est améliorée par la correction du mouvement respiratoire, notamment en utilisant la correction TE-IM. La détectabilité de lésions indiquées par la courbe F-ROC est systématiquement supérieure pou les images corrigées par rapport aux images non corrigées.
 
-ET-IM et ET-LOR ont des performances plus faibles à chaque fois. Cela pourrait s'expliquer par le fait que les lissages vont réduire la réponse fréquentielle et ainsi réduire la réponse du classifieur ?
+Cependant la correction TE-MS a des performances inférieures à celles observées pour TE-IM, ce qui est en contradiction avec les résultats présentés dans la littérature sur la quantification des lésions. Il faut noter que nous n'avons pas réalisé notre étude sur les mêmes bases, en privilégiant une approche détection sur la quantification. De plus, nous n'avons pas utilisé la même implémentation de l'estimateur de mouvement et du correcteur d'image que l'auteur, ce qui pourrait expliquer les différences observées.
 
-\section{base d'apprentissage}
+% \section{FDM}
+% 
+% Faire la distribution des scores de FP et des VP pour comparer les méthodes et avoir quelque chose de plus pertinent que la FDM
+% De plus, utilise le MAX !
+% 
+% Nous avons constaté que la mesure de détectabilité à l'aide de la FDM sur les images corrigées techniques de 
+% 
+% correction du mouvement respiratoire 
+% TE-IM et TE-LOR ont des performances plus faibles à chaque fois. Cela pourrait s'expliquer par le fait que les lissages vont réduire la réponse fréquentielle et ainsi réduire la réponse du classifieur ?
 
-Nous avons présenté notre méthodologie pour la création de la base d'apprentissage. Nous avons retenu le jeu de paramètres qui maximise la sensibilité, mais comme nous l'avons signalé dans la partie correspondante, nous utilisons les mêmes données pour estimer les paramètres de la base d'apprentissage et pour réaliser la mesures de performances finales. Cela crée un biais positif, et il serait intéressant de disposer de plus de données pour pouvoir réduire ce biais ou le mesurer.
+\section{Perspectives de la base d'apprentissage}
 
-De plus, les métriques utilisées pour choisir les paramètres et pour mesurer les performances finales des jeux d'images sont relativement différentes. La première métrique est réalisée à partir des centres des voxels, tandis que la seconde se base sur un critère basé sur une approche région. Bien que au final ces métriques soient 
+Nous avons présenté notre méthodologie pour la création de la base d'apprentissage. Nous avons retenu le jeu de paramètres qui maximise la sensibilité, mais comme nous l'avons signalé dans la partie correspondante, nous utilisons les mêmes données pour estimer les paramètres de la base d'apprentissage et pour réaliser la mesure de performances finales. Cela crée un biais positif, et il serait intéressant de disposer de plus de données pour pouvoir réduire ce biais ou le mesurer.
 
+De plus, les métriques utilisées pour choisir les paramètres et pour mesurer les performances finales des jeux d'images sont relativement différentes. La première métrique est réalisée à partir des centres des lésions, tandis que la seconde se base sur un critère utilisant une approche région. Enfin, les métriques FDM et Free-ROC utilisent des seuils variables pour déterminer la performance de chaque technique, tandis que la sensibilité est mesurée seulement pour le seuil par défaut de ``0''.
 
-Idéalement, il faudrait utiliser une métrique type Free-ROC pour estimaer les perfs de chaque jeu de param (=> sur-apprentissage !!)
-De plus, si base App != FROC : base app = perfs au 0
+Il serait intéressant de travailler sur une métrique basée région pour la recherche des meilleurs paramètres de la base d'apprentissage, mais dans ce cas l'évaluation de la performance pour chaque jeu de paramètre nécessite de traiter toutes les images, ce qui représente plusieurs heures de calculs. Il n'est donc pas possible d'utiliser la même métrique, à moins d'utiliser des algorithmes d'optimisation avancés et de réaliser les calculs sur une grille.
 
-\section{Base de donnée}
+Mais dans tous les cas, la quantité de données simulées devra être plus importante, pour pouvoir éviter le phénomène de sur-apprentissage (optimisation des paramètres pour le jeu de donnée et non pour les classes). Pour éliminer les biais, il faut entre autre que la base de données utilisée pour le réglage des paramètres doit être différente de celle utilisée pour réaliser l'estimation des performances.
 
-Pour la base de données que nous avons réalisé, nous avons privilégié l'approche modèles, qui a plusieurs limitations, notamment le manque d'inhomogéniété dans les tissus, contrairement à des approches basées sur des images réelles TEP. 
+%Idéalement, il faudrait utiliser une métrique type Free-ROC pour estimer les perfs de chaque jeu de param (=> sur-apprentissage !!)
+%De plus, si base App != FROC : base app = perfs au 0
 
-Cependant, ces inconvénients ont, dans notre casa, été réduit par les avantages (donc interface avec les simulateur, et surtout respi très difficile à implémenter.
+\section{Perspectives base de donnée}
 
-Par contre, ces limitations sont en passe d'être levées par les avancées du projet ViP.
+Nous avons réalisés notre base de données à partir du modèle anthropomorphique XCAT de Paul Segars, principalement pour la possibilité de l'adapter à des morphologies différentes et sa prise en charge native d'un modèle respiratoire complexe.
 
+Cependant, cette approche par modèle a des limitations connues, notamment l'homogénéisation forcée de l'activité des organes. En effet, contrairement à l'imagerie TDM où les coefficients d'atténuations sont relativement constants dans les tissus et entre les patients, en TEP l'activité mesurée pour un même organe varie entre les patients, et n'est pas constante à l'intérieur d'un même organe. Les différences d'activités entre les patients s'expliquent par la quantité de traceur injecté, d'éventuelles inflammations, ou encore la durée écoulée depuis l'injection. 
 
-Voir la thèse de simon studt, où il démonte l'approche modèle pour en extraire les limitations :
+Nous avions prévu au début de la création de la base d'intégrer une variabilité de captation inter-patient, mais nous avons dû la retirer par manque de temps. Cependant, incorporer la variabilité à l'intérieur de l'organe d'un patient n'aurait pas été possible car le modèle utilisé est trop simpliste. 
 
-- Trop d'homogénéité
+Dans la base de donnée que nous avons simulé, nous nous sommes restreint à utiliser des lésions sphériques de petit diamètre. Aux résolutions permises par la TEP, cette approximation est suffisante pour modéliser correctement les fixations observées en clinique. Cependant cette limite est uniquement liée à notre choix de sujet, et n'est pas représentative des possibilités du simulateur. Nous avons notamment travaillé sur des lésions de formes différentes dans le cadre de la publication~\cite{le2009incorporating}. 
 
-Mais pleins d'avantages (respirant)
 
 \subsection{Paramètres}
 
-Une étude de ce type demande  la fixation d'un nombre très important de paramètres. 
-Dire que les paramètres peuvent encore être mieux sélectionnés maintenant que la chaine complète est réalisée.
+Une étude de ce type demande  la fixation d'un nombre très important de paramètres, qui peuvent interférer avec les résultats. Nous avons justifié le choix d'un maximum d'entre eux, mais ils sont souvent interdépendants, ce qui engendre des problèmes impossibles à optimiser de manière réaliste. 
 
-Partie champ de mouvement (ET-LOR pas terrible) : pas spécialiste, a améliorer.
+Une évolution de nos travaux pourrait être de mettre en place une réflexion et une refonte du système d'optimisation des paramètres en se basant sur la théorie des plans d'expériences. Cela demanderait cependant des travaux supplémentaires pour évaluer de manière précise les interactions entre chaque type de paramètre et son implication dans le résultat final.
 
+\section{Discussion sur les simulations}
 
-\section{SimuTDM}
+En routine clinique, les acquisitions sont maintenant réalisées conjointement avec la TDM. Le rapprochement des scanner TEP et TDM sur le même appareil a permis d'éviter la réalisation de la carte de transmission et fourni au praticien des informations anatomiques qui permettent d'améliorer la précision du diagnostique. Nous avions prévu au début de la thèse d'inclure la simulation d'images TDM, et d'utiliser conjointement les deux modalités pour l'évaluation de la détectabilité des lésions. 
 
-En routine clinique, les acquisitions sont maintenant réalisées conjointement avec la TDM. Nous aviosn prévu au début de la thèse d'inclure les images TDM lors de la simulation. 
+Un partenariat avait été mis en place avec le laboratoire Leti du CEA de Grenoble portant sur l'utilisation de leur simulateur SINDBAD. Nous avons passé plusieurs mois à l'évaluer et à adapter nos données pour le valider. En effet, il a été développé à l'origine pour le contrôle non destructif, et n'avais jamais été utilisé pour simuler des données cliniques où les géométries ainsi que les énergies utilisées sont totalement différentes. Nous avions embauché un stagiaire ingénieur pour valider les simulations par rapport à des mesures réelles sur des fantômes. 
 
-Un partenariat avait été mis en polace avec le LeTi (CEA grenoble) pour utiliser leur simulateur. Nous avons passé plusieurs mois à évaluer le simulateur et à adapter nos données pour le valider. Un stagiaire a essayé de valider les simulations apr rapport à des mesures réelles sur des fantômes. 
+Cependant, les images que nous sommes parvenus à simuler étaient trop parfaites pour pouvoir être utilisées conjointement avec les images TEP. En effet, le modèle que nous utilisons (XCAT) est trop peu détaillé pour une modalité comme la TDM, qui dispose d'une résolution inférieure au mm. Les inclusions étaient beaucoup trop visibles dans les tissus, car ces derniers n'étaient pas assez complexes pour pouvoir les dissimuler. En effet, les images TDM réelles montrent fréquemment des imperfections bénignes qui doivent être éliminées par le radiologue, ou encore, notamment pour le poumon, des textures très complexes que nous ne sommes pas parvenu à reproduire. Malgré notre travail avec l'auteur du modèle, il n'a pas été possible d'améliorer suffisamment la complexité du modèle pour obtenir des résultats satisfaisants.
 
-Mais les images que nous sommes parvenus à simuler étaient trop parfaites pour pouvoir être utilisées avec les images TEP. En effet, le modèle que nous utilisons (XCAT) est tro ppeu détaillé pour une modalité comme la TDM, qui dispose d'une résolution inférieure au mm. Les inclusions étaient beaucoup trop visibles dans les tissus, car ils n'étaient pas assez complexes pour pouvoir lesdiddimuler. Malgré notre travail avec l'auteur du modèle, il n'a pas été possible d'améliorer suffisament la complexité du modèle pour obtenir des résultats satisfaisants.
+Malgré les difficultés, et en prenant la suite de nos travaux, le simulateur est actuellement en cours d'intégration dans la plate-forme ViP, où il devrait être utilisé à terme pour la simulation médicale.
 
+Le but de ce projet est de réaliser une interface commune pour plusieurs simulateurs et les modèles associés. Une interface en cours de développement permettra de réaliser les simulations sur une grille de calculs (actuellement la grille Égée). Les simulateurs que nous avons utilisés, à savoir PET-SORTEO et SINDBAD sont en cours d'intégration ainsi que le modèle XCAT. Des travaux sont en cours pour améliorer le réalisme des modèles, notamment grâce à l'ajout d'informations de textures. 
 
-Actuellement toutes les acquisitions sont réalisées en TEP/TDM. Avons tenté de générer base TEP/TDM, mais sans succès. Problème de qualité de simulation. Modèle trop pauvre, => images trop parfaites => plus besoin de la TEP
+%Actuellement toutes les acquisitions sont réalisées en TEP/TDM. Avons tenté de générer base TEP/TDM, mais sans succès. Problème de qualité de simulation. Modèle trop pauvre, => images trop parfaites => plus besoin de la TEP
 
-Grosse perte de temps, avec évaluation et prise en main simulateur TDM, embauche d'un stagiaire, etc.
+%Grosse perte de temps, avec évaluation et prise en main simulateur TDM, embauche d'un stagiaire, etc.
 
-Cette étape nous a fait perdre beaucoup de temps, mais a permis l'inclusion dusimulateur dans le projet ViP, où le travail porte actuellement 
+%Cette étape nous a fait perdre beaucoup de temps, mais a permis l'inclusion du simulateur dans le projet ViP, où le travail porte actuellement 
 
-mais cependant travail dans projet européen VIP, avec l'intégration de SINDBAD ainsi que de SORTEO. VIP va permettre de générer des bases de données plus réalistes.
-Approche modèle (VIP) bien, mais demande modèles + complexes (thésard avec textures)
-
-Dans la base de donnée que nous avons simulé, nous nous sommes restreints à utiliser des lésions sphériques de petit diamètre. Cependant cette limite est uniquement liée à notre choix de simulateur.
-
-Détection => cas de tumeurs sphériques dans notre cas, mais pas une limitation, seulement un choix. Citer Travaux d'amandine sur la simulation => puis onco\_PET
+%mais cependant travail dans projet européen VIP, avec l'intégration de SINDBAD ainsi que de SORTEO. VIP va permettre de générer des bases de données plus réalistes.
+%Approche modèle (VIP) bien, mais demande modèles + complexes (thésard avec textures)
 
 
-
-AAAAAAAAAAATTTTTTTTTENNNNTION
-
-Approche cluster -> originale, pas satisfait des ROC ou juste sensib/specif, => FROC, même si pas idéal. Avoir une réflexion sur les matriques, et les paramètres.
+%Détection => cas de tumeurs sphériques dans notre cas, mais pas une limitation, seulement un choix. Citer Travaux d'amandine sur la simulation => puis onco\_PET
 
 
-A valider par des observateurs humains
 
-L'approche région que nous avons utilisé lors de notre estimation est originale, dans le sens où elle se rapproche beaucoup des problématiques des médecins. Cependant, du travail doit encore être fait pour formaliser la sélection des paramètres, et améliorer les métriques que nous utilisons.
+%AAAAAAAAAAATTTTTTTTTENNNNTION
+
+%Approche cluster -> originale, pas satisfait des ROC ou juste sensib/specif, => FROC, même si pas idéal. Avoir une réflexion sur les métriques, et les paramètres.
+
+
+%A valider par des observateurs humains
+
+\section{Conclusion}
+
+L'approche région que nous avons utilisé lors de notre estimation est originale, dans le sens où nous avons cherché à créer un estimateur se proche dans le principe au système d'évaluation utilisé par les médecins. Cependant, il reste de nombreuses possibilités d'amélioration, notamment au niveau de la complexité du modèle utilisé et de la sélection des paramètres.
+
+Cependant, la référence sera toujours l'observateur humain, et les résultats que nous avons observés doivent être comparés avec les performances d'un observateur humain, et validé sur des données cliniques. Cependant, nous avons montré qu'il était possible de répondre à la problématique uniquement à partir de données simulées et d'observateurs informatiques.
