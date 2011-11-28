@@ -16,7 +16,7 @@ La figure~\ref{fig:respiXCAT} représente 3 instants du cycle respiratoire utili
     \begin{center}
             \includegraphics[width=10cm]{images/mvtRespi} \\
     \end{center}
-    \caption{Modèle de mouvement intégré dans le fantôme NCAT. La ligne pointillée rouge sert de référence pour la position d'une des côtes du modèle en expiration. L'image (a) correspond à l'expiration complète, et la (c) à la fin de l'inspiration. (b) correspond à un instant intermédiaire du cycle. }
+    \caption[Modèle de mouvement intégré dans le fantôme NCAT]{Modèle de mouvement intégré dans le fantôme NCAT. La ligne pointillée rouge sert de référence pour la position d'une des côtes du modèle en expiration. L'image (a) correspond à l'expiration complète, et la (c) à la fin de l'inspiration. (b) correspond à un instant intermédiaire du cycle. }
     \label{fig:respiXCAT}
 \end{figure}
 
@@ -42,7 +42,7 @@ La localisation et le volume des tumeurs peuvent être modifiés par le mouvemen
     \begin{center}
             \includegraphics[width=10cm]{images/moyennageImage} \\
     \end{center}
-    \caption{Effet du déplacement d'une tumeur sur les données acquises. La position de la tumeur change en fonction du temps, ce qui provoque l'acquisition d'une tumeur équivalente présentée à droite.}
+    \caption[Effet du déplacement d'une tumeur sur les données acquises]{Effet du déplacement d'une tumeur sur les données acquises. La position de la tumeur change en fonction du temps, ce qui provoque l'acquisition d'une tumeur équivalente présentée à droite.}
     \label{fig:effetMvt}
 \end{figure}
 
@@ -76,7 +76,7 @@ La figure~\ref{fig:lesionEnFctPhaseTDM} présente la variation de $SUV_{max}$ en
 	\centering
 			\includegraphics[width=10cm]{images/lesionEnFctPhaseTDM}
 	\vspace{-0.5cm}
-	\caption{A) Vue coronale d'un patient avec une lésion clairement visible en haut à droite (flèche noire).  B) $SUV_{max}$ observé sur les images reconstruites en fonction de l'image TDM utilisée pour la reconstruction. Le nombre en abscisse représente la position dans le cycle respiratoire en pourcentage.} 
+	\caption[Influence de l'influence de la carte d'atténuation sur l'activité des lésions] {A) Vue coronale d'un patient avec une lésion clairement visible en haut à droite (flèche noire).  B) $SUV_{max}$ observé sur les images reconstruites en fonction de l'image TDM utilisée pour la reconstruction. Le nombre en abscisse représente la position dans le cycle respiratoire en pourcentage.} 
 	\label{fig:lesionEnFctPhaseTDM}
 \end{figure}
 
@@ -110,7 +110,7 @@ Voici une liste des critères utilisés dans différentes publications pour éva
 
 \begin{enumerate}
  \item  $SUV_{max}$, contraste :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect,detorie2008quantitative}
- \item Profils d'image :~\cite{GuopingChang2010Implementation,Thielemans2006Lesion,lamare2007list}
+ \item Visualisation des Profils de lésion :~\cite{GuopingChang2010Implementation,Thielemans2006Lesion,lamare2007list}
  \item Volume et position de la lésion :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect}
  \item Rapport signal sur bruit (SNR) :~\cite{GuopingChang2010Implementation}
  \item Observateur de Hotelling (CHO) :~\cite{Thielemans2006Lesion}
@@ -124,6 +124,8 @@ Un autre document par Rahmim Arman~\cite{rahmim4d} propose d'utiliser le CHO pou
 
 \subsection{Synthèse de Thielemans,2006}
 
+\todo{voir ce que c'est que cette histoire avec l'autre citer thielemans}
+
 Dans sa publication, Thielemans~\cite{Thielemans2006Lesion} utilise le ``Channelized Hotelling Observer'' (CHO)~\cite{barrett1993model}, qui est un observateur dérivé du classifieur linéaire LDA présenté en \ref{lab:LDA}, utilisé en conjonction avec des informations fréquentielles. 
 
 Cependant ils utilisent le CHO uniquement sur des lésions de fort diamètre et de fort contraste (13mm de diamètre et contraste de 4.25:1, sur des simulations analytiques). Les résultats présentés (figure~\ref{fig:apportCHO}) montrent une amélioration du score pour les méthodes de correction de l'ordre de 50\% dans certains cas. 
@@ -132,25 +134,34 @@ Mais il est difficile d'évaluer de manière précise l'apport des méthodes de 
 
 \begin{figure}[h!]
 	\begin{center}
-		\begin{tabular}{c c}
 			\includegraphics[width=10cm]{images/apportCHO}
-		\end{tabular}
 	\end{center}
-	\caption{Index de CHO pour différents techniques de correction du mouvement respiratoire en fonction du nombre d'itérations. la méthode utilisant le gating est comparée avec une méthode évolution présentée dans le document.} 
+	\caption[Index de CHO pour différents techniques de correction du mouvement respiratoire en fonction du nombre d'itérations]{Index de CHO pour différents techniques de correction du mouvement respiratoire en fonction du nombre d'itérations. La méthode utilisant le gating est comparée avec une méthode évolution présentée dans le document.} 
 	\label{fig:apportCHO}
 \end{figure}
 
 
 \subsection{Chang 2010}
 
-Cette publication est une implémentation clinique d'un système de découpage automatique du signal respiratoire par amplitude. Elle est basée sur 13 patients totalisant 21 tumeurs du poumon. Le signal respiratoire est acquis à l'aide d'un dispositif propriétaire (Anzai AZ-733V) basé sur une ceinture abdominale avec capteur de pression. Seuls les données TEP acquises autour d'une amplitude présélectionnée (+/-10\% de l'amplitude correspondant à l'acquisition TDM) sont utilisées pour la reconstruction des images corrigées. 
+Cette publication est une évaluation clinique d'un système de découpage automatique du signal respiratoire par amplitude. Elle est basée sur 13 patients totalisant 21 tumeurs du poumon de taille diverses (estimée de 1 à 27 $cm^3$. Le signal respiratoire est acquis à l'aide d'un dispositif propriétaire (Anzai AZ-733V) basé sur une ceinture abdominale avec capteur de pression. Seuls les données TEP acquises autour d'une amplitude présélectionnée (+/-10\% de l'amplitude correspondant à l'acquisition TDM) sont utilisées pour la reconstruction des images corrigées. 
 
-Le jeu d'images ``témoin'', non corrigées, est réalisé en extrayant des données acquises la même quantité de données que pour les images corrigées, mais sans synchronisation.
+Le jeu d'images ``témoin'', non corrigées, est réalisé en extrayant des données acquises le même nombre d'évènements N que le jeu d'images synchronisées en considérant les N premiers du fichier en mode séquentiel.
 
-L'auteur compare le $SUV_{max}$, $SUV_{moyen}$, Rapport Signal/Bruit (SNR) et volume apparent de la lésion pour les deux jeu d'images. Le volume de la lésion et le $SUV _{moyen}$ sont calculés sur une région d'intérêt correspondant à 40\% du $SUV_{max}$ de la lésion. Le SNR est calculé en divisant le SUV moyen de la tumeur par l'écart-type d'une zone d'intérêt dans le poumon, dont la taille ni la localisation ne sont précisées. 
+L'auteur compare le $SUV_{max}$, $SUV_{moyen}$, Rapport Signal/Bruit (SNR) et volume apparent de la lésion pour les deux jeux d'images. Le volume de la lésion et le $SUV _{moyen}$ sont calculés sur une région d'intérêt correspondant à 40\% du $SUV_{max}$ de la lésion. Le SNR est calculé en divisant le SUV moyen de la tumeur par l'écart-type d'une zone d'intérêt dans le poumon, dont ni la taille ni la localisation ne sont précisées. 
 
-Les résultats présentés montrent une amélioration importante des valeurs du SNR pour les images corrigées du mouvement par rapport aux images témoin. En moyenne, cette augmentation est de 26.3\%, mais deux tumeurs sur les 21 de l'étude voient leur SNR augmenter de plus de 66\%. 
+Les résultats présentés montrent une amélioration importante des valeurs du SNR pour les images corrigées du mouvement par rapport aux images témoin, comme présenté dans la figure~\ref{fig:guoping2010Exemple}. En moyenne, cette augmentation est de 26.3\%, mais deux tumeurs sur les 21 de l'étude voient leur SNR augmenter de plus de 66\%. 
 
-Il est étonnant de constater que les mesures de $SUV_{max}$ et $SUV_{moyen}$ voient leurs valeurs augmenter respectivement de 26.8\% et 26\%, ce qui est tout à fait semblable avec l'augmentation de SNR. Cependant, les valeurs individuelles d'amélioration  pour chaque tumeur ne montrent pas de corrélation.
+\begin{figure}[h!]
+	\begin{center}
+			\includegraphics[width=10cm]{images/guoping2010Exemple}
+	\end{center}
+	\caption{Exemple d'image avec et sans correction de mouvement respiratoire.} 
+	\label{fig:guoping2010Exemple}
+\end{figure}
+
+
+
+
+Il est étonnant de constater que les mesures moyennes sur les 21 tumeurs de $SUV_{max}$ et $SUV_{moyen}$ voient leurs valeurs augmenter respectivement de 26.8\% et 26\%, ce qui est tout à fait semblable avec l'augmentation de SNR. Cependant, les valeurs individuelles d'amélioration  pour chaque tumeur ne montrent pas de corrélation avec le SNR. Par exemple, une lésion va montrer une augmentation de 24\% de son $SUV_{max}$, de 20\% de son $SUV_{moyen}$ et de 37\% de son SNR.
 
 Il est intéressant de constater qu'il y a un point où le SNR diminue de 3.4\%, mais que le $SUV_{max}$ et le $SUV_{moyen}$ augmentent tout de même de presque 18\%. Cela semble indiquer une erreur car le SUV de la zone d'intérêt n'est pas censé changer de manière importante.

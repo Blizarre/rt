@@ -22,7 +22,9 @@ Les performances d'un classifieur sont indiquées par la matrice de confusion (t
 		\multicolumn{1}{c|}{} & \multicolumn{1}{|c|}{Pathologique} & FN (\emph{Faux Négatif}) & VP (\emph{Vrai Positif})\\
 		\cline{2-4}
 	\end{tabular}
-	\caption{Matrice de confusion : donne une vue d'ensemble des performances du classifieur. Elle indique le résultat de la classification de signaux connus.}
+	\caption[Matrice de confusion]{Matrice de confusion : donne une vue
+d'ensemble des performances du classifieur. Elle indique le résultat de la
+classification de signaux connus.}
 \end{table}
 
 On utilise habituellement deux grandeurs pour mesurer les performances d'un classifieur :
@@ -136,7 +138,7 @@ Les courbes Free-ROC permettent de prendre en compte plus d'informations que les
 \subsection{Courbes Free-ROC}
 \label{lab:FROC}
 
-les courbes F-ROC~\cite{bunch1978free} sont une généralisation des courbes ROC aux cas où l'on évalue la capacité de l'observateur à détecter un ensemble de lésions dans une série d'images. Chaque image pouvant contenir un nombre indéfini de lésions. L'observateur va donc devoir pointer sur l'image l'ensemble des sites suspects et y associer une note.
+Les courbes F-ROC~\cite{bunch1978free} sont une généralisation des courbes ROC aux cas où l'on évalue la capacité de l'observateur à détecter un ensemble de lésions dans une série d'images. Chaque image pouvant contenir un nombre indéfini de lésions. L'observateur va donc devoir pointer sur l'image l'ensemble des sites suspects et y associer une note.
 
 Dans ce cas, on ne peut pas utiliser le formalisme ROC car le terme de spécificité n'est pas directement calculable pour chaque niveau de confiance. On utilise à sa place le nombre moyen de faux positifs par image pour un seuil donné (voir figure~\ref{fig:courbeFROC}).
 
@@ -164,7 +166,7 @@ Plusieurs techniques ont été développées pour permettre de réaliser des com
 
 JAFROC~\cite{chakraborty2004observer} (JAcknife Free Receiver Operating Curve) est un algorithme et un logiciel développé par Chakraborty et se base sur une FDM non liée directement à la courbe. Cette mesure de performance utilise un algorithme dérivé des études A-FROC, ce qui signifie qu'il n'utilise pas l'ensemble des informations disponibles dans les courbes Free-ROC. Il va comparer les scores des faux positifs de plus forte note pour chaque image avec les notes des vrais positifs. La FDM mesure la probabilité d'avoir un score de vrai positif supérieur à celui d'un faux positif (de n'importe quelle image).
 
-Soit $\theta$ la valeur de la FDM, $N_T$ le nombre total d'images, indexés par $i$, $N_A$ le nombre total de cas pathologiques, indexés par $j$. $n_j$ est le nombre total de lésions dans le cas anormal $j$.
+Soit $\theta$ la valeur de la FDM, $N_T$ le nombre total d'images, indexées par $i$, $N_A$ le nombre total de cas pathologiques, indexées par $j$. $n_j$ est le nombre total de lésions dans le cas anormal $j$.
 
 \begin{equation}
 \label{eq:JAFROC1}
@@ -183,11 +185,11 @@ Soit $\theta$ la valeur de la FDM, $N_T$ le nombre total d'images, indexés par 
 \end{array}
 \end{equation}
 
-$X_i$ le score du plus haut Faux positif de l'image $i$, $Y_{jk}$ est la note de la lésion k de l'image j. Si une lésion n'a pas été détectée, alors sa note sera par défaut de "0".
+$X_i$ le score du plus haut faux positif de l'image $i$, $Y_{jk}$ est la note de la lésion k de l'image j. Si une lésion n'a pas été détectée, alors sa note sera par défaut de "0".
 
 Les poids $W_{jk}$ correspondent à l'importance relative de détecter la lésion $k$ dans l'image $j$ pour le diagnostic. Pour chaque image, la somme des poids doit être égale à 1.
 
-Une seconde version de JAFROC existe avec un pouvoir statistique plus important, mais elle nécessite de disposer d'un grand nombre de cas non pathologiques. La formule est la même que la précédente (équation~\ref{eq:JAFROC1}). La seule différence est que la première sommation se fait sur l'ensemble des cas non pathologiques $N_N$ (équation~\ref{eq:JAFROC2}).
+Une seconde version de JAFROC existe avec une puissance statistique plus importante, mais elle nécessite de disposer d'un grand nombre de cas non pathologiques. La formule est la même que la précédente (équation~\ref{eq:JAFROC1}). La seule différence est que la première sommation se fait sur l'ensemble des cas non pathologiques $N_N$ (équation~\ref{eq:JAFROC2}) au lieu de l'ensemble des cas $N_T$.
 
 \begin{equation}
 \label{eq:JAFROC2}

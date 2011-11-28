@@ -162,7 +162,7 @@ Le classifieur (SVM) utilise en entrée les données d'apprentissage formatées 
 La sélection du triplet de paramètres $(C, \gamma, j)$ vu précédemment est obtenue à l'aide des algorithmes présentés ci-après. 
 
 \subsubsection{Choix des paramètres du classifieur}
-
+\label{lab:paramClassif}
 Pour obtenir les meilleurs paramètres du classifieur, nous réalisons une recherche exhaustive par grille. Cela correspond à évaluer les performances sur le produit cartésien d'une discrétisation des valeurs de chaque paramètre.
 
 Par exemple, si nous disposons de deux paramètres A et B, et que nous recherchons le meilleur jeu de paramètres, il faut tout d'abord sélectionner pour chaque paramètre la taille de la zone de recherche. Pour A, ce sera les valeurs {-1, 0, 1, 2} et pour B les valeurs {100, 10000, 50000}. Les critères de performance seront évalués pour toutes les combinaisons des valeurs de A et B, tels que (-1, 100), (-1, 10000), (-1, 50000), (0, 100), \dots, (2, 50000). Le jeu de paramètres ayant obtenu les meilleures performances sera donc sélectionné. 
@@ -193,7 +193,13 @@ De ce nuage de point nous pouvons voir le front de Pareto. Ce type de diagramme 
 
 \subsection{Mesure de performance de détection}
 \label{lab:selectionSeuil}
-La mesure de performances décrite ici permet de sélectionner les meilleurs paramètres de génération de la base d'apprentissage, mais aussi une fois ces paramètres sélectionnés, de comparer les différentes techniques de correction du mouvement respiratoire. La recherche des meilleurs paramètres de la base d'apprentissage sera réalisée sur la base d'images statiques afin de ne pas être influencée par les éventuels artefacts des autres type d'images.
+
+La mesure de performances décrite ici permet de sélectionner les meilleurs
+paramètres de génération de la base d'apprentissage, mais aussi une fois ces
+paramètres sélectionnés, de comparer les différentes techniques de correction du
+mouvement respiratoire. La recherche des meilleurs paramètres de la base
+d'apprentissage sera réalisée sur la base d'images statiques afin de ne pas être
+influencée par les éventuels artefacts des autres type d'images.
 
 Pour un seuil donné, Le CAD va générer un ensemble d'agrégats associés à un score, comme présenté en \ref{lab:aggregatsCAD}. Il est ensuite possible d'évaluer la performance de ce CAD à l'aide de courbes F-ROC décrites en \ref{lab:FROC} construites à l'aide de la vérité terrain.
 
@@ -264,7 +270,7 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 {\small c) Base enrichie}
 
 \end{center}
- \caption{(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code de couleurs correspond à la valeur de j. Bleu corresponds à $j=1$, turquoise à $j=2$, vert à $j=3$ et rouge à $j=4$. En a), la base \textbf{Témoin}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base \textbf{Appauvrie} avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base \textbf{Enrichie} avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
+ \caption[(1/2) Recherche des meilleurs paramètres du classifieurs : Fronts de pareto]{(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code de couleurs correspond à la valeur de j. Bleu corresponds à $j=1$, turquoise à $j=2$, vert à $j=3$ et rouge à $j=4$. En a), la base \textbf{Témoin}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base \textbf{Appauvrie} avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base \textbf{Enrichie} avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
 \label{fig:paretoParams1}
 \end{figure}
 
@@ -289,7 +295,7 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 {\small c) Base Témoin 2}
 
 \end{center}
- \caption{(2/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base \textbf{Noamrlisée Écart} avec 200 points négatifs par image et de normalisation écart. En b), la base \textbf{Érodée}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en c) la base \textbf{Témoin 2}, réalisée de la même manière que la base \textbf{Témoin} mais en retirant une image. }
+ \caption[(2/2) Recherche des meilleurs paramètres du classifieurs : Fronts de pareto ]{(2/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base \textbf{Noamrlisée Écart} avec 200 points négatifs par image et de normalisation écart. En b), la base \textbf{Érodée}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en c) la base \textbf{Témoin 2}, réalisée de la même manière que la base \textbf{Témoin} mais en retirant une image. }
 \label{fig:paretoParams2}
 \end{figure}
 
