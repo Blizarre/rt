@@ -1,0 +1,37 @@
+
+Chap.   JMR     Carole  Remy    Moi
+
+1       X?
+2       X?
+3       X?
+4               X
+5               X
+6               X
+7               X       X
+8               X       
+9				X		X
+10				X		X
+11      ?       X       X
+12      ?       X       X
+
+
+ajouter ref biblio :
+@inproceedings{tomei2008development,
+  title={Development of a database of realistic simulated whole body [18F] FDG PET images for lymphoma},
+  author={Tomei, S. and Reilhac, A. and Visvikis, D. and Odet, C. and Giammarile, F. and Mognetti, T. and Lartizien, C.},
+  booktitle={Nuclear Science Symposium Conference Record, 2008. NSS'08. IEEE},
+  pages={4958--4963},
+  year={2008},
+  organization={IEEE}
+}
+
+@article{gould2001accuracy,
+  title={Accuracy of positron emission tomography for diagnosis of pulmonary nodules and mass lesions},
+  author={Gould, M.K. and Maclean, C.C. and Kuschner, W.G. and Rydzak, C.E. and Owens, D.K.},
+  journal={JAMA: the journal of the American Medical Association},
+  volume={285},
+  number={7},
+  pages={914},
+  year={2001},
+  publisher={Am Med Assoc}
+}

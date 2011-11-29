@@ -15,6 +15,32 @@ L'objectif est d'évaluer les performances des techniques de correction du mouve
 
 La suite de ce chapitre présente les caractéristiques principales du système d'aide à la détection (CAD) que nous avons utilisé (voir chapitre \ref{lab:chapCAD}), l'étape d'optimisation du CAD que nous avons utilisé, puis la méthode utilisée pour mesurer les performances de détection.
 
+\section{Reconstruction de la base}
+
+Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche. 
+
+\subsection{Images Statiques}
+
+Les images statiques sont reconstruites à partir des donnés de simulation statiques, réalisées à partir d'une acquisition complète du modèle au premier instant du cycle respiratoire (fin d'expiration).
+
+Elle est donc en phase avec la carte d'atténuation qui est elle aussi tirée du modèle en fin d'expiration. Les images ont été reconstruites avec 8 itérations comprenant 5 sous-ensemble chacune.
+
+\subsection{Images Non corrigées}
+
+Les images non corrigées sont produites de la même manière que les images statiques, mais à partir des fichiers séquence dynamiques.
+
+\subsection{Images TE-MS}
+
+Ces images sont reconstruites à l'aide d'un logiciel fourni par le LaTim~\cite{lamare2007list}, qui prend en compte l'estimation de mouvement réalisée précédemment ainsi que les fichiers list-mode générés par la simulation dynamique pour reconstruire directement les images corrigées. Les 8 cartes d'atténuation déformées sont fournies de manière à réaliser une reconstruction optimale.
+
+\subsection{Images TI-IM}
+
+Les 8 images correspondant aux 8 instants du cycle moyen sont reconstruites séparément à l'aide de la carte d'atténuation recalée correspondante. 8 itérations et 5 subsets sont utilisés pour la reconstruction. Chaque image générée est très bruitée. Puis toutes ces images sont déformées sur l'image correspondant au premier instant du cycle à l'aide de la carte de mouvement estimée précédemment.
+
+Ces 8 cartes recalées sont ensuite sommées pour obtenir les images corrigées.
+
+
+
 \section{Système CAD} % 11.1
 
 Le système CAD que nous utilisons a été développé à l'origine pendant les travaux de thèse de Sandrine Tomeï ainsi que mes travaux de master~\cite{tomei2008automatic,lartizien2010impact}. Nous l'avons amélioré et adapté aux besoins de cette étude, notamment en développant les mesures de performances.
@@ -99,7 +125,7 @@ Règles de classification :
  \item $card( \mathbf{L} \cap \mathbf{A} ) > \beta \times card( \mathbf{A} )$ : où $\beta$ qui limite l'étendue de l'amas en dehors de la tumeur.
 \end{enumerate}
 
-$\alpha$ et $\beta$ sont des constantes empiriques fixées respectivement à 0.05 et 0.20 dans nos travaux. Nous avons choisit ces valeurs en visualisant les cartes de score pour obtenir des résultats correctes sans pénaliser les performances.
+$\alpha$ et $\beta$ sont des constantes empiriques fixées respectivement à 0.05 et 0.20 dans nos travaux. Nous avons choisi ces valeurs en visualisant les cartes de score pour obtenir des résultats correctes sans pénaliser les performances.
 
 \subsection{Résumé}
 
