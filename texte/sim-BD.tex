@@ -1,21 +1,21 @@
-\chapter{Base de données : OncoPET_Respi}
+\chapter{Base de données : OncoPET\_Respi}
 	\label{lab:bdd}
 
 \section{Présentation}
 
-Pour répondre à notre problématique de détection des lésions sur les images TEP respirantes, nous avons choisi d’utiliser une base de données d’images simulées. En effet, notre problématique repose sur une connaissance très précise de la position des lésions pour l’évaluation des performances, ainsi que sur l’acquisition de données en mode séquences. Ces deux objectifs sont relativement difficiles à atteindre à partir d’images cliniques, notamment parceque l'acquisitio nen modé séquence ne fait pas partie de la routine clinique en oncologie.
+Pour répondre à notre problématique de détection des lésions sur les images TEP respirantes, nous avons choisi d’utiliser une base de données d’images simulées. En effet, notre problématique repose sur une connaissance très précise de la position des lésions pour l’évaluation des performances, ainsi que sur l’acquisition de données en mode séquence. Ces deux objectifs sont relativement difficiles à réaliser à partir d’images cliniques, notamment parceque l'acquisition en mode séquence ne fait pas partie de la routine clinique en oncologie.
 
 	\subsection{Avantages des bases de données simulées}
 
-Le principal avantage des bases de données est le contrôle qu'elles permettent d'exercer sur les modèles. Il est possible de spécifier les conditions des acquisitions de manière très précise, et garantissent une homogénéité qu'il est difficile d'atteindre en utilisant des données patient.
+Le principal avantage des bases de données simulées est le contrôle qu'elles permettent d'exercer sur les modèles. Il est possible de spécifier les conditions des acquisitions de manière très précise, et garantissent une homogénéité qu'il est difficile d'atteindre en utilisant des données patient.
 
-Dans le cadre de nos travaux sur la détection, la présence de la vérité terrain est particulièrement appréciable, car elle permet de savoir avec une certitude impossible à atteindre en clinique la position, le contraste et le nombre des lésions. En effet, dans le cas de lésions de petit diamètre et de petit contraste, le diagnostic ne peut être donné avec une précision totale par le praticien. 
+Dans le cadre de nos travaux sur la détection, avoir accès à la vérité terrain est particulièrement appréciable, car elle permet de savoir avec une certitude impossible à atteindre en clinique la position, le contraste et le nombre des lésions. En effet, dans le cas de lésions de petit diamètre et de petit contraste, le diagnostic ne peut être donné avec une précision totale par le praticien. 
 
-De plus, les simulations permettent d’obtenir des images avec des paramètres qui ne sont pas forcément disponibles en routine clinique. Dans notre cas, la génération des images en mode séquence est indispensable, et très peu d’examens sont réalisés de cette façon, notamment à cause de l’espace disque nécessaire et des temps de reconstruction.
+De plus, les simulations permettent d’obtenir des images avec des paramètres qui ne sont pas forcément disponibles en routine clinique. Dans notre cas, la génération des images en mode séquence est indispensable, et très peu d’examens sont réalisés de cette façon, notamment à cause de l’espace disque nécessaire et des temps de reconstruction qu'ils impliquent.
 
 	\section{Modèles}
 
-Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles. Cette variabilité des patients va permettre de limiter le sur-apprentissage des outils de détection. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été adapté  sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des courbes paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'interêt du patient en déplacant les points de contrôle. Le recalage n’est pas parfait, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associés aux fantômes adaptés sont présentés dans la figure~\ref{fig:adaptXCAT}.
+Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles. Cette variabilité des patients va permettre de limiter le sur-apprentissage des outils de détection. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été déformé de manière manuelle sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des courbes paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'interêt du patient en déplacant les points de contrôle. L'adaptation n’est pas parfaite, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associées aux fantômes adaptés sont présentés dans la figure~\ref{fig:adaptXCAT}.
 
 \begin{figure}
  \centering
@@ -24,15 +24,15 @@ Nous avons utilisé une base de données d’images TDM fournie par le Centre Ho
  \label{fig:fitXCAT}
 \end{figure}
 
-Nous avons choisi le XCAT car il intégre directement un modèle de mouvement respiratoire, et il est conçu pour pouvoir être déformé et créer différents patients.
+Nous avons choisi le XCAT car il intégre directement un modèle de mouvement respiratoire, et il est conçu pour pouvoir être déformé et ainsi engendre différents patients virtuels.
 
 \begin{figure}
  \centering
  \begin{tabular}{c c}
- \includegraphics[width=6cm]{images/adapt_bru_jea} &
- \includegraphics[width=6cm]{images/adapt_cha_chr}
+ \includegraphics[width=4cm]{images/adapt_bru_jea} &
+ \includegraphics[width=4cm]{images/adapt_cha_chr}
  \end{tabular}
- \caption[Exemple d’adaptation d’images du modèle XCAT sur des images TDM]{ Exemple d’adaptation d’images du modèle XCAT sur des images TDM : deux modèles XCAT représentés en niveaux de rouge sont adaptés sur des images TDM représentées en vert}
+ \caption[Exemple d’adaptation d’images du modèle XCAT sur des images TDM]{ Exemple d’adaptation d’images du modèle XCAT sur des images TDM : deux modèles XCAT représentés en niveaux de rouge sont adaptés sur des images TDM représentées en vert.}
  \label{fig:adaptXCAT}
 \end{figure}
 
@@ -40,7 +40,7 @@ Nous avons choisi le XCAT car il intégre directement un modèle de mouvement re
 		\subsection{Respiration}
 
 
-Pour prendre en compte la variabilité du cycle respiratoire (voir figure \ref{fig:variabCycle}), nous avons utilisé 4 cycles différents pour modéliser la respiration du patient. Un signal respiratoire complet a été acquis sur une durée de plusieurs minutes à l'aide d'un spiromètre (voir \ref{lab:spirometre}). Nous avons extrait 3 cycles semblables correspondants à la phase de respiration normale, ainsi qu'un cycle ``anormal'' pour prendre en compte une respiration irrégulière.
+Pour prendre en compte la variabilité du cycle respiratoire (voir figure \ref{fig:variabCycle}), nous avons utilisé 4 cycles différents pour modéliser la respiration du patient. Un signal respiratoire complet a été acquis sur une durée de plusieurs minutes à l'aide d'un spiromètre (voir \ref{lab:spirometre}). Nous avons extrait 3 cycles semblables correspondants à la phase de respiration normale, ainsi qu'un cycle ``anormal'' pour prendre en compte les effets d'une respiration irrégulière du patient pendant une partie du cycle.
 
 \begin{figure}
  \centering
@@ -48,12 +48,12 @@ Pour prendre en compte la variabilité du cycle respiratoire (voir figure \ref{f
  \includegraphics[width=8cm]{images/respiReguliere} &
  \includegraphics[width=8cm]{images/respiIrreguliere}
  \end{tabular}
- \caption[Exemple de courbes respiratoires régulière et irrégulière]{Deux exemples de courbes respiratoires prises par un spiromètre : celle de gauche montre une respiration régulière, tandis que celle de droite est irrégulière}
+ \caption[Exemple de courbes respiratoires régulière et irrégulière]{Deux exemples de courbes respiratoires acquises par un spiromètre : celle de gauche montre une respiration régulière, tandis que celle de droite est irrégulière.}
  \label{fig:variabCycle}
 \end{figure}
 
 
-La signal respiratoire obtenu est présentée dans la figure \ref{fig:cycleRespi}. Il est constitué de 4 cycles de 5.6 secondes qui se répètent 10 fois pour former un signal total de 224 secondes. 
+La signal respiratoire obtenu est présenté dans la figure \ref{fig:cycleRespi}. Il est constitué de 4 cycles de 5.6 secondes qui se répètent 10 fois pour former un signal total de 224 secondes. 
 
 Chacun de ces 4 cycles est discrétisé en 8 parties qui seront utilisées pour générer les modèles de la simulation. 
 
@@ -105,7 +105,7 @@ Vessie		& 50973		       \\
 \hline
  \end{tabular}
 
-\caption[Activités des organes des patients de la base de données]{Activités définies pour les organes des patients virtuels}
+\caption[Activités des organes des patients de la base de données]{Activités définies pour les organes des patients virtuels.}
 \label{tab:activiteOrganes}
 \end{table}
 
@@ -117,12 +117,9 @@ Pour réaliser cela, un ensemble d'images a été simulé sans mouvement respira
 
 Nous avons en premier lieu utilisé les contrastes présentés dans la base de données créée dans notre laboratoire et présentée dans~\cite{tomei2010oncopet_db}.
 
-Nous avons simulé 5 réalisations d'un même modèle basé sur le XCAT avec plusieurs lésions implantées dans les poumons et le foie. Nous avons utilisé 4 \todo{nombre d'itérations à l'origine??}
+Nous avons simulé 5 réalisations d'un même modèle basé sur le XCAT avec 12 lésions différentes implantées dans les poumons et le foie de chaque réalisation. Nous avons utilisé 10 itérations et un seul subset pour réaliser cette étude, car elle est antérieure à la recherche des meilleurs paramètres de reconstruction.
 
-Nous avons utilisé les contrastes de la base OncoPET_DB présentés dans la table~\ref{tab:contrastePoumonOrig} pour les lésions du poumon et dans la table~\ref{tab:contrasteFoieOrig} pour les lésions du foie.
-
-
-\todo{combien de lésions, quelle taille/contraste}
+Nous avons utilisé les contrastes de la base OncoPET\_DB présentés dans la table~\ref{tab:contrastePoumonOrig} pour les lésions du poumon et dans la table~\ref{tab:contrasteFoieOrig} pour les lésions du foie.
 
 \begin{table}
 \centering
@@ -137,7 +134,7 @@ Poumon	& 10\% & 30\% & 50\% & 70\% & 90\% \\
 16mm    & 2    &  3.5 &  4.5 & 7.5  & 10   \\
 \hline
 \end{tabular}
-\caption[Contraste de la base originale OncoPET\_DB des lésions du poumon pour létude de détectabilité]{Contraste de la base originale OncoPET\_DB des lésions du poumon, avec les pourcentages de détection associés}
+\caption[Contraste de la base originale OncoPET\_DB des lésions du poumon pour létude de détectabilité]{Contraste de la base originale OncoPET\_DB des lésions du poumon, avec les pourcentages de détection associés.}
 \label{tab:contrastePoumonOrig}
 \end{table}
 
@@ -154,11 +151,11 @@ Poumon	& 10\% & 30\% & 50\% & 70\% & 90\% \\
 16mm    & 2    &  3   &  4   & 4.5   & 7.5   \\
 \hline
 \end{tabular}
-\caption[Contraste de la base originale OncoPET\_DB des lésions du foie pour létude de détectabilité]{Contraste de la base originale OncoPET\_DB des lésions du foie, avec les pourcentages de détection associés}
+\caption[Contraste de la base originale OncoPET\_DB des lésions du foie pour létude de détectabilité]{Contraste de la base originale OncoPET\_DB des lésions du foie, avec les pourcentages de détection associés.}
 \label{tab:contrasteFoieOrig}
 \end{table}
 
-On présente à chaque observateur les images les unes après les autres, qu'ils vont annoter en recherchant toutes les lésions et en leur attribuant une note à l'aide du logiciel Amide~\cite{loening2003amide}. Ils ne connaissent pas à l'avance la localisation des lésions, et doivent donner pour chaque lésion une note entre 1 et 5 correspondant au barème suivant :
+On présente à chaque observateur les images les unes après les autres. Ils vont les annoter en recherchant toutes les lésions et en leur attribuant une note à l'aide du logiciel Amide~\cite{loening2003amide}. La localisation des lésions n'est pas connue à l'avance, et ils doivent donner pour chaque lésion une note entre 1 et 5 correspondant au barème suivant :
 
 \begin{enumerate}
 \item Possible
@@ -178,7 +175,7 @@ Les figures~\ref{fig:calibration} et~\ref{fig:calibrationFoie}  représentent re
 \begin{center}
 \includegraphics[width=15cm]{images/calibration_crop}
 \end{center}
-\caption{Détectabilité des tumeurs du poumon moyennée sur 2 observateurs en fonction du contraste et de la taille des tumeurs. Chaque courbe représente une taille de lésion différente} 
+\caption[Détectabilité des tumeurs du poumon en fonction du contraste et de la taille des tumeurs]{Détectabilité des tumeurs du poumon moyennée sur 2 observateurs en fonction du contraste et de la taille des tumeurs. Chaque courbe représente une taille de lésion différente.} 
 \label{fig:calibration}
 \end{figure}
 
@@ -186,7 +183,7 @@ Les figures~\ref{fig:calibration} et~\ref{fig:calibrationFoie}  représentent re
 \begin{center}
 \includegraphics[width=15cm]{images/calibrationFoie_crop}
 \end{center}
-\caption[Détectabilité des tumeurs du foie en fonction du contraste et de la taille des tumeurs]{Détectabilité des tumeurs du foie moyennée sur 2 observateurs en fonction du contraste et de la taille des tumeurs. Chaque courbe représente une taille de lésion différente} 
+\caption[Détectabilité des tumeurs du foie en fonction du contraste et de la taille des tumeurs]{Détectabilité des tumeurs du foie moyennée sur 2 observateurs en fonction du contraste et de la taille des tumeurs. Chaque courbe représente une taille de lésion différente.} 
 \label{fig:calibrationFoie}
 \end{figure}
 
@@ -230,7 +227,7 @@ Foie :\\
 10 \% 		  & 30 \%  & 75 \% & 90 \%\\
 \hline
 \end{tabular}
-\caption[Détectabilité estimée des lésions en fonction du contraste et de leur diamètre]{Détectabilité des lésions réalisée à l'aide d'une étude par des humains. La colonne de gauche indique la détectabilité calibrée pour OncoPET_BD des lésions.}
+\caption[Détectabilité estimée des lésions en fonction du contraste et de leur diamètre]{Détectabilité des lésions réalisée à l'aide d'une étude par des humains sur 5 patients totalisant 60 lésions. La colonne de gauche indique la détectabilité des lésions calibrée pour OncoPET\_BD.}
 \label{fig:detectabiliteVue}
 \end{table}
 
@@ -272,14 +269,14 @@ La base de données générée contient 15 patients, reconstruits avec une corre
 \begin{figure}
  \centering
  \includegraphics[width=10cm]{images/exempleImageRecon}
- \caption[Images reconstruites tirées de la base de donnée]{Images reconstruites tirées de la base de données. La flèche représente une lésion du poumon de diamètre 8mm avec une activité de niveau 5.}
+ \caption[Images reconstruites tirées de la base de donnée]{Images reconstruites (8 itérations et 5 subsets) tirées de la base de données. Les flèches représentent une lésion du foie de diamètre 8 mm avec une activité de 3.5 dans le patient 2, ainsi que deux lésions du poumon de 8 mm et d'activité 6.5 pour le patient 2.}
  \label{fig:exempleImageRecon}
 \end{figure}
 
 \todo{plus d'images dans cette figure. Mais sans TE-IM et TE-MS}
 
 
-	\section{Données clef} % temps de calculs etc....
+\section{Données clef} % temps de calculs etc....
 
 \subsection{Modèles}
 
@@ -320,8 +317,10 @@ Foie 	(107)	& 8 mm (54)		& 1.8 (11)& 2 (11)  & 2.5 (10)& 3 (11)	& 3.5 (11)\\
 
 \subsection{Simulation et reconstruction}
 
-Les images sont reconstruites avec des voxels de 4mm dans les trois dimensions. Les reconstructions sont réalisées à l'aide de l'algorithme OPL-EM avec 8 itérations et 5 sous-ensembles, sauf pour l'estimation de mouvement où seulement 3 itérations avec 5 sous-ensembles sont réalisées, avec une régularisation de 6mm à chaque itération. 
+Les images sont reconstruites avec des voxels de 4mm dans les trois dimensions, ce qui corresponds à la résolution de l'imageur TEP. Les reconstructions sont réalisées à l'aide de l'algorithme OPL-EM avec 8 itérations et 5 sous-ensembles sans régularisation, sauf pour l'estimation de mouvement où seulement 3 itérations avec 5 sous-ensembles sont réalisées, avec une régularisation de 6 mm à chaque itération. 
 
-Le temps de simulation nécessaire pour générer une image statique est de 130h par processeur environ, et 110 heures pour générer une image dynamique.
+Le temps de simulation nécessaire pour générer une image statique est de 110 h par processeur environ, contre 130 heures pour générer une image dynamique. La différence de temps s'explique par le processus de simulation. TOutes les simulations se font en 
 
-Le volume de données généré est d'environ 6Go par patient sans prendre en compte les données intermédiaires générées lors de la simulation.
+\todo{en 2 partyis}
+
+Le volume de données généré est d'environ 6 Go par patient sans prendre en compte les données intermédiaires générées lors de la simulation.
