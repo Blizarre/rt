@@ -9,30 +9,40 @@ Les techniques de correction du mouvement implémentées sont les suivantes :
  \item Correction post-reconstruction par recalage des images prises à différents instants du cycle (voir section \ref{lab:corrPostRecon}). Elle sera désignée par l'acronyme \emph{TE-IM} (Transformation \'Elastique des Images reconstruites) 
 \end{enumerate}
 
-Elles sont comparées dans cette partie avec les images non corrigées \textbf{TE-MS} et des images statiques (qui représentent une correction parfaite). Leur acronymes sont respectivement \emph{NoCorr} et \emph{Statique}
+Les images TEP corrigées à l'aide de ces deux méthodes sont comparées dans cette partie avec les images non corrigées et des images statiques (qui représentent une correction parfaite). Leur acronymes sont respectivement \emph{NoCorr} et \emph{Statique}.
 
 L'objectif est d'évaluer les performances des techniques de correction du mouvement sur la détection des lésions de faible contraste et faible diamètre. Pour cela, les performances d'un système de détection automatique seront mesurées à l'aide des courbes F-ROC.
 
-La suite de ce chapitre présente les caractéristiques principales du système d'aide à la détection (CAD) que nous avons utilisé (voir chapitre \ref{lab:chapCAD}), l'étape d'optimisation du CAD que nous avons utilisé, puis la méthode utilisée pour mesurer les performances de détection.
+Ce chapitre va tout d'abord présenter la démarche réalisée pour sélectionner les paramètres de reconstruction des images, puis la méthode d'estimation du mouvement utilisée. 
+
+La suite de ce chapitre présente les caractéristiques principales du système d'aide à la détection (CAD) que nous avons proposé (voir chapitre \ref{lab:chapCAD}), l'étape d'optimisation des paramètres de ce CAD que nous avons utilisé, puis la méthode que nous avons développé pour mesurer les performances de détection.
 
 %%%%%%%%%%%%% EXTRAITE DE LA PARTIE PRECEDENTE
 
-\section{Reconstruction des images}
 
+
+%%%%CASER DESCRIPTION RECONSTRUCTION
+%Les images sont reconstruites avec des voxels de 4mm dans les trois dimensions, ce qui correspond à la résolution de l'imageur TEP~\cite{surti2004imaging}. Les reconstructions sont réalisées à l'aide de l'algorithme OPL-EM avec 8 itérations et 5 sous-ensembles sans régularisation, sauf pour l'estimation de mouvement où seulement 3 itérations avec 5 sous-ensembles sont réalisées, avec une régularisation de 6 mm à chaque itération. 
+%%%%%
+
+\section{Reconstruction des images}
+\todo{redit parès... trouver autre intro}
 Nous avons utilisé le logiciel de reconstruction fourni par le laboratoire LaTIM dans le cadre d'un partenariat, crée et utilisé par Frédéric Lamare pour ses travaux sur la correction du mouvement respiratoire~\cite{lamare2007list}.
 
-Ce logiciel est capable de reconstruire les images acquises en données séquentielles à l'aide de l'algorithme OPL-EM décrit en \ref{lab:OPLEM}. La reconstruction permet de prendre en compte la correction de l'atténuation, mais ne permet pas la correction des coïncidences aléatoires et des coïncidences diffusées. Nous avons donc choisi de simplifier le problème en supposant une correction parfaite de ces deux effets. Pour cela, nous n'avons pas inclus les photons diffusés ou les coïncidences aléatoires dans les données séquentielles .
+Ce logiciel est capable de reconstruire les images acquises en données séquentielles à l'aide de l'algorithme OPL-EM décrit en \ref{lab:OPLEM}. La reconstruction permet de prendre en compte la correction de l'atténuation, mais ne permet pas la correction des coïncidences aléatoires et des coïncidences diffusées. Nous avons donc choisi de simplifier le problème en supposant une correction parfaite de ces deux effets. Pour cela, nous n'avons pas inclus les photons diffusés ou les coïncidences aléatoires dans les données séquentielles. 
+
+L'algorithme utilisé peut intégrer les corrections de mouvement à partir d'une estimation du champ de déplacement qui doit être calculé séparément. La qualité de ce champ conditionne la qualité de la correction. De plus, OPL-EM, présenté en~\ref{lab:OPLEM}, est paramétré par le choix du nombre de sous-ensembles d'itération . Cette section présente l'étude réalisée pour fixes ces différents paramètres.
 
 \subsection{Paramètres de reconstruction}
 \label{lab:paramRecon}
 
-Lors de l'utilisation des méthodes itératives, il faut définir le nombre d'itérations à appliquer lors de la reconstruction. La figure~\ref{fig:evolRecon} présente des reconstructions  réalisées avec différentes valeurs du nombre d'itérations. Notre partenariat avec le LaTim nous a permis d'obtenir un logiciel de reconstruction basé sur l'algorithme OPL-EM~\ref{lab:OPLEM}. Cet algorithme utilise la technique des sous-ensembles pour accélérer la reconstruction.
+Lors de l'utilisation des méthodes itératives, il faut définir le nombre d'itérations à appliquer lors de la reconstruction. La figure~\ref{fig:evolRecon} présente des reconstructions  réalisées avec différentes valeurs du nombre d'itérations. L'algorithme OPL-EM utilisé pour réaliser les reconstructions emploie la technique des sous-ensembles pour accélérer la reconstruction.
 
-L'un des paramètres principaux à prendre en compte lors de la reconstruction est le nombre d'itérations. Le nombre d'itérations totale (nombre d'itération $\times$ Nombre de sous-ensemble) va déterminer la qualité du résultat. Nous avons choisi de travailler avec 5 sous-ensembles et de faire varier le nombre d'itérations de 1 à 7, ce qui corresponds à une évaluation de 5 à 35 itérations totales.
+L'un des paramètres principaux à prendre en compte lors de la reconstruction est le nombre d'itérations. Le nombre d'itérations totale (nombre d'itération $\times$ Nombre de sous-ensemble) va déterminer la qualité du résultat. Nous avons choisi de travailler avec 5 sous-ensembles et de faire varier le nombre d'itérations de 1 à 7, ce qui correspond à une évaluation de 5 à 35 itérations totales.
 
 \begin{figure}
 \centering
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{c c c c}
  \includegraphics[width=3cm]{images/ite1} & \includegraphics[width=3cm]{images/ite3} & \includegraphics[width=3cm]{images/ite5} & \includegraphics[width=3cm]{images/ite7} \\
 Itération 1  & Itération 3 & Itération 5 & Itération 7 \\
 \hline
@@ -52,7 +62,7 @@ L'optimisation du nombre totale d'itérations est réalisée en maximisant le ra
 
 Où $µ_{signal}$ et $µ_{fond}$ représentent, respectivement, l'activité moyenne d'une zone d'intérêt de taille 3$\times$3$\times$3 voxels centrée sur une lésion, et l'activité moyenne d'une zone saine. Cette zone correspond à un volume de 200 voxels dans le poumon et de 64 voxels dans le foie. $\sigma_0$ représente la variance du bruit. Dans notre cas, cette variance est évaluée sur la zone saine utilisée précédemment. Appliquée aux lésions, cette métrique a l'avantage de permettre une représentation rapide de l'évolution du contraste entre la lésion et le fond, tout en pénalisant le bruit.
 
-L'évaluation du rapport "contraste sur bruit" est réalisée sur un modèle pour toutes les lésions, en fonction du nombre d'itérations sur le foie (6 lésions) et le poumon (6 lésions).
+L'évaluation du rapport contraste sur bruit est réalisée sur une acquisition statique d'un modèle de patient contenant 12 lésions (6 dans le foie et 6 dans le poumon), de diamètre et de contraste échantillonnés à partir des valeurs calibrées dans la table \ref{tab:contrastePoumonFoieRecap} présentée à la page \pageref{tab:contrastePoumonFoieRecap}.
 
 Les résultats sont présentés dans la figure \ref{fig:CNRFoie} pour le foie et \ref{fig:CNRPoumon} pour le poumon.
 
@@ -73,17 +83,19 @@ Les résultats sont présentés dans la figure \ref{fig:CNRFoie} pour le foie et
 
 La première observation est que certaines courbes sont strictement descendantes, surtout dans le foie. Cela s'explique par le fait que le niveau de bruit augmente beaucoup plus rapidement que la différence d'activité entre le signal et le fond. Cependant, les lésions concernées ont toutes un contraste très élevé, ce qui les rend plus facilement détectables. Par contre, pour les autres, on peut voir que l'optimum du CSR des lésions du foie est situé autour de 4 itérations, suivi par un plateau, tandis que l'optimum du CSR des lésions du poumon est plus proche de 8 itérations complètes.
 
-La lésion du foie ayant un contraste de 2.5 et un diamètre de 8mm a une valeur de rapport contraste sur bruit négative. Cela s'explique par le fait que pour les premières itérations, une faible différence d'activité en faveur du fond peut être fortement accentuée par l'écart type qui est très faible. De la même manière, pour les itérations suivantes, l'activité de cette lésion redevient supérieure à celle du fond, mais l'écart-type du bruit devient plus important, ce qui fait que le rapport est proche de zero. Lorsque le nombre d'itérations est très faible, il y a contamination du volume par l'activité environnante (autres lésions, organes proches). Pour des nombres d'itérations plus importants, l'effet de volume partiel diminue, ce qui signifie que l'activité du centre de la lésion augmente.
+La lésion du foie ayant un contraste de 2.5 et un diamètre de 8mm a une valeur de rapport contraste sur bruit négative. Cela s'explique par le fait que pour les premières itérations, une faible différence d'activité en faveur du fond peut être fortement accentuée par l'écart type qui est très faible. De la même manière, pour les itérations suivantes, l'activité de cette lésion redevient supérieure à celle du fond, mais l'écart-type du bruit devient plus important, ce qui fait que le rapport est proche de zero. Lorsque le nombre d'itérations est très faible, on observe une diminution de l'activité des petites structures par effet d'étalement (spill-out). Pour des nombres d'itérations plus importants, l'effet de volume partiel diminue, ce qui signifie que l'activité du centre de la lésion augmente.
 
 Nous avons choisi de réaliser les reconstructions avec 8 itérations de 5 sous-ensembles car nous avons montré que ce nombre d'itérations est optimal pour les lésions du poumon, et ne pénalise pas trop la détectabilité des lésions du foie.
 
-\subsection{Gestion des lits}
 
-Le découpage des simulations en "lits" est nécessaire pour simuler de manière réaliste des acquisitions médicales. En effet, le champ de vue de la caméra PET est très limité, et de l'ordre de quelques dizaine de cm. Le patient est donc déplacé entre chaque acquisition, et chacune de ces positions corresponds à un "lit" différent.
-
-Or le logiciel de reconstruction avec correction de mouvement ne prenait pas en compte la possibilité de découper les images en lits.
-
-Nous avons donc modifié le logiciel pour permettre la prise en compte de champs de mouvement corps-entier lors de la reconstruction d'un seul lit. En pratique, le lit à recaler est insérée dans un volume de la taille du champ de mouvement, puis ce champ de mouvement est appliqué sur l'image. Le lit est ensuite extrait de l'image déformée pour continuer la reconstruction.
+%%%%%%%% NE SAIS PAS OU LE METTRE
+% \subsection{Gestion des lits}
+% 
+% Le découpage des simulations en "lits" est nécessaire pour simuler de manière réaliste des acquisitions médicales. En effet, le champ de vue de la caméra PET est très limité, et de l'ordre de quelques dizaine de cm. Le patient est donc déplacé entre chaque acquisition, et chacune de ces positions correspond à un "lit" différent.
+% 
+% Or le logiciel de reconstruction avec correction de mouvement ne prenait pas en compte la possibilité de découper les images en lits.
+% 
+% Nous avons donc modifié le logiciel pour permettre la prise en compte de champs de mouvement corps-entier lors de la reconstruction d'un seul lit. En pratique, le lit à recaler est insérée dans un volume de la taille du champ de mouvement, puis ce champ de mouvement est appliqué sur l'image. Le lit est ensuite extrait de l'image déformée pour continuer la reconstruction.
 
 
 \section{Estimation du mouvement}
@@ -96,16 +108,16 @@ L'estimation du mouvement est réalisée selon le principe énoncé en~\ref{lab:
 \begin{enumerate}
  \item Les données simulées de chaque partie de cycle sont additionnées pour les N instants du cycle respiratoire.
  %\item Les images correspondant à chaque instant du cycle respiratoire sont reconstruites à partir de ces données en utilisant l'algorithme OPL-EM.
- \item Les N images reconstruites à partir des données précédente sont utilisées pour calculer le mouvement respiratoire : les images des temps 2 à N sont recalées sur l'image de référence (numéro 1), ce qui associe à chaque instant respiratoire un champ de déformation.
+ \item Les N images reconstruites à partir des données précédentes sont utilisées pour calculer le mouvement respiratoire : les images des temps 2 à N sont recalées sur l'image de référence (numéro 1), ce qui associe à chaque instant respiratoire un champ de déformation.
 \end{enumerate}
 
 
-Le champ de mouvement est estimé en utilisant une méthode de recalage par B-splines. Le champ de mouvement est représenté par un nombre réduit de coefficients de B-splines placé en grille sur le volume, comme présenté dans la figure~\ref{fig:Bspline}. L'implémentation de cet algorithme que nous avons utilisé a été fournie par Philips France (laboratoire Medisys). La transformation $g_t(x)$ utilisée pour associer les images temporelle  $f(x,t)$ (pour t allant de 2 à N) avec l'image de référence $f(x,1)$, est représentée de la manière suivante :
+Le champ de mouvement est estimé en utilisant une méthode de recalage par B-splines. Il est représenté par un nombre réduit de coefficients $c$ de fonctions $\beta^n$ placées en grille sur le volume, comme présenté dans la figure~\ref{fig:Bspline}. L'implémentation de cet algorithme a été fournie par Philips France (laboratoire Medisys). La transformation $g_t(x)$ utilisée pour associer les images temporelle  $f(x,t)$ (pour t allant de 2 à N) avec l'image de référence $f(x,1)$, est représentée de la manière suivante :
 
 \begin{figure}
 \centering
 \includegraphics[width=17cm]{images/Bspline}
-\caption[Exemple d'interpolation par B-spline]{Exemple d'interpolation par B-spline en 1 dimension : La courbe en trait pointillé épais est représentée par la la somme d'un ensemble de courbes B-spline représentées en traits pointillés fins.}
+\caption[Exemple d'interpolation par B-spline]{Exemple d'interpolation par B-spline en 1 dimension : La courbe en trait pointillé épais est représentée par la la somme des contributions des courbes B-spline représentées en traits pointillés fins. Les points de la grille utilisée pour le placement des courbe sont représentés par les ronds rouge.}
 \label{fig:Bspline}
 \end{figure}
 
@@ -114,16 +126,21 @@ Le champ de mouvement est estimé en utilisant une méthode de recalage par B-sp
   g_t(x)=x + \sum\limits_{j\in \mathbb{Z}^N} c_j \beta^n \left( \frac{x}{h}-j \right)
 \end{equation}
 
-Où $\beta^n(x)$ est la valeur de la fonction B-spline de degré $n$ au point $x$, et $j$ représente les indices des positions de la grille. $h$ correspond à l'espacement entre les points de la grille. A chaque fonction B-spline de la grille corresponds un coefficient de pondération associé nommé $c_j$ qui représente l'apport de la B-spline correspondante au signal final.
+Où $\beta^n(x)$ est la valeur de la fonction B-spline de degré $n$ au point $x$, et $j$ représente les indices des positions de la grille. $h$ correspond à l'espacement entre les points de la grille. A chaque fonction B-spline de la grille correspond un coefficient de pondération associé nommé $c_j$ qui représente l'apport de la B-spline correspondante au signal final.
 
 Les coefficients $c_j$ sont obtenus à l'aide d'une optimisation multi-échelle sur 3 niveaux : L'estimation est réalisée sur des images de résolution différente, en se basant sur l'estimation à la résolution $r-1$ pour réaliser celle de l'estimation à la résolution $r$. l'optimisation est réalisée par gradient conjugué selon la méthode de Polak-Ribière~\cite{polak1969note}. Nous avons utilisé l'erreur quadratique moyenne pour comme métrique de recalage. Elle a l'avantage d'être simple, rapide, et de ne pas montrer de discontinuités~\cite{ledesma2005spatio}.
 
 
 \subsection{Paramètres de l'estimation de mouvement}
 
-Les images utilisées pour l'estimation du mouvement respiratoire ne sont pas reconstruites avec les mêmes paramètres que les images finales. En effet, la quantité de données disponible pour la reconstruction est 8 fois plus faible que celle utilisée pour réaliser les reconstructions d'images. De plus, nous cherchons à optimiser la qualité de l'estimation de mouvement. C'est pour ces raisons que nous avons réalisé une autre étude pour estimer les paramètres de reconstruction optimaux. 
+%Les images utilisées pour l'estimation du mouvement respiratoire ne sont pas reconstruites avec les mêmes paramètres que les images finales. En effet, la quantité de données disponible pour la reconstruction est 8 fois plus faible que celle utilisée pour réaliser les reconstructions d'images. De plus, nous cherchons à optimiser la qualité de l'estimation de mouvement. 
 
-Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la vérité terrain pour créer une image d'évaluation pour l'image de référence, ainsi qu'une autre pour l'image ``respirante``. Les images d'évaluation sont créées à partir des fantômes de référence en assignant aux organes étudiés (foie et poumon) une valeur de 1, et une valeur plus importante pour les lésions. Le reste a une valeur de 0. Une illustration est présentée dans la figure~\ref{lab:illustrationRecalage}.a). 
+Lestimation du champ de mouvement est réalisée à partir des 8 images TEP correspondant aux 8 positions temporelles du cycle respiratoire. Ces données contiennent donc 8 fois moins d'évènements que les images statiques. Ainsi, les paramètres de reconstruction déterminés en~\ref{lab:paramRecon} ne sont pas optimaux pour ces images, d'autant que nous cherchons, à ce stade, à optimiser la qualité de l'estimation de mouvement. C'est pour ces raisons que nous avons réalisé une autre étude pour estimer les paramètres de reconstruction pour cette problématique spécifique. 
+
+
+\subsubsection{\'Evaluation de l'estimation de mouvement}
+
+Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la vérité terrain fournie par la carte de labels pour créer une image d'évaluation correspondant à l'image de référence, ainsi qu'une autre correspondant à l'image ``respirante``. Les images d'évaluation sont créées à partir des fantômes de référence en assignant aux organes étudiés (foie et poumon) une valeur de 1, et une valeur plus importante pour les lésions. Le reste a une valeur de 0. Une illustration est présentée dans la figure~\ref{lab:illustrationRecalage}.a). 
 
 \begin{figure}
 \centering
@@ -137,9 +154,9 @@ Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la
 
 L'image d'évaluation correspondant à l'image ''respirante`` est alors recalée sur l'image de référence à l'aide du champ de mouvement élastique calculé précédemment. Nous évaluons ensuite la qualité du recalage en calculant l'écart quadratique moyen entre les deux images d'évaluation~\ref{lab:illustrationRecalage}.b).
 
-\subsubsection{paramètres de l'estimation de mouvement}
+\subsubsection{Optimisation des Paramètres de l'estimateur de mouvement}
 
-Nous avons évalué l'influence de l'échantillonnage spatial des B-spline sur la qualité de l'estimation de mouvement. En effet, si l'espacement entre les nœuds de contrôle est trop important, les mouvements locaux vont interférer entre eux et le résultat ne sera pas valide. De la même manière, en cas d'espacement trop faible, la nature extrêmement bruitée des images va engendrer des micro-mouvements parasites locaux. Pour réduire le bruit, nous appliquons une filtrage gaussien la largeur à mi-hauteur de 6mm à chaque itération.
+Nous avons évalué l'influence de l'échantillonnage spatial des B-spline sur la qualité de l'estimation de mouvement. En effet, si l'espacement entre les nœuds de contrôle est trop important, les mouvements locaux vont interférer entre eux et le résultat ne sera pas valide. De la même manière, en cas d'espacement trop faible, la nature extrêmement bruitée des images va engendrer des micro-mouvements parasites locaux. Pour réduire le bruit, nous appliquons un filtrage gaussien de largeur à mi-hauteur égale à 6 mm à chaque itération.
 
 Nous avons évalué le recalage des reconstructions pour les paramètres suivants :
 \begin{description}
@@ -147,7 +164,7 @@ Nous avons évalué le recalage des reconstructions pour les paramètres suivant
  \item[Précision de la grille :] nous avons évalué les performances de la détection pour 3 taille différentes, allant d'une grille très peu précise de 2 noeuds en x, y et z, à une grille plus précise avec 5 noeuds en x et y, et 10 noeuds en z. Une grille intermédiaire a été évaluée avec 3 noeuds en x et y, ainsi que 5 noeuds en z.
 \end{description}
 
-Les résultats sont présentés dans la figure~\ref{fig:perfsFctIterTaille}
+Les résultats sont présentés dans la figure~\ref{fig:perfsFctIterTaille}. Les meilleures performances sont obtenues pour la configuration $3 \times 3 \times 5$ avec 3 itérations et 5 sous-ensembles.
 
 \begin{figure}
 \centering
@@ -156,19 +173,16 @@ Les résultats sont présentés dans la figure~\ref{fig:perfsFctIterTaille}
 \label{fig:perfsFctIterTaille}
 \end{figure}
 
-Les résultats nous montrent que les meilleures performances sont obtenues pour la configuration $3 \times 3 \times 5$ avec 3 itérations et 5 subsets.
-
-
-\subsubsection{Optimisation des paramètres de reconstruction}
+\subsubsection{Optimisation des paramètres de la reconstruction}
 
 Nous avons ensuite souhaité vérifier que la régularisation avait un impact positif sur la qualité du recalage. Nous avons utilisé les paramètres présentés précédemment pour la valider :
 
 \begin{description}
- \item[Nombre d'itérations :] Le nombre de sous-ensembles est toujours de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 40.
+ \item[Nombre d'itérations :] Le nombre de sous-ensembles est de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 40.
  \item[Présence ou absence de régularisation pendant la reconstruction :] Une régularisation par filtrage gaussien de largeur à mi-hauteur de 6 mm est appliquée ou non à chaque itération.
 \end{description}
 
-Les résultats sont présentés dans la figure~\ref{lab:perfsFctIterReg}. Ils montrent clairement que la régularisation entraîne une amélioration des performances, et que la meilleure estimation de mouvement est réalisée pour une reconstruction de 3 itérations avec 5 sous-ensembles. Nous avons utilisé une grille de 3 noeuds en x et en y, soit un espacement de 17cm, et de 5 noeuds en z, soit un espacement de 7.7 cm.
+Les résultats sont présentés dans la figure~\ref{lab:perfsFctIterReg}. Ils montrent clairement que la régularisation entraîne une amélioration des performances, et que la meilleure estimation de mouvement est réalisée pour une reconstruction de 3 itérations avec 5 sous-ensembles. Nous avons par conséquent utilisé ces paramètres avec une grille de 3 noeuds en x et en y, soit un espacement de 17cm, et de 5 noeuds en z, soit un espacement de 7.7 cm.
 
 \begin{figure}
 \centering
@@ -178,14 +192,17 @@ Les résultats sont présentés dans la figure~\ref{lab:perfsFctIterReg}. Ils mo
 \end{figure}
 
 
-\section{Reconstruction de la base}
+\section{Méthodes de correction du mouvement respiratoire}
 
-Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche. Les images générées sur deux patients sont présentées dans la figure~\ref{fig:exempleImageReconTous}.
+Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche. Des images générées sur deux patients sont présentées dans la figure~\ref{fig:exempleImageReconTous}.
+
+Les images ont été reconstruites à l'aide de l'algorithme OPL-EM. L'implémentation de cet algorithme a été développé par le Laboratoire de Traitement de l'Information Médicale de Brest (LATIM)\cite{lamare2007list}. L'implémentation permet de prendre en compte la correction de l'atténuation, mais ne permet pas la correction des coïncidences aléatoires et des coïncidences diffusées. Nous avons donc choisi de simplifier le problème en supposant une correction parfaite de ces deux effets. Pour cela, nous n'avons pas inclus les photons diffusés ou les coïncidences aléatoires dans les données séquence. 
+
 
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{images/exempleImageReconToutes}
- \caption[Images reconstruites corrigées et non corrigées du mouvement]{Images reconstruites avec et sans correctio ndu mouvement respiratoire (8 itérations et 5 subsets). Les flèches représentent une lésion du foie de diamètre 8 mm avec une activité de 3.5 dans le patient 2, ainsi que deux lésions du poumon de 8 mm et d'activité 6.5 pour le patient 2.}
+ \caption[Exemples d'mages reconstruites corrigées et non corrigées du mouvement]{Images reconstruites avec et sans correction du mouvement respiratoire (8 itérations et 5 subsets). Les flèches représentent une lésion du foie de diamètre 8 mm avec un contraste de 3.5 dans le patient 1, ainsi que deux lésions du poumon de 8 mm et de contraste 6.5 pour le patient 2.}
  \label{fig:exempleImageReconTous}
 \end{figure}
 
@@ -194,23 +211,25 @@ Nous avons choisi de corriger les images TEP en utilisant la méthode de correct
 
 Les images statiques sont reconstruites à partir des donnés de simulation statiques, réalisées à partir d'une acquisition complète du modèle au premier instant du cycle respiratoire (fin d'expiration).
 
-Elle est donc en phase avec la carte d'atténuation qui est elle aussi tirée du modèle en fin d'expiration. Les images ont été reconstruites avec 8 itérations comprenant 5 sous-ensemble chacune.
+Chaque image est donc en phase avec la carte d'atténuation qui est elle aussi tirée du modèle en fin d'expiration. Les images ont été reconstruites à l'aide de l'algorithme OPL-EM avec 8 itérations comprenant 5 sous-ensemble chacune.
 
 \subsection{Images Non corrigées}
 
-Les images non corrigées sont produites de la même manière que les images statiques, mais à partir des fichiers séquence dynamiques.
+Les images non corrigées sont produites de la même manière que les images statiques, mais à partir des fichiers séquence dynamiques. Ces fichiers correspondent à une acquisition en respiration libre de 224 secondes. 
+
+La carte d'atténuation utilisée est celle correspondant au premier instant du cycle respiratoire.
 
 \subsection{Images TE-MS}
 
-Ces images sont reconstruites à l'aide d'un logiciel fourni par le LaTim~\cite{lamare2007list}, qui prend en compte l'estimation de mouvement réalisée précédemment ainsi que les fichiers list-mode générés par la simulation dynamique pour reconstruire directement les images corrigées. Les 8 cartes d'atténuation déformées sont fournies de manière à réaliser une reconstruction optimale.
+Ces images sont reconstruites en utilisant la méthode décrite en~\ref{lab:CorrpendantRecon}, qui prend en compte l'estimation de mouvement réalisée précédemment ainsi que les fichiers séquence générés par la simulation dynamique pour reconstruire directement les images corrigées. 
 
-\subsection{Images TI-IM}
+La carte d'atténuation de l'instant de référence est déformée à l'aide des champs de mouvements pour générer 8 cartes d'atténuation. Les données de chaque instant du cycle respiratoire seront corrigées avec la carte d'atténuation correspondante.
 
-Les 8 images correspondant aux 8 instants du cycle moyen sont reconstruites séparément à l'aide de la carte d'atténuation recalée correspondante. 8 itérations et 5 subsets sont utilisés pour la reconstruction. Chaque image générée est très bruitée. Puis toutes ces images sont déformées sur l'image correspondant au premier instant du cycle à l'aide de la carte de mouvement estimée précédemment.
+\subsection{Images TE-IM}
 
-Ces 8 cartes recalées sont ensuite sommées pour obtenir les images corrigées.
+La méthode TE-IM est présentée en~\ref{lab:corrPostRecon}. Les 8 images correspondant aux 8 instants du cycle moyen sont reconstruites séparément à l'aide de la carte d'atténuation recalée correspondante. Chacune de ces image est recontruite avec les mêmes paramètres que pour les autre types d'images, soit 8 itérations et 5 subsets. Ces 8 images sont ensuite déformées sur l'image correspondant au premier instant du cycle, à l'aide de la carte de mouvement estimée précédemment. Ces 8 cartes recalées sont ensuite sommées pour obtenir les images corrigées.
 
-
+Bien que chaque image prise indépendamment soit très bruitée à cause du faible nombre d'évènements, la déformation suivie par la sommation des différentes images apporte une régularisation importante, comme on peut le voir dans la figure~\ref{fig:exempleImageReconTous}. 
 
 \section{Système CAD} % 11.1
 
@@ -227,7 +246,7 @@ Nous avons choisi d’utiliser une décomposition en ondelettes 3D non décimée
 
 \begin{figure}
  \includegraphics[width=15cm]{images/decompHotell}
- \caption[Décomposition en ondelettes par banc de filtres]{Décomposition en ondelettes par banc de filtres : Chaque image est filtrée selon les 3 dimensions pour obtenir les coefficients d'ondelettes et d'échelle de chaque voxel de l'image. L correspond à un filtrage passe-bas tandis que H corresponds à un filtrage passe-haut. Les coefficients d'échelle sont contenus dans l'image $LLL_{j+1}$ tandis que les coefficients d'ondelettes sont présents dans les sept images de détail $LLH_{j+1}$, $LHL_{j+1}$ \dots $HHH_{j+1}$ }
+ \caption[Décomposition en ondelettes par banc de filtres]{Décomposition en ondelettes par banc de filtres : Chaque image est filtrée selon les 3 dimensions pour obtenir les coefficients d'ondelettes et d'échelle de chaque voxel de l'image. L correspond à un filtrage passe-bas tandis que H correspond à un filtrage passe-haut. Les coefficients d'échelle sont contenus dans l'image $LLL_{j+1}$ tandis que les coefficients d'ondelettes sont présents dans les sept images de détail $LLH_{j+1}$, $LHL_{j+1}$ \dots $HHH_{j+1}$ }
  \label{fig:ondelettes}
 \end{figure}
 
@@ -248,7 +267,7 @@ Nous utilisons l'ondelette biorthogonale 4/4 dont la fonction est présentée su
  \begin{tabular}{ c c }
  
  \includegraphics[width=8cm]{images/bior44Ondelette} & \includegraphics[width=8cm]{images/bior44Echelle} \\
- Fonction d'ondelette & Fonction D'échelle\\
+ Fonction d'ondelette & Fonction d'échelle\\
  \end{tabular}
 
  \caption{Fonction d'ondelette et d'échelle biorthogonale 4/4}
@@ -467,7 +486,7 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 {\small c) Base enrichie}
 
 \end{center}
- \caption[(1/2) Recherche des meilleurs paramètres du classifieurs : Fronts de pareto]{(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code de couleurs correspond à la valeur de j. Bleu corresponds à $j=1$, turquoise à $j=2$, vert à $j=3$ et rouge à $j=4$. En a), la base \textbf{Témoin}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base \textbf{Appauvrie} avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base \textbf{Enrichie} avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
+ \caption[(1/2) Recherche des meilleurs paramètres du classifieurs : Fronts de pareto]{(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code de couleurs correspond à la valeur de j. Bleu correspond à $j=1$, turquoise à $j=2$, vert à $j=3$ et rouge à $j=4$. En a), la base \textbf{Témoin}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base \textbf{Appauvrie} avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base \textbf{Enrichie} avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
 \label{fig:paretoParams1}
 \end{figure}
 
