@@ -467,6 +467,8 @@ La recherche des paramètres optimaux a été réalisée sur le foie, pour la s�
 
 Pour vérifier que les résultats de la sélection des paramètres du classifieur sont stables, une seconde base témoin (\textbf{Témoin 2}) a été générée avec les données de seulement 14 images sur les 15 que nous avons simulées. Les points ''sains`` ne sont pas non plus extraits aux mêmes endroits que pour la base \textbf{Témoin}. Nous allons donc vérifier que les paramètres optimaux du CAD pour un jeu de données ne sont pas dépendants de la base.
 
+\todo{Préciser j=? pour les images front de pareto}
+\todo{ajouter points sur les courbes FROC pour séparer les courbes}
 
 \subsection{Sélection des meilleurs paramètres du classifieur}
 \begin{figure}[h!]
@@ -585,7 +587,7 @@ En pratique, on choisira le seuil pour avoir la certitude d'avoir un nombre de f
 
 \subsection{Comparaison des performances JAFROC}
 
-La comparaison des performances obtenues par l'algorithme JAFROC \cite{chakraborty1990free} de la figure \ref{lab:fom_param} nous montre les FDM (Figure de Mérite) obtenues pour les différentes bases. Les FDM des bases \textbf{Témoin}, \textbf{Érodée} et \textbf{Enrichie} sont quasiment au même niveau (0.18), mais les barres d'erreurs semblent montrer un léger avantage pour la base \textbf{Témoin}.
+La comparaison des performances obtenues par l'algorithme JAFROC \cite{chakraborty1990free} de la figure \ref{lab:fom_param} nous montre les FDM (Figure de Mérite) obtenues pour les différentes bases par l'algorithme JAFROC. Les FDM des bases \textbf{Témoin}, \textbf{Érodée} et \textbf{Enrichie} sont quasiment au même niveau (0.18), mais les barres d'erreurs semblent montrer un léger avantage pour la base \textbf{Témoin}.
 
 Les bases \textbf{Normalisée Écart} et \textbf{Appauvrie} quand à elles ont une FDM de 0.1 environ, ce qui indique une performance plus faible que les autres.
 
@@ -608,22 +610,22 @@ Pas d'érosion, une normalisation visant à ramener la moyenne et l'écart-type 
 
 \FloatBarrier
 
-\section{Comparaison des performances des différentes méthodes pour la détection des tumeurs pulmonaires}
+\section{Comparaison des performances de la détection des tumeurs pulmonaires}
 
 Les paramètres de génération de la base d'apprentissage retenus sont ceux de la base \textbf{Témoin}. Ils correspondent aux choix suivants :
 
 \begin{itemize}
  \item 200 points tirés aléatoirement dans le volume complet du poumon de chaque image (hors tumeurs)
- \item normalisation par neutralisation de la moyenne et de la variance, tels que $\mu, \sigma) = (1,1)$
+ \item normalisation par neutralisation de la moyenne et de la variance, tels que $(\mu, \sigma) = (1,1)$
 \end{itemize}
 
 
-Quatre jeux d'images seront comparées :
+Quatre jeux d'images seront comparés :
 
 \begin{description}
- \item[Statique :] correspond aux images de la ``vérité terrain'', à savoir des images sans mouvement respiratoire. Elle doit donner la performance haute.  
-\item[NoCorr :] représente les images simulées avec mouvement respiratoire mais reconstruites sans aucune correction de mouvement. Elle représente le cas le plus défavorable. 
- \item [TE-IM : (Transformation Elastique images) :] correspond aux images reconstruites avec la correction de mouvement post-reconstruction
+ \item[Statique :] correspond aux images de la ``vérité terrain'', à savoir des images sans mouvement respiratoire. Ce jeu doit donner la performance haute.  
+\item[NoCorr :] représente les images simulées avec mouvement respiratoire mais reconstruites sans aucune correction de mouvement. Ce jeu représente le cas le plus défavorable. 
+ \item [TE-IM : (Transformation Elastique images) :] correspond aux images reconstruites avec la correction de mouvement post-reconstruction.
  \item [TE-MS (Transformation Elastique Matrice Système) :] correspond aux images reconstruites avec correction de mouvement pendant la reconstruction.
 \end{description}
 
@@ -687,7 +689,7 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
 
 De la même manière que pour la sélection de la meilleure base d'apprentissage, il faut adapter les paramètres du classifieur ($C$, $\gamma$, $j$) aux bases des quatre jeux d'images que nous souhaitons comparer.
 
-La figure \ref{fig:paretoModalite} montre les nuages de points associés aux différents triplets de paramètres ($C$, $\gamma$, $j$) pour chaque type d'images. Les performances des images statiques sont celles présentées sur la base \textbf{Témoin} de la figure \ref{fig:paretoParams1}.a . La table \ref{tab:paramsModPoumon} résume les triplets ($C$, $\gamma$, $j$) correspondant aux meilleures performances mesurées à l'aides des nuages de points des figures \ref{fig:paretoParams1}.a et \ref{fig:paretoModalite}.
+La figure \ref{fig:paretoModalite} montre les nuages de points associés aux différents triplets de paramètres ($C$, $\gamma$, $j$) pour chaque type d'images. Les performances des images statiques sont celles présentées sur la base \textbf{Témoin} de la figure \ref{fig:paretoParams1}.a. La table \ref{tab:paramsModPoumon} résume les triplets ($C$, $\gamma$, $j$) correspondant aux meilleures performances mesurées à l'aides des nuages de points des figures \ref{fig:paretoParams1}.a et \ref{fig:paretoModalite}.
 
 Il est étonnant de constater que la base \ref{fig:paretoParams1}.a, qui correspond aux images \textbf{Statique}, offre les plus mauvaises performances pour la décomposition de niveau 1 (17\% de sensibilité). La mauvaise performance de cette base d'apprentissage se retrouve pour tous les niveaux de décomposition. Le résultat est également souligné par le tableau \ref{tab:paramsModPoumon} (sensibilité de 75\% contre des valeurs supérieures à 80\% pour les autres type d'images). On peut cependant observer que les nuages de points des autres jeux d'images ont la même distribution spatiale que ceux de la base \textbf{Statique}, par opposition aux distributions des bases \textbf{Érodé} ou \textbf{Normalisée Écart} vues dans la partie précédente. Par exemple, pour $j=1$, on observe une forte corrélation de la sensibilité et de la spécificité pour les base \textbf{Statique}, \textbf{NoCorr}, \textbf{TE-IM} et \textbf{TE-MS} que l'on ne retrouve pas pour les bases \textbf{Érodée} et \textbf{Normalisée Écart}. 
 
@@ -695,23 +697,24 @@ On peut observer qu'il y a une forte corrélation entre la sensibilité et la sp
 
 Le type d'images ayant les meilleures performances pour la décomposition de niveau 2 est \textbf{TE-IM}, avec plus de 70\% de sensibilité, comparés aux 60\% de la base \textbf{Statique}. 
 
-Les meilleures performances du CAD sont atteintes pour le troisième niveau de décomposition pour tous les types d'images sauf \emph{TE-MS}, avec une sensibilité d'environ 81 à 84\% excepté pour la base \textbf{Statique} avec 75\%, confirmant la tendance observée au premier niveau de décomposition.
+Les meilleures performances du CAD sont atteintes pour le troisième niveau de décomposition pour tous les types d'images sauf \textbf{TE-MS}, avec une sensibilité d'environ 81 et 83\% pour TE-IM et NoCorr, et 75\% pour la base \textbf{Statique}. Les performances maximales sont atteintes pour TE-MS sont atteintes pour $j=4$
 
 La spécificité observée pour les meilleurs jeux de paramètres est sensiblement la même quelque soit le type d'image, entre 99\% et 99.5\%.
 
 \subsection{Courbes Free-ROC}
 
-Les courbes F-ROC obtenues sur les différents type d'images sont présentées dans la figure \ref{fig:froc_mod}. 
+Les courbes F-ROC obtenues sur les différents type d'images à l'aide des triplets ($C$, $\gamma$, $j$) reportés dans la table~\ref{tab:paramsModPoumon} sont présentées dans la figure \ref{fig:froc_mod}. 
 
-Toutes les courbes ont un NFM (nombre de faux positifs moyen par image) à peu près équivalent entre 20 et 24, excepté TE-MS avec un NFM de 34. Cependant, les performances en FLL (proportion des lésions localisées) de TE-MS sont constantes à partir d'une NFM de 20 environ. 
+Toutes les courbes ont un NFM (nombre de faux positifs moyen par image) à la sensibilité maximale à peu près équivalent entre 20 et 24, excepté TE-MS avec un NFM à la sensibilité maximale de 34. Cependant, les performances en FLL (fraction  des lésions détectées et localisées) de TE-MS sont constantes à partir d'une NFM de 20 environ. 
 
-L'ordre des courbes est constant pour tous les NFM à partir de 5 faux positifs par image. Au delà de cette limite, les performances des images statiques sont supérieures à celles de \textbf{TE-IM} de 1 à 5\%, tandis que \textbf{TE-IM} a des performances supérieures de 3 à 10\% à celles des images \textbf{TE-MS} et de \textbf{TE-MS}. Ces deux dernières ont des performances quasiment identiques.
+L'ordre des courbes est constant pour tous les NFM à partir de 5 faux positifs par image. Au delà de cette limite, les performances des images \textbf{statique} sont supérieures à celles de \textbf{TE-IM} de 1 à 5\%, tandis que \textbf{TE-IM} a des performances supérieures de 3 à 10\% à celles des images \textbf{TE-MS} et des images \textbf{NoCorr}. Ces deux dernières ont des performances quasiment identiques.
 
-Cependant, en dessous de 5 faux positifs par image, les courbes sont trop proches pour pouvoir en déduire une tendance.
+En dessous de 5 faux positifs par image, les courbes sont trop proches pour pouvoir en déduire une tendance.
 
 
-Globalement, le graphique montre que le maximum de performance est apporté par la base \textbf{Statique}, suivi par la base \textbf{TE-IM}. Les bases \textbf{TE-MS} et \textbf{TE-MS} sont très proches l'une de l'autre mais nettement en dessous des deux premières en terme de FLL, à NFM égale.
+Globalement, le graphique montre que le maximum de performance est apporté par la base \textbf{Statique}, suivi par la base \textbf{TE-IM}. Les bases \textbf{TE-MS} et \textbf{NoCorr} sont très proches l'une de l'autre mais nettement en dessous des deux premières en terme de FLL, à NFM égale.
 
+\todo{vérifier plus de FLN}
 \begin{figure}[h!]
  \begin{center}
    \includegraphics[width=13cm]{images/FROC_mod}
@@ -723,7 +726,7 @@ Globalement, le graphique montre que le maximum de performance est apporté par 
 
 \subsection{Comparaison des performances JAFROC}
 
-Les figures de mérite obtenues par l'algorithme de JAFROC sont présentées dans la figure \ref{fig:fom_mod}. On observe une tendance proche de celle observée sur les courbes F-ROC pour \textbf{Statique} : ces images montrent les meilleures performances, suivies par \textbf{TE-IM}. Il est intéressant de noter que les valeurs de \textbf{TE-IM} et \textbf{TE-MS} sont relativement proches, y compris leurs mesures d'erreur, ce qui indique que l'algorithme JAFROC les distingue difficilement. \textbf{TE-MS} est quand à lui nettement en retrait. 
+Les figures de mérite obtenues par l'algorithme de JAFROC sont présentées dans la figure \ref{fig:fom_mod}. On observe une tendance proche de celle observée sur les courbes F-ROC. Les images \textbf{Statique} montrent les meilleures performances, suivies par \textbf{TE-IM}. Il est intéressant de noter que les valeurs de \textbf{TE-IM} et \textbf{TE-MS} sont relativement proches, y compris leurs mesures d'erreur, ce qui indique que l'algorithme JAFROC les distingue difficilement. \textbf{TE-MS} est quand à lui nettement en retrait. 
 
 \begin{figure}[h!]
  \begin{center}
@@ -735,7 +738,7 @@ Les figures de mérite obtenues par l'algorithme de JAFROC sont présentées dan
 
 \subsection{Conclusion}
 
-Les résultats présentés précédemment indiquent que les techniques de correction du mouvement respiratoire améliorent les performances de détection par rapport aux images non corrigées. Le résultat est net pour \textbf{TE-IM}, surtout lorsque l'on regarde les courbes F-ROC. Il est plus difficile de statuer sur les performances de la méthode \textbf{TE-MS}, dont les performances selon JAFROC sont au même niveau que celles de la méthode \textbf{TE-IM}, mais qui est nettement moins performante que cette dernière sur les courbes F-ROC.
+Les résultats présentés précédemment indiquent que les techniques de correction du mouvement respiratoire améliorent les performances de détection par rapport aux images non corrigées pour les lésions pulmonaires. Le résultat est net pour \textbf{TE-IM}, surtout lorsque l'on regarde les courbes F-ROC. Il est plus difficile de statuer sur les performances de la méthode \textbf{TE-MS}, dont les performances selon JAFROC sont au même niveau que celles de la méthode \textbf{TE-IM}, mais qui est nettement moins performante que cette dernière sur les courbes F-ROC.
 
 
 \FloatBarrier
@@ -747,14 +750,14 @@ Les résultats présentés précédemment indiquent que les techniques de correc
 
 Les figures \ref{fig:paretoModalite19_1} et \ref{fig:paretoModalite19_2} nous montrent une répartition des performances très différente de celle observée précédemment pour les travaux sur les tumeurs pulmonaires. 
 
-Pour le premier niveau de décomposition, les images \textbf{Statique}, \textbf{TE-IM} et \textbf{TE-MS} montrent une très grande dispersion des valeurs de performances. \textbf{TE-MS}, par contre, montre des points plus proches, mais avec des sensibilités très faibles (inférieures à 15\%). Cette dispersion montre une rupture par rapport à la corrélation observée sur les bases du poumon.
+Pour le premier niveau de décomposition ($j=1$), les images \textbf{Statique}, \textbf{TE-IM} et \textbf{TE-MS} montrent une très grande dispersion des valeurs de performances. \textbf{NoCorr}, par contre, montre des points plus proches, mais avec des sensibilités très faibles (inférieures à 15\%). Cette dispersion montre une rupture par rapport à la corrélation observée sur les bases du poumon.
 
-De la même manière que sur les données ne contenant que le premier niveau de décomposition, les performances obtenues pour $j=2$ montrent une dispersion très importante des points de donnée pour les images statiques et \textbf{TE-IM}. Le nuage de points correspondant à \textbf{TE-MS} est plus proche de ceux observés précédemment. La base non corrigée est clairement en difficulté car l'apport des informations du second niveau de décomposition diminue les performances maximales du CAD en sensibilité.
+De la même manière que pour $j=1$, les performances obtenues pour $j=2$ montrent une dispersion très importante des points pour les images \textbf{Statique} et \textbf{TE-IM}. Le nuage de points correspondant à \textbf{TE-MS} a une forme plus proche de celles observées précédemment. La base non corrigée est clairement en difficulté car l'apport des informations du second niveau de décomposition diminue les performances maximales du CAD en sensibilité.
 
-En ajoutant les informations des niveaux de décomposition supérieurs, on observe une amélioration nette des performances, surtout pour la base des images non corrigées \textbf{TE-MS}. Tous les type d'images montrent une amélioration des performances lorsque l'on  prend en compte le 4è niveau de décomposition, par opposition aux tumeurs du poumon où l'ajout de ces informations faisait baisser les performances du CAD. \'Etant donné que les informations fournies par le quatrième niveau de décomposition des ondelettes sont de très basse fréquence, elles ne donnent pas d'information sur la lésion elle-même mais sur son environnement. Cela semble indiquer que le classifieur est mal adapté pour gérer ces données.
+En ajoutant les informations des niveaux de décomposition supérieurs, on observe une amélioration nette des performances, surtout pour la base \textbf{NoCorr}. Tous les type d'images montrent une amélioration des performances lorsque l'on  prend en compte le 4è niveau de décomposition, par opposition aux tumeurs du poumon où l'ajout de ces informations faisait baisser les performances du CAD. \'Etant donné que les informations fournies par le quatrième niveau de décomposition des ondelettes sont de très basse fréquence, elles ne donnent pas d'information sur la lésion elle-même mais sur son environnement. Cela semble indiquer que le classifieur est mal adapté pour gérer ces données.
 
 
- Comme pour les lésions pulmonaires, \textbf{TE-IM} a la sensibilité la plus forte avec 68\% (voir tableau \ref{fig:paramsModFoie}). Et cette fois ci, \textbf{Statique} est seconde avec 62\% , 
+Les résultats des couples ($C$, $\gamma$, $j$) pour les quatre types d'images sont reportés dans le tableau \ref{fig:paramsModFoie}. Comme pour les lésions pulmonaires, \textbf{TE-IM} a la sensibilité la plus forte avec 68\%. Et cette fois ci, \textbf{Statique} est seconde avec 62\%.
 
 \begin{figure}[h!]
 
@@ -832,13 +835,13 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
 \end{figure}
 
 
-Les courbes Free-ROC de la figure \ref{fig:froc_mod19} montrent un ordre différent de celui présenté par l'analyse JAFROC.
+Les courbes Free-ROC de la figure \ref{fig:froc_mod19} montrent un ordre différent de celui présenté par l'analyse JAFROC de la figure~\ref{fig:fom_mod19}.
 
-Le maximum de performances est apporté par les images statiques, suivi par les images \textbf{TE-IM}, puis \textbf{TE-MS} et enfin \textbf{TE-MS}. Contrairement au poumon, les courbes sont relativement bien séparées avec une différence de sensibilité de 20\% entre les images non corrigées et statiques. 
+Le maximum de performances est apporté par les images statiques, suivi par les images \textbf{TE-IM}, puis \textbf{TE-MS} et enfin \textbf{NoCorr}. Contrairement au poumon, les courbes sont relativement bien séparées avec une différence de sensibilité de 20\% entre les images non \textbf{NoCorr} et \textbf{Statique}. 
 
-Il est étonnant d'observer que les images statiques et \textbf{TE-MS} ont tous les deux un NFM maximum d'environ 17, très supérieur à celui de \textbf{TE-IM} et des images non corrigées qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images \textbf{Statique}, au contraire de \textbf{TE-MS} où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NFM de 11.5 . 
+Il est étonnant d'observer que les images \textbf{Static} et \textbf{TE-MS} ont tous les deux un NFM maximum d'environ 17, très supérieur à celui de \textbf{TE-IM} et des images non corrigées qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images de la base \textbf{Statique}, au contraire de \textbf{TE-MS} où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NFM de 11.5 . 
 
-Si l'on se contente de comparer les courbes F-ROC pour un NFM donné de 9, la base d'images statiques a la meilleur sensibilité avec 58\%, suivie par \textbf{TE-IM} avec 53\% et \textbf{TE-MS} avec 48\%. Les images non corrigées sont en net retrait avec seulement 37\% de sensibilité.
+Si l'on se contente de comparer les courbes F-ROC pour un NFM donné de 9, la base d'images \textbf{Statique} a la meilleur sensibilité avec 58\%, suivie par \textbf{TE-IM} avec 53\% et \textbf{TE-MS} avec 48\%. Les images \textbf{NoCorr} sont en net retrait avec seulement 37\% de sensibilité.
 
 Les performances sont globalement en retrait par rapport à celles du poumon, mais l'ordre des courbes reste cohérent avec celui observé sur le poumon.
 
@@ -855,16 +858,16 @@ Les performances sont globalement en retrait par rapport à celles du poumon, ma
 
 
 Les Figures de mérite obtenues par l'algorithme de JAFROC sont présentées dans la figure \ref{fig:fom_mod19}. La p-valeur est de 0.1, ce qui ne permet pas de déclarer que statistiquement les données sont différentes.
-Il n'est pas étonnant de constater que les FDM sont plus élevées que précédemment car le nombre de faux positifs est pratiquement deux fois inférieur à celui obtenu pour le poumon, ce qui est le signe que le classifieur réussit mieux à discerner les vrai positifs.
+Il n'est pas étonnant de constater que les FDM sont plus élevées que précédemment car le nombre de faux positifs est pratiquement deux fois inférieur à celui obtenu pour le poumon, ce qui est le signe que le classifieur réussit mieux à discerner les vrais positifs.
 
-On observe que les images statiques ont un score supérieur de 60\% environ à celui des images Non corrigées. Par contre, il est surprenant de constater que les deux techniques de correction du mouvement respiratoire ont un score égal ou plus faible que les images non corrigées, en contradiction avec les résultats de l'analyse F-ROC. Cependant, la proximité des valeurs ne permet pas de montrer une réelle hiérarchie entre les jeux d'images. Tout au plus pourrait-on observer que l'étendue des barres d'erreur semble indiquer que \textbf{TE-IM} aurait de meilleures performances que les images non Corrigées, elles-mêmes supérieures aux images \textbf{TE-MS}, mais il est n'est pas possible de se prononcer de manière définitive à partir de ces données. 
+On observe que les images \textbf{statique} ont un score supérieur de 60\% environ à celui des images \textbf{NoCorr}. Par contre, il est surprenant de constater que les deux techniques de correction du mouvement respiratoire ont un score égal ou plus faible que les images non corrigées, en contradiction avec les résultats de l'analyse F-ROC. Cependant, la proximité des valeurs ne permet pas de montrer une réelle hiérarchie entre les jeux d'images. Tout au plus pourrait-on observer que l'étendue des barres d'erreur semble indiquer que \textbf{TE-IM} aurait de meilleures performances que les images \textbf{NoCorr}, elles-mêmes supérieures aux images \textbf{TE-MS}, mais il est n'est pas possible de se prononcer de manière définitive à partir de ces données. 
 
 
 
 
 \subsection{Conclusion}
 
-Les résultats des mesures de performance sur les tumeurs hépatiques sont contrastés. Les courbes F-ROC montrent un clair avantage des techniques de correction du mouvement respiratoire, surtout pour \textbf{TE-IM} aux niveaux de NFM communs à tous les jeux d'images. Par contre, les Figures de Mérite obtenues par JAFROC montrent à l'inverse que \textbf{TE-IM} et \textbf{TE-MS} sont au même niveau que les images non corrigées du mouvement, en net retrait par rapport aux images \textbf{Statique}.
+Les résultats des mesures de performance sur les tumeurs hépatiques sont contrastés. Les courbes F-ROC montrent un clair avantage des techniques de correction du mouvement respiratoire, surtout pour \textbf{TE-IM} si l'on compare la sensibilité pour un nombre moyen de fausses localisations. Par contre, les figures de mérite obtenues par JAFROC montrent à l'inverse que \textbf{TE-IM} et \textbf{TE-MS} sont au même niveau que les images non corrigées du mouvement, en net retrait par rapport aux images \textbf{Statique}.
 
 
 

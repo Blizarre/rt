@@ -1,8 +1,7 @@
 
 \label{lab:chapPET}
-La Tomographie par \'Emission de Positons (TEP) est une modalité d'imagerie fonctionnelle utilisant la désintégration d'un traceur radioactif pour mettre en valeur les zones de forte activité métabolique. Elle est principalement utilisée en imagerie cérébrale, oncologique et cardiologique.
+La Tomographie par \'Emission de Positons (TEP) au fluorodesoxyglucose marquée au Fluor 18 ($^{18}$FDG) est une modalité d'imagerie fonctionnelle utilisant la désintégration d'un traceur radioactif pour mettre en valeur les zones de forte activité métabolique. Elle est principalement utilisée en imagerie cérébrale, oncologique et cardiologique.
 
-Le traceur $^{18}FDG$ est un traceur analogue du glucose utilisé en oncologie.
 
 Dans ces trois chapitres, nous allons tout d'abord détailler rapidement les principes physiques amenant à la création des images TEP, de la désintégration du traceur radioactif à la détection des photons émis lorsqu'ils atteignent un capteur. Ensuite, nous parlerons des solutions techniques mises en place pour réaliser les images TEP, avec les différents types d'acquisitions. Enfin, nous détaillerons les algorithmes utilisés pour reconstruire les images TEP.
 
@@ -11,9 +10,9 @@ Dans ces trois chapitres, nous allons tout d'abord détailler rapidement les pri
 
 	\section{Généralités}
 
-L'imagerie TEP permet de visualiser de manière indirecte des processus physiologiques survenant dans le corps du patient. Je vais présenter rapidement les événements qui se produisent lors d'un examen, présentés dans la figure~\ref{fig:schemaTEP}.
+L'imagerie TEP est basée sur l'injection d'une molécule traceuse marquée par un atome radioactif émetteur de positon. Ce paragraphe présente rapidement les événements qui se produisent lors d'un examen TEP, présentés dans la figure~\ref{fig:schemaTEP}.
 
-Pour cela, on lui injecte un ``traceur'' contenant une particule radioactive. Ce traceur est conçu de manière à se fixer sur les zones du corps que l'on souhaite imager. Pendant toute la durée de l'examen, les particules radioactives vont se désintégrer selon la loi de décroissance radioactive de l'équation~\ref{eq:loidecradioact}.
+Ce traceur est conçu de manière à se fixer sur les zones du corps que l'on souhaite imager. Pendant toute la durée de l'examen, les particules radioactives vont se désintégrer selon la loi de décroissance radioactive de l'équation~\ref{eq:loidecradioact}.
 
 \begin{equation}
 	dN = - \lambda N dt
@@ -22,14 +21,14 @@ Pour cela, on lui injecte un ``traceur'' contenant une particule radioactive. Ce
 
 $N$ représente le nombre de particules radioactives présentes dans le corps du patient. $dN$ représente la variation de ce nombre de particules (le nombre de désintégrations par $dt$) et $\lambda$ est une constante dépendant de l'élément radioactif.
 
-Chaque désintégration d'un élément radioactif va déclencher l'émission d'une particule chargée $\beta^+$, aussi appelée positon. En oncologie, on utilise le Fluor $^{18}F$ qui se désintègre en Oxygène $^{18}O$ en émettant le positon. Cette particule va parcourir quelques mm avant de s'annihiler avec un électron en émettant 2 photons dans deux directions opposées avec une énergie de 511 KeV.
+Chaque désintégration d'un élément radioactif va déclencher l'émission d'une particule chargée $\beta^+$, aussi appelée positon. En oncologie, on utilise par exemple le Fluor $^{18}F$ qui se désintègre en Oxygène $^{18}O$ en émettant un positon. Cette particule va parcourir quelques mm avant de s'annihiler avec un électron en émettant 2 photons dans deux directions opposées avec une énergie de 511 KeV.
 
-Ce sont ces photons qui sont détectés par l'imageur TEP. Ils représentent une coïncidence, car l'instant d'arrivée et leur énergie sont semblables. L'ensemble des ``Lignes de réponse'' (LDR) correspondant aux coïncidences détectées est utilisée pour reconstruire les images.
+Ce sont ces photons qui sont détectés par l'imageur TEP. Ils représentent une coïncidence, car l'instant d'arrivée et leur énergie sont semblables. L'ensemble des ``Lignes de réponse'' (LDR) correspondant aux coïncidences détectées est utilisé pour reconstruire les images.
 
 \begin{figure}
 \centering
 \includegraphics[width=16cm]{images/schemaTEP}
-\caption[Présentation simplifiée de la TEP]{Processus d'un examen TEP : a) Injection du traceur radioactif, qui va se fixer préférentiellement sur les zones que l'on cherche à observer. b) Désintégration d'un atome radioactif du traceur, ici dans la zone à imager. Cela entraîne l'émission de deux photons dans deux directions opposées, qui seront détectés dans la couronne de capteurs. c) Tous les événements détectés sont stockés dans la mémoire de la console, ici sous forme de sinogramme. d) L'image est reconstruite à la suite de l'acquisition pour former un volume 3D estimant la répartition du traceur dans l'organisme.}
+\caption[Présentation simplifiée de la TEP]{Processus d'un examen TEP : a) Injection du traceur radioactif, qui va se fixer préférentiellement sur les zones que l'on cherche à observer. b) Désintégration d'un atome radioactif du traceur, ici dans la zone à imager. Cela entraîne l'émission de deux photons dans deux directions opposées, qui sont détectés dans la couronne de capteurs. c) Tous les événements détectés sont stockés dans la mémoire de la console, ici sous forme de sinogramme. d) L'image est reconstruite à la suite de l'acquisition pour former un volume 3D estimant la répartition du traceur dans l'organisme.}
 \label{fig:schemaTEP}
 \end{figure}
 
@@ -38,9 +37,9 @@ Ce sont ces photons qui sont détectés par l'imageur TEP. Ils représentent une
 
 Le glucose est considéré comme un carburant essentiel à l’organisme qui peut l’assimiler directement. Les cellules cancéreuses, qui ont un métabolisme accéléré par rapport aux autres cellules du milieu, sont particulièrement friandes de glucose. Celui-ci est transporté à l’intérieur des cellules par des transporteurs spécifiques de la membrane afin d’être dégradé par un ensemble de réactions appelé glycolyse. Le glucose est d’abord phosphorylé en glucose-6-phosphate, catalysé par l’enzyme hexokinase. Le glucose-6-phosphate est ensuite transformé en fructose-6-phosphate qui subit à son tour plusieurs transformations successives pour être finalement excrété par la cellule sous forme de lactate.
 
-Le fluorodeoxyglucose ou FDG est un analogue du glucose avec un aspect structural très proche. Il est donc aussi capté par les cellules, mais ne peut pas être utilisé dans leur métabolisme. Le FDG suit le même processus métabolique que le glucose jusqu’à l’étape de phosphorylation en FDG-6-phosphate. Il n’est cependant pas métabolisé par l’enzyme glucose-6-phosphatas et s’accumule donc dans la cellule sous la forme de FDG-6-phosphate. Cette accumulation permet de distinguer la présence de tumeurs, généralement beaucoup plus gourmandes en énergie que les tissus sains et donc marquées par une présence élevée de FDG-6-phosphate. Par son métabolisme et son importance pour les cellules cancéreuses, le FDG est donc actuellement préconisé en clinique pour les examens concernant des patients en cancérologie. Il est généralement marqué au fluor 18 donnant le $^{18}$FDG.
+Le fluorodeoxyglucose ou FDG est un analogue du glucose avec un aspect structural très proche. Il est donc aussi capté par les cellules, mais ne peut pas être utilisé dans leur métabolisme. Le FDG suit le même processus métabolique que le glucose jusqu’à l’étape de phosphorylation en FDG-6-phosphate. Il n’est cependant pas métabolisé par l’enzyme glucose-6-phosphate et s’accumule donc dans la cellule sous la forme de FDG-6-phosphate. Cette accumulation permet de distinguer la présence de tumeurs, généralement beaucoup plus gourmandes en énergie que les tissus sains et donc marquées par une présence élevée de FDG-6-phosphate. Par son métabolisme et son importance pour les cellules cancéreuses, le FDG est donc actuellement préconisé en clinique pour les examens concernant des patients en cancérologie. Il est généralement marqué au fluor 18 donnant le $^{18}$FDG.
 
-Cependant, ce radiotraceur n'est pas spécifique aux tumeurs mais se fixe sur toute cellule consommant du glucose. C'est pourquoi le coeur ainsi que le cerveau fixent toujours une grande quantité de $^{18}FDG$.
+Cependant, ce radiotraceur n'est pas spécifique aux tumeurs mais se fixe sur toute cellule consommant du glucose. C'est pourquoi le coeur ainsi que le cerveau fixent toujours une grande quantité de $^{18}FDG$, comme l'indique la figure~\ref{fig:schemaTEP}.
 
 \section{\'Emission des photons}
 
@@ -53,7 +52,7 @@ Les émetteurs de positons utilisés en TEP sont des isotopes radioactifs prése
 \label{eq:desinteg}
 \end{equation}
 
-Le positon va alors s'annihiler avec un électron après un parcours de quelques millimètres en émettant simultanément deux photons de même énergie (511 keV) comme indiqué dans l'équation~\ref{eq:annihilation}. L'angle d'émission des photons est de $180°$ avec une incertitude de $\pm 0.25°$~\cite{bailey2005positon}.
+Le positon va alors s'annihiler avec un électron après un parcours de quelques millimètres en émettant simultanément deux photons $\gamma$ de même énergie (511 keV) comme indiqué dans l'équation~\ref{eq:annihilation}. L'angle d'émission des photons $\gamma$ est de $180°$ avec une incertitude de $\pm 0.25°$~\cite{bailey2005positon}.
 
 \begin{equation}
  e^+ + e^-~\rightarrow~\gamma + \gamma
@@ -63,17 +62,19 @@ Le positon va alors s'annihiler avec un électron après un parcours de quelques
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/annihilation}
-\caption[\'Emission des photons]{\'Emission des photons~\cite{Langner2008ad} : Le radio traceur se désintègre en émettant un neutrino et un positon. Après un parcours de quelques mm dans les tissus, ce dernier s'annihile avec un électron. Cette réaction provoque la création de deux photons d'énergie 511 keV partant dans deux directions opposées.}
+\caption[\'Emission des photons]{\'Emission des photons~\cite{Langner2008ad} : Le radio traceur se désintègre en émettant un neutrino et un positon. Après un parcours de quelques mm dans les tissus, ce dernier s'annihile avec un électron. Cette réaction provoque la création de deux photons $\gamma$ d'énergie 511 keV partant dans deux directions opposées.}
 \label{fig:Langner2008ad}
 \end{figure}
 
 \section{Détection des photons}
 
-Les détecteurs utilisés en TEP sont constitués d'un couplage entre un cristal et un tube photomultiplicateur, le tout placé devant un photodetecteur. Chaque photon absorbé par le matériau photomultiplicateur va entraîner une réaction en chaîne qui va déclencher une émission lumineuse. Le capteur situé derrière va convertir cette émission lumineuse en charge électrique. Habituellement,  
+Les détecteurs les plus couramment utilisés en TEP sont constitués d'un couplage entre un cristal scintillant et un tube photomultiplicateur.
 
-Un système électronique va ensuite apparier les photons détectés pour retrouver la ligne de réponse (LDR) sur laquelle la désintégration a eu lieu. Les paires de photon assemblées correspondent à des coïncidences.
+Le cristal scintillant permet de convertir les photons $\gamma$ de 511 keV en photons lumineux par les différents phénomènes d'interaction particules-matières.
 
-Les détecteurs sont regroupés par modules, placés en anneaux autour du patient. L'imageur TEP Gemini que nous utiliserons dans cette étude dispose de 28 modules, contenant chacun une matrice de 29 par 22 cristaux de GSO~\ref{fig:moduleTEP}. Une photo de l'imageur ouvert est visible en~\ref{fig:gemini_ecl}. 420 Photomultiplicateurs placés autour des blocs sont utilisée pour estimer la position des détections.
+Chaque photon absorbé par le matériau scintillant va entraîner une réaction en chaîne qui va déclencher une émission lumineuse. Le tube multiplicateur situé derrière va convertir cette émission lumineuse en charge électrique. Un système électronique va ensuite apparier les photons détectés pour retrouver la ligne de réponse (LDR) sur laquelle la désintégration a eu lieu. Les paires de photons assemblées correspondent à des coïncidences.
+
+Les détecteurs sont regroupés par modules, placés en anneaux autour du patient. L'imageur TEP Gemini que nous utiliserons dans cette étude dispose par exemple de 28 modules, contenant chacun une matrice de 29 par 22 cristaux de GSO~\ref{fig:moduleTEP}. Une photo de l'imageur ouvert est visible sur la figure~\ref{fig:gemini_ecl}. 420 Photomultiplicateurs placés autour des blocs sont utilisés pour estimer la position des détections.
 
 \begin{figure}
 \centering
@@ -94,7 +95,11 @@ Les détecteurs sont regroupés par modules, placés en anneaux autour du patien
 
 La figure~\ref{fig:schemaDetections} représente les différents types de coïncidences rencontrés en TEP.
 
-Les coïncidences vraies (\ref{fig:schemaDetections}.a) correspondent aux cas où les deux détections appariées correspondent bien à une seule désintégration et où aucun des photons n'a été dévié. Les coïncidences fortuites (\ref{fig:schemaDetections}.b) correspondent à la détectio nen coïncidence de deux photons issus de deux annihilations différentes, par exemple à cause de l’absorption d’un des photons d’une désintégration par les tissus. Enfin, les coïncidences diffusées (\ref{fig:schemaDetections}.c) sont le résultat de la déviation d'un des deux photons produit engendré par des interactions rayonnement-matière dans les tissus (diffusion compton). Pour éliminer ces erreurs, un certain nombre de méthodes ont été implémentées, dont le filtrage en énergie et en temps au niveau matériel : ne sont prises en compte que les paires d'événements arrivant dans une fenêtre temporelle et énergétique définie. En effet, les photons déviés vont perdre de l'énergie, ce qui va entraîner leur élimination.
+Les coïncidences vraies (\ref{fig:schemaDetections}.a) correspondent aux cas où les deux détections appariées correspondent bien à une seule désintégration et où aucun des photons n'a été dévié. Les coïncidences fortuites (\ref{fig:schemaDetections}.b) correspondent à la détection en coïncidence de deux photons issus de deux annihilations différentes, par exemple à cause de l’absorption d’un des photons d’une désintégration par les tissus. Enfin, les coïncidences diffusées (\ref{fig:schemaDetections}.c) sont le résultat de la déviation d'un des deux photons produit engendré par des interactions rayonnement-matière dans les tissus (diffusion Compton). 
+
+%Pour éliminer ces erreurs, un certain nombre de méthodes ont été implémentées, dont le filtrage en énergie et en temps au niveau matériel : ne sont prises en compte que les paires d'événements arrivant dans une fenêtre temporelle et énergétique définie. En effet, les photons déviés vont perdre de l'énergie, ce qui va entraîner leur élimination.
+
+%\todo{pkoi barré?}
 
 Les coïncidences diffusées ainsi que les coïncidences aléatoires génèrent un bruit parasite dans les sinogrammes. L'absorption des photons sans détection va engendree un effet d'atténuation du signal qui sera de plus en plus important en fonctio nde la profondeur des tissus et de leur absorption.
 
@@ -110,13 +115,13 @@ Les coïncidences diffusées ainsi que les coïncidences aléatoires génèrent 
 
 	\section{Perturbation du trajet du photon}
 
-Les deux interactions les plus importantes que peuvent avoir les photons avec les tissus sont la diffusion compton et l'absorption photoélectrique~\cite{cherry2006pet}. L'effet Rayleigh, qui correspond à la diffusion du photon sur un atome, est peu présent aux énergies concernées par la TEP. 
+Les deux interactions les plus importantes que peuvent avoir les photons avec les tissus sont la diffusion Compton et l'absorption photoélectrique~\cite{cherry2006pet}. L'effet Rayleigh, qui correspond à la diffusion du photon sur un atome, est peu présent aux énergies concernées par la TEP. 
 
 La diffusion compton correspond à l'interaction entre le photon émis et un électron du milieu. L'énergie cinétique de l'électron est augmentée, tandis que le photon est dévié. Il est intéressant de noter qu'une déviation de 25° engendre une perte d'énergie du photon de seulement 10\%~\cite{evans1955atomic}.
 
 L'absorption photo-électrique correspond quand à elle à l'interaction entre un noyau atomique et un des photons. L'énergie du photon est absorbée par le noyau et transmis à un de ses électrons. 
 
-L'atténuation du signal est lié à une combinaison de ces effets. Tout ce qui peut perturber le trajet du photon et perturber sa détection. L'effet d'aténuation est particulièrement important en TEP, car il génère des artefacts très visibles, qui doivent être corrigés à partir d'une carte d'atténuation, déduite d'un examen de Tomodensitométrie (Tomographie par rayons X) ou d'une carte de transmission, comme indiqué en~\ref{fig:schemaAtt}.
+L'atténuation du signal est lié à une combinaison de ces effets. L'effet d'atténuation est particulièrement important en TEP, car il génère des artefacts très visibles, qui doivent être corrigés à partir d'une carte d'atténuation, déduite d'un examen de Tomodensitométrie (Tomographie par rayons X) ou d'une carte de transmission, comme indiqué sur la figure~\ref{fig:schemaAtt}.
 
 
 On peut représenter cette atténuation de manière analytique à l'aide de la loi de Beer-Lambert~\cite{cherry2006pet}, qui montre que l'atténuation augmente exponentiellement avec la longueur du trajet dans les tissus :
@@ -136,15 +141,15 @@ I = I_0 e^{- \int\limits^L_0 \mu(l) dl}
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{images/attenuationNonAtt}
-\caption[Effet de l'atténuation sur les images TEP]{Effets de l'atténuation sur des images TEP : L'image de gauche correspond à la distribution de radioactivité reçue par les détecteurs. On peu observer une perte progressive de l'activité vers l'intérieur des tissus, car les photons ont plus de chances d'interagir avec la matière. L'image TDM au centre est utilisée pour estimer une carte de l'atténuation des tissus et prendre en compte cette atténuation lors de la reconstruction de l'image TEP.}
+\caption[Effet de l'atténuation sur les images TEP]{Effets de l'atténuation sur des images TEP : L'image de gauche correspond à la distribution de radioactivité reçue par les détecteurs. On peut observer une perte progressive de l'activité vers l'intérieur des tissus, car les photons ont plus de chances d'interagir avec la matière. L'image TDM au centre est utilisée pour estimer une carte de l'atténuation des tissus et prendre en compte cette atténuation lors de la reconstruction de l'image TEP.}
 \label{fig:schemaAtt}
 \end{figure}
 
-\section{Quantification en imagerie}
+\section{Quantification en imagerie TEP}
 
-L'image visualisée par le clinitien est directement liée à  la concentration de lisotope radioactif du fluor, le $^{18}F$. La concentration observée est la somme des isotope piégés dans les cellules et des isotopes libres dans le système vasculaire. Cependant, cette concentration mesurée est très dépendante du volume du patient, ainsi de de la dose injectée.
+L'image visualisée par le clinicien est directement liée à  la concentration de l'isotope radioactif. La concentration observée est la somme de la concentration du traceur piégé dans les cellules et du traceur libre dans le compartiment vasculaire. Cette concentration mesurée est très dépendante du volume du patient, ainsi de de la dose injectée.
 
-En clinique, on utilise habituellement le SUV (Standard Uptake Value), qui correspondu à une tentative de fournir des valeurs indépendantes de la dose injectée et du patient. Cela permet de réaliser des comparaisons entre des fixations radioactives de plusieurs examens, voir de plusieurs patients.
+En clinique, on utilise habituellement le SUV (Standard Uptake Value), qui est un index semi-quantitatif permettant de s'affranchir de la dose injectée et des caractéristiques morphologiques du patient. Cela permet de réaliser des comparaisons entre des fixations radioactives de plusieurs examens, voir de plusieurs patients.
 
 Le SUV est défini comme suit :
 
@@ -152,6 +157,9 @@ Le SUV est défini comme suit :
 SUV=\frac{C}{ \frac{dose~inject\acute{e}e}{poids~corporel} }
 \end{equation}
 
+Où C est la concentration du traceur radioactif.
+
+Des méthodes, plus complexes, basées sur des acquisitions dynamiques et la connaissance a priori d'un modèle de distribution du traceur dans l'organisme, permettent de remonter à des paramètres biologiques, tels que la consommation de glucose par gramme de tissus et par unité de temps pour le FDG. Ces méthodes sont en pratique peu utilisées en routine clinique en raison de la difficulté et du coût de réalisation des acquisitions dynamiques.
 \chapter{Déroulement d'une acquisition}
 
 
