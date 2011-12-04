@@ -144,7 +144,7 @@ I = I_0 e^{- \int\limits^L_0 \mu(l) dl}
 
 L'image visualisée par le clinitien est directement liée à  la concentration de lisotope radioactif du fluor, le $^{18}F$. La concentration observée est la somme des isotope piégés dans les cellules et des isotopes libres dans le système vasculaire. Cependant, cette concentration mesurée est très dépendante du volume du patient, ainsi de de la dose injectée.
 
-En clinique, on utilise habituellement le SUV (Standard Uptake Value), qui corresponds à une tentative de fournir des valeurs indépendantes de la dose injectée et du patient. Cela permet de réaliser des comparaisons entre des fixations radioactives de plusieurs examens, voir de plusieurs patients.
+En clinique, on utilise habituellement le SUV (Standard Uptake Value), qui correspondu à une tentative de fournir des valeurs indépendantes de la dose injectée et du patient. Cela permet de réaliser des comparaisons entre des fixations radioactives de plusieurs examens, voir de plusieurs patients.
 
 Le SUV est défini comme suit :
 
@@ -255,7 +255,7 @@ Le principal avantage du sinogramme est qu'il permet de stocker les données acq
 \begin{figure}
 \centering
 \includegraphics[width=11cm]{images/sino}
-\caption[Principe du sinogramme]{Exemple de sinogramme: chaque ligne corresponds à une projection de l'image selon un angle $\theta$ correspondant à la position de la ligne dans le sinogramme.}
+\caption[Principe du sinogramme]{Exemple de sinogramme: chaque ligne correspond à une projection de l'image selon un angle $\theta$ correspondant à la position de la ligne dans le sinogramme.}
 \label{fig:sino}
 \end{figure}
 
@@ -335,7 +335,7 @@ Le principal avantage de OS-EM est qu'il permet d'augmenter la vitesse de la rec
 
 Les acquisitions en mode séquentiel génèrent une suite d'enregistrements correspondant aux événements détectés par l'imageur. La lecture de tous ces événements un par un demande des temps de calculs extrêmement importants, c'est pourquoi Reader~\cite{reader2002one} a proposé une adaptation de l'OS-EM au mode séquentiel appelée One-Pass List-Mode EM (OPL-EM). L'algorithme proposé est conçu pour ne parcourir qu'une seule fois la liste des événements. Comme pour OS-EM, les données sont groupées en sous-ensemble, qui sont utilisés les uns après les autres pour chaque itération, comme indiqué dans l'équation suivante :
 
-Ici, $n$ corresponds à un numéro de sous-ensemble, j à un voxel et i à une ligne de réponse. Lorsque tous les sous-ensembles ont été parcourus, une nouvelle itération est déclenchée. Cet algorithme est conçu pour permettre de parcourir les données une seule fois, ce qui reviens à réaliser une seule itération.
+Ici, $n$ correspond à un numéro de sous-ensemble, j à un voxel et i à une ligne de réponse. Lorsque tous les sous-ensembles ont été parcourus, une nouvelle itération est déclenchée. Cet algorithme est conçu pour permettre de parcourir les données une seule fois, ce qui reviens à réaliser une seule itération.
 
 \begin{equation}
 	f_j^{(n+1)}=\frac{\hat{f}_j^{(n)}}{\sum\limits_{i'}H_{i'j}}\sum\limits_{i \in T^n}H_{ij}\frac{1}{\sum\limits_{k}H_{ik}\hat{f}_k^{(n)}}
