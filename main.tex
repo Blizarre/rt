@@ -1,5 +1,5 @@
 %% Document %%
-\documentclass[12pt]{book}
+\documentclass[12pt, a4paper]{book}
 
 
 %% Packages %%
@@ -8,27 +8,20 @@
 \usepackage{placeins} % donne \FloatBarrier pour forcer l'affichage de toutes les figures
 \usepackage[utf8x]{inputenc}
 \usepackage[francais]{babel}
-%\usepackage{fullpage}
-%\usepackage{mathpple}  % Pour la police
 \usepackage{graphicx}
 \usepackage{mathpazo}  % Pour la police
-
+\usepackage{fancyhdr}
 \usepackage{multirow} % lignes soudées
-
-%\usepackage{multirow} % lignes soudées
-
 \usepackage{hyperref}
 \usepackage{amsmath}   % Pour numberwithin
-%\usepackage{tocloft}   % pour cftsecaftersnumb ***
-%\usepackage{spacing} \begin{spacing}{0.8} toto \end{spacing}
-%\makeatletter \renewcommand{\numwidth}{9.55em plus1fil} \makeatother
 \usepackage{fullpage}
-
-%\usepackage{textcomp}
+\usepackage{pdfpages}
 \usepackage[font={it}]{caption}
 
-%\setcounter{tocdepth}{2}
+\usepackage{fix-cm}
 
+
+%\setcounter{tocdepth}{2}
 %%%%%%%%%%%%%%% Modification de la taille des captions
 % \newcommand{\captionfonts}{\small\itshape}
 % 
@@ -47,19 +40,16 @@
 
 
 %% Metadata %%
-\title{\Huge{Manuscrit de Thèse}\\\Large{Correction du mouvement respiratoire en TEP}}
-\author{
-        %\vspace{1cm}
-        Simon Marache-Francisco \\
-        Laboratoire CREATIS/LRMN - Philips Medisys
-        %\vspace{1cm}
-}
+\title{Manuscrit de Thèse}
+\author{Simon Marache-Francisco}
 \date{\today}
 
 
 %% Data %%
 \begin{document}
 \sloppy
+
+
 
 % espace interr-paragraphe un peu plus grand
 \addtolength{\parskip}{0.5em}
@@ -79,37 +69,55 @@ $\|$\textbf{A Faire : }#1$\|$
 }
 
 
-
-\maketitle
-
-\thispagestyle{empty}
-
-%\begin{center}ù
-%	\begin{tabular}{c c}
-%		\includegraphics[width=5cm]{images/logoPhilips} & \includegraphics[width=5cm]{images/logoCREATIS}
-%	\end{tabular}
-%\end{center}
-
-%\vfill
+\input{texte/titre}
 
 \newpage
 
+\pagestyle{fancyplain}
+\setlength{\headheight}{17pt}
+\setlength{\headsep}{35pt}
+%\setlength{\topmargin}{15pt}
+%\setlength{\voffset}{10pt}
+
+\lhead{\fancyplain{}{}}
+\chead{}
+\rhead{\fancyplain{}{\textit{\leftmark}}}
+\lfoot{}
+\cfoot{}
+\rfoot{\thepage}
+
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addcontentsline{toc}{part}{Résumé}
+\input{texte/resume}
+
+\addcontentsline{toc}{part}{Table des matières}
 \tableofcontents
+
+
+%%%% A PLACER QUELQUEPART
+%Elle permet l'évaluation de l'état d'avancement de la maladie, ou encore d'étudier la réponse à un traitement~\cite{dimitrakopoulou2002role}. Cette détection se fait actuellement par le médecin qui va observer les images TEP/TDM acquises à la recherche de fixations anormales. Cependant, ces fixations peuvent provenir d'autres facteurs, tels que la ``graisse brune'', des muscles activés ou encore une inflammation locale~\cite{bordessoule2006impact}. Du fait des limites de l'imageur au niveau du rapport signal sur bruit des volumes reconstruits, il est possible qu'il y ait une erreur de diagnostic.
 
 
 %\part{Introduction}
 \newpage
+
+
+\addcontentsline{toc}{part}{Liste des figures} \listoffigures
+
+\addcontentsline{toc}{part}{Liste des tables} \listoftables
+
+\newpage
+
 \addcontentsline{toc}{part}{Introduction}
-\input{texte/introduction}	
+\input{texte/introduction}
 
 \part{Imagerie TEP}
 	\input{texte/ImagerieTEP}	
 			
-%	\chapter{Imagerie TDM}
-
 \part{Mouvement respiratoire}
-%	\chapter{Modalités d'imageries}
-%	\input{texte/modalites}
 
 	\chapter{Respiration et influence sur les acquisitions TEP/TDM}
 	\input{texte/mvt-respi}
@@ -127,17 +135,12 @@ $\|$\textbf{A Faire : }#1$\|$
 
 \part{Construction d'une base d'images TEP simulées respirante}
 	\input{texte/sim-simulation}
-
 	\input{texte/sim-BD}
-
-
 
 \part{\'Evaluation de la correction du mouvement respiratoire sur la détection des lésions pulmonaires et hépatiques}
 	\input{texte/resultats}
 
-
 \part{Discussion}
-
 	\input{texte/discussion}
 
 
@@ -147,13 +150,7 @@ $\|$\textbf{A Faire : }#1$\|$
 
 %\part{Tables}
 
-\addcontentsline{toc}{part}{Liste des figures}
 
-\listoffigures
-
-\addcontentsline{toc}{part}{Liste des tables}
-
-\listoftables
 
 %\part{Bibliographie}
 
@@ -161,6 +158,11 @@ $\|$\textbf{A Faire : }#1$\|$
 
 \bibliographystyle{apalike}
 \bibliography{biblio}
+
+\newpage
+\includepdf{images/ecoleDoct}
+\newpage
+\includepdf{images/folioAdm}
 
 \end{document}
 
