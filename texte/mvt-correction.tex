@@ -8,7 +8,7 @@ Deux approches existent pour la correction du mouvement : les techniques dites p
 
 \section{Synchronisation respiratoire}
 
-La synchronisation respiratoire correspond à un découpage du cycle respiratoire selon la phase (voir figure~\ref{fig:gatingRespi}) ou l'amplitude (voir figure~\ref{fig:gatingRespiAmplitude}). Une seule des phases ou amplitude sera sélectionnée pour la reconstruction. En théorie cela permet d'avoir le meilleur résultat, car il est possible de sélectionner les évènements correspondants à la phase ou l'amplitude où a été acquise la carte d'atténuation.
+La synchronisation respiratoire correspond à un découpage du cycle respiratoire selon la phase (voir figure~\ref{fig:gatingRespi}) ou l'amplitude (voir figure~\ref{fig:gatingRespiAmplitude}). Une seule des phases ou amplitude sera sélectionnée pour la reconstruction. En théorie cela permet d'avoir le meilleur résultat, car il est possible de sélectionner les événements correspondants à la phase ou l'amplitude où a été acquise la carte d'atténuation.
 
 
 \begin{figure}[h!]
@@ -43,9 +43,9 @@ Une autre publication~\cite{boucher2004respiratory} utilise un thermomètre dét
 
 Une variante de cette technique ne nécessitant pas de capteur est décrite dans~\cite{nehmeh2003reduction}. Un point faiblement radioactif est fixé au-dessus du torse du patient. Les acquisitions de l'imageur sont ensuite enregistrées par blocs temporels de 1 seconde, et une zone d'intérêt est reconstruite dans chacune des images. Les données reconstruites montrant le point source dans cette zone d'intérêt sont sommées et l'image finale reconstruite. 
 
-Cette technique a été comparée avec celle présentée précédemment basée sur le système RPM de Variant. Ces deux techniques n'ont été testées cliniquement que sur un patient mais ont montré des performances tout à fait semblables (6\% de différence dans les activités et 2\% pour le volume de la lésion).
+Cette technique a été comparée avec celle présentée précédemment~\cite{nehmeh2002effect} basée sur le système RPM de Variant. Ces deux techniques n'ont été testées cliniquement que sur un patient mais ont montré des performances tout à fait semblables (6\% de différence dans les activités et 2\% pour le volume de la lésion).
 
-Cependant, ces techniques n'utilisent pas une carte d'atténuation optimisée pour la position du cycle correspondant aux acquisitions TEP.  Chang et al.~\cite{GuopingChang2010Implementation} estiment la carte d'atténuation à partir d'une image TDM réalisée en respiration libre synchronisée. La phase du cycle respiratoire où l'acquistion TDM a été réalisée est enregistrée, et les données TEP acquises sur tous les cycles à cette phase sont reconstruites (voir exemples figure~\ref{fig:chang2010}). Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
+Cependant, ces techniques n'utilisent pas forcément une carte d'atténuation optimisée pour la position du cycle correspondant aux acquisitions TEP. L'article~\cite{boucher2004respiratory} utilise par exemple une carte d'atténuation obtenue par transmission, qui est est une moyenne acquise sur plusieurs cycles respiratoire. Chang et al.~\cite{GuopingChang2010Implementation} estiment la carte d'atténuation à partir d'une image TDM réalisée en respiration libre synchronisée. La phase du cycle respiratoire où l'acquistion TDM a été réalisée est enregistrée, et les données TEP acquises sur tous les cycles à cette phase sont reconstruites (voir exemples figure~\ref{fig:chang2010}). Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -53,18 +53,18 @@ Cependant, ces techniques n'utilisent pas une carte d'atténuation optimisée po
 			\includegraphics[width=10cm]{images/chang2010}
 		\end{tabular}
 	\end{center}
-	\caption[Images TEP/TDM superposées du poumon]{Images TEP/TDM superposées du poumon reconstruites avec et sans gating respiratoire en utilisant la méthode décrite dans~\cite{GuopingChang2010Implementation}. On peut observer que les tumeurs sont mieux définies et correspondent à l'image TDM qui sert de référence.} 
+	\caption[Images TEP/TDM superposées du poumon]{Images TEP/TDM superposées du poumon reconstruites avec et sans synchronisation respiratoire en utilisant la méthode décrite dans~\cite{GuopingChang2010Implementation}. On peut observer que les tumeurs sont mieux définies et correspondent à l'image TDM qui sert de référence.} 
 	\label{fig:chang2010}
 \end{figure}
 
-Cependant, ces techniques demandent un temps d'acquisition beaucoup plus long à qualité d'image égale. Si l'on ne conserve que 20\% des évènements détectés, cela signifie qu'il faut augmenter le temps d'acquisition d'un facteur 5 pour obtenir une image de qualité égale. Il n'est donc pas envisageable de mettre en place ces protocoles en routine clinique, car le temps disponible n'est pas suffisant. C'est pour cela que de nombreuses équipes se sont mises à travailler sur une évolution de cette technique, où les images sont déformées les unes sur les autres pour prendre en compte toutes les informations de l'acquisition.
+L'inconvénient majeur de ces techniques est qu'elles demandent un temps d'acquisition beaucoup plus long à qualité d'image égale. Si l'on ne conserve que 20\% des évènements détectés, cela signifie qu'il faut augmenter le temps d'acquisition d'un facteur 5 pour obtenir une image de qualité égale. Il n'est donc pas envisageable de mettre en place ces protocoles en routine clinique, car le temps disponible n'est pas suffisant. C'est pour cela que de nombreuses équipes se sont mises à travailler sur une évolution de cette technique, où les images sont acquises en mode synchronisé  puis recalées et sommées pour prendre en compte toute la statique.
 
 \section{Synchronisation respiratoire avec recalage}
 \label{lab:corrPostRecon}
 
-Dans cette section, nous allons détailler la technique consistant à corriger  le mouvement en déformant les images reconstruites.
+Dans cette section, nous allons détailler la technique consistant à corriger le mouvement en recalant les images reconstruites de chaque phase du cycle respiratoire.
 
-Pour réaliser cela, les différentes techniques se basent sur une estimation préalable du mouvement respiratoire. Les images de chaque phase sont reconstruites indépendamment, puis recalées sur une phase de référence grâce au champ de mouvement. Enfin, les images déformées sont sommées. La difficulté principale se situe dans l'estimation du champ de mouvement interne lors de la respiration, car ce mouvement est complexe.
+Ces techniques se basent toutes sur une estimation préalable du mouvement respiratoire. Les images de chaque phase sont reconstruites indépendamment, puis recalées sur une phase de référence grâce au champ de mouvement. Enfin, les images déformées sont sommées. La difficulté principale se situe dans l'estimation du champ de mouvement interne lors de la respiration, car ce mouvement est complexe.
 
 Les premières publications décrivant cette technique l'utilisaient notamment pour réaliser de l'imagerie cardiaque en TEP~\cite{klein19973d}. Cette publication démontre la faisabilité du procédé sur un animal en utilisant des techniques de flux optique pour estimer le champ de mouvement. En effet le coeur a l'avantage d'avoir une activité métabolique intense, ce qui rend l'estimation de son mouvement relativement aisée même sur des images avec une faible statistique.
 
@@ -73,32 +73,32 @@ Les premières publications décrivant cette technique l'utilisaient notamment p
 
 \subsection{Estimation du mouvement respiratoire corps entier}
 
-L'estimation du champ de mouvement interne se fait à l'aide d'une des techniques présentées précédemment en~\ref{lab:estimChamp}. Elles sont rappelées brièvement :
+L'estimation du champ de mouvement interne se fait à l'aide d'une des méthode présentées précédemment en~\ref{lab:estimChamp} et rappelée brièvement :
 
 \subsubsection{Imagerie TEP avec synchronisation respiratoire}
 \label{lab:correctionDawood2008}
 
-L'acquisition TEP est réalisée en même temps que le signal respiratoire. Une image est reconstruite par phase du signal respiratoire, puis un algorithme d'estimation de mouvement est utilisé pour calculer le champ de mouvement entre les instants du cycle.
+L'acquisition TEP est réalisée en même temps que l'acquisition du signal respiratoire. Une image est reconstruite par phase du signal respiratoire, puis un algorithme d'estimation de mouvement est utilisé pour calculer le champ de mouvement entre les instants du cycle.
 
-Les premiers algorithmes étaient utilisés en imagerie cardiaque~\cite{klein2002four} avec des transformations simples (affines), puis d'autres algorithmes plus adaptés aux images corps entier ont été utilisées, comme les flux optiques~\cite{dawood2006lung, dawood2006lung}, ou l'interpolation par B-spline~\cite{bai2009regularized}. 
+Les premiers algorithmes étaient utilisés en imagerie cardiaque~\cite{klein2002four} avec des transformations simples (affines), puis d'autres algorithmes plus adaptés aux images corps entier ont été utilisés, comme les flux optiques~\cite{dawood2006lung, dawood2006lung}, ou l'interpolation par B-spline~\cite{bai2009regularized}. 
 
 
 \subsubsection{Imagerie CT 4D}
 
-Les images CT 4D peuvent être utilisées pour réaliser l'estimation du mouvement respiratoire au lieu des données TEP. Cela nécessite par contre une dose plus importante et un temps d'acquisition plus long.
+Les images CT 4D peuvent être utilisées pour réaliser l'estimation du mouvement respiratoire au lieu des données TEP. Cela nécessite un temps d'acquisition plus long et augmente la dose d'irradiation reçue par le patient.
 Dawood a réalisé plusieurs publications sur le sujet en utilisant le flux optique pour l'estimation du champ de mouvement~\cite{dawood2006lung, dawood2008respiratory}. L'algorithme a été étudié sur des images de patients réels. Une autre publication~\cite{thorndyke2006reducing} indique une amélioration du rapport de contraste sur bruit (CNR) d'un facteur 3 grâce à la correction.
 
 
 \section{Correction pré-reconstruction}
 
-Les méthodes de correction du mouvement pré-reconstruction modifient les positions des Lignes de réponse (LDR) estimée par l'imageur TEP.
+Les méthodes de correction du mouvement pré-reconstruction modifient les positions des lignes de réponse (LDR) estimée par l'imageur TEP.
 Ce recalage des LDR correspond à un déplacement des lignes de réponse dans l'espace du détecteur (voir figure~\ref{fig:recalageLOR}) en fonction du mouvement respiratoire. La limitation principale de ce type de méthode est que le champ de mouvement ne peut pas être élastique.
 
 Cependant, il a été étudié en imagerie du cerveau~\cite{bloomfield2003design}, où il permettait de corriger les mouvements de la tête. Il a été aussi utilisé en imagerie cardiaque TEP~\cite{livieratos2005rigid} en utilisant un champ de mouvement rigide (rotation suivie d'une translation).
 
 Dans les deux cas, les résultats ont montré une nette amélioration des images (voir figure~\ref{fig:ameliorationLOR}).
 
-Dans le cadre du mouvement respiratoire du thorax, l'approche de recalage par LDR a été expérimentée par Frédéric Lamare~\cite{lamare2007respiratory}, mais avec des résultats mitigés. En effet, le champ était approximé par une transformation affine, qui peut difficilement modéliser le mouvement du thorax dans son ensemble.
+Dans le cadre du mouvement respiratoire du thorax, l'approche de recalage par LDR a été expérimentée notamment par Frédéric Lamare~\cite{lamare2007respiratory}, mais avec des résultats mitigés. En effet, le champ était approximé par une transformation affine, qui peut difficilement modéliser le mouvement du thorax dans son ensemble. La figure~\ref{fig:lamare2007} montre un profil d'image réalisé pour différents types de corrections. On peut voir que bien que la correction pré-reconstruction estime correctement la position de la lésion, son activité est beaucoup plus faible que l'activité réelle.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -112,12 +112,12 @@ Dans le cadre du mouvement respiratoire du thorax, l'approche de recalage par LD
 	\begin{center}
 		\includegraphics[width=6cm]{images/bloomfield2003design} \includegraphics[width=3cm]{images/livieratos2005rigid}
 	\end{center}
-	\caption[Résultats de l'algorithme de recalage des LDR sur des images de patients]{Résultats de l'algorithme de recalage des LDR sur des images de patients utilisant le radio-traceur [$^{11}$C]raclopride. (a) montre une image non corrigée du mouvement et (b) une image corrigée. On peut noter que les structures internes du cerveau sont beaucoup mieux définis. (c) représente une coupe du c\oe{}ur petit axe non corrigée (en haut) et corrigée (en bas). On peut voir une amélioration de la définition de l'image.} 
+	\caption[Résultats de l'algorithme de recalage des LDR sur des images de patients]{Résultats de l'algorithme de recalage des LDR sur des images de patients utilisant le radio-traceur [$^{11}$C]raclopride. (a) montre une image non corrigée du mouvement et (b) une image corrigée. On peut noter que les structures internes du cerveau sont beaucoup mieux définies. (c) représente une coupe du c\oe{}ur petit axe non corrigée (en haut) et corrigée (en bas). On peut voir une amélioration de la définition de l'image.} 
 	\label{fig:ameliorationLOR}
 \end{figure}
  
 
-En effet,~\cite{lamare2007respiratory} réalise une estimation du mouvement, en recalant les images TDM de chaque instant du cycle sur l'image de référence à l'aide d'une transformation affine par maximisation de l'information mutuelle normalisée. Les données ont été acquises à l'aide de simulation réalisées à partir du logiciel GATE~\cite{jan2004gate}. Des lésions de 7, 11, 15 et 21mm de diamètre ont été placées dans le poumon, avec un contraste de 8. Le champ de mouvement affine est calculé séparément pour le poumon, le coeur et trois organes sous le diaphragme (foie, estomac, rate).
+En effet,~\cite{lamare2007respiratory} réalise une estimation du mouvement, en recalant les images TDM de chaque instant du cycle sur l'image de référence à l'aide d'une transformation affine par maximisation de l'information mutuelle normalisée. Les données sont des simulations réalisées à partir du logiciel GATE~\cite{jan2004gate} et du fanôme NCAT. Des lésions de 7, 11, 15 et 21mm de diamètre ont été placées dans le poumon, avec un contraste de 8. Le champ de mouvement est calculé séparément pour le poumon, le coeur et trois organes sous le diaphragme (foie, estomac, rate).
 
 Ces résultats ont été améliorés par l'utilisation de la technique suivante qui permettait la prise en compte d'un mouvement élastique. Les performances comparées des deux méthodes sont présentées dans la section suivante.
 
@@ -125,7 +125,7 @@ Ces résultats ont été améliorés par l'utilisation de la technique suivante 
 \label{lab:CorrpendantRecon}
 Plusieurs auteurs ont présenté des méthodes permettant de réaliser la correction de mouvement pendant la reconstruction. Qiao et al.~\cite{qiao2006motion} et Lamare et al.~\cite{lamare2007list} ont proposé une méthode de correction du mouvement respiratoire basé sur une modification de la matrice de sensibilité lors de la reconstruction pour prendre en compte le mouvement. Tous les deux utilisent un champ de mouvement élastique estimé en utilisant un champ interpolé par B-splines.
 
-L'algorithme original utilisé est basé sur OPL-EM~\cite{reader2002one} qui organise les données en ``sous-ensemble'' de la même manière que OS-EM~\cite{hudson1994accelerated} mais en utilisant les informations list-mode. Le principe de la reconstruction avec correction du mouvement respiratoire est décrit par la formule suivante :
+L'algorithme original utilisé est basé sur OPL-EM~\cite{reader2002one} qui organise les données en ``sous-ensemble'' de la même manière que OS-EM~\cite{hudson1994accelerated} mais en utilisant les informations séquentielles présentées en~\ref{lab:modeliste}. Le principe de la reconstruction avec correction du mouvement respiratoire est décrit par la formule suivante :
 
 \label{lab:corrMatSyst}
 \begin{equation}
@@ -136,7 +136,7 @@ $f^k$ est l'image à l'itération $k$,
 
 $T$ est l'opérateur de transposition
 
-$P_t$ représente la matrice système à l'instant t. Chaque élément $p_{ij}$ de cette matrice indique la probabilité de détecter à la ligne de réponse $i$ un évènement généré au voxel $j$. C'est cette matrice qui contient les informations du champ de mouvement. $P_t f$ correspond à la projection de l'image $f$ à l'instant $t$.  
+$P_t$ représente la matrice système à l'instant t. Chaque élément $p_{ij}$ de cette matrice indique la probabilité de détecter à la ligne de réponse $i$ un évènement généré au voxel $j$. Cette équation est basée sur l'algorithme OPL-EM présenté en~\ref{lab:OPLEM}. C'est cette matrice $P$ qui contient les informations du champ de mouvement. $P_t f$ correspond à la projection de l'image $f$ à l'instant $t$.  
 
 $N$ correspond au nombre d'instants temporels considérés.
 
@@ -170,6 +170,17 @@ La figure~\ref{fig:lamare2007} montre un profil de l'interface poumon/foie avec 
 	\caption[comparaison des performances des différentes techniques de correction du mouvement sur un profil d'image TEP]{comparaison des performances des différentes techniques de correction du mouvement sur un profil d'image TEP contenant une tumeur placée au niveau du diaphragme. La référence est l'image statique, reconstruction 1 correspond à la correction pré-reconstruction reconstruction 2 correspond à la correction pendant la reconstruction.} 
 	\label{fig:lamare2007}
 \end{figure}
+
+
+\begin{figure}[h!]
+	\begin{center}
+			\includegraphics[width=10cm]{images/apportCHO}
+	\end{center}
+	\caption[Index de CHO pour différentes techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de la reconstruction]{Index de CHO pour différents techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de l'aogorithme de reconstruction. La méthode utilisant la correction post-reconstruction est comparée avec une méthode hybride présentée dans le document en~\ref{lab:evolGating}.} 
+	\label{fig:apportCHO}
+\end{figure}
+
+\todo{ajouter apportCHO}
 
 La publication~\cite{Thielemans2006Lesion} présente un système hybride de synchronisation respiratoire avec recalage et de correction de mouvement pendant la reconstruction. Ce système a été développé pour pouvoir isoler l'effet de la sommation des images recalées sur le résultat. Pour cela, les données de chaque instant temporel sont reconstruites séparément avec la correction de mouvement pendant la reconstruction. Les N images sont ensuite directement sommées pour obtenir l'image corrigée. La publication montre que cette technique améliore de manière sensible la détection, comme présenté dans la figure~\ref{fig:apportCHO}
 \label{lab:evolGating}

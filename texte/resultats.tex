@@ -467,9 +467,6 @@ La recherche des paramètres optimaux a été réalisée sur le foie, pour la s�
 
 Pour vérifier que les résultats de la sélection des paramètres du classifieur sont stables, une seconde base témoin (\textbf{Témoin 2}) a été générée avec les données de seulement 14 images sur les 15 que nous avons simulées. Les points ''sains`` ne sont pas non plus extraits aux mêmes endroits que pour la base \textbf{Témoin}. Nous allons donc vérifier que les paramètres optimaux du CAD pour un jeu de données ne sont pas dépendants de la base.
 
-\todo{Préciser j=? pour les images front de pareto}
-\todo{ajouter points sur les courbes FROC pour séparer les courbes}
-
 \subsection{Sélection des meilleurs paramètres du classifieur}
 \begin{figure}[h!]
 \begin{center}
@@ -478,11 +475,11 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 {\small a) Base Témoin}
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_param_100.png}
+\includegraphics[width=14cm]{images/pareto_param_100}
 
 {\small b) Base appauvrie}
 
- \includegraphics[width=14cm]{images/pareto_param_1000.png}
+ \includegraphics[width=14cm]{images/pareto_param_1000}
  
 {\small c) Base enrichie}
 
@@ -503,11 +500,11 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_param_erosion.png}
+\includegraphics[width=14cm]{images/pareto_param_erosion}
 
 {\small b) Base Érodée}
 
- \includegraphics[width=14cm]{images/pareto_param_200_2.png}
+ \includegraphics[width=14cm]{images/pareto_param_200_2}
 
 {\small c) Base Témoin 2}
 
@@ -578,7 +575,7 @@ En pratique, on choisira le seuil pour avoir la certitude d'avoir un nombre de f
 \begin{figure}[h!]
  
  \begin{center}
-   \includegraphics[width=15cm]{images/FROC_param}
+   \includegraphics[width=15cm]{images/FROC_param_corrige}
  \end{center}
  \caption[Courbe Free-ROC comparant les performances du CAD selon les différents paramètres de base d'apprentissage]{Courbe Free-ROC comparant les performances du CAD sur une base \textbf{Témoin} (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base \textbf{Enrichie} (1000 points négatifs par image), sur une base \textbf{Appauvrie} (100 points négatifs par image), sur une base \textbf{Normalisée Écart} (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
  \label{lab:froc_comp_static}
@@ -633,17 +630,17 @@ Quatre jeux d'images seront comparés :
 \begin{figure}[h!]
 
 \begin{center}
- \includegraphics[width=14cm]{images/pareto_mod_IM.png}
+ \includegraphics[width=14cm]{images/pareto_mod_IM}
 
 {\small a) TE-IM}
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_mod_LOR.png}
+\includegraphics[width=14cm]{images/pareto_mod_LOR}
  
 {\small b) TE-MS}
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_mod_NoCorr.png}
+\includegraphics[width=14cm]{images/pareto_mod_NoCorr}
 
 {\small c) NoCorr}
 
@@ -717,7 +714,7 @@ Globalement, le graphique montre que le maximum de performance est apporté par 
 \todo{vérifier plus de FLN}
 \begin{figure}[h!]
  \begin{center}
-   \includegraphics[width=13cm]{images/FROC_mod}
+   \includegraphics[width=13cm]{images/FROC_mod_corrige}
  \end{center}
  \caption{Courbe Free-ROC comparant les performances du CAD selon la technique de correction du mouvement respiratoire.}
  \label{fig:froc_mod}
@@ -762,12 +759,12 @@ Les résultats des couples ($C$, $\gamma$, $j$) pour les quatre types d'images s
 \begin{figure}[h!]
 
 \begin{center}
- \includegraphics[width=14cm]{images/pareto_mod_Static19.png}
+ \includegraphics[width=14cm]{images/pareto_mod_Static19}
 
 {\small a) Statique}
 \vspace{0.5cm}
 
- \includegraphics[width=14cm]{images/pareto_mod_IM19.png}
+ \includegraphics[width=14cm]{images/pareto_mod_IM19}
 
 {\small b) TE-IM}
 
@@ -779,12 +776,12 @@ Les résultats des couples ($C$, $\gamma$, $j$) pour les quatre types d'images s
 \begin{figure}[h!]
 
 \begin{center}
-\includegraphics[width=14cm]{images/pareto_mod_LOR19.png}
+\includegraphics[width=14cm]{images/pareto_mod_LOR19}
  
 {\small c) TE-MS}
 \vspace{0.5cm}
 
-\includegraphics[width=14cm]{images/pareto_mod_NoCorr19.png}
+\includegraphics[width=14cm]{images/pareto_mod_NoCorr19}
 
 {\small d) NoCorr}
 
@@ -827,7 +824,7 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
 
 \begin{figure}[h!]
  \begin{center}
-   \includegraphics[width=15cm]{images/FROC_mod19}
+   \includegraphics[width=15cm]{images/FROC_mod19_corrige}
    \vspace{-0.3cm}
  \end{center}
  \caption{Courbe Free-ROC comparant les performances du CAD selon les techniques de correction du mouvement respiratoire.}

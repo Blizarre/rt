@@ -71,6 +71,7 @@ $\|$\textbf{A Faire : }#1$\|$
 
 \input{texte/titre}
 
+~~~
 \newpage
 
 \pagestyle{fancyplain}
@@ -90,11 +91,11 @@ $\|$\textbf{A Faire : }#1$\|$
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 
-\addcontentsline{toc}{part}{Résumé}
-\input{texte/resume}
+\addcontentsline{toc}{part}{Résumé} \input{texte/resume}
 
-\addcontentsline{toc}{part}{Table des matières}
-\tableofcontents
+\newpage
+
+\addcontentsline{toc}{part}{Table des matières} \tableofcontents
 
 
 %%%% A PLACER QUELQUEPART
@@ -131,7 +132,7 @@ $\|$\textbf{A Faire : }#1$\|$
 \part{Evaluation des performances de détection}
 	\input{texte/eval-perf}
 
-
+	\input{texte/transition}
 
 \part{Construction d'une base d'images TEP simulées respirante}
 	\input{texte/sim-simulation}
@@ -155,9 +156,13 @@ $\|$\textbf{A Faire : }#1$\|$
 %\part{Bibliographie}
 
 \addcontentsline{toc}{part}{Bibliographie}
-
 \bibliographystyle{apalike}
 \bibliography{biblio}
+
+\newpage
+
+\addcontentsline{toc}{part}{Bibliographie personnelle}
+\input{texte/biblioperso}
 
 \newpage
 \includepdf{images/ecoleDoct}

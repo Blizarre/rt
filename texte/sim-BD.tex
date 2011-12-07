@@ -5,6 +5,8 @@
 
 Pour répondre à notre problématique de détection des lésions sur les images TEP respirantes, nous avons choisi d’utiliser une base de données d’images simulées. En effet, notre problématique repose sur une connaissance très précise de la position des lésions pour l’évaluation des performances, ainsi que sur l’acquisition de données en mode séquence. Ces deux objectifs sont relativement difficiles à réaliser à partir d’images cliniques, notamment parceque l'acquisition en mode séquence ne fait pas partie de la routine clinique en oncologie.
 
+
+
 	\subsection{Avantages des bases de données simulées}
 
 Le principal avantage des bases de données simulées est le contrôle qu'elles permettent d'exercer sur les modèles. Il est possible de spécifier les conditions des acquisitions de manière très précise, et de garantir une homogénéité difficile d'atteindre en utilisant des données patient.
@@ -38,7 +40,7 @@ Nous avons choisi le XCAT car il intégre directement un modèle de mouvement re
  \label{fig:adaptXCAT}
 \end{figure}
 
-\todo{intégrer le copier/coller}
+
 \subsection{Activités des organes}
 
 Les activités des organes sont décrites dans la table \ref{tab:contrastePoumonFoieRecap}. Elles ont été estimées à partir d'une étude réalisée précédemment lors des travaux de thèse de Sandrine Tomeï~\cite{tomei2008development}, en mesurant l'activité dans de zones d'intérêt tracées dans une série de 70 patients~\cite{tomei2010oncopet_db}.
@@ -111,21 +113,19 @@ Chacun de ces 4 cycles est discrétisé en 8 parties qui seront utilisées pour 
 
 \subsection{Modèle de tumeur}
 
-\todo{améliorer la partie sur la description des lésions. Peut-être préciser quelques publis qui utilisent les mêmes types de lésions}
+Nous avons choisi de focaliser cette étude sur la détection des lésions situées dans le foie et les poumons. Ces organes, en effet, sont les plus influencés par le mouvement respiratoire.
 
-Nous avons utilisé un modèle de lésion correspondant adapté aux lésions de faible intensité. Elles sont sphériques, avec des diamètres de l'ordre de la résolution de l'imageur TEP.
+Nous avons utilisé un modèle de lésion correspondant adapté aux lésions de faible intensité. Nous avons utilisé des lésions sphériques~\cite{bai2009regularized}, avec des diamètres de l'ordre de la résolution de l'imageur TEP.
 
 Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons crée. 173 lésions sont présentes dans le Poumon, contre 103 dans le Foie. La différence de taille entre les organes du XCAT explique la petite taille de la base de lésions du foie. 
 
 Les lésions ont été placées manuellement dans tout le volume de l'organe, en privilégiant les parties à fort mouvement proche du diaphragme. 
 
-Les contrastes ont été calibrés pour correspondre à des lésions de faibles détectabilité par une étude présenté en~\ref{lab:etudeDetect}.
+Les contrastes ont été calibrés pour correspondre à des lésions de faibles détectabilité par l'étude suivante :
 
-\todo{intégrer le copier/coller suivant}
 \subsubsection{Calibration des contrastes des lésions}
 \label{lab:etudeDetect}
 
-Nous avons choisi de focaliser cette étude sur la détection des lésions situées dans le foie et les poumons. Ces organes, en effet, sont les plus influencés par le mouvement respiratoire.
 
 Notre but est de simuler des images avec un ensemble de tumeurs qui ne soient ni trop évidentes ni impossibles à détecter. Nous avons donc cherché à obtenir une échelle de contrastes qui permette un taux de détection par un observateur humain de 10\%, 30\%, 50\%, 70\% et 90\%.
 
@@ -133,9 +133,6 @@ Pour réaliser cela, un ensemble d'images a été simulé sans mouvement respira
 
 
 Ensuite, une étude ROC avec deux observateurs humains non médecin a été réalisée afin d'estimer la détectabilité de ces couples activité/taille de tumeurs (fig.\ref{fig:calibration}). 
-
-
-
 
 
 \begin{table}

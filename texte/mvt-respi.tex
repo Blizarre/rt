@@ -1,4 +1,4 @@
-Le mouvement respiratoire en imagerie TEP engendre plusieurs effets sur les images reconstruites, qui seront détaillés ci-après. Ils occasionnent notamment une diminution de la qualité des images, ce qui peut perturber le travail des praticiens.
+Le mouvement respiratoire en imagerie TEP engendre plusieurs effets sur les images reconstruites, qui seront détaillés ci-après. Il occasionne notamment une diminution de la qualité des images, ce qui peut perturber le travail des praticiens.
 
 \section{Mouvement respiratoire}
 
@@ -10,7 +10,7 @@ Ce mouvement est la succession d'une phase inspiratoire, suivi d'une phase expir
  \item en cas d'inspiration forcée, action des pectoraux
 \end{enumerate}
 
-La figure~\ref{fig:respiXCAT} représente 3 instants du cycle respiratoire utilisé dans le NCAT, un modèle de corps humain respirant. On voit clairement tous les effets présentés précédemment, notamment le relèvement des côtes et du sternum par rapport aux guides de référence  présents sur les images.
+La figure~\ref{fig:respiXCAT} représente 3 instants du cycle respiratoire utilisé dans le NCAT~\cite{segars2001These}, un modèle de corps humain respirant. On voit clairement tous les effets présentés précédemment, notamment le relèvement des côtes et du sternum par rapport aux guides de référence  présents sur les images.
 
 \begin{figure}[h!]
     \begin{center}
@@ -21,13 +21,13 @@ La figure~\ref{fig:respiXCAT} représente 3 instants du cycle respiratoire utili
 \end{figure}
 
 
-La variabilité inter et intra-patient de ce mouvement est très importante : le volume d'air inspiré peut varier de 500 mL à 1200 mL selon que la personne a une respiration normale ou profonde. Pour ces deux extrêmes, la fréquence respiratoire varie de 5 cycles/min. à 20 cycles/min.~\cite{sherwood2006fundamentals}.
+La variabilité inter et intra-patient de ce mouvement est très importante : le volume d'air inspiré peut varier de 500 ml à 1200 ml selon que la personne a une respiration normale ou profonde. Pour ces deux extrêmes, la fréquence respiratoire varie de 5 cycles/min. à 20 cycles/min.~\cite{sherwood2006fundamentals}.
 
-Or, une acquisition TEP a une durée de plusieurs minutes par lit, ce qui provoque des artefacts dû aux mouvements réalisés pendant l'acquisition, notamment au niveau de la localisation de la tumeur, de son activité mesurée et, par extension, de sa détection. De la même manière, des artefacts (voir figure~\ref{fig:artefactsCT}) apparaissent au niveau des zones de fort mouvements dans les images TDM, lorsque les organes bougent pendant une rotation du détecteur.
+Or, une acquisition TEP a une durée de plusieurs minutes par lit, ce qui provoque des artefacts dûs aux mouvements réalisés pendant l'acquisition, notamment au niveau de la localisation de la tumeur, de son activité mesurée et, par extension, de sa détection. De la même manière, des artefacts (voir figure~\ref{fig:artefactsCT}) apparaissent au niveau des zones de fort mouvement dans les images TDM, lorsque les organes bougent pendant une rotation du détecteur.
 
 Nous allons tout d'abord introduire les effets visibles sur les images, puis nous nous attarderons sur les mesures quantitatives utilisées pour étudier l'apport de la correction du mouvement sur la détection des tumeurs. Enfin, nous dresserons un état de l'art plus précis des publications s'intéressant à l'impact du mouvement respiratoire sur la détection.
 
-\section{Localisation et Volume}
+\section{Localisation et volume}
 
 
 La localisation et le volume apparent des tumeurs sur les images TEP peuvent être modifiés par le mouvement engendré par la respiration (voir figure~\ref{fig:effetMvt}). D'après l'étude de~\cite{lamare2007respiratory}, réalisée sur des simulations Monte-Carlo à l'aide du logiciel de simulation GATE~\cite{jan2004gate} en utilisant le modèle NCAT~\cite{segars2001These}, la largeur à mi-hauteur des lésions peut être modifiée de 48\% (équation~\ref{eq:PRD} : Différence relative) dans le cas d'une lésion de 7mm de diamètre dans la partie basse du poumon. L'imprécision axiale sur le positionnement de la tumeur peut atteindre 9\% dans les mêmes conditions.
@@ -62,7 +62,7 @@ L'activité peut être influencée par la respiration de deux manières :
 
 La carte d'atténuation utilisée pour corriger les images d'émission est basée sur une image TDM prise à un instant donné du cycle. Or l'atténuation de la zone correspondant à une tumeur peut être différente de celle des tissus environnants, ce qui peut occasionner des sous-estimations ou de sur-estimation de l'activité de la tumeur si la carte d'atténuation est mal positionnée.
 
-D'après l'étude~\cite{erdi2004ct}, on peut observer des variations très importante de $SUV_{max}$ (voir équation~\ref{eq:varSUV}) sur les images TEP reconstruites. L'étude a été réalisée sur 5 patients totalisant 8 lésions. L'acquisition TDM 4D a été synchronisée sur le mouvement à l'aide d'un dispositif placé sur l'abdomen du patient. Ce dispositif était constitué de deux marqueurs réfléchissant les ondes infrarouges, placés dans le champ de vue d'une caméra. Les données synchronisées acquises en TDM 4D ont été utilisées pour générer un cycle de 10 images TDM. Chacune de ces 10 images a ensuite servi de carte d'atténuation lors de la reconstruction des images d'émission, générant ainsi 10 images TEP .
+D'après l'étude~\cite{erdi2004ct}, on peut observer des variations très importantes de $SUV_{max}$ (voir équation~\ref{eq:varSUV}) sur les images TEP reconstruites. L'étude a été réalisée sur 5 patients totalisant 8 lésions. L'acquisition TDM 4D a été synchronisée sur le mouvement à l'aide d'un dispositif placé sur l'abdomen du patient. Ce dispositif était constitué de deux marqueurs réfléchissant les ondes infrarouges, placés dans le champ de vue d'une caméra. Les données synchronisées acquises en TDM 4D ont été utilisées pour générer un cycle de 10 images TDM. Chacune de ces 10 images a ensuite servi de carte d'atténuation lors de la reconstruction des images d'émission, générant ainsi 10 images TEP .
 
 \begin{equation}
 \label{eq:varSUV}
@@ -70,7 +70,7 @@ D'après l'étude~\cite{erdi2004ct}, on peut observer des variations très impor
 \end{equation}
 
 
-Les données TEP reconstruites à partir des 10 images ont montrés de grandes différences en termes de SUV selon l'instant du cycle à partir duquel les lésions ont été extraites.
+Les données TEP reconstruites à partir des 10 images ont montré de grandes différences en terme de SUV selon l'instant du cycle à partir duquel les lésions ont été extraites.
 Ces variations allant jusqu'à 24\% pour une lésion de $19.8~mm^3$ placée dans l'espace médiastinal, entre une reconstruction TEP réalisée à partir d'une image TDM de fin d'expiration et une image TDM de fin d'expiration. En recherchant la variation la plus grande sur l'ensemble du cycle (en non pas en se limitant aux extrêmes), la variation peut atteindre 30\%.
 
 La figure~\ref{fig:lesionEnFctPhaseTDM} présente la variation de $SUV_{max}$ en fonction de la phase utilisée pour la reconstruction.
@@ -87,7 +87,7 @@ La figure~\ref{fig:lesionEnFctPhaseTDM} présente la variation de $SUV_{max}$ en
 
 \subsection{Artefacts TEP dus aux artefacts TDM}
 
-On peut voir sur les images de la figure~\ref{fig:artefactsCT} des artefacts présents sur les images TDM utilisées pour la correction d'atténuation. Ces artefacts proviennent de la manière dont les images sont acquises : le couple ``source de rayons X-détecteur'' tourne autour du sujet dans un mouvement hélicoïdal, et l'algorithme de reconstruction va ensuite utiliser les acquisitions pour reconstruire une image complète. Or en cas de respiration rapide, des incohérences peuvent survenir quand le mouvement du diaphragme est plus important que celui de la caméra. Ce type d'artefacts peut créer des incohérences dans les images TEP reconstruites, car le poumon sera corrigé de l'atténuation avec des coefficients non uniformes.
+On peut voir sur les images de la figure~\ref{fig:artefactsCT} des artefacts présents sur les images TDM utilisées pour la correction d'atténuation. Ces artefacts proviennent de la manière dont les images sont acquises : le couple ``source de rayons X-détecteur'' tourne autour du sujet dans un mouvement hélicoïdal, et l'algorithme de reconstruction va ensuite utiliser les acquisitions pour reconstruire une image complète. Or, en cas de respiration rapide, des incohérences peuvent survenir quand le mouvement du diaphragme est plus important que celui de la caméra. Ce type d'artefacts peut créer des incohérences dans les images TEP reconstruites, car le poumon sera corrigé de l'atténuation avec des coefficients non uniformes.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -115,7 +115,7 @@ Voici une liste des critères utilisés dans différentes publications pour éva
 
 \begin{enumerate}
  \item Basés sur la récupération de l'activité des lésions, $SUV_{max}$, contraste :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect,detorie2008quantitative}
- \item Sur la visualisation des Profils de lésion :~\cite{GuopingChang2010Implementation,Thielemans2006Lesion,lamare2007list}
+ \item Sur la visualisation des profils de lésion :~\cite{GuopingChang2010Implementation,Thielemans2006Lesion,lamare2007list}
  \item Sur la récupération du volume et de la position de la lésion :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect}
  \item Sur le rapport signal sur bruit (SNR) :~\cite{GuopingChang2010Implementation}
  \item Sur l'observateur de Hotelling (CHO) :~\cite{Thielemans2006Lesion}
@@ -123,7 +123,7 @@ Voici une liste des critères utilisés dans différentes publications pour éva
 
 Comme on peut le voir, les deux seuls critères qui pourraient s'approcher d'une étude sur la détection sont le SNR et le CHO, mais ils sont largement sous-représentés. 
 
-Je vais me concentrer sur les deux publications qui utilisent un observateur, et présenterai les résultats des autres publications dans la partie suivante.
+Je vais me concentrer sur les deux publications the Thielemans et Chang qui utilisent un observateur.
 
 Un autre document par Rahmim Arman~\cite{rahmim4d} propose d'utiliser le CHO pour évaluer l'amélioration de la détection des défauts dans de l'imagerie cardiaque corrigée du mouvement respiratoire. Ce document n'a pas encore donné lieu à publication.
 	
@@ -131,22 +131,20 @@ Un autre document par Rahmim Arman~\cite{rahmim4d} propose d'utiliser le CHO pou
 
 Dans sa publication, Thielemans~\cite{Thielemans2006Lesion} utilise le ``Channelized Hotelling Observer'' (CHO)~\cite{barrett1993model}, qui est un observateur dérivé du classifieur linéaire LDA présenté en \ref{lab:LDA}, utilisé en conjonction avec des informations fréquentielles. 
 
-Cependant ils n'utilisent le CHO que sur des lésions de forts diamètre et de fort contraste (13mm de diamètre et contraste de 4.25:1, sur des simulations analytiques). Les résultats présentés (figure~\ref{fig:apportCHO}) montrent une amélioration du score pour les méthodes de correction de l'ordre de 50\% dans certains cas. 
+L'étude se base sur des simulations analytiques d'un fantôme thoracique dans lequel sont insérées des lésions sphériques de gros diamètre (13 mm) et de contraste élevé (4.25:1). Cette étude qui compare plusieurs méthodes de correction du mouvement respiratoire est détaillée dans le chapitre suivant en~\ref{lab:evolGating}.
 
-Mais il est difficile d'évaluer de manière précise l'apport des méthodes de détection à l'aide de ces seuls ``scores'' car ce sont des résultats qualitatifs. 
+%Cependant ils n'utilisent le CHO que sur des lésions de forts diamètre et de fort contraste (13mm de diamètre et contraste de 4.25:1, sur des simulations analytiques). 
 
-\begin{figure}[h!]
-	\begin{center}
-			\includegraphics[width=10cm]{images/apportCHO}
-	\end{center}
-	\caption[Index de CHO pour différentes techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de la reconstruction]{Index de CHO pour différents techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de l'aogorithme de reconstruction. La méthode utilisant la correctio npost-reconstruction est comparée avec une méthode hybride présentée dans le document en~\ref{lab:evolGating}.} 
-	\label{fig:apportCHO}
-\end{figure}
+
+%Les résultats présentés (figure~\ref{fig:apportCHO}) montrent une amélioration du score pour les méthodes de correction de l'ordre de 50\% dans certains cas. 
+
+%Mais il est difficile d'évaluer de manière précise l'apport des méthodes de détection à l'aide de ces seuls ``scores'' car ce sont des résultats qualitatifs. 
+
 
 
 \subsection{Chang 2010}
 
-Cette publication est une évaluation clinique d'un système de découpage automatique du signal respiratoire selon l'amplitude. Elle est basée sur 13 patients totalisant 21 tumeurs du poumon de taille diverses (estimée de 1 à 27 $cm^3$. Le signal respiratoire est acquis à l'aide d'un dispositif propriétaire (Anzai AZ-733V) basé sur une ceinture abdominale avec capteur de pression. Seuls les données TEP acquises autour d'une amplitude présélectionnée (+/-10\% de l'amplitude correspondant à l'acquisition TDM) sont utilisées pour la reconstruction des images corrigées. 
+Cette publication est une évaluation clinique d'un système de découpage automatique du signal respiratoire selon l'amplitude. Elle est basée sur 13 patients totalisant 21 tumeurs du poumon de taille diverses (estimée de 1 à 27 $cm^3$. Le signal respiratoire est acquis à l'aide d'un dispositif propriétaire (Anzai AZ-733V) basé sur une ceinture abdominale avec capteur de pression. Seules les données TEP acquises autour d'une amplitude présélectionnée (+/-10\% de l'amplitude correspondant à l'acquisition TDM) sont utilisées pour la reconstruction des images corrigées. 
 
 Le jeu d'images ``témoin'', non corrigées, est réalisé en extrayant des données acquises le même nombre d'évènements N que le jeu d'images synchronisées en considérant les N premiers du fichier en mode séquentiel.
 
