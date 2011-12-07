@@ -130,13 +130,14 @@ L'algorithme original utilisé est basé sur OPL-EM~\cite{reader2002one} qui org
 \label{lab:corrMatSyst}
 \begin{equation}
  f^{k+1}=\frac{f^k}{S} \sum_{t=1}^{N} P_t^T \frac{1}{P_t f^k} 
+\label{lab:OPLLamara}
 \end{equation}
 
 $f^k$ est l'image à l'itération $k$,
 
 $T$ est l'opérateur de transposition
 
-$P_t$ représente la matrice système à l'instant t. Chaque élément $p_{ij}$ de cette matrice indique la probabilité de détecter à la ligne de réponse $i$ un évènement généré au voxel $j$. Cette équation est basée sur l'algorithme OPL-EM présenté en~\ref{lab:OPLEM}. C'est cette matrice $P$ qui contient les informations du champ de mouvement. $P_t f$ correspond à la projection de l'image $f$ à l'instant $t$.  
+$P_t$ représente la matrice système à l'instant t. Chaque élément $p_{ij}^t$ de cette matrice indique la probabilité de détecter à la ligne de réponse $i$ un évènement généré au voxel $j$ au temps $t$. Cette équation est basée sur l'algorithme OPL-EM présenté en~\ref{lab:OPLEM}. Les informations du champ de mouvement sont contenues dans la matrice $P_t$. $P_t f$ correspond à la projection de l'image $f$ à l'instant $t$.  
 
 $N$ correspond au nombre d'instants temporels considérés.
 
@@ -148,7 +149,7 @@ $S$ est la matrice de sensibilité :
 
  $A_t$ est la matrice permettant de corriger les effets de l'atténuation au temps $t$ et $M$ est la matrice de normalisation qui compense l'inhomogénéité spatiale de la sensibilité. $A_t$ est estimée à partir des cartes d'atténuation de chaque instant $t$.
 
-L'étude~\cite{lamare2007list} a été réalisée sur des données simulées semblables à celles de l'étude précédente : simulations à l'aide du logiciel GATE d'un cycle respiratoire constitué de 8 instants temporels ainsi qu'une acquisition statique de référence de statistique équivalente à la somme des 8 acquisitions précédentes. Des lésions de 7, 11, 15 et 21mm de diamètre et d'activité 8 fsoi plus importante que le fond ont été insérées dans le poumon.
+L'étude~\cite{lamare2007list} a été réalisée sur des données simulées semblables à celles de l'étude précédente. Il sagit de simulations réalisées à l'aide du logiciel GATE, d'un cycle respiratoire du modèle NCAT, constitué de 8 instants temporels ainsi qu'une acquisition statique de référence de statistique équivalente à la somme des 8 acquisitions précédentes. Des lésions de 7, 11, 15 et 21mm de diamètre et d'activité 8 fois plus importante que le fond ont été insérées dans le poumon.
  
 Dans la publication, deux variantes de la technique de correction du mouvement respiratoire sont comparées avec la correction par synchronisation respiratoire avec recalage présentée précédemment ainsi que la correction pré-reconstruction. Les variantes correspondent à des différences d'interpolation du champ de mouvement dans la matrice système. Les résultats présentés montrent un clair avantage pour la correction pendant la reconstruction, avec des performances couramment améliorées d'un facteur 2. 
 
@@ -167,7 +168,7 @@ La figure~\ref{fig:lamare2007} montre un profil de l'interface poumon/foie avec 
 	\begin{center}
 		\includegraphics[width=12cm]{images/lamare2007list.pdf}
 	\end{center}
-	\caption[comparaison des performances des différentes techniques de correction du mouvement sur un profil d'image TEP]{comparaison des performances des différentes techniques de correction du mouvement sur un profil d'image TEP contenant une tumeur placée au niveau du diaphragme. La référence est l'image statique, reconstruction 1 correspond à la correction pré-reconstruction reconstruction 2 correspond à la correction pendant la reconstruction.} 
+	\caption[comparaison des performances des différentes techniques de correction du mouvement sur un profil d'image TEP]{comparaison des performances des différentes techniques de correction du mouvement sur un profil d'image TEP contenant une tumeur placée au niveau du diaphragme. La référence est l'image statique, ``Reconstruction 1'' correspond à la correction pré-reconstruction, et ``Reconstruction 2'' correspond à la correction pendant la reconstruction.} 
 	\label{fig:lamare2007}
 \end{figure}
 
@@ -176,13 +177,13 @@ La figure~\ref{fig:lamare2007} montre un profil de l'interface poumon/foie avec 
 	\begin{center}
 			\includegraphics[width=10cm]{images/apportCHO}
 	\end{center}
-	\caption[Index de CHO pour différentes techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de la reconstruction]{Index de CHO pour différents techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de l'aogorithme de reconstruction. La méthode utilisant la correction post-reconstruction est comparée avec une méthode hybride présentée dans le document en~\ref{lab:evolGating}.} 
+	\caption[Index de CHO pour différentes techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de la reconstruction]{Index de CHO pour différents techniques de correction du mouvement respiratoire en fonction du nombre d'itérations de l'algorithme de reconstruction. Plus l'indice est important meilleure est la détectabilité. La méthode utilisant la correction post-reconstruction est comparée avec une méthode hybride présentée dans le document en~\ref{lab:evolGating}.} 
 	\label{fig:apportCHO}
 \end{figure}
 
 \todo{ajouter apportCHO}
 
-La publication~\cite{Thielemans2006Lesion} présente un système hybride de synchronisation respiratoire avec recalage et de correction de mouvement pendant la reconstruction. Ce système a été développé pour pouvoir isoler l'effet de la sommation des images recalées sur le résultat. Pour cela, les données de chaque instant temporel sont reconstruites séparément avec la correction de mouvement pendant la reconstruction. Les N images sont ensuite directement sommées pour obtenir l'image corrigée. La publication montre que cette technique améliore de manière sensible la détection, comme présenté dans la figure~\ref{fig:apportCHO}
+ La publication~\cite{Thielemans2006Lesion} présente un système hybride de synchronisation respiratoire avec recalage et de correction de mouvement pendant la reconstruction. Ce système a été développé pour pouvoir isoler l'effet de la sommation des images recalées sur le résultat. Pour cela, les données de chaque instant temporel sont corrigées et reconstruites séparément à l'aide de la formule~\ref{lab:OPLLamara}. Les N images sont ensuite directement sommées pour obtenir l'image corrigée. La publication montre que cette technique hybride améliore de manière sensible la détection par rapport aux images non corrigées mais reste inférieure aux deux autres techniques mentionnées pour la mesure de détectabilité, comme présenté dans la figure~\ref{fig:apportCHO}
 \label{lab:evolGating}
 
 \section{Déconvolution de l'image}
@@ -191,17 +192,17 @@ Cette technique décrite dans~\cite{naqa2006deblurring} utilise une connaissance
 
 \begin{figure}[h!]
 	\begin{center}
-		\includegraphics[width=5cm]{images/formeTLP}
+		\includegraphics[width=10cm]{images/formeTLP}
 	\end{center}
-	\caption[Exemple de filtres TLP pour la correction par déconvolution]{Exemple de filtres TLP pour la correction par déconvolution, rendu en 3D après tesselation,lissage et normalisation. Il représente la probabilité de présence du centre de la lésion.} 
+	\caption[Exemple de filtres TLP pour la correction par déconvolution]{Exemple de filtres TLP calculé dans l'article~\cite{naqa2006deblurring} pour la correction par déconvolution, rendu en 3D après tesselation,lissage et normalisation. Il représente la probabilité de présence du centre de la lésion.} 
 	\label{fig:formeTLP}
 \end{figure}
 
 
 
-L'image est ensuite déconvoluée pour corriger les effets du mouvement respiratoire. Cette méthode a été évaluée sur un fantôme physique et des patients réels à l'aide d'un grand nombre de critères provenant pour partie de la TEP (sous-estimation de l'activité de la tumeur, exemples d'images), et pour partie du domaine de la déconvolution (entropie, ``rugosité'').
+L'image est déconvoluée pixel par pixel pour corriger les effets du mouvement respiratoire. Cette méthode a été évaluée sur un fantôme physique et des patients réels à l'aide d'un grand nombre de critères provenant pour partie de la TEP (sous-estimation de l'activité de la tumeur, exemples d'images), et pour partie du domaine de la déconvolution (entropie, ``rugosité'').
 
-Les résultats présentés sur la figure~\ref{fig:performanceDeconvolution} montrent une nette amélioration des performances sur des fantômes, pour un déplacement axial simple de 20 mm. L'activité des lésions de fort diamètre est correctement récupérée quelque soit l'algorithme utilisé, mais il n'a pratiquement pas d'effets sur les lésions de 1 cm de diamètre.
+Les résultats présentés sur la figure~\ref{fig:performanceDeconvolution} montrent une nette amélioration des performances sur des fantômes, pour un déplacement axial simple de 20 mm. L'activité des lésions de fort diamètre ($>$ 20 mm) est correctement récupérée quelque soit l'algorithme utilisé, mais il n'a pratiquement pas d'effets sur les lésions de 1 cm de diamètre.
 
 Ce type de méthode est peu présent dans la littérature par rapport aux autres présentés précédemment. 
 
