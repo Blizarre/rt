@@ -26,7 +26,7 @@ La suite de ce chapitre présente les caractéristiques principales du système 
 %%%%%
 
 \section{Reconstruction des images}
-\todo{redit parès... trouver autre intro}
+
 Nous avons utilisé le logiciel de reconstruction fourni par le laboratoire LaTIM dans le cadre d'un partenariat, crée et utilisé par Frédéric Lamare pour ses travaux sur la correction du mouvement respiratoire~\cite{lamare2007list}.
 
 Ce logiciel est capable de reconstruire les images acquises en données séquentielles à l'aide de l'algorithme OPL-EM décrit en \ref{lab:OPLEM}. La reconstruction permet de prendre en compte la correction de l'atténuation, mais ne permet pas la correction des coïncidences aléatoires et des coïncidences diffusées. Nous avons donc choisi de simplifier le problème en supposant une correction parfaite de ces deux effets. Pour cela, nous n'avons pas inclus les photons diffusés ou les coïncidences aléatoires dans les données séquentielles. 
@@ -711,7 +711,7 @@ En dessous de 5 faux positifs par image, les courbes sont trop proches pour pouv
 
 Globalement, le graphique montre que le maximum de performance est apporté par la base \textbf{Statique}, suivi par la base \textbf{TE-IM}. Les bases \textbf{TE-MS} et \textbf{NoCorr} sont très proches l'une de l'autre mais nettement en dessous des deux premières en terme de FLL, à NFM égale.
 
-\todo{vérifier plus de FLN}
+%\todo{vérifier plus de FLN}
 \begin{figure}[h!]
  \begin{center}
    \includegraphics[width=13cm]{images/FROC_mod_corrige}

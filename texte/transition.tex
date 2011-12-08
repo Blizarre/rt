@@ -1,20 +1,21 @@
 \chapter{Choix méthodologiques}
 
-\todo{Cette transition va récapituler nos choix méthodologiques pour introduire les ``résultats'' : BD et détection}
+%\todo{Cette transition va récapituler nos choix méthodologiques pour introduire les ``résultats'' : BD et détection}
 
 \section{Base de donnée}
-Nous avons cherché à générer une base de donnée réaliste prenant en compte la variabilité rencontrée dans les acquisitions réelles. Pour cela, nous avons utilisé un modèle de patient déformable incorporant un modèle de respiration pour générer les images. Cela permet d'incorporer une variabilité importante dans les formes des organes patients de la base de donnée. Un mouvement respiratoire irrégulier a été utilisé pour générer les données, pour prendre en compte les imprécisions des système d'acquisition du signal respiratoire. 
 
-Les contrastes des lésions ont été calibrées pour obtenir des taux de détection par un observateur humain de 10\% à 90\%. Les activités des organes sont calculées à partir de zones d'intérêts extraites de 70 images TEP. La simulation a été réalisée avec le logiciel PET-SORTEO, utilisant des algorithmes Monte-Carlo accélérés. 
+Nous avons cherché à générer une base de données réaliste prenant en compte la variabilité rencontrée dans les acquisitions réelles. Pour cela, nous avons utilisé un modèle de patient déformable incorporant un modèle de respiration pour générer les images. Cela permet d'incorporer une variabilité importante dans les formes des organes patients de la base de données. Un mouvement respiratoire irrégulier a été utilisé pour générer les données, pour prendre en compte les imprécisions des systèmes d'acquisition du signal respiratoire. 
+
+
+Les contrastes des lésions ont été calibrés pour obtenir des taux de détection par un observateur humain de 10\% à 90\%. Les activités des organes sont calculées à partir de zones d'intérêts extraites de 70 images TEP. La simulation a été réalisée avec le logiciel PET-SORTEO, utilisant des algorithmes Monte-Carlo accélérés. Nous avons simulé deux jeux de données : le premier correspond à une acquisition dynamique d'un patient respirant, avec 4 cycles respiratoires différents. Les cycles ont été coupés en 8 instants temporels simulés séparément pour représenter une acquisition synchronisée. Le second jeu de données correspond à une acquisition statique de même durée que le précédent (224 secondes), mais sans mouvement respiratoire. Il va être utilisé comme ``témoin'', correspondant à une hypothétique correction parfaite du mouvement respiratoire.
 
 
 \section{Détection}
-
 
 Les systèmes CAD permettent de surmonter les inconvénients des observateur humain lors des évaluation de méthodes. Ils permettent de limiter la variabilité inter-observateurs en permettant de réaliser l'ensemble des détections avec un seul observateur, et garantissent que toutes les observations réalisées dans les mêmes conditions. Il est aussi possible de reproduire à l'identique les conditions d'évaluation pour traiter de nouvelles données.
 
 Nous avons développé une méthode d'évaluation des performances de correction basée sur l'utilisation d'un système de détection des lésions automatisé. Les performances de ce système de détection sur les lésions présentes dans les modèles vont définir la qualité de la correction. 
 
-Nous utilisons un classifieur basé sur les Machines à Vecteurd e support (SVM) utilisant des caractéristiques fréquentielles. Les performances sont mesurées par l’analyse psychophysique des courbes free-receiver operating characteristics (FROC) que nous avons adaptée aux spécificités de l’imagerie TEP. L’évaluation des performances est réalisée sur deux méthodes prometteuses de correction du mouvement respiratoire, en les comparant avec les performances obtenues sur les images non corrigées ainsi que sur les images idéales sans mouvement respiratoire.
+Nous utilisons un classifieur basé sur les Machines à Vecteur de support (SVM) utilisant les ondelettes non décimées comme caractéristiques fréquentielles. La classification est réalisée sur chaque voxel des images, puis une étape de réduction des faux positifs est appliquée, en agrégeant les voxels classés positifs, et en supprimant les agrégats trop petits.
 
-Dnas un premier lieu, nous allons définir les paramètres 
+Les performances sont mesurées par l’analyse psychophysique des courbes free-receiver operating characteristics (FROC) que nous avons adaptée aux spécificités de l’imagerie TEP. L’évaluation des performances est réalisée sur deux méthodes prometteuses de correction du mouvement respiratoire, en les comparants avec les performances obtenues sur les images non corrigées ainsi que sur les images idéales sans mouvement respiratoire.

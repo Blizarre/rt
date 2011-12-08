@@ -192,19 +192,74 @@ Une seconde version de JAFROC existe avec une puissance statistique plus importa
 
 \chapter{Systèmes de détection}
 
-\todo{Rajouter principe général des CAD (cf correction)}
+\section{Principe des CAD}
 
-	\section{Les CAD en TEP}
+\subsection{Introduction}
 
 Les systèmes CAD (Computer-Aided-Detection) sont des algorithmes permettant d'assister le praticien dans la détection des lésions ou le classement des images médicales. Dans le cadre de l'imagerie TEP oncologique, le besoin principal est celui du suivi thérapeutique, pour lequel, il est important de détecter d'éventuelles lésions résiduelles. Pour cela, il faut que le système CAD soit particulièrement adapté à la recherche de petites lésions de faible contraste qui pourraient échapper au médecin. Cependant, le diagnostic, qui consiste à évaluer la dangerosité des lésions, et leur caractère pathologique est une tâche plus complexe qui relève plus des systèmes d'aide au diagnostic, qui ne seront pas traités ici.
 
 Le développement des systèmes CAD a débuté dans les années 1980~\cite{chan1987image}, notamment pour détecter les micro-calcifications en mammographie. Bien qu'il existe plusieurs systèmes CAD commerciaux pour l'imagerie TDM (xLNA pour philips par exemple), aucun CAD commercial pour la TEP n'existe à notre connaissance.
 
-Quelques systèmes CAD sur des images TEP ont été décrits dans des travaux académiques, tels que~\cite{guan2006automatic}, qui recherche des anomalies dans le corps entier. Cependant, ils ne donnent pas de mesures de performances quantitatives. La publication de~\cite{Kanakatte2008pulmonary} utilise des systèmes de classification supervisés (K plus proches voisins et SVM décrits en~\ref{lab:SVM}). Un seuillage est réalisé, puis les candidats sont classés en utilisant des caractéristiques fréquentielles et les moments statistiques. 
+\'Etant donné que les systèmes d’aide à la détection dédiées à l’imagerie TEP restent limitées,  le travail de cette thèse s’est largement inspiré de la méthodologie suivie lors du développement de systèmes CAD dans d’autres modalités d’imagerie médicale et particulièrement la mammographie et l’imagerie TDM. La classification supervisée permet de profiter de la disponibilité a priori d’images préalablement classées pour fournir un ‘superviseur’ efficace et paramétrable. Le paragraphe suivant définit les différentes étapes standardisées d’un système CAD supervisé.
 
-\todo{Ajouter CAD présentés dans le papier de TNS}
+
+\subsection{Les différentes étapes d’un système CAD supervisé}
+
+Comme rappelé dans la publication~\cite{li2007recent}, un système CAD est constitué de deux étapes majeures : l’identification initiale des tumeurs et la réduction de faux positifs. 
+
+L’objectif de l’identification initiale des tumeurs (figure \ref{fig:presSystemesCAD}.1),2) et 3)) est de localiser les structures potentiellement suspectes de l’image avec la plus grande sensibilité possible au coût d’un grand nombre de fausses détections. Différents choix méthodologiques doivent être précisés pour cette étape :
+
+
+\begin{figure}[h]
+	\begin{center}
+	\includegraphics[width=12cm]{images/principeCAD}
+	\end{center}
+	\caption{Les différentes étapes d'un système CAD}
+	\label{fig:presSystemesCAD}
+\end{figure}
+
+
+\begin{itemize}
+\item Les régions ou organes d’intérêt du système, lorsque celui-ci n’est pas dédié au corps entier, peuvent être séparés. L’image ou les régions d’intérêt de l’image peuvent ensuite être améliorées lors d’une étape de pré-traitement, reposant par exemple sur du rehaussement du contraste ou du débruitage (figure \ref{fig:presSystemesCAD}.1) ).
+\item Le processus d’extraction des tumeurs suspectes passe ensuite par l’utilisation d’un système de classification (figure \ref{fig:presSystemesCAD}.3) )., optimisé par un apprentissage, s’appliquant sur un ensemble de caractéristiques de l’image ou de la structure cible (figure \ref{fig:presSystemesCAD}.2) ). Ce dernier a pour but de déterminer la classe, « tumeur présente » ou « tumeur absente », de l’image ou de la structure cible. 
+\item L’objectif de l’étape de réduction de faux positifs (figure \ref{fig:presSystemesCAD}.4) ) est de fortement réduire les fausses détections extraites de l’étape précédente, tout en conservant une sensibilité élevée. Cette étape rassemble un ensemble de méthodes permettant de trier les tumeurs candidates précédemment extraites afin de ne conserver que les candidats les plus ‘suspects’.  
+\end{itemize}
+
+	\section{Les CAD en TEP}
+
+
+Quelques systèmes CAD sur des images TEP ont été décrits dans des travaux académiques, tels que~\cite{guan2006automatic}, qui recherche des anomalies dans le corps entier. Cependant, ils ne donnent pas de mesures de performances quantitatives. La publication de~\cite{kanakatte2008pulmonary} utilise des systèmes de classification supervisés (K plus proches voisins et SVM décrits en~\ref{lab:SVM}). Un seuillage est réalisé, puis les candidats sont classés en utilisant des caractéristiques fréquentielles et les moments statistiques. 
+
+Certaines publications utilisent seulement l'imagerie fonctionnelle TEP~\cite{ying2004novel, kanakatte2007pilot, kanakatte2008pulmonary, saradhi2009framework, el2009exploring, mhd2010artificial}, tandis que d'autres combinent cette information avec l'imagerie TDM~\cite{jafar2006computerized, nie2006integrating, potesil2007automated}.
+
+La plupart des travaux réalisés dans le domaine ont portés sur la segmentation de lésions pré-sélectionnées pour réaliser de l'estimation de volume pour de la planification de radio-thérapie ou du suivi thérapeutique~\cite{kanakatte2007pilot, potesil2007automated, kanakatte2008pulmonary, yu2009automated}. Des publications récentes se sont focalisées sur la problématique du diagnostique pour la classification de nodules~\cite{nie2006integrating} ou la prédiction d'évolution des lésions suite à un traitement~\cite{el2009exploring}. Cependant, très peu d'études se sont focalisées sur la problématique de la localisation des lésions~\cite{guan2006automatic, kanakatte2007pilot, kanakatte2008pulmonary, mhd2010artificial}, surtout dans le cas de lésions de faibles diamètre/faible contraste~\cite{ying2004novel, jafar2006computerized, saradhi2009framework}.
 
 Les systèmes de classifications existants se concentrent en général sur la délimitation de lésions de fort contraste, ce qui ne correspond pas à notre problématique de détection. 
+
+
+\section{Extraction initiale des lésions}
+
+	\subsection{Pré-traitements de l'image}
+
+Cette étape (figure \ref{fig:presSystemesCAD}.1) ) a pour objectif de préparer et améliorer l’image initiale à l’extraction des tumeurs candidates. 
+
+Cette étape n'est pas obligatoire et certaines études utilisent simplement l’image original en imagerie TDM~\cite{mougiakakou2007differential}. D’autres modifient l’image initiale, pour améliorer les performances finales de classification. En imagerie TDM, des méthodes de rehaussement de contraste sont mises en place à partir de filtres sélectifs~\cite{li2003selective}. Certains pré-traitements visent à éliminer des structures gênantes (vaisseaux sanguins dans les poumons…). En mammographie, il est également courant de débruiter les images par des techniques de filtrage~\cite{bazzani2001svm}. Cependant, le filtrage doit être correctement optimisé pour les images à traiter, car il peut être à l'origine d'une baisse de sensibilité~\cite{ge2005computer}.
+	
+	\subsection{Extraction des caractéristiques}
+
+Un système de classification ne traite que très rarement directement les voxels de l’image brute. Différentes caractéristiques descriptives de l’image ou du cas clinique (patient) (figure \ref{fig:presSystemesCAD}.2) ) sont utilisées pour réaliser la classification. Celles-ci sont en effet porteuses d’informations plus pertinentes facilitant leur interprétation. Ces caractéristiques sont assimilées à l'analyse réalisée par l'oeil humain avant avant de réaliser le diagnostic sur la présence ou non de tumeurs. Elles sont l’interprétation de l’image d’un point de vue numérique. Elles doivent permettre au classifieur de discriminer les éléments pathologiques des éléments sains et être caractéristiques de chacune des classes. 
+
+Un état de l'art des différentes caractéristiques a été présenté par~\cite{cheng2006approaches}, classées selon leurs catégories. On peut différentier plusieurs familles de caractéristiques selon leur type :
+
+\begin{description}
+\item[les régions d’intérêt de l’image :] Que ce soit en imagerie anatomique ou fonctionnelle, les tumeurs apparaissent visuellement avec un degré de distinction variable par rapport au fond de l’organe d’appartenance. Dans le cas de la mammographie et de la TEP au 18F-FDG, les tumeurs sont de captation généralement plus élevée que le tissu environnant. L’imagerie TEP associée à d’autres radiotraceurs que le 18F-FDG peut aussi être caractérisée par un hyposignal dans les tumeurs. Dans le cas de la TDM, les tumeurs correspondent à des nodules de forme spécifique (ellipsoïde) et d’atténuation plus élevée. Etant donné que les tumeurs peuvent, dans certains cas, être caractérisées par la valeur même des pixels ou voxels les constituant, certaines études utilisent directement les voxels de la région d'intérêt comme caractéristiques d’image.
+\item[les caractéristiques statistiques : ] Les caractéristiques statistiques reflètent généralement les propriétés de bruit et de texture des zones étudiées. Les statistiques du premier ordre caractérisent les niveaux de gris de l’image sans prendre en compte leur distribution relative. Des mesures de moyennes ou d’histogrammes peuvent être extraites. Les statistiques d’ordre deux représentent généralement des propriétés de texture. Celle-ci est assimilée à l’apparence locale de l’image, c’est à dire l’organisation des détails d’une petite partie de l’image telle que le système visuel humain l’aperçoit.
+\item[les caractéristiques cliniques : ] Ce sont les données contenues dans le dossier médical du patient qui peuvent être utilisées comme critère par le système de détection.
+\item[les caractéristiques fréquentielles :] Selon~\cite{sachs1971spatial}, le système visuel humain traite l’information à travers des canaux sélectifs en fréquence. Il est ainsi possible de se rapprocher d’une modélisation assez fiable du système visuel humain en se basant sur les caractéristiques fréquentielles des images cibles.
+\item[les caractéristiques géométriques :] Les caractéristiques géométriques des tumeurs, exprimées par exemple par des critères de convexité, peuvent aussi être discriminantes. Elles sont généralement simples à interpréter car elles correspondent aux détails visuels sur lesquels se focalisent consciemment les cliniciens. Cette famille de caractéristiques est généralement dédiée aux imageries de type anatomique étant donné qu’elle repose sur une délinéation précise des structures étudiées. Le principal inconvénient des caractéristiques de forme est d’être fortement corrélé à la segmentation initiale des tumeurs étudiées.
+\end{description}
+
+
 
 	\section{Méthodes de classification}
 
