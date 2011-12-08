@@ -2,7 +2,24 @@
 
 %\todo{Cette transition va récapituler nos choix méthodologiques pour introduire les ``résultats'' : BD et détection}
 
-\section{Base de donnée}
+La problématique de ce travail de thèse relève du domaine de l'évaluation en imagerie médicale. Cette discipline nécessite :
+
+\begin{itemize}
+ \item De bien définir la tâche
+ \item De choisir les bonnes métriques
+ \item De disposer d'une référence (ou vérité terrain)
+\end{itemize}
+
+Pour nous la tâche du diagnostique est d'améliorer la détection. Dans ce court chapitre, nous justifierons les choix méthodologiques que nous avons dû faire, d'une part pour la construction de la vérité terrain et d'autre part pour définir la méthode d'évaluation des performances de détection.
+
+\section{Construction de la vérité terrain}
+
+Le choix des types de données à utiliser pour une étude relevant du domaine de l'évaluation est important. Les différentes étapes de cette méthode d'évaluation sont présentées dans le chapitre 12. Pour notre problème, il est important de disposer de données TEP oncologiques dynamiques synchronisées à la respiration contenant des lésions parfaitement annotées. La collection d’images cliniques annotées est un travail de longue haleine nécessitant le concours de différentes personnes, et principalement des cliniciens. 
+
+
+Quelques bases de cas cliniques sont disponibles en imagerie TEP oncologiques. Celles-ci ne sont cependant pas distribuées à la communauté scientifique, sont rarement annotées et ne présentent pas forcément assez d’images de chaque classe. La littérature des CAD en imagerie TEP (section ~\cite{lab:CADTEP}) confirme ce manque de bases d’images cliniques distribuées car les auteurs utilisent généralement quelques cas fournis par les hôpitaux partenaires de leur étude. 
+
+Une alternative à l’utilisation d’images cliniques repose sur la simulation d’examens. La quatrième partie de ce manuscrit s'attache à décrire la méthode utilisée pour créer notre jeu de données TEP 3D simulées avec la respiration, puis à décrire les caractéristiques de cette base de données
 
 Nous avons cherché à générer une base de données réaliste prenant en compte la variabilité rencontrée dans les acquisitions réelles. Pour cela, nous avons utilisé un modèle de patient déformable incorporant un modèle de respiration pour générer les images. Cela permet d'incorporer une variabilité importante dans les formes des organes patients de la base de données. Un mouvement respiratoire irrégulier a été utilisé pour générer les données, pour prendre en compte les imprécisions des systèmes d'acquisition du signal respiratoire. 
 
@@ -10,7 +27,13 @@ Nous avons cherché à générer une base de données réaliste prenant en compt
 Les contrastes des lésions ont été calibrés pour obtenir des taux de détection par un observateur humain de 10\% à 90\%. Les activités des organes sont calculées à partir de zones d'intérêts extraites de 70 images TEP. La simulation a été réalisée avec le logiciel PET-SORTEO, utilisant des algorithmes Monte-Carlo accélérés. Nous avons simulé deux jeux de données : le premier correspond à une acquisition dynamique d'un patient respirant, avec 4 cycles respiratoires différents. Les cycles ont été coupés en 8 instants temporels simulés séparément pour représenter une acquisition synchronisée. Le second jeu de données correspond à une acquisition statique de même durée que le précédent (224 secondes), mais sans mouvement respiratoire. Il va être utilisé comme ``témoin'', correspondant à une hypothétique correction parfaite du mouvement respiratoire.
 
 
-\section{Détection}
+\section{Mesure des performances de détection}
+
+Nous avons montré dans le chapitre 7 que les analyses ROC ou F-ROC sont les méthodes de référence pour évaluer les performances de détection. Ces études sont néanmoins lourdes à mettre en oeuvre lorsque l'on cherche à optimiser des paramètres et requierent la participation active d'observateurs, souvent difficile à mobiliser lorsque les tâches de lecture sont longues et répétitives.
+
+Nous avons donc cherché à développer une stratégie qui \todo{``peuvelle''} de respecter les conditions de l'analyse F-ROC mais en s'affranchissant d'observateurs humains.
+
+Le chapitre 8 a présenté le principe des systèmes d'aide à la détection, développés pour fournir une seconde lecture au médecin lors de son diagnostic. Nous avons proposé d'utiliser ces systèmes CAD comme observateurs numériques.
 
 Les systèmes CAD permettent de surmonter les inconvénients des observateur humain lors des évaluation de méthodes. Ils permettent de limiter la variabilité inter-observateurs en permettant de réaliser l'ensemble des détections avec un seul observateur, et garantissent que toutes les observations sont réalisées dans les mêmes conditions. Il est aussi possible de reproduire à l'identique les conditions d'évaluation pour traiter de nouvelles données.
 

@@ -1,7 +1,7 @@
 \pagestyle{fancyplain}
 
 \label{lab:chapPET}
-La Tomographie par \'Emission de Positons (TEP) au fluorodesoxyglucose marqué au Fluor 18 ($^{18}$FDG) est une modalité d'imagerie fonctionnelle utilisant la désintégration d'un traceur radioactif pour mettre en valeur les zones de forte activité métabolique. Elle est principalement utilisée en imagerie cérébrale, oncologique et cardiologique.
+La Tomographie par \'Emission de Positons (TEP) au fluoro-deoxy-glucose marqué au Fluor 18 ($^{18}$FDG) est une modalité d'imagerie fonctionnelle utilisant la désintégration d'un traceur radioactif pour mettre en valeur les zones de forte activité métabolique. Elle est principalement utilisée en imagerie cérébrale, oncologique et cardiologique.
 
 
 Dans ces trois chapitres, nous allons tout d'abord détailler rapidement les principes physiques amenant à la création des images TEP, de la désintégration du traceur radioactif à la détection des photons émis lorsqu'ils atteignent un capteur. Ensuite, nous parlerons des solutions techniques mises en place pour réaliser les images TEP, avec les différents types d'acquisitions. Enfin, nous détaillerons les algorithmes utilisés pour reconstruire les images TEP.
@@ -24,7 +24,7 @@ $N$ représente le nombre de particules radioactives présentes dans le corps du
 
 Chaque désintégration d'un élément radioactif va déclencher l'émission d'une particule chargée $\beta^+$, aussi appelée positon. En oncologie, on utilise par exemple le Fluor $^{18}F$ qui se désintègre en Oxygène $^{18}O$ en émettant un positon. Cette particule va parcourir quelques mm avant de s'annihiler avec un électron en émettant 2 photons dans deux directions opposées avec une énergie de 511 KeV.
 
-Ce sont ces photons qui sont détectés par l'imageur TEP. Ils représentent une coïncidence, car l'instant d'arrivée et leur énergie sont semblables. L'ensemble des ``Lignes de réponse'' (LDR) correspondant aux coïncidences détectées est utilisé pour reconstruire les images.
+Ce sont ces photons qui sont détectés par l'imageur TEP. Ils représentent une coïncidence, car l'instant d'arrivée et leur énergie sont approximativement semblables. L'ensemble des ``lignes de réponse'' (LDR) correspondant aux coïncidences détectées est utilisé pour reconstruire les images.
 
 \begin{figure}
 \centering
@@ -75,7 +75,7 @@ Le cristal scintillant permet de convertir les photons $\gamma$ de 511 keV en ph
 
 Chaque photon absorbé par le matériau scintillant va entraîner une réaction en chaîne qui va déclencher une émission lumineuse. Le tube multiplicateur situé derrière va convertir cette émission lumineuse en charge électrique. Un système électronique va ensuite apparier les photons détectés pour retrouver la ligne de réponse (LDR) sur laquelle la désintégration a eu lieu. Les paires de photons assemblées correspondent à des coïncidences.
 
-Les détecteurs sont regroupés par modules, placés en anneaux autour du patient. L'imageur TEP Gemini que nous utiliserons dans cette étude dispose par exemple de 28 modules, contenant chacun une matrice de 29 par 22 cristaux de GSO~\ref{fig:moduleTEP}. Une photo de l'imageur ouvert est visible sur la figure~\ref{fig:gemini_ecl}. 420 Photomultiplicateurs placés autour des blocs sont utilisés pour estimer la position des détections.
+Les détecteurs sont regroupés par modules, placés en anneaux autour du patient. L'imageur TEP Gemini que nous utiliserons dans cette étude dispose par exemple de 28 modules, contenant chacun une matrice de 29 par 22 cristaux de GSO (voir figure~\ref{fig:moduleTEP}). Une photo de l'imageur ouvert est visible sur la figure~\ref{fig:gemini_ecl}. 420 photomultiplicateurs placés autour des blocs sont utilisés pour estimer la position des détections.
 
 \begin{figure}
 \centering
@@ -180,7 +180,7 @@ La TEP est ensuite utilisée pour suivre l'évolution des lésions, afin d'adapt
 \includegraphics[width=5cm]{images/ex_lymphome} & \includegraphics[width=5cm]{images/ex_poumon} & \includegraphics[width=5cm]{images/ex_cou} \\
 a) & b) & c)
 \end{tabular}
-\caption[Exemples d'images TEP]{Exemples d’images TEP au $^{18}$FDG provenant d’examens de patients atteints d’un cancer a) des ganglions (lymphome), b) du poumon et c) du cou. Certaines lésions sont représentées par les flèches noires.}
+\caption[Exemples d'images TEP]{Exemples d’images TEP au $^{18}$FDG provenant d’examens de patients atteints d’un cancer a) des ganglions (lymphome), b) du poumon et c) du cou. Certaines lésions sont représentées par les flèches noires. Les image sont extraites de l'article~\cite{rohren2004clinical}.}
 \label{fig:exTEP}
 \end{figure}
 
@@ -212,7 +212,7 @@ Les acquisitions corps entier utilisent typiquement plus de 10 lits sur la camé
 
 	\section{Acquisition en mode 3D}
 
-Historiquement, les données étaient acquises par coupe : des septas (plaque destinées à absorber les photons) étaient placés entre les détecteurs dans la dimension axiale de manière à éliminer les photons qui n'étaient pas émis dans le plan  transverse (perpendiculaire à l'axe du détecteur). Aujourd'hui, la totalité des scanners fonctionnent en mode 3D uniquement. Le retrait des septa (voir la figure~\ref{fig:2D3D}) permet d'augmenter le rapport signal sur bruit pour les gammes d'activité injectées aux patients, même si la détection des coïncidences vraies s'accompagne d'une augmentation de bruit parasite liée à l'augmentation de la détection des coïncidences fortuites et diffusées.
+Historiquement, les données étaient acquises par coupe : des septas (plaque destinées à absorber les photons) étaient placés entre les détecteurs dans la direction axiale de manière à éliminer les photons qui n'étaient pas émis dans le plan  transverse (perpendiculaire à l'axe du détecteur). Aujourd'hui, la totalité des scanners fonctionnent en mode 3D uniquement. Le retrait des septa (voir la figure~\ref{fig:2D3D}) permet d'augmenter le rapport signal sur bruit pour les gammes d'activité injectées aux patients, même si la détection des coïncidences vraies s'accompagne d'une augmentation de bruit parasite liée à l'augmentation de la détection des coïncidences fortuites et diffusées.
 
 \begin{figure}
 \centering
@@ -266,7 +266,7 @@ Les coïncidences diffusées, bien que déjà triées par les fenêtres énergé
 
 
 \subsubsection{Correction des coïncidences aléatoires}
-Les coïncidences aléatoires provenant de la détection de deux photons issus de deux annihilations différentes mais détectées dans la même fenêtre temporelle bruite les données mesurées. La correction de ce phénomène consiste à soustraire au niveau du sinogramme les coïncidences aléatoires estimées des coïncidences vraies. Ces coïncidences aléatoires peuvent être estimées de trois façons~\cite{brasse2005correction} :
+Les coïncidences aléatoires provenant de la détection de deux photons issus de deux annihilations différentes mais détectées dans la même fenêtre temporelle bruitent les données mesurées. La correction de ce phénomène consiste à soustraire au niveau du sinogramme les coïncidences aléatoires estimées des coïncidences vraies. Ces coïncidences aléatoires peuvent être estimées de trois façons~\cite{brasse2005correction} :
 
 \begin{itemize}
 \item Utilisation d'une fenêtre temporelle décalée. L’activité y est considérée comme constante par sa taille réduite, mais les événements détectés proviennent forcément d’annihilations différentes par sa taille suffisamment élevée.
@@ -322,7 +322,7 @@ Le principal avantage du sinogramme est qu'il permet de stocker les données acq
 
 La reconstruction des images TEP correspond à un problème inverse : à partir de l'ensemble des lignes de réponse, il faut déduire la répartition du radio traceur dans l'organisme du patient. Deux classes d'algorithmes existent pour résoudre ce type de problèmes, mais actuellement seuls les algorithmes itératifs sont utilisés en oncologie clinique. 
 
-	\section{Algorithmes Itératifs}
+	\section{Algorithmes itératifs}
 
 La relation liant l'image TEP $f$ et les projections sur les détecteurs $p$ est la suivante :
 
@@ -352,14 +352,14 @@ Où $<p_i>$ est le paramètre de la loi de Poisson (moyenne) de la ligne de rép
 <p_i> = \sum\limits_{i=1}^{P} R_{ij}f_j
 \end{equation}
 
-On maximise la log-vraisemblance de~\ref{lab:proba} pour évaluer la cohérence entre les pixels de l'image $(f_j)_{j=1..P}$ et projections observées $(p_i)_{i=1..L}$. Cette fonction de coût est notée $Q(f_1 \dots f_P, q_1 \dots q_L)$. On cherche l'estimation $\hat{f}$ de $f$ qui maximise cette fonction de coût :
+On maximise la log-vraisemblance de l'équation~\ref{lab:proba} pour évaluer la cohérence entre les pixels de l'image $(f_j)_{j=1..P}$ et les projections observées $(p_i)_{i=1..L}$. Cette fonction de coût est notée $Q(f_1 \dots f_P, q_1 \dots q_L)$. On cherche l'estimation $\hat{f}$ de $f$ qui maximise cette fonction de coût :
 
 \begin{equation}
 	\hat{f}_j^{(n+1)}=\frac{\hat{f}_j^{(n)}}{\sum\limits_{i'}R_{i'j}}\sum\limits_{i}R_{ij}\frac{p_i}{\sum\limits_{k}R_{ik}\hat{f}_k^{(n)}}
 \label{eq:MLEM}
 \end{equation}
 
-En pratique, la matrice système $R$ inclut des informations supplémentaires pour corriger les différences de sensibilité entre les différents capteurs, et réaliser la correction des diffusés~\cite{shepp1982maximum,chornoboy1990evaluation}. Cette matrice peut aussi être utilisée pour corriger l'atténuation des tissus. En pratique, cette matrice ``système'' $R_{ij}$ indique la probabilité de détecter une désintégration issue du voxel $j$ de l'image dans la ligne de réponse $i$.
+En pratique, la matrice système $R$ peut inclure des informations supplémentaires pour corriger les différences de sensibilité entre les différents capteurs, et réaliser la correction des diffusés~\cite{shepp1982maximum,chornoboy1990evaluation} ou la correction de l'atténuation des tissus. Cette matrice ``système'' $R_{ij}$ indique la probabilité de détecter une désintégration issue du voxel $j$ de l'image dans la ligne de réponse $i$.
 
 
 
@@ -378,14 +378,14 @@ Le nombre d'itérations à réaliser avant d'atteindre la convergence dépend de
 
 L'algorithme OS-EM est une évolution de l'algorithme ML-EM  qui permet une accélération substantielle de la convergence en réalisant les itérations de l'équation~\ref{eq:MLEM} sur des sous-ensemble des données acquises~\cite{hudson1994accelerated}. 
 
-Ces sous-ensembles de données sont réalisés en échantillonnant de manière régulière les lignes de réponses. Leur nombre est un des paramètres de l'algorithme, mais la convergence n'est plus garantit contrairement à ML-EM. En pratique, l'algorithme converge toujours approximativement, et le nombre d'itérations est déterminé de manière empirique~\cite{bailey2005positon}. Des évolutions de OS-EM ont été réalisées pour garantir une convergence, notamment l'algorithme Row-Action Maximum Likelihood (RAMLA)~\cite{browne1996row, chiang2004clinical}.
+Ces sous-ensembles de données sont réalisés en échantillonnant de manière régulière les lignes de réponses. Leur nombre est un des paramètres de l'algorithme, mais la convergence n'est plus garantie contrairement à ML-EM. En pratique, l'algorithme converge toujours approximativement, et le nombre d'itérations est déterminé de manière empirique~\cite{bailey2005positon}. Des évolutions de OS-EM ont été réalisées pour garantir une convergence, notamment l'algorithme Row-Action Maximum Likelihood (RAMLA)~\cite{browne1996row, chiang2004clinical}.
 
 Le principal avantage de OS-EM est qu'il permet d'augmenter la vitesse de la reconstruction d'un facteur correspondant au nombre de sous-ensembles utilisés.
 
-	\subsection{Cas des acquisitions en mode Séquentiel}
+	\subsection{Cas des acquisitions en mode séquentiel}
 \label{lab:OPLEM}
 
-Les acquisitions en mode séquentiel génèrent une suite d'enregistrements correspondant aux événements détectés par l'imageur. La lecture de tous ces événements un par un demande des temps de calculs extrêmement importants, c'est pourquoi Reader~\cite{reader2002one} ont proposé une adaptation de l'OS-EM au mode séquentiel appelée One-Pass List-Mode EM (OPL-EM). L'algorithme proposé est conçu pour ne parcourir qu'une seule fois la liste des événements. Comme pour OS-EM, les données sont groupées en sous-ensembles, qui sont utilisés les uns après les autres pour chaque itération, comme indiqué dans l'équation~\ref{eq:OSEM_seq}.
+Les acquisitions en mode séquentiel génèrent une suite d'enregistrements correspondant aux événements détectés par l'imageur. La lecture de tous ces événements un par un demande des temps de calculs extrêmement importants, c'est pourquoi Reader et al.~\cite{reader2002one} ont proposé une adaptation de l'OS-EM au mode séquentiel appelée One-Pass List-Mode EM (OPL-EM). L'algorithme proposé est conçu pour ne parcourir qu'une seule fois la liste des événements. Comme pour OS-EM, les données sont groupées en sous-ensembles, qui sont utilisés les uns après les autres pour chaque itération, comme indiqué dans l'équation~\ref{eq:OSEM_seq}.
 
 Ici, $s$ correspond à un numéro de sous-ensemble, $j$ à un voxel et $i$ à une ligne de réponse. Lorsque tous les sous-ensembles ont été parcourus, une nouvelle itération est déclenchée. Cet algorithme est conçu pour permettre de parcourir les données une seule fois, ce qui revient à réaliser une seule itération, cependant, il reste possible d'en réaliser plusieurs.
 
@@ -394,14 +394,14 @@ Ici, $s$ correspond à un numéro de sous-ensemble, $j$ à un voxel et $i$ à un
 \label{eq:OSEM_seq}
 \end{equation}
 
-La différence entre OS-EM et cet algorithme est la manière dont sont sommées les différences. Dans OPL-EM, la sommation est réalisée sur l'ensemble des événements $T^n$ correspondant au sous-ensemble d'événements $n$. Cette somme est réalisée non pas pour chaque ligne de réponse $p$ comme précédemment, mais pour chaque événement détecté, ce qui explique le remplacement de $p_i$ par la valeur 1.
+La différence entre OS-EM et cet algorithme est la manière dont sont sommées les différences. Dans OPL-EM, la sommation est réalisée sur l'ensemble des événements $T^s$ correspondant au sous-ensemble d'événements $s$. Cette somme est réalisée non pas pour chaque ligne de réponse $p$ comme précédemment, mais pour chaque événement détecté, ce qui explique le remplacement de $p_i$ par la valeur 1.
 		
 	\section{Reconstructions analytiques}
 
 Ces algorithmes sont supplantés en oncologie par les algorithmes itératifs qui sont jugés plus performants sur l'évaluation du SUV et moins bruités~\cite{schoder2004clinical}.
 
 Les méthodes analytiques utilisent la rétroprojection des projections du sinogramme pour reconstruire l'image. Si P est l'opération de projection d’une distribution $f(x,y)$ d’un objet vers $p(r, \theta)$, selon l’angle azimutal $\theta$, et $r$ la distance entre la projetée de la LDR dans le plan (x,y) et l’axe x, alors la projection peut s’écrire comme la transformée de Radon de cette distribution :
-
+\todo{revoir u et r}
 \begin{equation}
 p(u, \theta) = P(f(x,y)) = \int\limits_{-\infty}^{+\infty} f(u~cos \theta - v~cos \theta, u~sin \theta + v~cos \theta) dv
 \end{equation}

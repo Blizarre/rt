@@ -58,13 +58,13 @@ Le contraste des tumeurs par rapport au fond est un critère important pour dét
 L'activité peut être influencée par la respiration de deux manières : 
 \begin{itemize}
  \item Par un mauvais ajustement de la carte d'atténuation.
- \item Par le moyennage de la position de la tumeur
+ \item Par le moyennage de la position de la tumeur.
 \end{itemize}
 
 
 \subsection{Décalage de la carte d'atténuation}
 
-La carte d'atténuation utilisée pour corriger les images d'émission est basée sur une image TDM prise à un instant donné du cycle. Or l'atténuation de la zone correspondant à une tumeur peut être différente de celle des tissus environnants, ce qui peut occasionner des sous-estimations ou de sur-estimation de l'activité de la tumeur si la carte d'atténuation est mal positionnée.
+La carte d'atténuation utilisée pour corriger les images d'émission est basée sur une image TDM prise à un instant donné du cycle. Or l'atténuation de la zone correspondant à une tumeur peut être différente de celle des tissus environnants, ce qui peut occasionner des sous-estimations ou des sur-estimations de l'activité de la tumeur si la carte d'atténuation est mal positionnée.
 
 D'après l'étude~\cite{erdi2004ct}, on peut observer des variations très importantes de $SUV_{max}$ (voir équation~\ref{eq:varSUV}) sur les images TEP reconstruites. L'étude a été réalisée sur 5 patients totalisant 8 lésions. L'acquisition TDM 4D a été synchronisée sur le mouvement à l'aide d'un dispositif placé sur l'abdomen du patient. Ce dispositif était constitué de deux marqueurs réfléchissant les ondes infrarouges, placés dans le champ de vue d'une caméra. Les données synchronisées acquises en TDM 4D ont été utilisées pour générer un cycle de 10 images TDM. Chacune de ces 10 images a ensuite servi de carte d'atténuation lors de la reconstruction des images d'émission, générant ainsi 10 images TEP .
 
@@ -131,9 +131,9 @@ Je vais me concentrer sur les deux publications the Thielemans et Chang qui util
 
 Un autre document par Rahmim Arman~\cite{rahmim4d} propose d'utiliser le CHO pour évaluer l'amélioration de la détection des défauts dans de l'imagerie cardiaque corrigée du mouvement respiratoire. Ce document n'a pas encore donné lieu à publication.
 	
-\subsection{Synthèse de Thielemans,2006}
+\subsection{Article de Thielemans et al.~\cite{Thielemans2006Lesion}}
 
-Dans sa publication, Thielemans~\cite{Thielemans2006Lesion} utilise le ``Channelized Hotelling Observer'' (CHO)~\cite{barrett1993model}, qui est un observateur dérivé du classifieur linéaire LDA présenté en \ref{lab:LDA}, utilisé en conjonction avec des informations fréquentielles. 
+Dans sa publication, Thielemans et al. utilisent le ``Channelized Hotelling Observer'' (CHO)~\cite{barrett1993model}, qui est un observateur dérivé du classifieur linéaire LDA présenté en \ref{lab:LDA}, utilisé en conjonction avec des informations fréquentielles. 
 
 L'étude se base sur des simulations analytiques d'un fantôme thoracique dans lequel sont insérées des lésions sphériques de gros diamètre (13 mm) et de contraste élevé (4.25:1). Cette étude qui compare plusieurs méthodes de correction du mouvement respiratoire est détaillée dans le chapitre suivant en~\ref{lab:evolGating}.
 %
@@ -146,9 +146,9 @@ L'étude se base sur des simulations analytiques d'un fantôme thoracique dans l
 
 
 
-\subsection{Chang 2010}
+\subsection{Article de Chang et al.~\cite{GuopingChang2010Implementation}}
 
-Cette publication est une évaluation clinique d'un système de découpage automatique du signal respiratoire selon l'amplitude. Elle est basée sur 13 patients totalisant 21 tumeurs du poumon de taille diverses (estimée de 1 à 27 $cm^3$. Le signal respiratoire est acquis à l'aide d'un dispositif propriétaire (Anzai AZ-733V) basé sur une ceinture abdominale avec capteur de pression. Seules les données TEP acquises autour d'une amplitude présélectionnée (+/-10\% de l'amplitude correspondant à l'acquisition TDM) sont utilisées pour la reconstruction des images corrigées. 
+Cette publication est une évaluation clinique d'un système de découpage automatique du signal respiratoire selon l'amplitude. Elle est basée sur 13 patients totalisant 21 tumeurs du poumon de taille diverses (estimée de 1 à 27 cm$^3$. Le signal respiratoire est acquis à l'aide d'un dispositif propriétaire (Anzai AZ-733V) basé sur une ceinture abdominale avec capteur de pression. Seules les données TEP acquises autour d'une amplitude présélectionnée (+/-10\% de l'amplitude correspondant à l'acquisition TDM) sont utilisées pour la reconstruction des images corrigées. 
 
 Le jeu d'images ``témoin'', non corrigées, est réalisé en extrayant des données acquises le même nombre d'évènements N que le jeu d'images synchronisées en considérant les N premiers du fichier en mode séquentiel.
 

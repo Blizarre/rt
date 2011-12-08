@@ -226,7 +226,7 @@ L’objectif de l’identification initiale des tumeurs (figure \ref{fig:presSys
 \end{itemize}
 
 	\section{Les CAD en TEP}
-
+\label{lab:CADTEP}
 
 Quelques systèmes CAD sur des images TEP ont été décrits dans des travaux académiques, tels que~\cite{guan2006automatic}, qui recherche des anomalies dans le corps entier. Cependant, ils ne donnent pas de mesures de performances quantitatives. La publication de~\cite{kanakatte2008pulmonary} utilise des systèmes de classification supervisés (K plus proches voisins et SVM décrits en~\ref{lab:SVM}). Un seuillage est réalisé, puis les candidats sont classés en utilisant des caractéristiques fréquentielles et les moments statistiques. 
 
@@ -277,7 +277,7 @@ La classification non supervisée repose sur une méthode statistique utilisant 
 Plusieurs algorithmes sont décrits dans la littérature pour réaliser des classifications non supervisées :
 
 \begin{description}
- \item[K-moyennes (K-means) : ]  c'est un algorithme itératif qui associe à chaque point la classe dont le barycentre est le plus proche, puis remet à jour le centre des classes à la prochaine itération~\cite{herwig1999large}. Cet algorithme nécéssite de fixer le nombre de classes \textit{a priori}.
+ \item[K-moyennes (K-means) : ]  c'est un algorithme itératif qui associe à chaque point la classe dont le barycentre est le plus proche, puis remet à jour le centre des classes à la prochaine itération~\cite{herwig1999large}. Cet algorithme nécessite de fixer le nombre de classes \textit{a priori}.
  \item[Cartes auto-adaptatives : ] Cet algorithme utilise des techniques dérivées des graphes pour partitionner les données~\cite{kohonen1982self}.
  \item[Regroupement ascendant hiérarchique : ] Cet algorithme utilise une mesure de dissimilarité pour regrouper les observations. A la première itération, chaque observation dispose de sa propre classe. A chaque itération suivante, les deux classes contenant les observations les plus proches vont être regroupées, jusqu'à obtenir la classification finale~\cite{ward1963hierarchical}.
 \end{description}
