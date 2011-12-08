@@ -3,13 +3,13 @@
 
 \section{Présentation}
 
-Pour répondre à notre problématique de détection des lésions sur les images TEP respirantes, nous avons choisi d’utiliser une base de données d’images simulées. En effet, notre problématique repose sur une connaissance très précise de la position des lésions pour l’évaluation des performances, ainsi que sur l’acquisition de données en mode séquence. Ces deux objectifs sont relativement difficiles à réaliser à partir d’images cliniques, notamment parceque l'acquisition en mode séquence ne fait pas partie de la routine clinique en oncologie.
+Pour répondre à notre problématique de détection des lésions sur les images TEP respirantes, nous avons choisi d’utiliser une base de données d’images simulées. En effet, notre problématique repose sur une connaissance très précise de la position des lésions pour l’évaluation des performances, ainsi que sur l’acquisition de données en mode séquence. Ces deux objectifs sont relativement difficiles à réaliser à partir d’images cliniques, notamment parce que l'acquisition en mode séquence ne fait pas partie de la routine clinique en oncologie.
 
 
 
 	\subsection{Avantages des bases de données simulées}
 
-Le principal avantage des bases de données simulées est le contrôle qu'elles permettent d'exercer sur les modèles. Il est possible de spécifier les conditions des acquisitions de manière très précise, et de garantir une homogénéité difficile d'atteindre en utilisant des données patient.
+Le principal avantage des bases de données simulées est le contrôle qu'elles permettent d'exercer sur les modèles. Il est possible de spécifier les conditions des acquisitions de manière très précise, et de garantir une homogénéité difficile à atteindre en utilisant des données patient.
 
 Dans le cadre de nos travaux sur la détection, la vérité terrain est particulièrement appréciable, car elle permet de savoir, avec une certitude impossible à atteindre en clinique, la position, le contraste et le nombre des lésions. En effet, dans le cas de lésions de petit diamètre et de petit contraste, le diagnostic ne peut être donné avec une précision totale par le praticien. 
 
@@ -19,12 +19,12 @@ De plus, les simulations permettent d’obtenir des images avec des paramètres 
 
 \subsection{Modèle anatomique}
 
-Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles de patients. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été déformé de manière manuelle sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des courbes paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'interêt du patient en déplacant les points de contrôle. L'adaptation n’est pas parfaite, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associées aux fantômes adaptés sont présentées dans la figure~\ref{fig:adaptXCAT}.
+Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles de patients. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été déformé de manière manuelle sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des surfaces paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'interêt du patient en déplacant les points de contrôle. L'adaptation n’est pas parfaite, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associées aux fantômes adaptés sont présentées dans la figure~\ref{fig:adaptXCAT}.
 
 \begin{figure}
  \centering
  \includegraphics[width=10cm]{images/FIT_XCAT}
- \caption[Adaptation du modèle XCAT sur une image TDM de patient]{Adaptation du modèle XCAT sur une image TDM de patient : le modèle est fortement déformé par la différence entre l'épaisseur des coupes et la résolution du plan. Chaque organe est représenté par une surface paramétrique qu’il est possible d’adapter sur un modèle de patient.}
+ \caption[Adaptation du modèle XCAT sur une image TDM de patient]{Adaptation du modèle XCAT sur une image TDM de patient : le logiciel ne gère pas correctement l'anisotrpie des voxels, ce qui explique la déformation du modèle sur la vue de droite. Chaque organe est représenté par une surface paramétrique qu’il est possible d’adapter sur un modèle de patient.}
  \label{fig:fitXCAT}
 \end{figure}
 
@@ -43,7 +43,7 @@ Nous avons choisi le XCAT car il intégre directement un modèle de mouvement re
 
 \subsection{Activités des organes}
 
-Les activités des organes sont décrites dans la table \ref{tab:contrastePoumonFoieRecap}. Elles ont été estimées à partir d'une étude réalisée précédemment lors des travaux de thèse de Sandrine Tomeï~\cite{tomei2008development}, en mesurant l'activité dans de zones d'intérêt tracées dans une série de 70 patients~\cite{tomei2010oncopet_db}.
+Les activités des organes sont décrites dans la table \ref{tab:contrastePoumonFoieRecap}. Elles ont été estimées à partir d'une étude réalisée précédemment lors des travaux de thèse de Sandrine Tomeï~\cite{tomei2008development}, en mesurant l'activité dans des zones d'intérêt tracées dans une série de 70 patients~\cite{tomei2010oncopet_db}.
 
 \begin{table}
 \centering
@@ -98,9 +98,9 @@ Pour prendre en compte la variabilité du cycle respiratoire (voir figure \ref{f
 \end{figure}
 
 
-La signal respiratoire obtenu est présenté dans la figure \ref{fig:cycleRespi}. Il est constitué de 4 cycles de 5.6 secondes qui se répètent 10 fois pour former un signal total de 224 secondes. 
+La signal respiratoire obtenu est présenté dans la figure \ref{fig:cycleRespi}. Il est constitué de 4 cycles de 5.6 secondes qui se répètent 10 fois pour former un signal total de 224 secondes, soit un peu moins de 4 minutes. 
 
-Chacun de ces 4 cycles est discrétisé en 8 parties qui seront utilisées pour générer les modèles de la simulation. 
+Chacun de ces 4 cycles est ensuite discrétisé en 8 parties qui seront utilisées pour générer les modèles de la simulation. 
 
 
 \begin{figure}
@@ -117,7 +117,7 @@ Nous avons choisi de focaliser cette étude sur la détection des lésions situ�
 
 Nous avons utilisé un modèle de lésion correspondant adapté aux lésions de faible intensité. Nous avons utilisé des lésions sphériques~\cite{bai2009regularized}, avec des diamètres de l'ordre de la résolution de l'imageur TEP.
 
-Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons crée. 173 lésions sont présentes dans le Poumon, contre 103 dans le Foie. La différence de taille entre les organes du XCAT explique la petite taille de la base de lésions du foie. 
+Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons créé. 173 lésions sont présentes dans le Poumon, contre 103 dans le Foie. La différence de taille entre les organes du XCAT explique la petite taille de la base de lésions du foie. 
 
 Les lésions ont été placées manuellement dans tout le volume de l'organe, en privilégiant les parties à fort mouvement proche du diaphragme. 
 
@@ -142,7 +142,7 @@ Poumon :\\
  \hline
 Poumon	& 10\% & 30\% & 50\% & 70\% & 90\% \\
 \hline
-4mm	& 2    &  5   &  8   & 10   & 13   \\
+8mm	& 2    &  5   &  8   & 10   & 13   \\
 \hline
 12mm    & 2    &  5   &  8   & 10   & 13   \\
 \hline
@@ -157,11 +157,11 @@ Foie :\\
  \hline
 Poumon	& 10\% & 30\% & 50\% & 70\% & 90\% \\
 \hline
-4mm	& 2    &  5   &  8   & 10   & 13   \\
+8mm	& 2.5    &  4   &  4.5   & 6   & 9   \\
 \hline
-12mm    & 2    &  5   &  8   & 10   & 13   \\
+12mm    & 2    &  3   &  4   & 4.5   & 7.5   \\
 \hline
-16mm    & 2    &  3.5 &  4.5 & 7.5  & 10   \\
+16mm    & 2    &  3   &  4   & 4.5   & 7.5   \\
 \hline
 \end{tabular}
 \caption[Contraste de la base originale OncoPET\_DB des lésions du poumon et du foie pour létude de détectabilité]{Contraste de la base originale OncoPET\_DB des lésions du poumon et du foie, avec les pourcentages de détection associés.}
@@ -304,6 +304,8 @@ La base de données générée contient les données de simulation de 15 patient
 
 \section{Données clef} % temps de calculs etc....
 
+Cette section correspond à un résumé des caractéristiques de la base de données.
+
 \subsection{Modèles}
 
 Nous avons crée 15 modèles, qui ont été adaptés depuis autant d'images TDM fournies par le centre hospitalier Lyon-SUD. Pour cela nous avons utilisé les outils fournis par Paul Segars~\cite{segars2001These}.
@@ -311,7 +313,7 @@ Nous avons crée 15 modèles, qui ont été adaptés depuis autant d'images TDM 
 
 \subsection{Lésions}
 
-Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons crée. 173 lésions sont présentes dans le poumon, contre 107 dans le foie. La différence de taille entre les organes explique la petite taille de la base de lésions du foie. 
+Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons créé. 173 lésions sont présentes dans le poumon, contre 107 dans le foie. La différence de taille entre les organes explique la petite taille de la base de lésions du foie. 
 
 Les lésions ont été placées manuellement dans tout le volume de l'organe, en préférant les parties à fort mouvement proche du diaphragme. 
 
@@ -334,7 +336,7 @@ Foie 	(107)	& 8 mm (54)		& 1.8 (11)& 2 (11)  & 2.5 (10)& 3 (11)	& 3.5 (11)\\
 \hline 
  \end{tabular}
 
-\caption[Tableau récapitulatif des lésions]{Tableau récapitulatif des contrastes des lésions présentes dans le foie et les poumon des modèles. Le nombre en parenthèse correspond au nombre de lésions}
+\caption[Tableau récapitulatif des lésions]{Tableau récapitulatif des contrastes des lésions présentes dans le foie et les poumon des modèles. le nombre de lésions est indiqué entre parenthèses.}
 \label{tab:contrastePoumonFoieRecap}
 
 
