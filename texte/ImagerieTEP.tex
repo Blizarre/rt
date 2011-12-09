@@ -100,7 +100,6 @@ Les coïncidences vraies (\ref{fig:schemaDetections}.a) correspondent aux cas o�
 
 %Pour éliminer ces erreurs, un certain nombre de méthodes ont été implémentées, dont le filtrage en énergie et en temps au niveau matériel : ne sont prises en compte que les paires d'événements arrivant dans une fenêtre temporelle et énergétique définie. En effet, les photons déviés vont perdre de l'énergie, ce qui va entraîner leur élimination.
 
-%\todo{pkoi barré?}
 
 Les coïncidences diffusées ainsi que les coïncidences aléatoires génèrent un bruit parasite dans les sinogrammes. L'absorption des photons sans détection va engendrer un effet d'atténuation du signal qui sera de plus en plus important en fonction de la profondeur des tissus et de leur absorption.
 
@@ -217,7 +216,7 @@ Historiquement, les données étaient acquises par coupe : des septas (plaque de
 \begin{figure}
 \centering
 \includegraphics[width=6cm]{images/2D3D}
-\caption[Acquisitions 3D en TEP]{Coupe schématique axiale d'un imageur TEP. Les annihilations représentées en rouge émettent des photons qui sont détectés par des cristaux correspondant à des plans de coupes différents}
+\caption[Acquisitions 3D en TEP]{Coupe schématique axiale d'un imageur TEP. Les annihilations représentées en rouge émettent des photons qui sont détectés par des cristaux correspondant à des plans de coupes différents.}
 \label{fig:2D3D}
 \end{figure}
 
@@ -401,7 +400,7 @@ La différence entre OS-EM et cet algorithme est la manière dont sont sommées 
 Ces algorithmes sont supplantés en oncologie par les algorithmes itératifs qui sont jugés plus performants sur l'évaluation du SUV et moins bruités~\cite{schoder2004clinical}.
 
 Les méthodes analytiques utilisent la rétroprojection des projections du sinogramme pour reconstruire l'image. Si P est l'opération de projection d’une distribution $f(x,y)$ d’un objet vers $p(r, \theta)$, selon l’angle azimutal $\theta$, et $r$ la distance entre la projetée de la LDR dans le plan (x,y) et l’axe x, alors la projection peut s’écrire comme la transformée de Radon de cette distribution :
-\todo{revoir u et r}
+%\todo{revoir u et r}
 \begin{equation}
 p(u, \theta) = P(f(x,y)) = \int\limits_{-\infty}^{+\infty} f(u~cos \theta - v~cos \theta, u~sin \theta + v~cos \theta) dv
 \end{equation}

@@ -1,5 +1,5 @@
 %% Document %%
-\documentclass[12pt, a4paper]{book}
+\documentclass[12pt, twoside, a4paper]{book}
 
 
 %% Packages %%
@@ -76,20 +76,20 @@ $\|$\textbf{A Faire : }#1$\|$
 
 \pagestyle{fancyplain}
 \setlength{\headheight}{17pt}
-\setlength{\headsep}{35pt}
+\setlength{\headsep}{25pt}
 %\setlength{\topmargin}{15pt}
 %\setlength{\voffset}{10pt}
 
-\lhead{\fancyplain{}{}}
-\chead{}
-\rhead{\fancyplain{}{\textit{\leftmark}}}
-\lfoot{}
-\cfoot{\thepage}
-\rfoot{}
+%\lhead{\fancyplain{}{}}
+%\chead{}
+%\rhead{\fancyplain{}{\textit{\leftmark}}}
+%\lfoot{}
+%\cfoot{\thepage}
+%\rfoot{}
 %\fancyfoot[LE,RO]{\thepage}
-%\fancyhead[LE,RO]{}
-%\fancyhead[LO]{\bfseries\rightmark}   
-%\fancyhead[RE]{\bfseries\leftmark}
+\fancyhead[LE,RO]{}
+\fancyhead[LO]{\fancyplain{}{\bfseries\rightmark}}   
+\fancyhead[RE]{\fancyplain{}{\bfseries\leftmark}}
 
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -122,7 +122,6 @@ $\|$\textbf{A Faire : }#1$\|$
 	\input{texte/ImagerieTEP}	
 			
 \part{Mouvement respiratoire}
-
 Cette partie présente tout d'abord la problématique du mouvement respiratoire en TEP. Puis il aborde successivement les différentes techniques permettant d'estimer soit le signal respiratoire, soit le champ de mouvement 3D du patient. Enfin, le dernier chapitre montre comment cette information sur le signal respiratoire ou le champ de mouvement peut être prise en compte pour corriger les phénomènes de dégradation engendrés par la respiration.
 
 	\chapter{Respiration et influence sur les acquisitions TEP/TDM}
@@ -135,6 +134,8 @@ Cette partie présente tout d'abord la problématique du mouvement respiratoire 
 	\input{texte/mvt-correction}
 
 \part{Evaluation des performances de détection}
+Cette partie va présenter tout d'abord les techniques mises en place dans la littérature pour réaliser des comparaison de performances entre plusieurs observateurs, puis une présentation des systèmes de détection. Enfin, le dernier chapitre récapitulera nos choix méthodologiques pour répondre à la problématique.
+
 	\input{texte/eval-perf}
 	\input{texte/transition}
 
@@ -155,7 +156,7 @@ Cette partie présente tout d'abord la problématique du mouvement respiratoire 
 
 \addcontentsline{toc}{part}{Bibliographie}
 \bibliographystyle{apalike}
-\bibliography{biblio}
+\bibliography{bibliographieFinale}
 
 \newpage
 

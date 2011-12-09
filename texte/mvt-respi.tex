@@ -9,9 +9,9 @@ Nous ferons tout d'abord une introduction générale sur le mouvement respiratoi
 Ce mouvement est la succession d'une phase inspiratoire, suivi d'une phase expiratoire. Chacune de ces phases combine plusieurs mouvements élémentaires~\cite{servant2007cours} :
  
 \begin{enumerate}
- \item thoracique, avec un déplacement des côtes
- \item abdominal, avec un déplacement du diaphragme
- \item en cas d'inspiration forcée, action des pectoraux
+ \item Thoracique, avec un déplacement des côtes.
+ \item Abdominal, avec un déplacement du diaphragme.
+ \item En cas d'inspiration forcée, action des pectoraux.
 \end{enumerate}
 
 La figure~\ref{fig:respiXCAT} représente 3 instants du cycle respiratoire utilisé dans le NCAT~\cite{segars2001These}, un modèle de corps humain respirant. On voit clairement tous les effets présentés précédemment, notamment le relèvement des côtes et du sternum par rapport aux guides de référence  présents sur les images.
@@ -118,11 +118,11 @@ Peu de travaux ont été réalisés sur l'impact du mouvement respiratoire sur l
 Voici une liste des critères utilisés dans différentes publications pour évaluer les performances d'algorithmes de correction du mouvement respiratoire :
 
 \begin{enumerate}
- \item Basés sur la récupération de l'activité des lésions, $SUV_{max}$, contraste :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect,detorie2008quantitative}
- \item Sur la visualisation des profils de lésion :~\cite{GuopingChang2010Implementation,Thielemans2006Lesion,lamare2007list}
- \item Sur la récupération du volume et de la position de la lésion :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect}
- \item Sur le rapport signal sur bruit (SNR) :~\cite{GuopingChang2010Implementation}
- \item Sur l'observateur de Hotelling (CHO) :~\cite{Thielemans2006Lesion}
+ \item Basés sur la récupération de l'activité des lésions, $SUV_{max}$, contraste :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect,detorie2008quantitative}.
+ \item Sur la visualisation des profils de lésion :~\cite{GuopingChang2010Implementation,Thielemans2006Lesion,lamare2007list}.
+ \item Sur la récupération du volume et de la position de la lésion :~\cite{GuopingChang2010Implementation,lamare2007list,nehmeh2002effect}.
+ \item Sur le rapport signal sur bruit (SNR) :~\cite{GuopingChang2010Implementation}.
+ \item Sur l'observateur de Hotelling (CHO) :~\cite{Thielemans2006Lesion}.
 \end{enumerate}
 
 Comme on peut le voir, les deux seuls critères qui pourraient s'approcher d'une étude sur la détection sont le SNR et le CHO, mais ils sont largement sous-représentés. 
@@ -132,7 +132,7 @@ Je vais me concentrer sur les deux publications the Thielemans et Chang qui util
 Un autre document par Rahmim Arman~\cite{rahmim4d} propose d'utiliser le CHO pour évaluer l'amélioration de la détection des défauts dans de l'imagerie cardiaque corrigée du mouvement respiratoire. Ce document n'a pas encore donné lieu à publication.
 	
 \subsection{Article de Thielemans et al.~\cite{Thielemans2006Lesion}}
-
+\label{lab:articleThielPres}
 Dans sa publication, Thielemans et al. utilisent le ``Channelized Hotelling Observer'' (CHO)~\cite{barrett1993model}, qui est un observateur dérivé du classifieur linéaire LDA présenté en \ref{lab:LDA}, utilisé en conjonction avec des informations fréquentielles. 
 
 L'étude se base sur des simulations analytiques d'un fantôme thoracique dans lequel sont insérées des lésions sphériques de gros diamètre (13 mm) et de contraste élevé (4.25:1). Cette étude qui compare plusieurs méthodes de correction du mouvement respiratoire est détaillée dans le chapitre suivant en~\ref{lab:evolGating}.

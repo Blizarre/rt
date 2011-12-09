@@ -5,17 +5,17 @@ Nous avons utilisé la base de données présentée dans la partie~\ref{lab:bdd}
 Les techniques de correction du mouvement implémentées sont les suivantes :
 
 \begin{enumerate}
- \item Correction pendant la reconstruction par modification de la matrice système (voir section \ref{lab:corrMatSyst}). Elle sera désignée par l'acronyme \emph{TE-MS} (Transformation \'Elastique de la Matrice Système)
- \item Correction post-reconstruction par recalage des images prises à différents instants du cycle (voir section \ref{lab:corrPostRecon}). Elle sera désignée par l'acronyme \emph{TE-IM} (Transformation \'Elastique des IMages reconstruites) 
+ \item Correction pendant la reconstruction par modification de la matrice système (voir section \ref{lab:corrMatSyst}). Elle sera désignée par l'acronyme \textbf{TE-MS} (Transformation \'Elastique de la Matrice Système).
+ \item Correction post-reconstruction par recalage des images prises à différents instants du cycle (voir section \ref{lab:corrPostRecon}). Elle sera désignée par l'acronyme \textbf{TE-IM} (Transformation \'Elastique des IMages reconstruites).
 \end{enumerate}
 
-Les images TEP corrigées à l'aide de ces deux méthodes sont comparées dans cette partie avec les images non corrigées et des images statiques (qui représentent une correction parfaite). Leurs acronymes sont respectivement \emph{NoCorr} et \emph{Statique}.
+Les images TEP corrigées à l'aide de ces deux méthodes sont comparées dans cette partie avec les images non corrigées et des images statiques (qui représentent une correction parfaite). Leurs acronymes sont respectivement \textbf{NoCorr} et \textbf{Statique}.
 
 L'objectif est d'évaluer les performances des techniques de correction du mouvement sur la détection des lésions de faible contraste et faible diamètre. Pour cela, les performances d'un système de détection automatique seront mesurées à l'aide des courbes F-ROC.
 
 Ce chapitre va tout d'abord présenter la démarche réalisée pour sélectionner les paramètres de reconstruction des images, puis la méthode d'estimation du mouvement utilisée. 
 
-La suite de ce chapitre présente les caractéristiques principales du système d'aide à la détection (CAD) que nous avons proposé (voir chapitre \ref{lab:chapCAD}), l'étape d'optimisation des paramètres de ce CAD que nous avons utilisé, puis la méthode que nous avons développée pour mesurer les performances de détection.
+La suite de ce chapitre présente les caractéristiques principales du système d'aide à la détection (CAD) que nous avons proposé (voir chapitre \ref{lab:chapCAD}), l'étape d'optimisation des paramètres de ce CAD que nous avons utilisée, puis la méthode que nous avons développée pour mesurer les performances de détection.
 
 %%%%%%%%%%%%% EXTRAITE DE LA PARTIE PRECEDENTE
 
@@ -27,7 +27,7 @@ La suite de ce chapitre présente les caractéristiques principales du système 
 
 \section{Reconstruction des images}
 
-Nous avons utilisé le logiciel de reconstruction fourni par le laboratoire LaTIM dans le cadre d'un partenariat, créé et utilisé par Frédéric Lamare pour ses travaux sur la correction du mouvement respiratoire~\cite{lamare2007list}.
+Nous avons utilisé le logiciel de reconstruction fourni par le Laboratoire de Traitement de l'Information Médicale (LaTIM) dans le cadre d'un partenariat, créé et utilisé par Frédéric Lamare pour ses travaux sur la correction du mouvement respiratoire~\cite{lamare2007list}.
 
 Ce logiciel est capable de reconstruire les images acquises en données séquentielles à l'aide de l'algorithme OPL-EM décrit en \ref{lab:OPLEM}. La reconstruction permet de prendre en compte la correction de l'atténuation, mais ne permet pas la correction des coïncidences aléatoires et des coïncidences diffusées. Nous avons donc choisi de simplifier le problème en supposant une correction parfaite de ces deux effets. Pour cela, nous n'avons pas inclus les photons diffusés ou les coïncidences aléatoires dans les données séquentielles. 
 
@@ -38,7 +38,7 @@ L'algorithme utilisé peut intégrer les corrections de mouvement à partir d'un
 
 Lors de l'utilisation des méthodes itératives, il faut définir le nombre d'itérations à appliquer lors de la reconstruction. La figure~\ref{fig:evolRecon} présente des reconstructions  réalisées avec différentes valeurs du nombre d'itérations. L'algorithme OPL-EM utilisé pour réaliser les reconstructions emploie la technique des sous-ensembles pour accélérer la reconstruction.
 
-Le nombre d'itérations totale (nombre d'itération $\times$ Nombre de sous-ensemble) va déterminer la qualité du résultat. Nous avons choisi de travailler avec 5 sous-ensembles et de faire varier le nombre d'itérations de 1 à 7, ce qui correspond à une évaluation de 5 à 35 itérations totales.
+Le nombre d'itérations totale (nombre d'itération $\times$ nombre de sous-ensemble) va déterminer la qualité du résultat. Nous avons choisi de travailler avec 5 sous-ensembles et de faire varier le nombre d'itérations de 1 à 7, ce qui correspond à une évaluation de 5 à 35 itérations totales.
 
 \begin{figure}
 \centering
@@ -128,7 +128,7 @@ Le champ de mouvement est estimé en utilisant une méthode de recalage par B-sp
 
 Où $\beta^n(x)$ est la valeur de la fonction B-spline de degré $n$ au point $x$, et $j$ représente les indices des positions de la grille. Le paramètre $h$ correspond à l'espacement entre les points de la grille. A chaque fonction B-spline de la grille correspond un coefficient de pondération associé nommé $c_j$ qui représente l'apport de la B-spline correspondante au signal final.
 
-Les coefficients $c_j$ sont obtenus à l'aide d'une optimisation multi-échelle sur 3 niveaux : L'estimation est réalisée sur des images de résolution différente, en se basant sur l'estimation à la résolution $r-1$ pour réaliser celle de l'estimation à la résolution $r$. l'optimisation est réalisée par gradient conjugué selon la méthode de Polak-Ribière~\cite{polak1969note}. Nous avons utilisé l'erreur quadratique moyenne pour comme métrique de recalage. Elle a l'avantage d'être simple, rapide, et de ne pas montrer de discontinuités~\cite{ledesma2005spatio}. Nous avons choisi d'utiliser des splines d'ordre 1.
+Les coefficients $c_j$ sont obtenus à l'aide d'une optimisation multi-échelle sur 3 niveaux : L'estimation est réalisée sur des images de résolution différente, en se basant sur l'estimation à la résolution $r-1$ pour réaliser celle de l'estimation à la résolution $r$. L'optimisation est réalisée par gradient conjugué selon la méthode de Polak-Ribière~\cite{polak1969note}. Nous avons utilisé l'erreur quadratique moyenne pour comme métrique de recalage. Elle a l'avantage d'être simple, rapide, et de ne pas montrer de discontinuités~\cite{ledesma2005spatio}. Nous avons choisi d'utiliser des splines d'ordre 1.
 
 
 \subsection{Paramètres de l'estimation de mouvement}
@@ -140,7 +140,7 @@ L'estimation du champ de mouvement est réalisée à partir des 8 images TEP cor
 
 \subsubsection{\'Evaluation de l'estimation de mouvement}
 
-Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la vérité terrain fournie par la carte de labels pour créer une image d'évaluation correspondant à l'image de référence, ainsi qu'une autre correspondant à l'image ``respirante``. Les images d'évaluation sont créées à partir des fantômes de référence en assignant aux organes étudiés (foie et poumon) une valeur de 1, et une valeur plus importante pour les lésions. Le reste a une valeur de 0. Une illustration est présentée dans la figure~\ref{lab:illustrationRecalage}.a). 
+Pour évaluer la performance de chaque jeu de paramètres, nous avons utilisé la vérité terrain fournie par la carte de labels pour créer une image d'évaluation correspondant à l'image de référence, ainsi qu'une autre correspondant à l'image ``respirante``. Les images d'évaluation sont créées à partir des fantômes de référence en assignant aux organes étudiés (foie et poumon) une valeur de 1, et une valeur plus importante pour les lésions. Le reste a une valeur de 0. Une illustration est présentée dans la figure~\ref{lab:illustrationRecalage}.a). 
 
 \begin{figure}
 \centering
@@ -154,14 +154,14 @@ Pour évaluer la performance de chaque jeu de paramètre, nous avons utilisé la
 
 L'image d'évaluation correspondant à l'image ''respirante`` est alors recalée sur l'image de référence à l'aide du champ de mouvement élastique calculé précédemment. Nous évaluons ensuite la qualité du recalage en calculant l'écart quadratique moyen entre les deux images d'évaluation~\ref{lab:illustrationRecalage}.b).
 
-\subsubsection{Optimisation des Paramètres de l'estimateur de mouvement}
+\subsubsection{Optimisation des paramètres de l'estimateur de mouvement}
 
 Nous avons évalué l'influence de l'échantillonnage spatial des B-spline sur la qualité de l'estimation de mouvement. En effet, si l'espacement entre les nœuds de contrôle est trop important, les mouvements locaux vont interférer entre eux et le résultat ne sera pas valide. De la même manière, en cas d'espacement trop faible, la nature extrêmement bruitée des images va engendrer des micro-mouvements parasites locaux. Pour réduire le bruit, nous appliquons un filtrage gaussien de largeur à mi-hauteur égale à 6 mm à chaque itération.
 
 Nous avons évalué le recalage des reconstructions pour les paramètres suivants :
 \begin{description}
- \item[Nombre d'itérations :] Le nombre de sous-ensembles est toujours de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 40.
- \item[Précision de la grille :] nous avons évalué les performances de la détection pour 3 taille différentes, allant d'une grille très peu précise de 2 noeuds en x, y et z, à une grille plus précise avec 5 noeuds en x et y, et 10 noeuds en z. Une grille intermédiaire a été évaluée avec 3 noeuds en x et y, ainsi que 5 noeuds en z.
+ \item[Nombre d'itérations :] Le nombre de sous-ensembles est toujours de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 35.
+ \item[Précision de la grille :] nous avons évalué les performances de la détection pour 3 tailles différentes, allant d'une grille très peu précise de 2 noeuds en x, y et z, à une grille plus précise avec 5 noeuds en x et y, et 10 noeuds en z. Une grille intermédiaire a été évaluée avec 3 noeuds en x et y, ainsi que 5 noeuds en z.
 \end{description}
 
 Les résultats sont présentés dans la figure~\ref{fig:perfsFctIterTaille}. Les meilleures performances sont obtenues pour la configuration $3 \times 3 \times 5$ avec 3 itérations et 5 sous-ensembles.
@@ -178,28 +178,28 @@ Les résultats sont présentés dans la figure~\ref{fig:perfsFctIterTaille}. Les
 Nous avons ensuite souhaité vérifier que la régularisation avait un impact positif sur la qualité du recalage. Nous avons utilisé les paramètres présentés précédemment pour la valider :
 
 \begin{description}
- \item[Nombre d'itérations :] Le nombre de sous-ensembles est de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 40.
+ \item[Nombre d'itérations :] Le nombre de sous-ensembles est de 5, mais nous faisons varier le nombre d'itérations de 1 à 7, ce qui représente un nombre d'itérations totales de 5 à 35.
  \item[Présence ou absence de régularisation pendant la reconstruction :] Une régularisation par filtrage gaussien de largeur à mi-hauteur de 6 mm est appliquée ou non à chaque itération.
 \end{description}
 
-Les résultats sont présentés dans la figure~\ref{lab:perfsFctIterReg}. Ils montrent clairement que la régularisation entraîne une amélioration des performances, et que la meilleure estimation de mouvement est réalisée pour une reconstruction de 3 itérations avec 5 sous-ensembles. Nous avons par conséquent utilisé ces paramètres avec une grille de 3 noeuds en x et en y, soit un espacement de 17cm, et de 5 noeuds en z, soit un espacement de 7.7 cm.
+Les résultats sont présentés dans la figure~\ref{lab:perfsFctIterReg}. Ils montrent clairement que la régularisation entraîne une amélioration des performances, et que la meilleure estimation de mouvement est réalisée pour une reconstruction de 3 itérations avec 5 sous-ensembles. Nous avons par conséquent utilisé ces paramètres avec une grille de 3 noeuds en x et en y, soit un espacement de 17 cm, et de 5 noeuds en z, soit un espacement de 7.7 cm.
 
 \begin{figure}
 \centering
 \includegraphics[width=10cm]{images/perfsRecalageFctIter_crop}
-\caption[Performances de l'estimation de mouvement en fonction de la régularisation]{Performances de l'estimation de mouvement en fonction du nombre d'itérations complètes de la reconstruction selon la présence ou l'absence de régularisation pendant la reconstruction. Plus la valeur en ordonnées (mesure de différence) est faible, meilleure est la performance}
+\caption[Performances de l'estimation de mouvement en fonction de la régularisation]{Performances de l'estimation de mouvement en fonction du nombre d'itérations complètes de la reconstruction selon la présence ou l'absence de régularisation pendant la reconstruction. Plus la valeur en ordonnée (mesure de différence) est faible, meilleure est la performance}
 \label{lab:perfsFctIterReg}
 \end{figure}
 
 
-\section{Méthodes de correction du mouvement respiratoire}
+\section{Description des différents types d'images à évaluer}
 
-Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche. Des images générées sur deux patients sont présentées dans la figure~\ref{fig:exempleImageReconTous}.
+Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche et intégrée dans le logiciel de reocnstruction fourni par le LATIM. Des images générées sur deux patients sont présentées dans la figure~\ref{fig:exempleImageReconTous}.
 
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{images/exempleImageReconToutes}
- \caption[Exemples d'mages reconstruites corrigées et non corrigées du mouvement]{Images reconstruites avec et sans correction du mouvement respiratoire (8 itérations et 5 subsets). Les flèches représentent une lésion du foie de diamètre 8 mm avec un contraste de 3.5 dans le patient 1, ainsi que deux lésions du poumon de 8 mm et de contraste 6.5 pour le patient 2.}
+ \caption[Exemples d'mages reconstruites corrigées et non corrigées du mouvement]{Images reconstruites avec et sans correction du mouvement respiratoire (8 itérations et 5 sous-ensemble). Les flèches représentent une lésion du foie de diamètre 8 mm avec un contraste de 3.5 dans le patient 1, ainsi que deux lésions du poumon de 8 mm et de contraste 6.5 pour le patient 2.}
  \label{fig:exempleImageReconTous}
 \end{figure}
 
@@ -208,7 +208,7 @@ Nous avons choisi de corriger les images TEP en utilisant la méthode de correct
 
 Les images statiques sont reconstruites à partir des données de simulation statiques, réalisées à partir d'une acquisition complète du modèle au premier instant du cycle respiratoire (fin d'expiration).
 
-Chaque image est donc en phase avec la carte d'atténuation qui est elle aussi tirée du modèle en fin d'expiration. Les images ont été reconstruites à l'aide de l'algorithme OPL-EM avec 8 itérations comprenant 5 sous-ensemble chacune.
+Chaque image est donc en phase avec la carte d'atténuation qui est elle aussi dérivée du modèle en fin d'expiration. Les images ont été reconstruites à l'aide de l'algorithme OPL-EM avec 8 itérations comprenant 5 sous-ensembles chacune.
 
 \subsection{Images Non corrigées}
 
@@ -222,9 +222,11 @@ Ces images sont reconstruites en utilisant la méthode décrite en~\ref{lab:Corr
 
 La carte d'atténuation de l'instant de référence est déformée à l'aide des champs de mouvement pour générer 8 cartes d'atténuation. Les données de chaque instant du cycle respiratoire seront corrigées avec la carte d'atténuation correspondante.
 
+Ces images sont reconstruites avec OPL-EM en utilisant 8 itérations et 5 sous-ensembles.
+
 \subsection{Images TE-IM}
 
-La méthode TE-IM est présentée en~\ref{lab:corrPostRecon}. Les 8 images correspondant aux 8 instants du cycle moyen sont reconstruites séparément à l'aide de la carte d'atténuation recalée correspondante. Chacune de ces image est recontruite avec les mêmes paramètres que pour les autre types d'images, soit 8 itérations et 5 subsets. Ces 8 images sont ensuite déformées sur l'image correspondant au premier instant du cycle, à l'aide de la carte de mouvement estimée précédemment. Ces 8 cartes recalées sont ensuite sommées pour obtenir les images corrigées.
+La méthode TE-IM est présentée en~\ref{lab:corrPostRecon}. Les 8 images correspondant aux 8 instants du cycle moyen sont reconstruites séparément à l'aide de la carte d'atténuation recalée correspondante. Chacune de ces images est recontruite avec les mêmes paramètres que pour les autre types d'images, soit 8 itérations et 5 sous-ensembles. Ces 8 images sont ensuite déformées sur l'image correspondant au premier instant du cycle, à l'aide de la carte de mouvement estimée précédemment. Ces 8 cartes recalées sont ensuite sommées pour obtenir les images corrigées.
 
 Bien que chaque image prise indépendamment soit très bruitée à cause du faible nombre d'évènements, la déformation suivie par la sommation des différentes images apporte une régularisation importante, comme on peut le voir dans la figure~\ref{fig:exempleImageReconTous}. 
 
@@ -237,7 +239,7 @@ Le CAD utilise des informations fréquentielles obtenues par décomposition des 
 
 Le nombre de tumeurs utilisées pour générer la base d'apprentissage est de 107 pour la base d'apprentissage poumon et 173 pour la base d'apprentissage foie. Ce nombre est relativement faible~\cite{hua2005optimal} par rapport à la taille du vecteur de caractéristiques utilisé pour le CAD (entre 24 et 32), ce qui nécessite de prendre en compte un maximum de données pour l'apprentissage et le test pour éviter le sous-apprentissage. Nous avons donc utilisé une méthode d'évaluation des performances par resubstitution. Cela signifie que les apprentissages et les tests sont réalisés sur la même base de données constituée de 15 patients présentés dans le chapitre 10. %\ref{lab:bdd}.
 
-\subsection{Vecteur de Caractéristiques}
+\subsection{Vecteur de caractéristiques}
 
 Nous avons choisi d’utiliser une décomposition en ondelettes 3D non décimées par banc de filtres. Dans le cas tridimensionnel, la décomposition par banc de filtres est résumée par la figure \ref{fig:ondelettes}. L’image de départ est traitée successivement dans les trois directions de l’espace par un filtre fréquentiel passe-haut correspondant à la fonction d’ondelettes (noté $H$) et passe-bas correspondant à la fonction d’échelle (noté $L$). 
 
@@ -255,7 +257,7 @@ Nous avons choisi d’utiliser une décomposition en ondelettes 3D non décimée
 \end{figure}
 
 
-Ainsi sept images de détails (HHH, LLH, \dots) et une image d’approximation (LLL) sont produites pour chaque niveau $j$ de décomposition. Les huit images du niveau suivant $j+1$ sont générées de la même manière, mais en considérant l’image d’approximation $LLL_j$ du niveau précédent comme image de départ. Les caractéristiques des images, rassemblées dans un vecteur descripteur de taille $8 \times j$, correspondent ici à l’ensemble de ces coefficients pour chaque voxel  de l’image. Des exemples d'images obtenues par les filtrages sont présentés dans la figfure \ref{fig:bior44Ex}.
+Ainsi sept images de détails (HHH, LLH, \dots) et une image d’approximation (LLL) sont produites pour chaque niveau $j$ de décomposition. Les huit images du niveau suivant $j+1$ sont générées de la même manière, mais en considérant l’image d’approximation $LLL_j$ du niveau précédent comme image de départ. Les caractéristiques des images, rassemblées dans un vecteur descripteur de taille $8 \times j$, correspondent ici à l’ensemble de ces coefficients pour chaque voxel  de l’image. Des exemples d'images obtenues par les filtrages sont présentés dans la figure \ref{fig:bior44Ex}.
 
 Nous utilisons l'ondelette biorthogonale 4/4 dont la fonction est présentée sur la figure \ref{fig:bior44}.
 
@@ -290,7 +292,7 @@ Le SVM va calculer un modèle décrivant l'hyperplan permettant de séparer les 
 
 \subsection{Génération des sites présumés}
 \label{lab:aggregatsCAD}
-Une fois le classifieur entraîné, il est capable de classer rapidement les nouveaux vecteurs de caractéristiques. Ainsi, on lui soumet les données correspondants aux voxels des images pour qu'il les classe. On obtient donc en sortie un ensemble de cartes de score (une par image 3D), dans lesquelles chaque voxel correspond au score indiqué par le SVM. Ce score est une mesure de distance polarisé par rapport à l'hyperplan de séparation dans l'espace des points d'apprentissage, et donne en plus de la classe, une mesure assimilable à la confiance du SVM vis-à-vis de sa classification.
+Une fois le classifieur entraîné, il est capable de classer rapidement les nouveaux vecteurs de caractéristiques. Ainsi, on lui soumet les données correspondants aux voxels des images pour qu'il les classe. On obtient en sortie un ensemble de cartes de score (une par image 3D), dans lesquelles chaque voxel correspond au score indiqué par le SVM. Ce score est une mesure de distance polarisée par rapport à l'hyperplan de séparation dans l'espace des points d'apprentissage, et donne, en plus de la classe, une mesure assimilable à la confiance du SVM vis-à-vis de sa classification.
 
 Cette carte de score est ensuite seuillée pour fournir une carte binaire, indiquant pour chaque voxel la classe sélectionnée par le SVM pour ce niveau de seuil. Le mécanisme de sélection du seuil est défini en \ref{lab:selectionSeuil}. Une exemple de carte de score est visible dans la figure \ref{fig:cheminementCAD}.a.
 	
@@ -304,7 +306,7 @@ Les agrégats sont classés en LL (Lésion localisée) et NL (Non Lésion) selon
 
 Soit $\mathbf{L}$ l'ensemble des points de la lésion, $\mathbf{A}$ les points correspondant à l'amas candidat.
 
-Les agrégats seront considérés comme des vrai positifs si ils intersectent une tumeur selon les règles décrites ci-après, ou comme de faux positifs dans le cas contraire. Cependant, si leur taille est inférieure à la taille minimale définie par la première règle, l'amas n'est pas considéré.
+Les agrégats seront considérés comme des vrais positifs si ils intersectent une tumeur selon les règles décrites ci-après, ou comme des faux positifs dans le cas contraire. Cependant, si leur taille est inférieure à la taille minimale définie par la première règle, l'amas n'est pas considéré.
 
 Règles de classification :
 \begin{enumerate}
@@ -346,7 +348,7 @@ Les différentes étapes de l'évaluation des performances nécessitent de fixer
 
 \subsubsection{Paramètres de la base d'apprentissage}
 
-Nous avons identifié plusieurs autres paramètres qui, sont suceptible d'influencer les performances de détection :
+Nous avons identifié plusieurs autres paramètres qui, sont suceptibles d'influencer les performances de détection :
 
 \begin{enumerate}
  \item \textbf{Normalisation :} Le but de la normalisation est d'homogénéiser les plages de valeurs des différentes caractéristiques pour faciliter le travail du classifieur, dont les paramètres $C$ et $\gamma$ (définis ci-après) dépendent de la distance entre les points et ne permettent pas de gérer des différences trop importantes d'étendues dans les caractéristiques.  Nous avons proposé de comparer deux méthodes de normalisation. La première consiste à modifier les données pour que la moyenne et l'écart-type aient une valeur respectivement de 0 et 1 ($(\mu, \sigma)=(0,1)$). Cette méthode est notée ``\emph{moyenne}'' dans la suite du texte. La seconde méthode consiste à adapter des données pour que l'ensemble des valeurs soit comprises entre -1 et +1. Cette méthode est notée ``\emph{écart}''. La première méthode (\emph{moyenne}) a l'avantage d'être relativement peu sensible aux valeurs extrêmes, contrairement à la seconde (\emph{écart}).
@@ -355,19 +357,19 @@ Nous avons identifié plusieurs autres paramètres qui, sont suceptible d'influe
  \item \textbf{Nombre de points de la base d'apprentissage :} Le nombre de point de la base d'apprentissage détermine directement la qualité du modèle. Le nombre de caractéristiques de chaque exemple de la base est de $8 \times j$, avec $j$ le niveau de décomposition des images. Il n'existe pas de règle définitive pour choisir le nombre d'exemples nécessaires en fonction du nombre de caractéristiques, mais l'on considère cependant que le nombre d'échantillons de la base d'apprentissage doit être largement supérieur au nombre de caractéristiques pour éviter le sur-apprentissage. Cependant, les SVM sont relativement efficaces pour éviter ce problème. Dans notre étude, le nombre de cas pathologiques est de 173 pour le poumon et de 107 pour le foie. Il faudrait idéalement sélectionner autant de cas ``sains'' que de cas pathologiques pour chaque organe. Cependant le nombre total de cas risque d'être trop faible par rapport au nombre de caractéristiques. Nous avons par conséquent analysé l'influence du nombre de cas sur les performances de détection en considérant trois valeurs : 100 points normaux par images (pts/im.) (soit 1500 pts. négatifs), 200 pts/im. (soit 3000 pts. négatifs) et 1000 pts/im. (soit 15000 pts. négatifs).
 
 
- \item \textbf{positions des points extraits :} Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatifs de l'ensemble des cas rencontrés dans la base de tests, néanmoins les bords de certains organes ont un profil proche de celui des tumeurs, et rendent l'estimation de la surface de séparation plus difficile. Nous avons donc voulu évaluer la performance du CAD sur une base dépourvue de ces données ambiguës. Pour cela nous avons réalisé une érosion de 2 voxels sur les masques des volumes sains à extraire, afin de ne pas prendre en compte les frontières des organes.
+ \item \textbf{Positions des points extraits :} Les points normaux extraits des images pour alimenter la base vont avoir une influence directe sur la qualité des résultats. Idéalement ils devraient être représentatifs de l'ensemble des cas rencontrés dans la base de tests, néanmoins les bords de certains organes ont un profil proche de celui des tumeurs, et rendent l'estimation de la surface de séparation plus difficile. Nous avons donc voulu évaluer la performance du CAD sur une base dépourvue de ces données ambiguës. Pour cela nous avons réalisé une érosion de 2 voxels sur les masques des volumes sains à extraire, afin de ne pas prendre en compte les frontières des organes.
 \end{enumerate}
 
 
 
 \subsubsection{Paramètres du classifieur}
 \label{lab:paramClassif}
-Le classifieur (SVM) utilise les données d'apprentissage formatées selon les choix opérés précédemment (normalisation, volumes utilisés pour extraire les points de la base de points ''sain`` et nombre de ces points) pour générer un modèle de prédiction. Cependant, cet algorithme dispose de paramètres intrinsèques, qui sont beaucoup plus dépendant des données d'apprentissage (voir \ref{lab:SVM}).
+Le classifieur (SVM) utilise les données d'apprentissage formatées selon les choix opérés précédemment (normalisation, volumes utilisés pour extraire les points de la base de points ''sain`` et nombre de ces points) pour générer un modèle de prédiction. Cependant, cet algorithme dispose de paramètres intrinsèques, qui sont beaucoup plus dépendans des données d'apprentissage (voir \ref{lab:SVM}).
 
 \begin{description}
- \item[Niveau de la décomposition en ondelettes $j$ :] Ce paramètre détermine la taille du vecteur de caractéristiques. il correspond au nombre de niveaux de décomposition pris en compte par le SVM. Les niveaux de décomposition élevés ($j$ grand) correspondant à des informations de très basse fréquence, les informations qu'ils apportent ne sont pas forcément pertinentes pour la détection des lésions. Cependant, les caractéristiques fréquentielles des images générées par les différents jeux d'images étant différentes, il est nécessaire d'adapter ce paramètre à chaque type d'images.
- \item[Coefficient de pénalisation $C$ :] lors du calcul de l'hyperplan de séparation des données, chaque point mal classé va pénaliser la surface selon un facteur proportionnel à $C$, comme indiqué en~\ref{lab:SVM}.
- \item[Largeur de bande $\gamma$ :] cette valeur influe directement la largeur de bande du noyau utilisé par le classifieur (Fonction de Base Radiale gaussienne, ou RBF). Voir la description du SVM en~\ref{lab:SVM}
+ \item[Niveau de la décomposition en ondelettes $j$ :] Ce paramètre détermine la taille du vecteur de caractéristiques. Il correspond au nombre de niveaux de décomposition pris en compte par le SVM. Les niveaux de décomposition élevés ($j$ grand) correspondant à des informations de très basse fréquence, les informations qu'ils apportent ne sont pas forcément pertinentes pour la détection des lésions. Cependant, les caractéristiques fréquentielles des images générées par les différents jeux d'images étant différentes, il est nécessaire d'adapter ce paramètre à chaque type d'images.
+ \item[Coefficient de pénalisation $C$ :] lors du calcul de l'hyperplan de séparation des données, chaque point mal classé va pénaliser la surface selon un facteur proportionnel à $C$, comme indiqué dans le paragraphe~\ref{lab:SVM}.
+ \item[Largeur de bande $\gamma$ :] cette valeur influe directement la largeur de bande du noyau utilisé par le classifieur (Fonction de Base Radiale gaussienne, ou RBF), comme indiqué dans la description du SVM présentée au paragraphe~\ref{lab:SVM}.
 \end{description}
 
 \subsection{Méthodes d'optimisation}
@@ -389,9 +391,9 @@ Les critères de performance que nous avons sélectionnés sont la sensibilité 
 Pour choisir les meilleurs paramètres du classifieur, j'ai effectué une recherche exhaustive par grille avec les paramètres suivants :
 
 \begin{description}
- \item [$C$ :] de 1 à 10000 en 15 pas logarithmiques
- \item [$\gamma$ :] de 0.0001 à 1 en 15 pas logarithmiques
- \item [$j$ :] de 1 à 4, soit de 8 à 32 caractéristiques
+ \item [$C$ :] de 1 à 10000 en 15 pas logarithmiques.
+ \item [$\gamma$ :] de 0.0001 à 1 en 15 pas logarithmiques.
+ \item [$j$ :] de 1 à 4, soit de 8 à 32 caractéristiques.
 \end{description}
 
 L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa2006} pour chaque type d'image. Les indicateurs de performance calculés par validation croisée sont les suivants : sensibilité, spécificité et précision définis dans le chapitre 7 (section \ref{lab:pressensib}). Le triplet de paramètres retenu est celui qui maximise la sensibilité.
@@ -399,7 +401,7 @@ L'optimisation a été réalisée à l'aide du logiciel rapid-i~\cite{mierswa200
 Nous avons représenté pour chaque jeu d'image le nuage de points correspondant à la répartition de chaque triplet ($C, \gamma, j)$ dans un espace à deux dimensions (``Sensibilité'', ``Spécificité''). De ce nuage de points nous pouvons voir le front de Pareto. Ce type de diagramme permet de rechercher un optimum selon plusieurs critères antagonistes. Dans notre cas, nous voulons à la fois une sensibilité et une spécificité importante, sachant qu'il n'existe pas de jeu de paramètres ''parfaits`` qui permettent d'avoir 100\% aux deux. Dans notre cas, le front de Pareto va permettre de vérifier que le choix par maximisation de la sensibilité ne se fait pas au détriment de la spécificité.
 
 
-\subsection{Mesure de performances de détections}
+\subsection{Mesure des performances de détection}
 \label{lab:selectionSeuil}
 \label{lab:optimIMSTNOMS}
 Les performances de détection obtenues par la méthode de validation croisée considère uniquement le voxel central de la tumeur
@@ -421,7 +423,7 @@ Le second critère utilisé pour comparer les bases d'apprentissage est la figur
 
 L'optimisation des paramètres décrits dans la section~\ref{lab:optimParametres} nous a permis de fixer les paramètres de la base d'apprentissage (normalisation, nombre de cas sains, localisation des cas sains).
 
-Afin de comparer les performances des quatre séries (statique, non corrigéee, TE-IM et TE-MS) nous avons dans un premier temps réalisé une nouvelle optimisation des paramètres ($C$, $\gamma$, $j$) pour chaque type d'images en suivant la méthode décrite en~\ref{lab:optimCGJ}. Puis nous avons comparé les courbes F-ROC et réalisé une étude JAFROC comme décrit dans la section~\ref{lab:optimIMSTNOMS}
+Afin de comparer les performances des quatre séries d'images (statique, non corrigéee, TE-IM et TE-MS) nous avons dans un premier temps réalisé une nouvelle optimisation des paramètres ($C$, $\gamma$, $j$) pour chaque type d'images en suivant la méthode décrite en~\ref{lab:optimCGJ}. Puis nous avons comparé les courbes F-ROC et réalisé une étude JAFROC comme décrit dans la section~\ref{lab:optimIMSTNOMS}
 
 
 
@@ -430,7 +432,7 @@ Afin de comparer les performances des quatre séries (statique, non corrigéee, 
 
 \chapter{Analyse des résultats}
 
-Dans ce chapitre nous détaillons les performances de détection obtenus par les quatre séries d'images que nous avons comparées : TE-IM, TE-MS, Statiques et Non Corrigées. Nous commençons par présenter les courbes obtenues lors de l'étape d'optimisation et d'adaptation du CAD aux données, puis nous parlons des performances de détection obtenues par ce CAD sur les lésions hépatiques et pulmonaires.
+Dans ce chapitre, nous détaillons les performances de détection obtenue par les quatre séries d'images que nous avons comparées : TE-IM, TE-MS, Statiques et Non Corrigées. Nous commençons par présenter les courbes obtenues lors de l'étape d'optimisation et d'adaptation du CAD aux données, puis nous parlons des performances de détection obtenues par ce CAD sur les lésions hépatiques et pulmonaires.
 
 Dans tous les cas, l'estimation des performances se fait de la manière suivante :
 
@@ -438,7 +440,7 @@ Dans tous les cas, l'estimation des performances se fait de la manière suivante
  \item Optimisation des paramètres du classifieur au jeu de données.
  \item Comparaison des courbes Free-ROC.
  \item Comparaison des Figures de Mérite JAFROC.
- \item Conclusion
+ \item Conclusion.
 \end{itemize}
 
 
@@ -447,12 +449,12 @@ Dans tous les cas, l'estimation des performances se fait de la manière suivante
 Nous avons réalisé des mesures de performances pour les différentes valeurs des paramètres suivants :
 
 \begin{itemize}
- \item Nombre de points de la base d'apprentissage (100, \textbf{200}, 1000)
- \item Normalisation des données (\textbf{moyenne}, écart)
- \item Position des points de la base d'apprentissage (\textbf{organe complet}, organe avec érosion)
+ \item Nombre de points de la base d'apprentissage (100, \textbf{200}, 1000).
+ \item Normalisation des données (\textbf{moyenne}, écart).
+ \item Position des points de la base d'apprentissage (\textbf{organe complet}, organe avec érosion).
 \end{itemize}
 
-La recherche des paramètres optimaux a été réalisée sur le foie, pour la série d'images statiques, afin de ne pas être influencé par les artefacts des méthodes de correction du mouvement respiratoire. Pour sélectionner le jeu de paramètre optimal, nous avons créée une base \textbf{Témoin} comprenant les valeurs en gras des paramètres présentés ci-dessus. Toutes les autres bases reprennent les valeurs de la base Témoin en modifiant un seul paramètre. Nous utiliseront par la suite les termes définis ci-dessous pour qualifier les 5 jeux de paramètres :
+La recherche des paramètres optimaux a été réalisée sur le foie, pour la série d'images statiques, afin de ne pas être influencé par les artefacts des méthodes de correction du mouvement respiratoire. Pour sélectionner le jeu de paramètre optimal, nous avons créé une base \textbf{Témoin} comprenant les valeurs en gras des paramètres présentés ci-dessus. Toutes les autres bases reprennent les valeurs de la base Témoin en modifiant un seul paramètre. Nous utilisons par la suite les termes définis ci-dessous pour qualifier les 5 jeux de paramètres :
 
 \begin{description}
  \item[Base Témoin : ] contient des données normalisées par la méthode ''moyenne`` avec 200 points sains extraits de chaque ensemble du volume des organes.
@@ -526,7 +528,7 @@ La table \ref{fig:paramsParams} référence tous les paramètres sélectionnés 
 
 Il est intéressant de constater que les performances en sensibilité pour les bases \textbf{Appauvrie}, \textbf{Témoin} et \textbf{Enrichie} sont inversement proportionnelles à la taille de la base. En effet, plus la complexité de la base est importante, plus il devient difficile de trouver une surface de séparation efficace. Cependant, une base trop simpliste va engendrer une solution qui sera sans rapport avec la réalité, comme nous le verrons plus loin avec les courbes F-ROC.
 
-Les valeurs de spécificité sont toutes très supérieures à 99\%, ce qui montre que le classifieur n'a pas de problème pour classer correctement les points sains. En effet, la base étant très déséquilibrée, avec un rapport de 17 points sains pour 1 point ''lésion`` dans la base \textbf{Témoin}, il est normal que le classifieur favorise la classification des points ''sain''. Il existe des techniques classiques permettant de compenser ce déséquilibre lors de l'apprentissage, notamment le choix d'un paramètre de pénalisation $C$ différents pour chacune des classes, mais tous les tests que nous avons réalisés n'ont pas montré d'amélioration du résultat. En effet, l'étape de sélection du seuil (voir section suivante) permet de compenser ces différences.
+Les valeurs de spécificité sont toutes très supérieures à 99\%, ce qui montre que le classifieur n'a pas de problème pour classer correctement les points sains. En effet, la base étant très déséquilibrée, avec un rapport de 17 points sains pour 1 point ''lésion`` dans la base \textbf{Témoin}, il est normal que le classifieur favorise la classification des points ''sains''. Il existe des techniques classiques permettant de compenser ce déséquilibre lors de l'apprentissage, notamment le choix d'un paramètre de pénalisation $C$ différent pour chacune des classes, mais tous les tests que nous avons réalisés n'ont pas montré d'amélioration du résultat. En effet, l'étape de sélection du seuil (voir section suivante) permet de compenser ces différences.
 
 Il est intéressant d'observer que les fronts de Pareto de la base \textbf{Témoin 2} sont très semblables à ceux de la base \textbf{Témoin} pour une décomposition au troisième niveau. Des disparités apparaissent pour le quatrième niveau, mais les performances optimales sont obtenues pour le même jeu de paramètre. Cela semble indiquer que la base d’apprentissage est suffisamment complète en exemples de lésions.
 \begin{table}[h!]
@@ -562,7 +564,7 @@ Précision& 0.98		& 0.98		& 0.97		& 0.99		& 0.98 \\
 
 Les courbes Free-ROC de la figure \ref{lab:froc_comp_static} permettent de comparer les performances du CAD sur les différentes bases d'apprentissage. Les courbes ont volontairement été tronquées à 40 faux positifs par image, car ce nombre est déjà trop important pour un système CAD.
 
-On peut observer que les courbes correspondants aux bases \textbf{Témoin} et \textbf{Enrichie} atteignent leur maximum de sensibilité pour un nombre de faux positifs relativement faible par rapport aux autres bases : entre 17 et 20 faux positifs pour ces bases, contre plus de 40 pour les bases \textbf{Appauvrie} et \textbf{Érodée}. Cela tend à montrer que le système CAD est plus performant pour ces bases car il crée moins d'agrégats là ou il n'y a pas de lésions.
+On peut observer que les courbes correspondant aux bases \textbf{Témoin} et \textbf{Enrichie} atteignent leur maximum de sensibilité pour un nombre de faux positifs moyen par image (NFM) relativement faible par rapport aux autres bases : entre 17 et 20 faux positifs pour ces bases, contre plus de 40 pour les bases \textbf{Appauvrie} et \textbf{Érodée}. Cela tend à montrer que le système CAD est plus performant pour ces bases car il crée moins d'agrégats là ou il n'y a pas de lésions.
 
 En ce qui concerne la sensibilité maximale obtenue sur les courbes, elle est atteinte pour la base \textbf{Témoin} avec environ 62\% de sensibilité, suivie par la base \textbf{Appauvrie} avec 60\%, mais pour un nombre de faux positifs beaucoup plus important (38 contre 18 pour la base \textbf{Témoin}). La troisième courbe est la courbe \textbf{Normalisation Écart}, suivie par la base enrichie puis la base \textbf{Érodée}. Il est important de noter que les sensibilités maximales observées sont très proches, entre 55\% et 62\%, ce qui indique que la qualité de la base d'apprentissage n'a pas d'impact réel sur la sensibilité maximale atteinte par le CAD, mais qu'il pourra être plus ou moins difficile pour ce dernier de différencier les lésions du bruit de fond. 
 
@@ -591,13 +593,13 @@ D'un point de vue statistique, la p-valeur (voir \ref{lab:p-valeur}) calculée p
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_param}
  \end{center}
- \caption{Les FDM (Figure de Mérite) JAFROC obtenues pour les différents paramètres de génération de la base d'apprentissage. Les bases Témoin, \'Erodée et Enrichie montrent les meilleures performances, avec un faible avantage pour la base Témoin. Les bases Normélisée écart et Appauvrie ont une figure de mérite nettement plus faible.}
+ \caption{Les FDM (Figure de Mérite) JAFROC obtenues pour les différents paramètres de génération de la base d'apprentissage. Les bases \textbf{Témoin}, \textbf{\'Erodée} et \textbf{Enrichie} montrent les meilleures performances, avec un faible avantage pour la base \textbf{Témoin}. Les bases \textbf{Normalisée écart} et \textbf{Appauvrie} ont une figure de mérite nettement plus faible.}
  \label{lab:fom_param}
 \end{figure}
 
 \subsection{Conclusion}
 
-Nous avons vu que tous les indicateurs montrent que le maximum de performance est apporté par la base \textbf{Témoin}. De plus, les  performances relativement proches de la base \textbf{Témoin 2} semblent indiquer que les performances sont stables. Nous allons donc conserver les paramètres de cette base pour la comparaison des différents type d'images :
+Nous avons vu que tous les indicateurs montrent que le maximum de performance est apporté par la base \textbf{Témoin}. De plus, les  performances relativement proches de la base \textbf{Témoin 2} semblent indiquer que les performances sont stables. Nous allons donc conserver les paramètres de cette base pour la comparaison des différents types d'images :
 
 Pas d'érosion, une normalisation visant à ramener la moyenne et l'écart-type sur les caractéristiques à 1, et 200 points extraits de chaque image de la base d'apprentissage.
  
@@ -609,8 +611,8 @@ Pas d'érosion, une normalisation visant à ramener la moyenne et l'écart-type 
 Les paramètres de génération de la base d'apprentissage retenus sont ceux de la base \textbf{Témoin}. Ils correspondent aux choix suivants :
 
 \begin{itemize}
- \item 200 points tirés aléatoirement dans le volume complet du poumon de chaque image (hors tumeurs)
- \item normalisation par neutralisation de la moyenne et de la variance, tels que $(\mu, \sigma) = (0,1)$
+ \item 200 points tirés aléatoirement dans le volume complet du poumon de chaque image (hors tumeurs).
+ \item normalisation par neutralisation de la moyenne et de la variance, tels que $(\mu, \sigma) = (0,1)$.
 \end{itemize}
 
 
@@ -642,7 +644,7 @@ Quatre jeux d'images seront comparés :
 {\small c) NoCorr}
 
 \end{center}
- \caption[Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image \textbf{TE-IM}, b) les images non corrigées du mouvement, et c) les images corrigées par la méthode LOR.}
+ \caption[Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image \textbf{TE-IM}, b) les images corrigées par la méthode \textbf{TE-MS}, et c) les images \textbf{NoCorr}.}
 \label{fig:paretoModalite} 
 \end{figure}
 
@@ -683,7 +685,7 @@ Précision& 0.98		& 0.98		& 0.98		& 0.98		\\
 
 De la même manière que pour la sélection de la meilleure base d'apprentissage, il faut adapter les paramètres du classifieur ($C$, $\gamma$, $j$) aux bases des quatre jeux d'images que nous souhaitons comparer.
 
-La figure \ref{fig:paretoModalite} montre les nuages de points associés aux différents triplets de paramètres ($C$, $\gamma$, $j$) pour chaque type d'images. Les performances des images statiques sont celles présentées sur la base \textbf{Témoin} de la figure \ref{fig:paretoParams1}.a. La table \ref{tab:paramsModPoumon} résume les triplets ($C$, $\gamma$, $j$) correspondant aux meilleures performances mesurées à l'aides des nuages de points des figures \ref{fig:paretoParams1}.a et \ref{fig:paretoModalite}.
+La figure \ref{fig:paretoModalite} montre les nuages de points associés aux différents triplets de paramètres ($C$, $\gamma$, $j$) pour chaque type d'images. Les performances des images statiques sont celles présentées sur la base \textbf{Témoin} de la figure \ref{fig:paretoParams1}.a. La table \ref{tab:paramsModPoumon} résume les triplets ($C$, $\gamma$, $j$) correspondant aux meilleures performances mesurées à l'aide des nuages de points des figures \ref{fig:paretoParams1}.a et \ref{fig:paretoModalite}.
 
 Il est étonnant de constater que la base \ref{fig:paretoParams1}.a, qui correspond aux images \textbf{Statique}, offre les plus mauvaises performances pour la décomposition de niveau 1 (17\% de sensibilité). La mauvaise performance de cette base d'apprentissage se retrouve pour tous les niveaux de décomposition. Le résultat est également souligné par le tableau \ref{tab:paramsModPoumon} (sensibilité de 75\% contre des valeurs supérieures à 80\% pour les autres type d'images). On peut cependant observer que les nuages de points des autres jeux d'images ont la même distribution spatiale que ceux de la base \textbf{Statique}, par opposition aux distributions des bases \textbf{Érodée} ou \textbf{Normalisée Écart} vues dans la partie précédente. Par exemple, pour $j=1$, on observe une forte corrélation de la sensibilité et de la spécificité pour les base \textbf{Statique}, \textbf{NoCorr}, \textbf{TE-IM} et \textbf{TE-MS} que l'on ne retrouve pas pour les bases \textbf{Érodée} et \textbf{Normalisée Écart}. 
 
@@ -691,7 +693,7 @@ On peut observer qu'il y a une forte corrélation entre la sensibilité et la sp
 
 Le type d'images ayant les meilleures performances pour la décomposition de niveau 2 est \textbf{TE-IM}, avec plus de 70\% de sensibilité, comparés aux 60\% de la base \textbf{Statique}. 
 
-Les meilleures performances du CAD sont atteintes pour le troisième niveau de décomposition pour tous les types d'images sauf \textbf{TE-MS}, avec une sensibilité d'environ 81 et 83\% pour TE-IM et NoCorr, et 75\% pour la base \textbf{Statique}. Les performances maximales sur TE-MS sont atteintes pour $j=4$.
+Les meilleures performances du CAD sont atteintes pour le troisième niveau de décomposition pour tous les types d'images sauf \textbf{TE-MS}, avec une sensibilité d'environ 81 et 83\% pour TE-IM et NoCorr, et 75\% pour la base \textbf{Statique}. Les performances maximales sur \textbf{TE-MS} sont atteintes pour $j=4$.
 
 La spécificité observée pour les meilleurs jeux de paramètres est sensiblement la même quelque soit le type d'image, entre 99\% et 99.5\%.
 
@@ -708,12 +710,11 @@ En dessous de 5 faux positifs par image, les courbes sont trop proches pour pouv
 
 Globalement, le graphique montre que le maximum de performance est apporté par la base \textbf{Statique}, suivi par la base \textbf{TE-IM}. Les bases \textbf{TE-MS} et \textbf{NoCorr} sont très proches l'une de l'autre mais nettement en dessous des deux premières en terme de FLL, à NFM égale.
 
-%\todo{vérifier plus de FLN}
 \begin{figure}[h!]
  \begin{center}
    \includegraphics[width=13cm]{images/FROC_mod_corrige}
  \end{center}
- \caption{Courbe Free-ROC comparant les performances du CAD selon la technique de correction du mouvement respiratoire.}
+ \caption{Courbe Free-ROC comparant les performances du CAD sur les lésions pulmonaires selon la technique de correction du mouvement respiratoire.}
  \label{fig:froc_mod}
 \end{figure}
 
@@ -732,7 +733,7 @@ Les figures de mérite obtenues par l'algorithme de JAFROC sont présentées dan
 
 \subsection{Conclusion}
 
-Les résultats présentés précédemment indiquent que les techniques de correction du mouvement respiratoire améliorent les performances de détection par rapport aux images non corrigées pour les lésions pulmonaires. Le résultat est net pour \textbf{TE-IM}, surtout lorsque l'on regarde les courbes F-ROC. Il est plus difficile de statuer sur les performances de la méthode \textbf{TE-MS}, dont les performances selon JAFROC sont au même niveau que celles de la méthode \textbf{TE-IM}, mais qui est nettement moins performante que cette dernière sur les courbes F-ROC.
+Les résultats présentés précédemment indiquent que les techniques de correction du mouvement respiratoire améliorent les performances de détection par rapport aux images \textbf{NoCorr} pour les lésions pulmonaires. Le résultat est net pour \textbf{TE-IM}, surtout lorsque l'on regarde les courbes F-ROC. Il est plus difficile de statuer sur les performances de la méthode \textbf{TE-MS}, dont les performances selon JAFROC sont au même niveau que celles de la méthode \textbf{TE-IM}, mais qui est nettement moins performante que cette dernière sur les courbes F-ROC.
 
 
 \FloatBarrier
@@ -746,9 +747,9 @@ Les figures \ref{fig:paretoModalite19_1} et \ref{fig:paretoModalite19_2} nous mo
 
 Pour le premier niveau de décomposition ($j=1$), les images \textbf{Statique}, \textbf{TE-IM} et \textbf{TE-MS} montrent une très grande dispersion des valeurs de performances. \textbf{NoCorr}, par contre, montre des points plus proches, mais avec des sensibilités très faibles (inférieures à 15\%). Cette dispersion montre une rupture par rapport à la corrélation observée sur les bases du poumon.
 
-De la même manière que pour $j=1$, les performances obtenues pour $j=2$ montrent une dispersion très importante des points pour les images \textbf{Statique} et \textbf{TE-IM}. Le nuage de points correspondant à \textbf{TE-MS} a une forme plus proche de celles observées précédemment. La base non corrigée est clairement en difficulté car l'apport des informations du second niveau de décomposition diminue les performances maximales du CAD en sensibilité.
+De la même manière que pour $j=1$, les performances obtenues pour $j=2$ montrent une dispersion très importante des points pour les images \textbf{Statique} et \textbf{TE-IM}. Le nuage de points correspondant à \textbf{TE-MS} a une forme plus proche de celles observées précédemment. La base \textbf{NoCorr} est clairement en difficulté car l'apport des informations du second niveau de décomposition diminue les performances maximales du CAD en sensibilité.
 
-En ajoutant les informations des niveaux de décomposition supérieurs, on observe une amélioration nette des performances, surtout pour la base \textbf{NoCorr}. Tous les type d'images montrent une amélioration des performances lorsque l'on  prend en compte le 4è niveau de décomposition, par opposition aux tumeurs du poumon où l'ajout de ces informations faisait baisser les performances du CAD. \'Etant donné que les informations fournies par le quatrième niveau de décomposition des ondelettes sont de très basse fréquence, elles ne donnent pas d'information sur la lésion elle-même mais sur son environnement. Cela semble indiquer que le classifieur est mal adapté pour gérer ces données.
+En ajoutant les informations des niveaux de décomposition supérieurs, on observe une amélioration nette des performances, surtout pour la base \textbf{NoCorr}. Tous les types d'images montrent une amélioration des performances lorsque l'on  prend en compte le quatrième niveau de décomposition, par opposition aux tumeurs du poumon où l'ajout de ces informations faisait baisser les performances du CAD. \'Etant donné que les informations fournies par le quatrième niveau de décomposition des ondelettes sont de très basse fréquence, elles ne donnent pas d'information sur la lésion elle-même mais sur son environnement. Cela semble indiquer que le classifieur est mal adapté pour gérer ces données.
 
 
 Les résultats des couples ($C$, $\gamma$, $j$) pour les quatre types d'images sont reportés dans le tableau \ref{fig:paramsModFoie}. Comme pour les lésions pulmonaires, \textbf{TE-IM} a la sensibilité la plus forte avec 68\%. Et cette fois ci, \textbf{Statique} est seconde avec 62\%.
@@ -783,7 +784,7 @@ Les résultats des couples ($C$, $\gamma$, $j$) pour les quatre types d'images s
 {\small d) NoCorr}
 
 \end{center}
- \caption[(2/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image pendant la reconstruction et d) le images non corrigées.}
+ \caption[(2/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les lésions du foie, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. c) représente la correction d'image \textbf{TE-MS} et d) les images \textbf{NoCorr}.}
 \label{fig:paretoModalite19_2} 
 \end{figure}
 
@@ -824,18 +825,18 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
    \includegraphics[width=15cm]{images/FROC_mod19_corrige}
    \vspace{-0.3cm}
  \end{center}
- \caption{Courbe Free-ROC comparant les performances du CAD selon les techniques de correction du mouvement respiratoire.}
+ \caption{Courbe Free-ROC comparant les performances du CAD sur les lésions hépatiques selon la technique de correction du mouvement respiratoire.}
 \label{fig:froc_mod19}
 \end{figure}
 
 
-Les courbes Free-ROC de la figure \ref{fig:froc_mod19} montrent un ordre différent de celui présenté par l'analyse JAFROC de la figure~\ref{fig:fom_mod19}.
+Les courbes Free-ROC de la figure \ref{fig:froc_mod19} montrent un ordre équivalent à celles de la figure~\ref{fig:froc_mod} pour le poumon.
 
 Le maximum de performances est apporté par les images statiques, suivi par les images \textbf{TE-IM}, puis \textbf{TE-MS} et enfin \textbf{NoCorr}. Contrairement au poumon, les courbes sont relativement bien séparées avec une différence de sensibilité de 20\% entre les images non \textbf{NoCorr} et \textbf{Statique}. 
 
-Il est étonnant d'observer que les images \textbf{Static} et \textbf{TE-MS} ont toutes les deux un NFM maximum d'environ 17, très supérieur à celui de \textbf{TE-IM} et des images non corrigées qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images de la base \textbf{Statique}, au contraire de \textbf{TE-MS} où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NFM de 11.5 . 
+Il est étonnant d'observer que les images \textbf{Static} et \textbf{TE-MS} ont toutes les deux un NFM maximum d'environ 17, très supérieur à celui de \textbf{TE-IM} et des images \textbf{NoCorr} qui ne dépassent pas 9 faux positifs par image. Mais comme dans les cas précédents, ce nombre important de faux positifs n'apporte qu'une amélioration très faible de la sensibilité pour les images de la base \textbf{Statique}, au contraire de \textbf{TE-MS} où un important bond de sensibilité (de 50\% à 60\%) apparaît pour un NFM de 11.5 . 
 
-Si l'on se contente de comparer les courbes F-ROC pour un NFM donné de 9, la base d'images \textbf{Statique} a la meilleur sensibilité avec 58\%, suivie par \textbf{TE-IM} avec 53\% et \textbf{TE-MS} avec 48\%. Les images \textbf{NoCorr} sont en net retrait avec seulement 37\% de sensibilité.
+Si l'on se contente de comparer les courbes F-ROC pour un NFM donné de 9, la base d'images \textbf{Statique} a la meilleure sensibilité avec 58\%, suivie par \textbf{TE-IM} avec 53\% et \textbf{TE-MS} avec 48\%. Les images \textbf{NoCorr} sont en net retrait avec seulement 37\% de sensibilité.
 
 Les performances sont globalement en retrait par rapport à celles du poumon, mais l'ordre des courbes reste cohérent avec celui observé sur le poumon.
 
@@ -854,14 +855,14 @@ Les performances sont globalement en retrait par rapport à celles du poumon, ma
 Les Figures de mérite obtenues par l'algorithme de JAFROC sont présentées dans la figure \ref{fig:fom_mod19}. La p-valeur est de 0.1, ce qui ne permet pas de déclarer que statistiquement les données sont différentes.
 Il n'est pas étonnant de constater que les FDM sont plus élevées que précédemment car le nombre de faux positifs est pratiquement deux fois inférieur à celui obtenu pour le poumon, ce qui est le signe que le classifieur réussit mieux à discerner les vrais positifs.
 
-On observe que les images \textbf{statique} ont un score supérieur de 60\% environ à celui des images \textbf{NoCorr}. Par contre, il est surprenant de constater que les deux techniques de correction du mouvement respiratoire ont un score égal ou plus faible que les images non corrigées, en contradiction avec les résultats de l'analyse F-ROC. Cependant, la proximité des valeurs ne permet pas de montrer une réelle hiérarchie entre les jeux d'images. Tout au plus pourrait-on observer que l'étendue des barres d'erreur semble indiquer que \textbf{TE-IM} aurait de meilleures performances que les images \textbf{NoCorr}, elles-mêmes supérieures aux images \textbf{TE-MS}, mais il est n'est pas possible de se prononcer de manière définitive à partir de ces données. 
+On observe que les images \textbf{Statique} ont un score supérieur de 60\% environ à celui des images \textbf{NoCorr}. Par contre, il est surprenant de constater que les deux techniques de correction du mouvement respiratoire ont un score égal ou plus faible que les images \textbf{NoCorr}, en contradiction avec les résultats de l'analyse F-ROC. Cependant, la proximité des valeurs ne permet pas de montrer une réelle hiérarchie entre les jeux d'images. Tout au plus pourrait-on observer que l'étendue des barres d'erreur semble indiquer que \textbf{TE-IM} aurait de meilleures performances que les images \textbf{NoCorr}, elles-mêmes supérieures aux images \textbf{TE-MS}, mais il est n'est pas possible de se prononcer de manière définitive à partir de ces données. 
 
 
 
 
 \subsection{Conclusion}
 
-Les résultats des mesures de performance sur les tumeurs hépatiques sont contrastés. Les courbes F-ROC montrent un clair avantage des techniques de correction du mouvement respiratoire, surtout pour \textbf{TE-IM} si l'on compare la sensibilité pour un nombre moyen de fausses localisations. Par contre, les figures de mérite obtenues par JAFROC montrent à l'inverse que \textbf{TE-IM} et \textbf{TE-MS} sont au même niveau que les images non corrigées du mouvement, en net retrait par rapport aux images \textbf{Statique}.
+Les résultats des mesures de performance sur les tumeurs hépatiques sont contrastés. Les courbes F-ROC montrent un clair avantage des techniques de correction du mouvement respiratoire, surtout pour \textbf{TE-IM} si l'on compare la sensibilité pour un nombre moyen de fausses localisations. Par contre, les figures de mérite obtenues par JAFROC montrent à l'inverse que \textbf{TE-IM} et \textbf{TE-MS} sont au même niveau que les images \textbf{NoCorr}, en net retrait par rapport aux images \textbf{Statique}.
 
 
 

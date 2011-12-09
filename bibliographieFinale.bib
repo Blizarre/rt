@@ -1,0 +1,1522 @@
+% Techniques de reconstruction TEP
+
+@article{schoder2004clinical,
+  title={{Clinical implications of different image reconstruction parameters for interpretation of whole-body PET studies in cancer patients}},
+  author={Sch{\"o}der, H. and Erdi, Y.E. and Chao, K. and Gonen, M. and Larson, S.M. and Yeung, H.W.D.},
+  journal={Journal of Nuclear Medicine},
+  volume={45},
+  number={4},
+  pages={559},
+  year={2004},
+  publisher={Soc Nuclear Med}
+}
+
+##### CNR pour meilleures reconstruction
+@article{takahara2004diffusion,
+  title={{Diffusion weighted whole body imaging with background body signal suppression (DWIBS): technical improvement using free breathing, STIR and high resolution 3D display}},
+  author={Takahara, T. and Imai, Y. and Yamashita, T. and Yasuda, S. and Nasu, S. and Van Cauteren, M.},
+  journal={Matrix},
+  volume={160},
+  number={160},
+  pages={160},
+  year={2004}
+}
+
+@article{daube2001application,
+  title={{Application of the row action maximum likelihood algorithm with spherical basis functions to clinical PET imaging}},
+  author={Daube-Witherspoon, ME and Matej, S. and Karp, JS and Lewitt, RM},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={48},
+  number={1},
+  pages={24--30},
+  year={2001},
+  publisher={IEEE}
+}
+
+@article{hudson1994accelerated,
+  title={{{Accelerated Image Reconstruction Using Ordered Subsets of Projection Data}}},
+  author={Hudson, H.M.},
+  journal={IEEE Transactions On Medical Imaging},
+  volume={13},
+  number={4},
+  year={1994}
+}
+
+@article{zaidi2007optimization,
+  title={{Optimization of whole-body PET/CT scanning protocols}},
+  author={Zaidi, H.},
+  journal={Biomed Imaging Interv J},
+  volume={3},
+  year={2007}
+}
+
+@article{chiang2004clinical,
+  title={{Clinical validation of fully 3D versus 2.5-D RAMLA reconstruction on the Philips-ADAC CPET PET scanner}},
+  author={Chiang, S. and Cardi, C. and Matej, S. and Zhuang, H. and Newberg, A. and Alavi, A. and Karp, J.S.},
+  journal={Nuclear medicine communications},
+  volume={25},
+  number={11},
+  pages={1103},
+  year={2004}
+}
+
+@article{kinahan1988three,
+    title={{Three-dimensional image reconstruction in object space}},
+    author={Kinahan, P.E. and Rogers, J.G. and Harrop, R. and Johnson, R.R.},
+    journal={IEEE Transactions on Nuclear Science},
+    volume={35},
+    number={1},
+    pages={635--638},
+    year={1988},
+    publisher={IEEE}
+}
+
+@book{bailey2005positon,
+  title={{Positron emission tomography: basic sciences}},
+  author={Bailey, D.L.},
+  year={2005},
+  publisher={Springer Verlag}
+}
+
+@article{browne1996row,
+  title={{A row-action alternative to the EM algorithm for maximizing likelihood in emission tomography}},
+  author={Browne, J. and De Pierro, AB},
+  journal={IEEE Transactions on Medical Imaging},
+  volume={15},
+  number={5},
+  pages={687--699},
+  year={1996},
+  publisher={IEEE}
+}
+
+@article{chornoboy1990evaluation,
+  title={{An evaluation of maximum likelihood reconstruction for SPECT}},
+  author={Chornoboy, ES and Chen, CJ and Miller, MI and Miller, TR and Snyder, DL},
+  journal={IEEE Transactions on Medical Imaging},
+  volume={9},
+  number={1},
+  pages={99--110},
+  year={1990},
+  publisher={IEEE}
+}
+
+@article{shepp1982maximum,
+  title={{Maximum likelihood reconstruction for emission tomography}},
+  author={Shepp, L.A. and Vardi, Y.},
+  journal={IEEE Transactions on Medical Imaging},
+  volume={1},
+  number={2},
+  pages={113--122},
+  year={1982},
+  publisher={IEEE}
+}
+
+@inproceedings{bissantz2006multi,
+  title={{A multi-scale stopping criterion for MLEM reconstructions in PET}},
+  author={Bissantz, N. and Mair, B.A. and Munk, A.},
+  booktitle={{Nuclear Science Symposium Conference Record, 2006. IEEE}},
+  volume={6},
+  pages={3376--3379},
+  year={2006},
+  organization={IEEE}
+}
+
+@article{ramos2001fdg,
+  title={{FDG-PET standardized uptake values in normal anatomical structures using iterative reconstruction segmented attenuation correction and filtered back-projection}},
+  author={Ramos, C.D. and Erdi, Y.E. and Gonen, M. and Riedel, E. and Yeung, H.W.D. and Macapinlac, H.A. and Chisin, R. and Larson, S.M.},
+  journal={European Journal of Nuclear Medicine and Molecular Imaging},
+  volume={28},
+  number={2},
+  pages={155--164},
+  year={2001},
+  publisher={Springer}
+}
+
+% Modèles de patients
+
+
+@article{le2009incorporating,
+    title={{Incorporating Patient-Specific Variability in the Simulation of Realistic Whole-Body $^{18}$FDG Distributions for Oncology Applications}},
+    author={Le Maitre, A. and Segars, W.P. and Marache, S. and Reilhac, A. and Hatt, M. and Tomei, S. and Lartizien, C. and Visvikis, D.},
+    journal={Proceedings of the IEEE},
+    volume={97},
+    number={12},
+    pages={2026--2038},
+    year={2009},
+    publisher={IEEE}
+}
+
+
+
+% Premier modèle de patient utilisé en calcul de dose
+@article{snyder3estimates,
+      title={{{Estimates of absorbed fractions for monoenergetic photon sources uniformly distributed in various organs of a heterogenous phantom}}},
+        author={Snyder, WS and Ford, MR and Warner, GG and Fisher Jr, WL},
+          journal={Journal of Nuclear Medicine, Supplement},
+            volume={3}
+}
+
+@phdthesis{segars2001These,
+  title={{{Development and Application ot the new dynamic nurbs-based cardiac-torso (NCAT) phantom}}},
+  author={Segars, WP},
+  year={2001},
+  publisher={PhD thesis, University of North Carolina at Chapel Hill, 2001}
+} 
+
+% dispo sur google books
+@article{segars2009mcatoverview,
+    title={{{The MCAT, NCAT, XCAT, and MOBY Computational Human and Mouse Phantoms}}},
+    author={Segars, W.P. and Tsui, B.M.W.},
+    journal={Handbook of Anatomical Models for Radiation Dosimetry},
+    pages={105},
+    year={2009},
+    publisher={Taylor \& Francis}
+}
+
+@article{zubal1994computerized,
+  title={{{Computerized three-dimensional segmented human anatomy}}},
+  author={Zubal, I.G. and Harrell, C.R. and Smith, E.O. and Rattner, Z. and Gindi, G. and Hoffer, P.B.},
+  journal={MEDICAL PHYSICS},
+  volume={21},
+  pages={299--299},
+  year={1994},
+  publisher={American Institute of Physics}
+}
+
+@article{ackerman1998visible,
+  title={{{The visible human project}}},
+  author={Ackerman, MJ},
+  journal={Proceedings of the IEEE},
+  volume={86},
+  number={3},
+  pages={504--511},
+  year={1998}
+}
+
+
+
+% Simulation CT
+
+@article{tabary2004combination,
+  title={{{Combination of high resolution analytically computed uncollided flux images with low resolution Monte Carlo computed scattered flux images}}},
+  author={Tabary, J. and Guillemaud, R. and Mathy, F. and Gliere, A. and Hugonnard, P.},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={51},
+  number={1},
+  pages={212--217},
+  year={2004},
+  publisher={Institute of Electrical and Electronics Engineers, Inc, 445 Hoes Ln, Piscataway, NJ, 08854-1331, UK,}
+}
+
+
+@mastersthesis{leduvehat,
+    author={Leduvehat, L.},
+    title={{Développement d'un modèle de simulation réaliste d'images TDM médicales avec SINDBAD}},
+    year={2010},
+    school={ENSEIRB-MATMECA-Bordeaux}
+}
+
+
+@article{guillemaud2003sindbad,
+  title={{{Sindbad: a multi-purpose and scalable X-ray simulation tool for NDE and medical imaging}}},
+  author={Guillemaud, R. and Tabary, J. and Hugonnard, P. and Mathy, F. and Koenig, A. and Gli{\`e}re, A.},
+  journal={at PSIP},
+  volume={2003},
+  year={2003}
+}
+
+@article{gliere1998sindbad,
+  title={{{Sindbad: From CAD model to synthetic radiographs}}},
+  author={Gli{\`e}re, A.},
+  journal={Review of progress in quantitative nondestructive evaluation},
+  volume={17},
+  pages={387--394},
+  year={1998},
+  publisher={Citeseer}
+}
+
+% Simulation PET
+
+@inproceedings{tomei2008development,
+  title={{Development of a database of realistic simulated whole body ${^18F}$-FDG PET images for lymphoma}},
+  author={Tomei, S. and Reilhac, A. and Visvikis, D. and Odet, C. and Giammarile, F. and Mognetti, T. and Lartizien, C.},
+  booktitle={{Nuclear Science Symposium Conference Record, 2008. NSS'08. IEEE}},
+  pages={4958--4963},
+  year={2008},
+  organization={IEEE}
+}
+
+
+@mastersthesis{lemaitre2008,
+    title={{Développement d'un modèle de simulation réaliste représentant la distribution de radioactivité chez un patient}},
+    author={Lemaître, A},
+    school={Telecom Bretagne},
+    year={2008},
+}
+
+@article{tomei2010oncopet_db,
+  title={{OncoPET\_DB: A Freely Distributed Database of Realistic Simulated Whole Body $^{18}$FDG PET Images for Oncology}},
+  author={Tomei, S. and Reilhac, A. and Visvikis, D. and Boussion, N. and Odet, C. and Giammarile, F. and Lartizien, C.},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={57},
+  number={1},
+  pages={246--255},
+  year={2010},
+  publisher={IEEE}
+}
+
+@article{espana2009penelopet,
+  title={{PeneloPET, a Monte Carlo PET simulation tool based on PENELOPE: features and validation}},
+  author={Espana, S. and Herraiz, JL and Vicente, E. and Vaquero, J.J. and Desco, M. and Udias, JM},
+  journal={Physics in Medicine and Biology},
+  volume={54},
+  pages={1723},
+  year={2009},
+  publisher={IOP Publishing}
+}
+
+@article{allison2006geant4,
+  title={{Geant4 developments and applications}},
+  author={Allison, J. and Amako, K. and Apostolakis, J. and Araujo, H. and Dubois, P.A. and Asai, M. and Barrand, G. and Capra, R. and Chauvie, S. and Chytracek, R. and others},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={53},
+  number={1},
+  pages={270--278},
+  year={2006},
+  publisher={IEEE}
+}
+
+@article{reilhac2004pet,
+  title={{{PET-SORTEO: A Monte Carlo-based simulator with high count rate capabilities}}},
+  author={Reilhac, A. and Lartizien, C. and Costes, N. and Sans, S. and Comtat, C. and Gunn, RN and Evans, AC},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={51},
+  number={1  Part 1},
+  pages={46--52},
+  year={2004}
+} 
+
+
+@article{reilhac2005pet,
+  title={{{PET-SORTEO: validation and development of database of simulated PET volumes}}},
+  author={Reilhac, A. and Batan, G. and Michel, C. and Grova, C. and Tohka, J. and Collins, DL and Costes, N. and Evans, AC},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={52},
+  number={5  Part 1},
+  pages={1321--1328},
+  year={2005}
+}
+
+@book{reilhac2005manuel,
+  title={{{PET-SORTEO - Simulation Package Manual}}},
+  author={Reilhac, A},
+  year={2003},
+}
+
+@article{jan2004gate,
+  title={{{GATE: a simulation toolkit for PET and SPECT}}},
+  author={Jan, S. and Santin, G. and Strul, D. and Staelens, S. and Assie, K. and Autret, D. and Avner, S. and Barbier, R. and Bardies, M. and Bloomfield, PM and others},
+  journal={Physics in medicine and biology},
+  volume={49},
+  pages={4543},
+  year={2004},
+  publisher={IOP Publishing}
+}
+
+%%%  Simulations analytiques
+@conference{comtat2002simulating,
+  title={{{Simulating whole-body PET scanning with rapid analytical methods}}},
+  author={Comtat, C. and Kinahan, PE and Defrise, M. and Michel, C. and Lartizien, C. and Townsend, DW},
+  booktitle={{Nuclear Science Symposium, 1999. Conference Record. 1999 IEEE}},
+  volume={3},
+  pages={1260--1264},
+  isbn={0780356969},
+  year={2002},
+  organization={IEEE}
+}
+
+@article{buvat2006monte,
+  title={{Monte Carlo simulations in emission tomography and GATE: an overview}},
+  author={Buvat, I. and Lazaro, D.},
+  journal={Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment},
+  volume={569},
+  number={2},
+  pages={323--329},
+  year={2006},
+  publisher={Elsevier}
+}
+
+@article{buvat2002monte,
+  title={{Monte Carlo simulations in SPET and PET}},
+  author={Buvat, I. and Castiglioni, I. and others},
+  journal={Journal of Nuclear Medecine},
+  volume={46},
+  number={1},
+  pages={48--61},
+  year={2002}
+}
+
+@inproceedings{salvat2006penelope,
+  title={{PENELOPE-2006: A code system for Monte Carlo simulation of electron and photon transport}},
+  author={Salvat, F. and Fern{\'a}ndez-Varea, J.M. and Sempau, J.},
+  booktitle={{Workshop Proceedings}},
+  volume={4},
+  pages={7},
+  year={2006}
+}
+
+@article{lamare2006validation,
+  title={{{Validation of a Monte Carlo simulation of the Philips Allegro/GEMINI PET systems using GATE}}},
+  author={Lamare, F. and Turzo, A. and Bizais, Y. and Rest, C. and Visvikis, D.},
+  journal={Physics in medicine and biology},
+  volume={51},
+  pages={943},
+  year={2006},
+  publisher={IOP Publishing}
+}
+
+% Estimation du mouvement
+
+@article{ledesma2005spatio,
+  title={{{Spatio-temporal nonrigid registration for ultrasound cardiac motion estimation}}},
+  author={Ledesma-Carbayo, M.J. and Kybic, J. and Desco, M. and Santos, A. and Suhling, M. and Hunziker, P. and Unser, M.},
+  journal={IEEE transactions on medical imaging},
+  volume={24},
+  number={9},
+  pages={1113--1126},
+  year={2005},
+  publisher={Citeseer}
+}
+
+@article{vandemeulebroucke2009respiratory,
+  title={{Respiratory motion estimation from cone-beam projections using a prior model}},
+  author={Vandemeulebroucke, J. and Kybic, J. and Clarysse, P. and Sarrut, D.},
+  journal={Medical Image Computing and Computer-Assisted Intervention--MICCAI 2009},
+  pages={365--372},
+  year={2009},
+  publisher={Springer}
+}
+
+% Estimation sans avoir besoin de capteur externe pour la phase
+@article{bundschuh2007postacquisition,
+  title={{{Postacquisition detection of tumor motion in the lung and upper abdomen using list-mode PET data: a feasibility study}}},
+  author={Bundschuh, R.A. and Martinez-Moeller, A. and Essler, M. and Martinez, M.J. and Nekolla, S.G. and Ziegler, S.I. and Schwaiger, M.},
+  journal={Journal of Nuclear Medicine},
+  volume={48},
+  number={5},
+  pages={758},
+  year={2007},
+  publisher={Soc Nuclear Med}
+}
+
+% Utilisation du spiromètre pour estimer la phase
+@conference{guivarc2004synchronization,
+  title={{{Synchronization of pulmonary scintigraphy by respiratory flow and by impedance plethysmography}}},
+  author={Guivarc'h, O. and Turzo, A. and Visvikis, D. and Bizais, Y.},
+  booktitle={{Proceedings of SPIE}},
+  volume={5370},
+  pages={1166},
+  year={2004}
+}
+
+
+@article{thevenaz2000optimization,
+  title={{Optimization of mutual information for multiresolution image registration}},
+  author={Th{\'e}venaz, P. and Unser, M.},
+  journal={IEEE Transactions on Image Processing},
+  volume={9},
+  number={12},
+  pages={2083--2099},
+  year={2000},
+  publisher={IEEE}
+}
+@inproceedings{fayad2009patient,
+    title={{A patient specific respiratory model based on 4D CT data and a time of flight camera (TOF)}},
+    author={Fayad, H. and Pan, T. and Roux, C. and Le Rest, C.C. and Pradier, O. and Clement, J.F. and Visvikis, D.},
+    booktitle={{Nuclear Science Symposium Conference Record (NSS/MIC), 2009 IEEE}},
+    pages={2594--2598},
+    year={2009},
+    organization={IEEE}
+}
+
+
+@article{horn1981determining,
+  title={{Determining optical flow}},
+  author={Horn, B.K.P. and Schunck, B.G.},
+  journal={Artificial intelligence},
+  volume={17},
+  number={1-3},
+  pages={185--203},
+  year={1981},
+  publisher={Elsevier}
+}
+
+@article{CarstenStephan03012003,
+author = {Stephan, Carsten and Wesseling, Sebastian and Schink, Tania and Jung, Klaus},
+title = {Comparison of Eight Computer Programs for Receiver-Operating Characteristic Analysis},
+journal = {Clin Chem},
+volume = {49},
+number = {3},
+pages = {433-439},
+doi = {10.1373/49.3.433},
+year = {2003},
+abstract = {Background: ROC analysis is widely accepted to assess and compare diagnostic validity of laboratory tests. Within the last few years, many new ROC programs have become available but have not been systematically evaluated. The aim of this study was to assess different ROC programs regarding their ease of use, mathematical correctness, final output, and their compatibility with other graphics programs.  Methods: Eight available programs running under Windows (AccuROC, Analyse-It, CMDT, GraphROC, MedCalc, mROC, ROCKIT, and SPSS) were evaluated. ROC analyses of prostate-specific antigen and related values were performed from a dataset of 928 men with prostate cancer and benign prostatic hyperplasia and corresponding subsets. Criteria such as data input, data output, and correctness and completeness of results were used to evaluate the practicability of the programs.  Results: Although the programs produced equivalent results (areas under the curves and their characteristics), we observed deficiencies concerning input of data, processing of the output data, and completeness of the results. Analyse-It, AccuROC, and MedCalc exhibited good performance, but each program had different shortcomings. Only GraphROC could compare curves at a certain sensitivity or specificity cutoff.  Conclusions: Adequate ROC analysis and ROC plotting cannot be performed with a single program. Analyse-It, AccuROC, and MedCalc can be recommended with certain limitations. Further improvements of the programs are necessary.
+},
+URL = {http://www.clinchem.org/cgi/content/abstract/49/3/433},
+eprint = {http://www.clinchem.org/cgi/reprint/49/3/433.pdf}
+}
+
+@article{loening2003amide,
+  title={{AMIDE: a free software tool for multimodality medical image analysis}},
+  author={Loening, A.M. and Gambhir, S.S.},
+  journal={Molecular imaging},
+  volume={2},
+  number={3},
+  pages={131--137},
+  year={2003},
+  publisher={Cambridge, MA: MIT Press, c2002-}
+}
+
+@article{chakraborty2004observer,
+  title={{Observer studies involving detection and localization: modeling, analysis, and validation}},
+  author={Chakraborty, D.P. and Berbaum, K.S.},
+  journal={Medical physics},
+  volume={31},
+  pages={2313},
+  year={2004}
+}
+
+A-FROC
+@article{chakraborty1990free,
+  title={{Free-response methodology: alternate analysis and a new observer-performance experiment.}},
+  author={Chakraborty, DP and Winter, LH},
+  journal={Radiology},
+  volume={174},
+  number={3},
+  pages={873},
+  year={1990},
+  publisher={Radiological Society of North America}
+}
+
+%L-ROC
+@article{farquhar1999roc,
+  title={{ROC and localization ROC analyses of lesion detection in whole-body FDG PET: effects of acquisition mode, attenuation correction and reconstruction algorithm}},
+  author={Farquhar, T.H. and Llacer, J. and Hoh, C.K. and Czernin, J. and Gambhir, S.S. and Seltzer, M.A. and Silverman, D.H.S. and Qi, J. and Hsu, C. and Hoffman, E.J.},
+  journal={Journal of Nuclear Medicine},
+  volume={40},
+  number={12},
+  pages={2043},
+  year={1999},
+  publisher={Soc Nuclear Med}
+}
+
+@article{metz1986roc,
+  title={{ROC methodology in radiologic imaging}},
+  author={Metz, C.E.},
+  journal={Investigative Radiology},
+  volume={21},
+  number={9},
+  pages={720},
+  year={1986}
+}
+
+%gradation des lesions mammographie
+@article{genestie1998comparison,
+  title={{Comparison of the prognostic value of Scarff-Bloom-Richardson and Nottingham histological grades in a series of 825 cases of breast cancer: major importance of the mitotic count as a component of both grading systems}},
+  author={Genestie, C. and Zafrani, B. and Asselain, B. and Fourquet, A. and Rozan, S. and Validire, P. and Vincent-Salomon, A. and Sastre-Garau, X.},
+  journal={Anticancer research},
+  volume={18},
+  number={1B},
+  pages={571--576},
+  year={1998},
+  publisher={International Institute of Anticancer Research}
+}
+
+@inproceedings{tomei2008automatic,
+    title={{Automatic detection of active nodules in 3D PET oncology imaging using the Hotelling Observer and the Support Vector Machines: a comparison study}},
+    author={Tomei, S. and Marache-Francisco, S. and Odet, C. and Lartizien, C.},
+    booktitle={{Nuclear Science Symposium Conference Record, 2008. NSS'08. IEEE}},
+    pages={5314--5319},
+    year={2008},
+    organization={IEEE}
+}
+
+@article{statnikov2008comprehensive,
+      title={{A comprehensive comparison of random forests and support vector machines for microarray-based cancer classification}},
+        author={Statnikov, A. and Wang, L. and Aliferis, C.},
+          journal={BMC bioinformatics},
+            volume={9},
+              number={1},
+                pages={319},
+                  year={2008},
+                    publisher={BioMed Central Ltd}
+}
+
+
+@article{baydush2007incorporation,
+      title={{Incorporation of a Laguerre--Gauss Channelized Hotelling Observer for False-Positive Reduction in a Mammographic Mass CAD System}},
+        author={Baydush, A.H. and Catarious, D.M. and Lo, J.Y. and Floyd, C.E.},
+          journal={Journal of Digital Imaging},
+            volume={20},
+              number={2},
+                pages={196--202},
+                  year={2007},
+                    publisher={Springer}
+}
+
+
+
+%%%%%%% CAD TEP/CT
+@inproceedings{jafar2006computerized,
+  title={{Computerized detection of lung tumors in PET/CT images}},
+  author={Jafar, I. and Ying, H. and Shields, A.F. and Muzik, O.},
+  booktitle={{Engineering in Medicine and Biology Society, 2006. EMBS'06. 28th Annual International Conference of the IEEE}},
+  pages={2320--2323},
+  year={2006},
+  organization={IEEE}
+}
+@article{nie2006integrating,
+  title={{Integrating PET and CT information to improve diagnostic accuracy for lung nodules: A semiautomatic computer-aided method}},
+  author={Nie, Y. and Li, Q. and Li, F. and Pu, Y. and Appelbaum, D. and Doi, K.},
+  journal={Journal of Nuclear Medicine},
+  volume={47},
+  number={7},
+  pages={1075--1080},
+  year={2006},
+  publisher={Soc Nuclear Med}
+}
+@inproceedings{potesil2007automated,
+  title={{Automated tumor delineation using joint PET/CT information}},
+  author={Potesil, V. and Huang, X. and Zhou, X.S.},
+  booktitle={{Proc. SPIE International Symposium on Medical Imaging: Computer-Aided Diagnosis}},
+  volume={6514},
+  year={2007}
+}
+@article{yu2009automated,
+  title={{Automated radiation targeting in head-and-neck cancer using region-based texture analysis of PET and CT images}},
+  author={Yu, H. and Caldwell, C. and Mah, K. and Poon, I. and Balogh, J. and MacKenzie, R. and Khaouam, N. and Tirona, R.},
+  journal={International Journal of Radiation Oncology* Biology* Physics},
+  volume={75},
+  number={2},
+  pages={618--625},
+  year={2009},
+  publisher={Elsevier}
+}
+
+
+%%%%%%% CAD TEP SEULE
+@inproceedings{ying2004novel,
+  title={{A novel computerized approach to enhancing lung tumor detection in whole-body PET images}},
+  author={Ying, H. and Zhou, F. and Shields, A.F. and Muzik, O. and Wu, D. and Heath, E.I.},
+  booktitle={{Engineering in Medicine and Biology Society, 2004. IEMBS'04. 26th Annual International Conference of the IEEE}},
+  volume={1},
+  pages={1589--1592},
+  year={2004},
+  organization={IEEE}
+}
+@inproceedings{kanakatte2007pilot,
+  title={{A pilot study of automatic lung tumor segmentation from positron emission tomography images using standard uptake values}},
+  author={Kanakatte, A. and Gubbi, J. and Mani, N. and Kron, T. and Binns, D.},
+  booktitle={{Computational Intelligence in Image and Signal Processing, 2007. CIISP 2007. IEEE Symposium on}},
+  pages={363--368},
+  year={2007},
+  organization={IEEE}
+}
+@article{el2009exploring,
+  title={{Exploring feature-based approaches in PET images for predicting cancer treatment outcomes}},
+  author={El Naqa, I. and Grigsby, PW and Apte, A. and Kidd, E. and Donnelly, E. and Khullar, D. and Chaudhari, S. and Yang, D. and Schmitt, M. and Laforest, R. and others},
+  journal={Pattern recognition},
+  volume={42},
+  number={6},
+  pages={1162--1171},
+  year={2009},
+  publisher={Elsevier}
+}
+@inproceedings{kanakatte2008pulmonary,
+  title={{Pulmonary tumor volume detection from positron emission tomography images}},
+  author={Kanakatte, A. and Mani, N. and Srinivasan, B. and Giibbi, J.},
+  booktitle={{BioMedical Engineering and Informatics, 2008. BMEI 2008. International Conference on}},
+  volume={2},
+  pages={213--217},
+  year={2008},
+  organization={IEEE}
+}
+@inproceedings{saradhi2009framework,
+  title={{A framework for automated tumor detection in thoracic FDG PET images using texture-based features}},
+  author={Saradhi, GV and Gopalakrishnan, G. and Roy, AS and Mullick, R. and Manjeshwar, R. and Thielemans, K. and Patil, U.},
+  booktitle={{Biomedical Imaging: From Nano to Macro, 2009. ISBI'09. IEEE International Symposium on}},
+  pages={97--100},
+  year={2009},
+  organization={IEEE}
+}
+@article{mhd2010artificial,
+  title={{Artificial Neural Network-Based System for PET Volume Segmentation}},
+  author={Mhd Saeed, S. and Maysam, A. and Abbes, A. and Habib, Z.},
+  journal={International Journal of Biomedical Imaging},
+  volume={2010},
+  year={2010},
+  publisher={Hindawi Publishing Corporation}
+}
+
+
+
+
+
+@article{ge2005computer,
+  title={{Computer-aided detection of lung nodules: False positive reduction using a 3D gradient field method and 3D ellipsoid fitting}},
+  author={Ge, Z. and Sahiner, B. and Chan, H.P. and Hadjiiski, L.M. and Cascade, P.N. and Bogot, N. and Kazerooni, E.A. and Wei, J. and Zhou, C.},
+  journal={Medical physics},
+  volume={32},
+  pages={2443},
+  year={2005}
+}
+
+@article{sachs1971spatial,
+  title={{Spatial-frequency channels in human vision}},
+  author={Sachs, M.B. and Nachmias, J. and Robson, J.G.},
+  journal={JOSA},
+  volume={61},
+  number={9},
+  pages={1176--1186},
+  year={1971},
+  publisher={Optical Society of America}
+}
+
+@article{cheng2006approaches,
+  title={{Approaches for automated detection and classification of masses in mammograms}},
+  author={Cheng, HD and Shi, XJ and Min, R. and Hu, LM and Cai, XP and Du, HN},
+  journal={Pattern recognition},
+  volume={39},
+  number={4},
+  pages={646--668},
+  year={2006},
+  publisher={Elsevier}
+}
+
+@article{mougiakakou2007differential,
+  title={{Differential diagnosis of CT focal liver lesions using texture features, feature selection and ensemble driven classifiers}},
+  author={Mougiakakou, S.G. and Valavanis, I.K. and Nikita, A. and Nikita, K.S.},
+  journal={Artificial Intelligence in Medicine},
+  volume={41},
+  number={1},
+  pages={25--37},
+  year={2007},
+  publisher={Elsevier}
+}
+
+@article{bazzani2001svm,
+  title={{An SVM classifier to separate false signals from microcalcifications in digital mammograms}},
+  author={Bazzani, A. and Bevilacqua, A. and Bollini, D. and Brancaccio, R. and Campanini, R. and Lanconelli, N. and Riccardi, A. and Romani, D.},
+  journal={Physics in Medicine and Biology},
+  volume={46},
+  pages={1651},
+  year={2001},
+  publisher={IOP Publishing}
+}
+
+@article{li2003selective,
+  title={{Selective enhancement filters for nodules, vessels, and airway walls in two-and three-dimensional CT scans}},
+  author={Li, Q. and Sone, S. and Doi, K.},
+  journal={Medical Physics},
+  volume={30},
+  pages={2040},
+  year={2003}
+}
+
+@article{li2007recent,
+  title={{Recent progress in computer-aided diagnosis of lung nodules on thin-section CT}},
+  author={Li, Q.},
+  journal={Computerized Medical Imaging and Graphics},
+  volume={31},
+  number={4-5},
+  pages={248--257},
+  year={2007},
+  publisher={Elsevier}
+}
+
+@article{gurcan2002lung,
+      title={{Lung nodule detection on thoracic computed tomography images: preliminary evaluation of a computer-aided diagnosis system}},
+        author={Gurcan, M.N. and Sahiner, B. and Petrick, N. and Chan, H.P. and Kazerooni, E.A. and Cascade, P.N. and Hadjiiski, L.},
+          journal={Medical Physics},
+            volume={29},
+              pages={2552},
+                year={2002}
+}
+
+% CAD PET
+@inproceedings{guan2006automatic,
+  title={{Automatic hot spot detection and segmentation in whole body fdg-pet images}},
+  author={Guan, H. and Kubota, T. and Huang, X. and Zhou, X.S. and Turk, M.},
+  booktitle={{Image Processing, 2006 IEEE International Conference on}},
+  pages={85--88},
+  year={2006},
+  organization={IEEE}
+}
+
+% classif non supervisée
+@article{ward1963hierarchical,
+  title={{Hierarchical grouping to optimize an objective function}},
+  author={Ward Jr, J.H.},
+  journal={Journal of the American statistical association},
+  pages={236--244},
+  year={1963},
+  publisher={JSTOR}
+}
+
+@article{herwig1999large,
+  title={{Large-scale clustering of cDNA-fingerprinting data}},
+  author={Herwig, R. and Poustka, A.J. and M{\"u}ller, C. and Bull, C. and Lehrach, H. and O'Brien, J.},
+  journal={Genome research},
+  volume={9},
+  number={11},
+  pages={1093},
+  year={1999},
+  publisher={Cold Spring Harbor Lab}
+}
+
+@article{ho1998random,
+  title={{The random subspace method for constructing decision forests}},
+  author={Ho, T.K.},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume={20},
+  number={8},
+  pages={832--844},
+  year={1998},
+  publisher={IEEE}
+}
+
+% sef organising maps
+@article{kohonen1982self,
+  title={{Self-organized formation of topologically correct feature maps}},
+  author={Kohonen, T.},
+  journal={Biological cybernetics},
+  volume={43},
+  number={1},
+  pages={59--69},
+  year={1982},
+  publisher={Springer}
+}
+
+@book{haykin1999neural,
+  title={{Neural networks: a comprehensive foundation}},
+  author={Haykin, S.},
+  year={1999},
+  publisher={Prentice hall}
+}
+
+@article{fisher1936use,
+  title={{The use of multiple measurements in taxonomic problems}},
+  author={Fisher, R.A.},
+  journal={Annals of Human Genetics},
+  volume={7},
+  number={2},
+  pages={179--188},
+  year={1936},
+  publisher={Wiley Online Library}
+}
+@article {cortes1995support,
+   author = {Cortes, Corinna and Vapnik, Vladimir},
+   title = {Support-vector networks},
+   journal = {Machine Learning},
+   publisher = {Springer Netherlands},
+   issn = {0885-6125},
+   keyword = {Computer Science},
+   pages = {273-297},
+   volume = {20},
+   issue = {3},
+   url = {http://dx.doi.org/10.1007/BF00994018},
+   note = {10.1007/BF00994018},
+   year = {1995}
+}
+
+
+@article{zhao2003automatic,
+  title={{Automatic detection of small lung nodules on CT utilizing a local density maximum algorithm}},
+  author={Zhao, B.},
+  journal={journal of applied clinical medical physics},
+  volume={4},
+  number={3},
+  pages={248--260},
+  year={2003}
+}
+
+@article{paik2004surface,
+  title={{Surface normal overlap: a computer-aided detection algorithm with application to colonic polyps and lung nodules in helical CT}},
+  author={Paik, D.S. and Beaulieu, C.F. and Rubin, G.D. and Acar, B. and Jeffrey Jr, R.B. and Yee, J. and Dey, J. and Napel, S.},
+  journal={IEEE Transactions on Medical Imaging},
+  volume={23},
+  number={6},
+  pages={661--675},
+  year={2004},
+  publisher={IEEE}
+}
+
+@article{varma2006bias,
+  title={{Bias in error estimation when using cross-validation for model selection}},
+  author={Varma, S. and Simon, R.},
+  journal={BMC bioinformatics},
+  volume={7},
+  number={1},
+  pages={91},
+  year={2006},
+  publisher={BioMed Central Ltd}
+}
+
+@article{hua2005optimal,
+  title={{Optimal number of features as a function of sample size for various classification rules}},
+  author={Hua, J. and Xiong, Z. and Lowey, J. and Suh, E. and Dougherty, E.R.},
+  journal={Bioinformatics},
+  volume={21},
+  number={8},
+  pages={1509},
+  year={2005},
+  publisher={Oxford Univ Press}
+}
+
+@conference{lartizien2010impact,
+  title={{{Impact of partial volume correction in whole-body PET imaging: A computer-aided detection study}}},
+  author={Lartizien, C. and Marache-Francisco, S. and Le Pogam, A. and Tomei, S. and Visvikis, D.},
+  booktitle={{Nuclear Science Symposium Conference Record (NSS/MIC), 2009 IEEE}},
+  pages={3214--3217},
+  issn={1082-3654},
+  year={2010},
+  organization={IEEE}
+}
+
+% premiers systèmes CAD
+@article{chan1987image,
+  title={{Image feature analysis and computer-aided diagnosis in digital radiography. Automated detection of microcalcifications in mammography}},
+  author={Chan, H.P. and Doi, K. and Galhotra, S. and Vyborny, C.J. and MacMahon, H. and Jokich, P.M.},
+  journal={Medical Physics},
+  volume={14},
+  pages={538},
+  year={1987}
+}
+
+@InProceedings{mierswa2006,
+   author = {Mierswa, Ingo and Wurst, Michael and Klinkenberg, Ralf and Scholz, Martin and Euler, Timm},
+   title = {YALE: Rapid Prototyping for Complex Data Mining Tasks},
+   booktitle = {KDD '06: Proceedings of the 12th ACM SIGKDD international conference on Knowledge discovery and data mining},
+   year = {2006},
+   isbn = {1-59593-339-5},
+   pages = {935--940},
+   editor = {Ungar, Lyle and Craven, Mark and Gunopulos, Dimitrios and Eliassi-Rad, Tina},
+   location = {Philadelphia, PA, USA},
+   publisher = {ACM},
+   address = {New York, NY, USA},
+   month = {August},
+   doi = {http://doi.acm.org/10.1145/1150402.1150531},
+   url = {http://rapid-i.com/component/option,com_docman/task,doc_download/gid,25/Itemid,62/}
+}
+
+@book{swets1982evaluation,
+  title={{Evaluation of diagnostic systems: methods from signal detection theory}},
+  author={Swets, J.A. and Pickett, R.M.},
+  year={1982},
+  publisher={Academic Press New York}
+}
+
+@article{barrett1993model,
+  title={{{Model observers for assessment of image quality}}},
+  author={Barrett, H.H. and Yao, J. and Rolland, J.P. and Myers, K.J.},
+  journal={Proceedings of the National Academy of Sciences of the United States of America},
+  volume={90},
+  number={21},
+  pages={9758},
+  year={1993},
+  publisher={National Acad Sciences}
+}
+
+@article{bunch1978free,
+  title={{A free-response approach to the measurement and characterization of radiographic-observer performance}},
+  author={Bunch, P.C. and Hamilton, J.F. and Sanderson, G.K. and Simmons, A.H.},
+  journal={J. Appl. Photogr. Eng},
+  volume={4},
+  number={4},
+  pages={166--171},
+  year={1978}
+}
+
+@article{zou2007receiver,
+  title={{Receiver-operating characteristic analysis for evaluating diagnostic tests and predictive models}},
+  author={Zou, K.H. and O'Malley, A.J. and Mauri, L.},
+  journal={Circulation},
+  volume={115},
+  number={5},
+  pages={654},
+  year={2007},
+  publisher={Am Heart Assoc}
+}
+
+
+@inproceedings{boser1992training,
+  title={{A training algorithm for optimal margin classifiers}},
+  author={Boser, B.E. and Guyon, I.M. and Vapnik, V.N.},
+  booktitle={{Proceedings of the fifth annual workshop on Computational learning theory}},
+  pages={144--152},
+  year={1992},
+  organization={ACM}
+}
+
+@article{lowe1998prospective,
+  title={{{Prospective investigation of positron emission tomography in lung nodules}}},
+  author={Lowe, V.J. and Fletcher, JW and Gobar, L. and Lawson, M. and Kirchner, P. and Valk, P. and Karis, J. and Hubner, K. and Delbeke, D. and Heiberg, E.V. and others},
+  journal={Journal of Clinical Oncology},
+  volume={16},
+  number={3},
+  pages={1075},
+  year={1998},
+  publisher={Am Soc Clin Oncol}
+}
+
+
+@article{gould2001accuracy,
+  title={{Accuracy of positron emission tomography for diagnosis of pulmonary nodules and mass lesions}},
+  author={Gould, M.K. and Maclean, C.C. and Kuschner, W.G. and Rydzak, C.E. and Owens, D.K.},
+  journal={JAMA: the journal of the American Medical Association},
+  volume={285},
+  number={7},
+  pages={914},
+  year={2001},
+  publisher={Am Med Assoc}
+}
+
+@article{brasse2005correction,
+    title={{Correction methods for random coincidences in fully 3D whole-body PET: impact on data and image quality}},
+    author={Brasse, D. and Kinahan, P.E. and Lartizien, C. and Comtat, C. and Casey, M. and Michel, C.},
+    journal={Journal of nuclear medicine},
+    volume={46},
+    number={5},
+    pages={859},
+    year={2005},
+    publisher={Soc Nuclear Med}
+}
+
+@book{cherry2006pet,
+    title={{PET: physics, instrumentation, and scanners}},
+    author={Cherry, S. and Dahlbom, M.},
+    year={2006},
+    organization={Springer}
+}
+
+@article{cachin2006evaluation,
+  title={{{\'E}valuation de la r{\'e}ponse th{\'e}rapeutique en canc{\'e}rologie: place de l’imagerie isotopique}},
+  author={Cachin, F. and Kelly, A. and Maublant, J.},
+  journal={Bulletin du cancer},
+  volume={93},
+  number={12},
+  pages={1191--1199},
+  year={2006}
+}
+
+@inproceedings{visvikis2004evaluation,
+  title={{Evaluation of respiratory motion effects in comparison with other parameters affecting PET image quality}},
+  author={Visvikis, D. and Barret, O. and Fryer, TD and Lamare, F. and Turzo, A. and Bizais, Y. and Le Rest, C.C.},
+  booktitle={{Nuclear Science Symposium Conference Record, 2004 IEEE}},
+  volume={6},
+  pages={3668--3672},
+  year={2004},
+  organization={IEEE}
+}
+
+@article{fahey2002data,
+  title={{Data acquisition in PET imaging}},
+  author={Fahey, F.H.},
+  journal={Journal of nuclear medicine technology},
+  volume={30},
+  number={2},
+  pages={39--49},
+  year={2002},
+  publisher={Soc Nuclear Med}
+}
+
+@book{evans1955atomic,
+  title={{The atomic nucleus}},
+  author={Evans, R.D.},
+  lccn={lc55007275},
+  series={International series in pure and applied physics},
+  url={http://books.google.fr/books?id=6sLQAAAAMAAJ},
+  year={1955},
+  publisher={McGraw-Hill}
+}
+
+
+% graisse brune
+@article{bordessoule2006impact,
+  title={{Impact de la TEP dans la prise en charge des lymphomes malins hodgkiniens et non hodgkiniens}},
+  author={Bordessoule, D. and Jaccard, A. and Chaury, M.P. and Desfoug{\`e}res, M. and Monteil, J.},
+  journal={Oncologie},
+  volume={8},
+  number={4},
+  pages={322--330},
+  year={2006},
+  publisher={Springer}
+}
+
+@article{krak2005effects,
+  title={{{Effects of ROI definition and reconstruction method on quantitative outcome and applicability in a response monitoring trial}}},
+  author={Krak, N.C. and Boellaard, R. and Hoekstra, O.S. and Twisk, J.W.R. and Hoekstra, C.J. and Lammertsma, A.A.},
+  journal={European journal of nuclear medicine and molecular imaging},
+  volume={32},
+  number={3},
+  pages={294--301},
+  issn={1619-7070},
+  year={2005},
+  publisher={Springer}
+}
+
+@article{dimitrakopoulou2002role,
+  title={{{The role of quantitative $^{18}$F-FDG PET studies for the differentiation of malignant and benign bone lesions}}},
+  author={Dimitrakopoulou-Strauss, A. and Strauss, L.G. and Heichel, T. and Wu, H. and Burger, C. and Bernd, L. and Ewerbeck, V.},
+  journal={Journal of Nuclear Medicine},
+  volume={43},
+  number={4},
+  pages={510},
+  year={2002},
+  publisher={Soc Nuclear Med}
+}
+
+@article{romer1998positron,
+  title={{{Positron emission tomography in non-Hodgkin's lymphoma: assessment of chemotherapy with fluorodeoxyglucose}}},
+  author={Romer, W. and Hanauske, A.R. and Ziegler, S. and Thodtmann, R. and Weber, W. and Fuchs, C. and Enne, W. and Herz, M. and Nerl, C. and Garbrecht, M. and others},
+  journal={Blood},
+  volume={91},
+  number={12},
+  pages={4464},
+  year={1998},
+  publisher={Am Soc Hematology}
+}
+
+@ARTICLE{reader2002one,
+author={Reader, A.J. and Ally, S. and Bakatselos, F. and Manavaki, R. and Walledge, R.J. and Jeavons, A.P. and Julyan, P.J. and Sha Zhao and Hastings, D.L. and Zweit, J.},
+journal={IEEE Transactions on Nuclear Science}, title={{One-pass list-mode EM algorithm for high-resolution 3D PET image reconstruction into large arrays}},
+year={2002},
+month={jun},
+volume={49},
+number={3},
+pages={ 693 - 699},
+keywords={ PET image reconstruction; list-mode data; multiple image updates; one-pass list-mode EM algorithm; one-pass list-mode expectation maximization algorithm; quad-HIDAC; quad-high density avalanche chamber; image reconstruction; positron emission tomography;},
+doi={10.1109/TNS.2002.1039550},
+ISSN={0018-9499},}
+
+% Mouvement respiratoire et artefacts
+
+### optim B-splines
+@article{polak1969note,
+  title={{Note sur la convergence de m{\'e}thodes de directions conjugu{\'e}es}},
+  author={Polak, E. and Ribiere, G.},
+  journal={Revue Fr Inf Rech Oper},
+  volume={3},
+  number={1},
+  pages={35--43},
+  year={1969}
+}
+
+
+@article{beach2004feasibility,
+  title={{Feasibility of stereo-infrared tracking to monitor patient motion during cardiac SPECT imaging}},
+  author={Beach, R.D. and Pretorius, P.H. and Boening, G. and Bruyant, P.P. and Feng, B. and Fulton, R.R. and Gennert, M.A. and Nadella, S. and King, M.A.},
+  journal={IEEE Transactions on Nuclear Science},
+  volume={51},
+  number={5},
+  pages={2693--2698},
+  year={2004},
+  publisher={IEEE}
+}
+
+################ A RECUPERER
+@article{nehmeh2011Novel,
+author = {S. A. Nehmeh and A. A. Haj-Ali and C. Qing and C. Stearns and H. Kalaigian and S. Kohlmyer and H. Schoder and A. Y. Ho and S. M. Larson and J. L. Humm},
+collaboration = {},
+title = {A novel respiratory tracking system for smart-gated PET acquisition},
+publisher = {AAPM},
+year = {2011},
+journal = {Medical Physics},
+volume = {38},
+number = {1},
+pages = {531-538},
+keywords = {cancer; image motion analysis; lung; medical image processing; phantoms; pneumodynamics; positron emission tomography},
+url = {http://link.aip.org/link/?MPH/38/531/1},
+doi = {10.1118/1.3523100}
+}
+
+
+@misc{servant2007cours,
+    author = "Agnès Servant-Laval",
+    title = "Cours anatomie fonctionnelle",
+    year = "2007",
+    howpublished="Disponible sur Internet à l'adresse http://www.chups.jussieu.fr/polysPSM/anatfonctPSM2/poly/POLY.Chp.8.html"
+}
+
+
+
+% Bouquin sur la physiologie du mouvement respi
+@book{sherwood2006fundamentals,
+  title={{{Fundamentals of physiology: a human perspective}}},
+  author={Sherwood, L.},
+  isbn={0534466974},
+  year={2006},
+  chapter={12}, page={380},
+  publisher={Thomson Brooks/Cole}
+}
+
+
+
+%@article{Guivarch2004Sync, title = {Synchronization of pulmonary scintigraphy by respiratory flow and by impedance plethysmography}, publisher = {SPIE}, year = {2004}, doi = {DOI:10.1117/12.536329}, issn = {0277786X}, coden = {PSISDG}, volume = {5370}, number = {1}, pages = {1166-1175}, author = {Olivier Guivarc'h and Alexandre Turzo and Dimitris Visvikis and Yves Bizais}, url = {http://dx.doi.org/10.1117/12.536329}, } 
+
+@phdthesis{Langner2008ad,
+   Author = {Langner, J.},
+   School = {{Faculty of Medicine Carl Gustav Carus, University of Technology Dresden, Germany}},
+   Title = {{Event-Driven Motion Compensation in Positron Emission Tomography: Development of a Clinically Applicable Method}},
+   Month = {November},
+   Year = {2008},
+   Url = {http://www.jens-langner.de/ftp/langner_phdthesis.pdf}
+}
+
+%Effets du mouvement respiratoire
+
+@article{visvikis2006respiratory,
+  title={{{Respiratory motion in positron emission tomography for oncology applications: Problems and solutions}}},
+  author={Visvikis, D. and Lamare, F. and Bruyant, P. and Boussion, N. and Cheze Le Rest, C.},
+  journal={Nuclear Inst. and Methods in Physics Research, A},
+  volume={569},
+  number={2},
+  pages={453--457},
+  year={2006},
+  publisher={Elsevier}
+}
+
+
+% Correction de mouvement par modification de la matrice de sensibilité
+
+@article{lamare2007list,
+  title={{{List-mode-based reconstruction for respiratory motion correction in PET using non-rigid body transformations}}},
+  author={Lamare, F. and Ledesma Carbayo, MJ and Cresson, T. and Kontaxakis, G. and Santos, A. and Le Rest, C.C. and Reader, AJ and Visvikis, D.},
+  journal={Physics in medicine and biology},
+  volume={52},
+  number={17},
+  pages={5187--5204},
+  year={2007},
+  publisher={Citeseer}
+}
+
+@article{qiao2006motion,
+  title={{{A motion-incorporated reconstruction method for gated PET studies}}},
+  author={Qiao, F. and Pan, T. and John Jr, W.C. and Mawlawi, O.R.},
+  journal={Physics in Medicine and Biology},
+  volume={51},
+  pages={3769},
+  year={2006},
+  publisher={IOP Publishing}
+}
+
+% Deconvolution des images
+
+@article{naqa2006deblurring,
+  title={{{Deblurring of breathing motion artifacts in thoracic PET images by deconvolution methods}}},
+  author={El Naqa, I. and Low, D.A. and Bradley, J.D. and Vicic, M. and Deasy, J.O.},
+  journal={Medical physics},
+  volume={33},
+  pages={3587},
+  year={2006}
+}
+
+@article{wiemker2008combined,
+  title={{Combined motion blur and partial volume correction for computer aided diagnosis of pulmonary nodules in PET/CT}},
+  author={Wiemker, R. and Paulus, T. and Kabus, S. and B{\"u}low, T. and Apostolova, I. and Buchert, R. and Klutmann, S.},
+  journal={International Journal of Computer Assisted Radiology and Surgery},
+  volume={3},
+  number={1},
+  pages={105--113},
+  year={2008},
+  publisher={Springer}
+}
+
+%Comparaison des techniques de correction du mouvement
+
+@article{rohren2004clinical,
+    title={{Clinical applications of PET in oncology}},
+    author={Rohren, E.M. and Turkington, T.G. and Coleman, R.E.},
+    journal={Radiology},
+    volume={231},
+    number={2},
+    pages={305},
+    year={2004},
+    publisher={Radiological Society of North America}
+}
+
+
+@INPROCEEDINGS{Thielemans2006Lesion, 
+author={Thielemans, K. and Manjeshwar, R.M. and Xiaodong Tao and Asma, E.}, 
+booktitle={Nuclear Science Symposium Conference Record, 2006. IEEE}, 
+title={{Lesion detectability in motion compensated image reconstruction of respiratory gated PET/CT}}, 
+year={2006}, 
+month={11}, 
+volume={6}, 
+number={}, 
+pages={3278 -3282}, 
+keywords={PET images;lesion detectability;lung tumors;motion compensated image reconstruction;reconstruction algorithm;respiratory gated PET/CT;image reconstruction;medical computing;medical image processing;positron emission tomography;tumours;}, 
+doi={10.1109/NSSMIC.2006.353708}, 
+ISSN={1082-3654},}
+
+
+@article{rahmim4d,
+  title={{{4D Respiratory Motion-Corrected Rb-82 Myocardial Perfusion PET Image Reconstruction}}},
+  author={Rahmim, A. and Tang, J. and Ay, MR and Bengel, FM},
+  year={2011}
+}
+
+% Pas le fichier ? Seulement sur des données simulées. utilisation du CNR
+@INPROCEEDINGS{detorie2008quantitative, 
+author={Detorie, Nicole C. and Dahlbom, Magnus}, 
+booktitle={Nuclear Science Symposium Conference Record, 2008. NSS '08. IEEE}, title={{Quantitative evaluation of reconstruction algorithms for motion compensated PET}}, 
+year={2008}, 
+month={11}, 
+volume={}, 
+number={}, 
+pages={5366 -5372}, 
+keywords={}, 
+doi={10.1109/NSSMIC.2008.4774446}, 
+ISSN={1082-3654},}
+
+@article{fayad2010application,
+author = {Fayad, Hadi and Pan, Tinsu and Roux, Christian and Visvikis, Dimitris},
+title = {Application of a generic motion model for PET respiratory motion correction},
+journal = {Journal of Nuclear Medicine},
+volume = {51},
+number = {2},
+pages = {524},
+year = {2010},
+URL = {http://jnumedmtg.snmjournals.org}
+}
+
+
+
+%Gating Respiratoire simple
+
+@article{GuopingChang2010Implementation,
+author = {Chang, Guoping and Chang, Tingting and Pan, Tinsu and Clark, John W., Jr. and Mawlawi, Osama R.},
+title = {{Implementation of an automated respiratory amplitude gating technique for PET/CT: clinical evaluation}},
+journal = {J Nucl Med},
+volume = {51},
+number = {1},
+pages = {16-24},
+doi = {10.2967/jnumed.109.068759},
+year = {2010},
+abstract = {Amplitude gating techniques have recently been shown to be better at suppressing respiratory motion artifacts than phase gating. However, most commercial PET/CT scanners are equipped with phase gating capabilities only. The objective of this article was to propose and evaluate using patient studies an automated respiratory amplitude gating technique that could be implemented on current whole-body PET/CT scanners. A primary design feature of the proposed technique is to automatically match the respiratory amplitude captured during the CT scan with a corresponding amplitude during the PET scan. Methods: The proposed amplitude gating technique consists of a CT scan, followed by a list-mode PET scan. The CT scan was acquired while the patient's respiratory motion was recorded by a monitoring device that determined the respiratory motion amplitude captured during the CT scan. A program was designed to inject triggers into the PET list stream whenever the patient's respiration crossed a preset amplitude range determined by the captured amplitude during CT. To implement this proposed amplitude gating technique in whole-body PET/CT, a PET-first protocol was necessary to minimize the respiratory baseline drift between the CT and PET scans. In this implementation, a regular PET scan was first acquired over the patient's whole body but excluding the bed position that covered the lesion of interest. The whole-body CT scan was then acquired, followed by a list-mode PET acquisition over the bed position that covered the area of interest (lesion). The proposed amplitude gating technique was tested using 13 patients with 21 lung or thoracic tumors. Results: In the patient studies, the gated images--when compared with the ungated images--showed statistically significant improvements, with an average 27% and 28% increase in maximum and mean standardized uptake value, respectively, for all lesions. Furthermore, the tumors in the gated images showed better contrast using visual inspection and line profiles. Conclusion: The implementation of the proposed respiratory amplitude gating technique on current PET/CT scanners is feasible, and amplitude-matched CT and PET data can be automatically generated using our proposed procedures without requiring patients to hold their breath or increase their radiation exposure.
+},
+URL = {http://jnm.snmjournals.org/cgi/content/abstract/51/1/16},
+eprint = {http://jnm.snmjournals.org/cgi/reprint/51/1/16.pdf}
+}
+
+
+@article{nehmeh2002effect,
+  title={{{Effect of respiratory gating on quantifying PET images of lung cancer}}},
+  author={Nehmeh, S.A. and Erdi, Y.E. and Ling, C.C. and Rosenzweig, K.E. and Schoder, H. and Larson, S.M. and Macapinlac, H.A. and Squire, O.D. and Humm, J.L.},
+  journal={Journal of Nuclear Medicine},
+  volume={43},
+  number={7},
+  pages={876},
+  year={2002},
+  publisher={Soc Nuclear Med}
+}
+
+
+@article{boucher2004respiratory,
+  title={{{Respiratory gating for 3-dimensional PET of the thorax: feasibility and initial results}}},
+  author={Boucher, L. and Rodrigue, S. and Lecomte, R. and Benard, F.},
+  journal={Journal of Nuclear Medicine},
+  volume={45},
+  number={2},
+  pages={214},
+  year={2004},
+  publisher={Soc Nuclear Med}
+}
+
+
+
+@article{nehmeh2003reduction,
+  title={{{Reduction of respiratory motion artifacts in PET imaging of lung cancer by respiratory correlated dynamic PET: methodology and comparison with respiratory gated PET}}},
+  author={Nehmeh, S.A. and Erdi, Y.E. and Rosenzweig, K.E. and Schoder, H. and Larson, S.M. and Squire, O.D. and Humm, J.L.},
+  journal={Journal of Nuclear Medicine},
+  volume={44},
+  number={10},
+  pages={1644},
+  year={2003},
+  publisher={Soc Nuclear Med}
+}
+
+%Recalage des LOR
+
+@article{lamare2007respiratory,
+  title={{{Respiratory motion correction using affine transformation of list mode data in PET}}},
+  author={Lamare, F. and Cresson, T. and Savean, J. and Cheze Le Rest, C. and Reader, AJ and Visvikis, D.},
+  journal={Physics in medicine and biology},
+  volume={52},
+  pages={121--140},
+  year={2007},
+  publisher={Institute of Physics Publishing}
+}
+
+
+% L'original sur lequel lamare s'est basé
+@article{livieratos2005rigid,
+  title={{{Rigid-body transformation of list-mode projection data for respiratory motion correction in cardiac PET}}},
+  author={Livieratos, L. and Stegger, L. and Bloomfield, PM and Schafers, K. and Bailey, DL and Camici, PG},
+  journal={Physics in Medicine and Biology},
+  volume={50},
+  pages={3313},
+  year={2005},
+  publisher={IOP Publishing}
+}
+
+% Pas de mouvement respiratoire mais mouvement de la tête !
+@article{bloomfield2003design,
+  title={{{The design and implementation of a motion correction scheme for neurological PET}}},
+  author={Bloomfield, P.M. and Spinks, T.J. and Reed, J. and Schnorr, L. and Westrip, A.M. and Livieratos, L. and Fulton, R. and Jones, T.},
+  journal={Physics in Medicine and Biology},
+  volume={48},
+  pages={959},
+  year={2003},
+  publisher={IOP Publishing}
+}
+
+
+% Mouvement de la tête -> recalage translation + rotation
+@article{picard1997motion,
+  title={{{Motion correction of PET images using multiple acquisition frames}}},
+  author={Picard, Y. and Thompson, C.J.},
+  journal={IEEE transactions on medical imaging},
+  volume={16},
+  number={2},
+  pages={137--144},
+  year={1997},
+  publisher={Citeseer}
+}
+
+
+
+% Gating avec recalage
+
+@article{bai2009regularized,
+  title={{{Regularized B-spline deformable registration for respiratory motion correction in PET images}}},
+  author={Bai, W. and Brady, M.},
+  journal={Physics in Medicine and Biology},
+  volume={54},
+  pages={2719},
+  year={2009},
+  publisher={IOP Publishing}
+}
+
+
+% En cardiaque de 1997
+@article{klein19973d,
+  title={{{A 3D optical flow approach to addition of deformable PET volumes}}},
+  author={Klein, G.J. and Huesman, R.H.},
+  journal={nam},
+  pages={0136},
+  year={1997},
+  publisher={Published by the IEEE Computer Society}
+}
+
+% optical flow intelligent, par contre evaluation images réelles resultats tout pourris (genre est-ce que le coeur ne bouge plus)
+@ARTICLE{dawood2008respiratory, 
+author={Dawood, M. and Buther, F. and Xiaoyi Jiang and Schafers, K.P.}, 
+journal={IEEE Transactions on Medical Imaging}, title={{Respiratory Motion Correction in 3D PET Data With Advanced Optical Flow Algorithms}}, 
+year={2008}, 
+month=aug. , 
+volume={27}, 
+number={8}, 
+pages={1164 -1175}, 
+keywords={PET images;breath;discontinuity preservation;motion artifacts;optical flow algorithms;organ boundaries;positron emission tomography;radioactive uptake;respiratory motion correction;respiratory-gating;software phantom;spatial blurring;three-dimensional PET data;biological organs;image motion analysis;medical image processing;phantoms;pneumodynamics;positron emission tomography;}, 
+doi={10.1109/TMI.2008.918321}, 
+ISSN={0278-0062},}
+
+@article{dawood2006lung,
+  title={{{Lung motion correction on respiratory gated 3D PET/CT images}}},
+  author={Dawood, M. and Lang, N. and Jiang, X. and Schafers, KP},
+  journal={IEEE transactions on medical imaging},
+  volume={25},
+  number={4},
+  pages={476},
+  year={2006},
+  publisher={IEEE INSTITUTE OF ELECTRICAL AND ELECTRONICS}
+}
+
+% Mouvement de la tête -> recalage translation + rotation
+@article{picard1997motion,
+  title={{{Motion correction of PET images using multiple acquisition frames}}},
+  author={Picard, Y. and Thompson, C.J.},
+  journal={IEEE transactions on medical imaging},
+  volume={16},
+  number={2},
+  pages={137--144},
+  year={1997},
+  publisher={Citeseer}
+}
+
+
+@ARTICLE{klein2002four, 
+author={Klein, G.J. and Reutter, R.W. and Huesman, R.H.}, 
+journal={IEEE Transactions on Nuclear Science}, title={{Four-dimensional affine registration models for respiratory-gated PET}}, 
+year={2001}, 
+month=jun, 
+volume={48}, 
+number={3}, 
+pages={756 -760}, 
+keywords={12-parameter global affine motion model;adjacent respiratory time frames;adjacent time frames;affine model;cardiac-gated positron emission tomography;constant velocity;cost function;end-diastolic cardiac PET sequence;extension ratios;four-dimensional affine registration models;heart position;image quality;iterative calculation;least squares voxel difference measure;motion;motion-corrected composite volumes;motion-induced blur;nonrigid deformation;nonrigid motion;penalty;prediction prior;principal extension ratios;registered image volume recombination;registration parameters;respiratory cycle;respiratory motion;respiratory-gated PET;respiratory-gated acquisition;rigid-body motion;six-parameter rigid body assumption;smoothly varying motion;cardiology;image registration;medical image processing;pneumodynamics;positron emission tomography;}, 
+doi={10.1109/23.940159}, 
+ISSN={0018-9499}
+}
+
+@article{thorndyke2006reducing,
+  title={{{Reducing respiratory motion artifacts in positron emission tomography through retrospective stacking}}},
+  author={Thorndyke, B. and Schreibmann, E. and Koong, A. and Xing, L.},
+  journal={Medical physics},
+  volume={33},
+  pages={2632},
+  year={2006}
+}
+
+%Effets du décalage TEP-TDM
+@article{erdi2004ct,
+  title={{{The CT motion quantitation of lung lesions and its impact on PET-measured SUVs}}},
+  author={Erdi, Y.E. and Nehmeh, S.A. and Pan, T. and Pevsner, A. and Rosenzweig, K.E. and Mageras, G. and Yorke, E.D. and Schoder, H. and Hsiao, W. and Squire, O.D. and others},
+  journal={Journal of Nuclear Medicine},
+  volume={45},
+  number={8},
+  pages={1287},
+  year={2004},
+  publisher={Soc Nuclear Med}
+}
+
+
+
+
+@article{beyer2003dual,
+  title={{{Dual-modality PET/CT imaging: the effect of respiratory motion on combined image quality in clinical oncology}}},
+  author={Beyer, T. and Antoch, G. and Blodgett, T. and Freudenberg, L.F. and Akhurst, T. and Mueller, S.},
+  journal={European Journal of Nuclear Medicine and Molecular Imaging},
+  volume={30},
+  number={4},
+  pages={588--596},
+  year={2003},
+  publisher={Springer}
+}
+
+@article{beyer2005respiration,
+   author = {Beyer, Thomas and Rosenbaum, Sandra and Veit, Patrick and Stattaus, Jörg and Müller, Stefan and DiFilippo, Frank and Schöder, Heiko and Mawlawi, Osama and Roberts, Fiona and Bockisch, Andreas and Kühl, Hilmar},
+   affiliation = {University Hospital Essen Department of Nuclear Medicine Hufelandstrasse 55 45122 Essen Germany Hufelandstrasse 55 45122 Essen Germany},
+   title = {Respiration artifacts in whole-body (18)F-FDG PET/CT studies with combined PET/CT tomographs employing spiral CT technology with 1 to 16 detector rows},
+   journal = {European Journal of Nuclear Medicine and Molecular Imaging},
+   publisher = {Springer Berlin / Heidelberg},
+   issn = {1619-7070},
+   keyword = {Medicine},
+   pages = {1429-1439},
+   volume = {32},
+   issue = {12},
+   url = {http://dx.doi.org/10.1007/s00259-005-1879-8},
+   note = {10.1007/s00259-005-1879-8},
+   year = {2005}
+}
+

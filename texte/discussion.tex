@@ -13,7 +13,7 @@ Les résultats que nous avons présentés montrent une différence importante de
 détectabilité des lésions dans les images non corrigées et dans les images statiques
 avec tous les critères utilisés. Ce résultat conforte la fiabilité du système de
 détection que nous avons développé. Les détections réalisées dans les images
-corrigées montrent des performances de détectabilité intermédiaires entre celles obtenues dans les images statiques et celles avec obtenues dans les images dynamiques non corrigée. 
+corrigées montrent des performances de détectabilité intermédiaires entre celles obtenues dans les images statiques et celles avec obtenues dans les images dynamiques non corrigées. 
 
 Pour le poumon, les courbes Free-ROC montrent que la détectabilité des
 lésions est bien retrouvée pour la correction du mouvement respiratoire TE-IM, avec une sensibilité de 62\% contre 63\% sur les images statiques, pour
@@ -28,33 +28,31 @@ ne montrent pas d'améliorations notables de la détectabilité apportée par la
 correction du mouvement par rapport à celle des images non corrigées. 
 
 Les performances observées à l'aide des courbes Free-ROC sont très différentes
- entre les deux organes, notamment le nombre de faux positif moyen qui est
+ entre les deux organes, notamment le nombre de faux positifs moyen qui est
 beaucoup plus faible pour le foie que pour le poumon. Cette différence
 s'explique par les différences de volumes des
 organes. En effet, le volume des poumons est approximativement deux fois plus
-important que celui du foie dans le modèle XCAT que que nous avons utilisés.
+important que celui du foie dans le modèle XCAT que nous avons utilisé.
 
 Les courbes Free-ROC sont plus pertinentes que les FDM pour la
 détection, mais il n'existe pas de métrique permettant de synthétiser l'ensemble des performances, comme peut le faire l'aire sous la courbe pour les étude ROC. Il est intéressant de constater que les deux métriques que nous
-avons utilisées montrent des résultats parfois contradictoires. Cela peut
-s'expliquer par la différence de l'information qu'elles mesurent. En effet,
-ces métriques sont complémentaires, et ne mesurent pas les mêmes
-informations. L'analyse JAFROC
+avons utilisées (F-ROC et FDM JAFROC) montrent des résultats parfois contradictoires. Cela peut
+s'expliquer par la différence de l'information qu'elles mesurent. L'analyse JAFROC
 ne prend en compte que le faux positif de plus haut score pour chaque image,
 tandis les courbes F-ROC utilisent le nombre de faux positifs dépassant un
 certain seuil. Les FDM sont naturellement plus difficiles à interpréter et sont,
-par nature, plus sensibles au bruit car elles utilisent des maximums de distributions, et sont
+par nature, plus sensibles au bruit car elles utilisent des maxima de distributions, et sont
 donc très dépendantes des valeurs extrêmes. Cependant, cette métrique renseigne
 sur la différence de détectabilité entre les vrais positifs et le
 faux positifs de plus haut score. C’est une métrique qui est handicapée par la faible quantité d’exemples à disposition, comme
-le montrent les barres d’erreur~\ref{fig:fom_mod}.
+le montrent les barres d’erreur de la figure~\ref{fig:fom_mod}.
 
 
 
 Les résultats que nous avons obtenus montrent néanmoins, sans ambiguïté, que
 la détectabilité des lésions est améliorée par la correction du mouvement
 respiratoire, notamment en utilisant la correction TE-IM. La détectabilité des
-lésions indiquées par la courbe F-ROC est systématiquement supérieure sur les
+lésions indiquée par la courbe F-ROC est systématiquement supérieure sur les
 images corrigées par rapport à celle des images non corrigées. Cependant la correction TE-MS a des performances inférieures à celles observées
 pour TE-IM, ce qui est en contradiction avec les résultats présentés dans la
 littérature sur la quantification des
@@ -66,7 +64,7 @@ paramétrages spécifiques. De plus, nous n'avons pas utilisé la même
 implémentation de l'estimateur de mouvement et du correcteur d'image que
 les auteurs, ce qui pourrait expliquer les différences observées. La précision de
 l'estimation de mouvement est aussi différente, car nous utilisons un
-espacement entre les noeuds de la grille B-spline de 17cm en X et en Y contre 2.5cm pour
+espacement entre les noeuds de la grille B-spline de 17 cm en X et en Y contre 2.5 cm pour
 l'évaluation de~\cite{lamare2007list}.
 
 
@@ -100,23 +98,22 @@ technique.
 
 Il serait intéressant de travailler sur une métrique ``basée région'' pour la
 recherche des meilleurs paramètres de la base d'apprentissage mais, dans ce cas,
-l'évaluation des performances pour chaque jeu de paramètres nécessite de traiter
-toutes les images, ce qui représente plusieurs heures de calculs par jeu de
+l'évaluation des performances pour chaque jeu de paramètres nécessiterait de traiter
+toutes les images, ce qui représente plusieures heures de calculs par jeu de
 paramètres. La recherche exhaustive que nous avons réalisée demande l'évaluation
 de 900 triplets $(c, \gamma, j)$. ll n'est donc pas possible d'utiliser la même
 métrique, à moins d'opérer une étude séparée sur les algorithmes d'optimisation à utiliser, et de
 réaliser les calculs sur une grille. 
 
-
-Mais, dans tous les cas, la quantité de données simulées devra être plus
-importante, pour pouvoir éviter le phénomène de sur-apprentissage (optimisation
+Il serait également intéressant d'augmenter la taille de la base de données
+pour pouvoir éviter le phénomène de sur-apprentissage (optimisation
 des paramètres pour le jeu de données et non pour les classes), qui est
 relativement important dans notre étude, où les données d'apprentissage et
 de tests sont extraites de la même base de données. Cela engendre un biais
-positif sur les résultats. Ce biais n'est pas très grave dans notre cas car
+positif sur les résultats. Ce biais n'est cependant pas très grave dans notre cas car
 il affecte toutes les modalités, et nous ne sommes pas intéressés par les
 performances absolues, mais par les performances relatives.
-Pour éliminer ce biais, il faut entre autre que la base de données utilisée
+Pour éliminer ce biais, il faudrait entre autre, que la base de données utilisée
 pour le réglage des paramètres soit différente de celle utilisée pour réaliser
 l'estimation des performances.
 
@@ -139,7 +136,7 @@ complexe.
 
 Cependant, cette approche par modèle a des limitations connues, notamment
 l'homogénéisation de l'activité des organes. En effet, contrairement à
-l'imagerie TDM, où les coefficients d'atténuations sont relativement constants
+l'imagerie TDM, où les coefficients d'atténuation sont relativement constants
 dans les tissus et entre les patients, en TEP l'activité mesurée pour un même
 organe varie entre les patients, et n'est pas constante à l'intérieur d'un même
 organe. Les différences d'activités entre les patients s'expliquent par la
@@ -186,12 +183,12 @@ de la détectabilité des lésions.
 
 Un partenariat avait été mis en place avec le laboratoire Leti du CEA de
 Grenoble portant sur l'utilisation de leur simulateur SINDBAD. Nous avons passé
-plusieurs mois à l'évaluer et à adapter nos données pour le valider. En effet,
-il a été développé à l'origine pour le contrôle non destructif, et n'avais
+plusieurs mois à l'évaluer et à adapter nos données pour le valider. En effet, ce simulateur
+ a été développé à l'origine pour le contrôle non destructif, et n'avait
 jamais été utilisé pour simuler des données cliniques où les géométries, ainsi
 que les énergies utilisées, sont totalement différentes. Nous avions embauché un
 stagiaire ingénieur pour valider les simulations par rapport à des mesures
-réelles sur des fantômes~\cite{leduvehat}. Cependant, les images que nous sommes parvenus à simuler étaient trop
+réelles sur des fantômes~\cite{leduvehat}. Cependant, les images que nous sommes parvenues à simuler étaient trop
 ``parfaites'' pour pouvoir être utilisées conjointement avec les images TEP. En
 effet, le modèle que nous utilisons (XCAT) est trop peu détaillé pour une
 modalité comme la TDM, qui dispose d'une résolution inférieure au millimètre. Les

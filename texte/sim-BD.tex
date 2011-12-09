@@ -117,7 +117,7 @@ Nous avons choisi de focaliser cette étude sur la détection des lésions situ�
 
 Nous avons utilisé un modèle de lésion correspondant adapté aux lésions de faible intensité. Nous avons utilisé des lésions sphériques~\cite{bai2009regularized}, avec des diamètres de l'ordre de la résolution de l'imageur TEP.
 
-Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons créé. 173 lésions sont présentes dans le Poumon, contre 103 dans le Foie. La différence de taille entre les organes du XCAT explique la petite taille de la base de lésions du foie. 
+Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons créés. 173 lésions sont présentes dans le poumon, contre 103 dans le foie. La différence de taille entre les organes du XCAT explique la plus petite taille de la base de lésions du foie. 
 
 Les lésions ont été placées manuellement dans tout le volume de l'organe, en privilégiant les parties à fort mouvement proche du diaphragme. 
 
@@ -129,7 +129,7 @@ Les contrastes ont été calibrés pour correspondre à des lésions de faibles 
 
 Notre but est de simuler des images avec un ensemble de tumeurs qui ne soient ni trop évidentes ni impossibles à détecter. Nous avons donc cherché à obtenir une échelle de contrastes qui permette un taux de détection par un observateur humain de 10\%, 30\%, 50\%, 70\% et 90\%.
 
-Pour réaliser cela, un ensemble d'images a été simulé sans mouvement respiratoire, avec différentes tailles de tumeurs et en utilisant, en premier lieu, des valeurs de contrastes présentés dans la base de données créée dans notre laboratoire et présentée dans~\cite{tomei2010oncopet_db}. Les valeurs de contraste de la base OncoPET\_DB présentées dans la table~\ref{fig:contrtasteFoiePoumonOrig} pour les lésions du poumon et du foie.
+Pour réaliser cela, un ensemble d'images a été simulé sans mouvement respiratoire, avec différentes tailles de tumeurs et en utilisant, en premier lieu, des valeurs de contrastes présentés dans la base de données créée dans notre laboratoire et présentée dans~\cite{tomei2010oncopet_db}. Les valeurs de contraste de la base OncoPET\_DB sont présentées dans la table~\ref{fig:contrtasteFoiePoumonOrig} pour les lésions du poumon et du foie.
 
 
 Ensuite, une étude ROC avec deux observateurs humains non médecin a été réalisée afin d'estimer la détectabilité de ces couples activité/taille de tumeurs (fig.\ref{fig:calibration}). 
@@ -169,17 +169,17 @@ Poumon	& 10\% & 30\% & 50\% & 70\% & 90\% \\
 \end{table}
 
 
-On présente à chaque observateur les images les unes après les autres. Ils vont les annoter en recherchant toutes les lésions et en leur attribuant une note à l'aide du logiciel Amide~\cite{loening2003amide}. La localisation des lésions n'est pas connue à l'avance, et ils doivent donner pour chaque lésion une note entre 1 et 5 correspondant au barème suivant :
+On présente à chaque observateur les images les unes après les autres. Ils les annotent en recherchant toutes les lésions et en leur attribuant une note à l'aide du logiciel Amide~\cite{loening2003amide}. La localisation des lésions n'est pas connue à l'avance, et ils doivent donner pour chaque lésion une note entre 1 et 5 correspondant au barème suivant :
 
 \begin{enumerate}
-\item Possible
-\item Probable
-\item Très probable
-\item Pratiquement  certain
-\item Certain
+\item Possible.
+\item Probable.
+\item Très probable.
+\item Pratiquement certain.
+\item Certain.
 \end{enumerate}
 
-Nous avons simulé 5 réalisations d'un même modèle basé sur le XCAT avec 12 lésions différentes implantées dans les poumons et le foie de chaque réalisation. Nous avons utilisé 10 itérations et un seul subset pour réaliser cette étude, car elle est antérieure à la recherche des meilleurs paramètres de reconstruction.
+Nous avons simulé 5 réalisations d'un même modèle basé sur le XCAT avec 12 lésions différentes implantées dans les poumons et le foie de chaque réalisation. Les données ont été reconstruites avec l'algorithme OPL-EM présenté dans le chapitre~\ref{lab:OPLEM} en utilisant 10 itérations et un seul sous-ensemble. Le choix de ces paramètres a été fixé \textit{a priori} car cette étude est antérieure à la recherche des meilleurs paramètres présentés dans le chapitre 12.
 
 Les résultats de cette étude sont reportés sur les figures~\ref{fig:calibration} et~\ref{fig:calibrationFoie}, qui représentent respectivement le taux de détection des lésions du foie et du poumon moyennée sur 2 observateurs en fonction du contraste.
 
@@ -272,12 +272,12 @@ Ces résultats sont également résumés dans la table~\ref{fig:detectabiliteVue
 
 \section{Simulation}
 
-Nous avons utilisé le logiciel SORTEO pour simuler la caméra TEP de l'imageur TEP/TDM Philips gemini. La simulation a été réalisée sur 3 lits, avec un recouvrement de 9cm par lits. Pour référence, le champ de vue axial de l'imageur est de 18 cm.
+Nous avons utilisé le logiciel SORTEO pour simuler la caméra TEP de l'imageur TEP/TDM Philips Gemini. La simulation a été réalisée sur 3 lits, avec un recouvrement de 9 cm par lits. Pour référence, le champ de vue axial de l'imageur est de 18 cm.
 
 Nous avons réalisé les simulations de deux acquisitions :
 \begin{description}
-\item[Dynamique :] Les 8 modèles de chacun des 4 cycles respiratoires ont été simulés séparément pour chaque lit. La durée de chaque examen simulé est de 7 secondes, ce qui représente une simulation totale de 224 secondes. Les données simulées de chaque cycle sont concaténées pour simuler le résultat d'une acquisition avec synchronisatio nrespiratoire, et former 8 fichiers de données séquence par lit.
-\item[Statique :] Le modèle de fin d'expiration a été utilisé pour un examen de 224 secondes par lits pour correspondre à la simulation dynamique.
+\item[Dynamique :] Les 8 modèles de chacun des 4 cycles respiratoires ont été simulés séparément pour chaque lit. La durée de chaque examen simulé est de 7 secondes, ce qui représente une simulation totale de 224 secondes. Les données simulées de chaque cycle sont concaténées pour simuler le résultat d'une acquisition avec synchronisation respiratoire, et former 8 fichiers de données séquence par lit.
+\item[Statique :] Le modèle de fin d'expiration a été utilisé pour simuler un examen de 224 secondes par lit pour correspondre à la durée de la simulation dynamique.
 \end{description}
 
 Le temps de simulation nécessaire pour générer une image statique est de 110 h par processeur environ, contre 130 heures pour générer une image dynamique. La différence de temps s'explique par le processus de simulation. En effet, chaque simulation est réalisée en deux temps (voir~\ref{lab:simuSORTEO}), dont le premier a une durée fixe, qui est réalisée pour chacune des 8 simulations des 4 cycles dans le cadre de la simulation dynamique, et seulement une fois pour la simulation statique.
@@ -291,14 +291,14 @@ La base de données générée contient les données de simulation de 15 patient
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{images/exempleImageRecon}
- \caption[Images reconstruites tirées de la base de donnée]{Images reconstruites (8 itérations et 5 subsets) à partir des simulations de la base de données. Les flèches représentent une lésion du foie de diamètre 8 mm avec un contraste de 3.5 : patient 1, ainsi que deux lésions du poumon de 8 mm et de contraste 6.5 : patient 2.}
+ \caption[Images reconstruites tirées de la base de donnée]{Images reconstruites (8 itérations et 5 sous-ensembles) à partir des simulations de la base de données. Les flèches représentent une lésion du foie de diamètre 8 mm avec un contraste de 3.5 : patient 1, ainsi que deux lésions du poumon de 8 mm et de contraste 6.5 : patient 2.}
  \label{fig:exempleImageRecon}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[width=14cm]{images/exempleImageReconMouvement}
- \caption[Images respirantes reconstruites tirées de la base de donnée]{Images reconstruites (8 itérations et 5 subsets) à partir des simulations statiques a) et dynamiques b),c) et d) de la base de données. b), c) et d) représentent respectivement les données du premier instant temporel (fin d'expiration), du troisièe et du quatrième. L1 représente une lésion pulmonaire de 8 mm et de contraste 8, L2 une lésion hépatique de 12 mm et de contraste 1.5, L3 et L4 des lésions hépatiques de diamètre 12 mm et de contraste de 2.3}
+ \caption[Images respirantes reconstruites tirées de la base de donnée]{Images reconstruites (8 itérations et 5 sous-ensembles) à partir des simulations statiques a) et dynamiques b),c) et d) de la base de données. b), c) et d) représentent respectivement les données du premier instant temporel (fin d'expiration), du troisième et du quatrième. L1 représente une lésion pulmonaire de 8 mm et de contraste 8, L2 une lésion hépatique de 12 mm et de contraste 1.5, L3 et L4 des lésions hépatiques de diamètre 12 mm et de contraste de 2.3.}
  \label{fig:exempleImageReconMvt}
 \end{figure}
 
@@ -308,12 +308,12 @@ Cette section correspond à un résumé des caractéristiques de la base de donn
 
 \subsection{Modèles}
 
-Nous avons crée 15 modèles, qui ont été adaptés depuis autant d'images TDM fournies par le centre hospitalier Lyon-SUD. Pour cela nous avons utilisé les outils fournis par Paul Segars~\cite{segars2001These}.
+Nous avons créé 15 modèles, qui ont été adaptés depuis autant d'images TDM fournies par le centre hospitalier Lyon-SUD. Pour cela nous avons utilisé les outils fournis par Paul Segars~\cite{segars2001These}.
 
 
 \subsection{Lésions}
 
-Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons créé. 173 lésions sont présentes dans le poumon, contre 107 dans le foie. La différence de taille entre les organes explique la petite taille de la base de lésions du foie. 
+Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons créés. 173 lésions sont présentes dans le poumon, contre 107 dans le foie. La différence de taille entre les organes explique la plus petite taille de la base de lésions du foie. 
 
 Les lésions ont été placées manuellement dans tout le volume de l'organe, en préférant les parties à fort mouvement proche du diaphragme. 
 

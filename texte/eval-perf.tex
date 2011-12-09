@@ -7,7 +7,7 @@ Dans cette partie, je vais détailler les techniques qui permettent de comparer 
 
 Pour cette section, le problème va être simplifié au cas où un observateur doit classer un signal en ``Sain'' (normal, HO) ou ``Pathologique'' (anormal, H1). 
 
-Les performances d'un classifieur sont indiquées par la matrice de confusion (table~\ref{tab:confusion}), qui recense les signaux correctement et incorrectement classés 
+Les performances de l'observateur sont indiquées par la matrice de confusion (table~\ref{tab:confusion}), qui recense les signaux correctement et incorrectement classés.
 
 \begin{table}[h]
 	\label{tab:confusion}
@@ -26,48 +26,48 @@ d'ensemble des performances du classifieur. Elle indique le résultat de la
 classification de signaux connus.}
 \end{table}
 
-On utilise habituellement deux grandeurs pour mesurer les performances d'un classifieur :
+On utilise habituellement deux grandeurs pour mesurer les performances de l'observateur :
 
-La \emph{sensibilité} (voir l'équation~\ref{eq:sensib}) correspond à la proportion d'images correctement évaluées pathologiques par l'observateur par rapport au nombre total d'images réellement pathologiques. Elle donne une information sur la capacité du classifieur à détecter les cas pathologiques.
+La \emph{sensibilité} (voir l'équation~\ref{eq:sensib}) correspond à la proportion d'images correctement évaluées pathologiques par l'observateur par rapport au nombre total d'images réellement pathologiques. Elle donne une information sur la capacité de l'observateur à détecter les cas pathologiques.
 \label{lab:pressensib}
 \begin{equation}
 	\label{eq:sensib}
 	Sensibilit\acute{e} = \frac{VP}{VP + FN}
 \end{equation}
 
-La \emph{spécificité} (voir équation~\ref{eq:specif}) représente le même type de grandeur, mais cette-fois ci appliquée aux cas non pathologiques : elle correspond à la capacité du classifieur à donner un résultat négatif lorsque l'image est non pathologique.
+La \emph{spécificité} (voir équation~\ref{eq:specif}) représente le même type de grandeur, mais cette-fois ci appliquée aux cas non pathologiques : elle correspond à la capacité de l'observateur à donner un résultat négatif lorsque l'image est non pathologique.
 
 \begin{equation}
 	\label{eq:specif}
 	Sp\acute{e}cificit\acute{e} = \frac{VN}{VN + FP}
 \end{equation}
 
-Ces deux grandeurs sont complémentaires mais ne permettent pas à elle seules de comparer des classifieurs. En effet, un  utilisateur va souvent donner des notes, qui vont indiquer son niveau de confiance sur la présence de la pathologie (à ne pas confondre avec des notations sur la gravité des lésions, comme les techniques de gradation de~\cite{genestie1998comparison}).
+Ces deux grandeurs sont complémentaires mais ne permettent pas à elle seules de comparer les performances de différents observateurs. En effet, un  utilisateur va souvent donner des notes, qui vont indiquer son niveau de confiance sur la présence de la pathologie (à ne pas confondre avec des notations sur la gravité des lésions, comme les techniques de gradation de~\cite{genestie1998comparison}).
 
 Les techniques de comparaison de systèmes de décision comme l'analyse ROC (Receiver-Operating Curve) permettent de prendre en compte ces incertitudes. Elles proviennent à l'origine du domaine des télécommunications pendant la seconde guerre mondiale, où il fallait une métrique permettant de tester les performances des systèmes RADAR~\cite{zou2007receiver} pour la détection des avions ennemis. Les courbes ROC servent donc à évaluer la capacité d'un ou plusieurs ``observateurs'' à discriminer des signaux entre deux classes ``normal'' et ``anormal''. Les informations de sensibilité et de spécificité se limitent à comparer les performances pour un niveau de confiance donné.
 
 \subsection{Définition d'un Vrai positif / Faux positif}
 
-En général, les systèmes CAD génèrent des cartes paramétriques, sur lesquels les voxels ou des groupements de voxels reçoivent une valeur correspondant à leur classe. 
+En général, les systèmes CAD, que nous présentons dans le chapitre 8 génèrent des cartes paramétriques, sur lesquels les voxels ou des groupements de voxels reçoivent une valeur correspondant à leur classe. 
 
-Afin de déterminer si l'élément (voxel ou groupement de voxels) noté ``anormal'' fait effectivement partie d'une lésion, sa  position est généralement comparée à celle des lésions de la vérité terrain. Une distance d'acceptation est utilisée pour prendre en compte une éventuelle imprécision du système CAD. Par exemple, l'auteur de~\cite{paik2004surface} considère que l'élément est un vrai positif si il est contenu dans la tumeur de la vérité terrain.
+Afin de déterminer si l'élément (voxel ou groupement de voxels) noté ``anormal'' fait effectivement partie d'une lésion, sa  position est généralement comparée à celle des lésions de la vérité terrain. Une distance d'acceptation est utilisée pour prendre en compte une éventuelle imprécision du système CAD. Par exemple, l'auteur de~\cite{paik2004surface} considère que l'élément est un vrai positif si il est contenu dans le volume de la tumeur de la vérité terrain.
 
 Cependant, il existe plusieurs stratégies pour compter les FP :
 \begin{itemize}
- \item Par voxel ou groupe de voxel (3D)
- \item Par coupe (2D)
+ \item Par voxel ou groupe de voxel (3D).
+ \item Par coupe (2D).
 \end{itemize}
 
 Ces deux techniques vont très fortement influer sur le nombre de faux positifs pour le même système CAD. En effet, dans le cas où le comptage des FP est réalisé sur l'ensemble de l'image, chaque groupement ou voxel ne correspondant pas à une lésion est noté FP. L'auteur de~\cite{paik2004surface} indique par exemple 165 faux positifs par images TDM pour une sensibilité de 100\%. De même,~\cite{zhao2003automatic} montre une sensibilité de 94\% avec 906 faux positifs par image TDM pour la détection du cancer du poumon. Ces résultats montrent des nombre de faux positifs très importants, mais ne peuvent pas être comparés avec ceux utilisant un chiffrage des FP par coupe. En effet, dans ce cas, ``FP'' correspond au nombre de coupes contenant au moins un élément n'étant pas une tumeur. Le nombre de faux positifs est donc borné par le nombre de coupes, et ne fait pas de différences entre des coupes contenant un grand nombre de lésions et celles n'en contenant qu'une. 
 
-\textbf{Dans le reste du document, nous considèrerons le premier système de comptage des Faux positifs : tout élément du volume à observer n'étant pas en contact avec une tumeur sera compté comme un faux positif.}
+\textbf{Dans le reste du document, nous considèrerons le premier système de comptage des FP : tout élément du volume à observer n'étant pas en contact avec une tumeur sera compté comme un faux positif.}
 
 
 	\section{Méthodologie ROC - Receiver-Operating Curve}
 
 Les courbes ROC~\cite{swets1982evaluation,metz1986roc} sont des courbes indiquant la spécificité et la sensibilité de l'observateur (humain ou numérique) pour différents niveaux de certitude. Elles fournissent une mesure objective des performances d'un observateur dans une tâche de discrimination entre deux classes. 
 
-Elles peuvent être utilisées pour comparer les performances relatives de différents observateurs ou pour déterminer leurs paramètres optimaux. L’évaluation d'un observateur par la méthode ROC nécessite la création d'un jeu de données labellisées en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: pas du tout pathologique, 1: potentiellement pathologique, 2: équivoque, 3: potentiellement pathologique, 4: définitivement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain. 
+Elles peuvent être utilisées pour comparer les performances relatives de différents observateurs avec la même modalité d'imagerie ou pour déterminer les paramètres optimaux de ces images. L’évaluation d'un observateur par la méthode ROC nécessite la création d'un jeu de données labellisées en deux classes : Normale (H0) et Pathologiques (H1). L'observateur va se voir présenter l'ensemble des images et devra les noter individuellement selon un barème défini à l'avance (par exemple 0: définitivement normal, 1: potentiellement normal, 2: équivoque, 3: potentiellement pathologique, 4: définitivement pathologique). Par convention, plus la note (notée $\lambda$) sera élevée, plus l'observateur va considérer qu'il est en présence d'un cas pathologique. A l'inverse, une note basse va indiquer un cas présumé sain ou normal. 
 
 
 \begin{figure}[h]
@@ -92,7 +92,7 @@ Selon cette hypothèse gaussienne, on peut montrer que la distance $d$, appelée
 
 
 \begin{equation}
- d= \frac{d_1 - d_0}{\sqrt{\sigma_1 + \sigma_0}}
+ d= \frac{\lambda_1 - \lambda_0}{\sqrt{\sigma_1 + \sigma_0}}
 \end{equation}
 
 \begin{figure}[h]
@@ -107,14 +107,14 @@ Selon cette hypothèse gaussienne, on peut montrer que la distance $d$, appelée
 
 
 
-Un ensemble d'indicateurs et de figures de mérite (FDM) permettent de comparer les performances de classifieurs à partir des courbes ROC. La FDM la plus simple consiste à choisir un niveau de spécificité (noté $\alpha$) et à comparer les sensibilités des différents classifieurs. L'avantage de ce système est qu'il permet de comparer les performances dans des conditions proches de la réalité, où l'on cherche à rester dans un taux de spécificité donné. Cependant, les résultats vont dépendre du paramètre $\alpha$. Une métrique plus globale est l'aire sous la courbe ROC. \'Etant donné que la courbe est nécessairement comprise dans un carré unitaire, la valeur de l'aire sera comprise entre 0 (le classifieur donne systématiquement les mauvaises réponses), 0.5 (le classifieur donne des réponses aléatoires) et 1 (le classifieur donne toujours la bonne réponse)~\cite{nie2006integrating}.
+Un ensemble d'indicateurs et de figures de mérite (FDM) permettent de comparer les performances de détection à partir des courbes ROC. La FDM la plus simple consiste à choisir un niveau de spécificité (noté $\alpha$) et à comparer les sensibilités des différents observateurs. L'avantage de ce système est qu'il permet de comparer les performances dans des conditions proches de la réalité, où l'on cherche à rester dans un taux de spécificité donné. Cependant, les résultats vont dépendre du paramètre $\alpha$. Une métrique plus globale est l'aire sous la courbe ROC. \'Etant donné que la courbe est nécessairement comprise dans un carré unitaire, la valeur de l'aire sera comprise entre 0 (le classifieur donne systématiquement les mauvaises réponses), 0.5 (le classifieur donne des réponses aléatoires) et 1 (le classifieur donne toujours la bonne réponse)~\cite{nie2006integrating}.
 
 Il est important, lors du calcul de la FDM, d'avoir une estimation de l'erreur. Il est possible de l'estimer en ajustant une courbe théorique (répondant à la loi théorique de la figure~\ref{fig:loiROC}). Plusieurs logiciels ont été développés pour estimer les paramètres, qui ont été comparés dans la publication~\cite{CarstenStephan03012003} (AccuROC, Analyse-It, CMDT, GraphROC, MedCalc, mROC, ROCKIT, and SPSS).
 
 \label{lab:p-valeur}
 Une grandeur souvent utilisée dans la littérature pour évaluer la pertinence d'un résultat est la \emph{p-valeur}. Elle représente la probabilité d'obtenir des différences entre deux courbes au moins aussi extrême que la différence observée (dans notre cas, les courbes ROC), en prenant en compte l'hypothèse selon laquelle le classifieur est aléatoire. Elle permet de vérifier si le test est statistiquement significatif.
 
-Le problème de la méthodologie ROC est que l'observateur ne donne pas d'information de localisation de la pathologie dans l'image. On lui présente une image et il doit la noter sans indiquer la localisation de la zone suspecte. Dans notre cas, nous voulons comparer des classifieurs qui détectent les tumeurs dans l'image. Il faut non seulement savoir si des lésions sont présentes, mais aussi avoir leur nombre et leur localisation. Cela est proche du travail en routine clinique, qui consiste à évaluer l'étendue et le nombre des lésions pour déterminer l'efficacité d'un traitement par exemple. 
+Le problème de la méthodologie ROC est que l'observateur ne donne pas d'information de localisation de la pathologie dans l'image. On lui présente une image et il doit la noter sans indiquer la localisation de la zone suspecte. Dans notre cas, nous voulons comparer des observateurs qui réalisent une tâche de détection et de localisation de la zone suspecte. Il faut non seulement savoir si des lésions sont présentes, mais aussi avoir leur nombre et leur localisation. Cela est proche du travail en routine clinique, qui consiste à évaluer l'étendue et le nombre des lésions pour déterminer l'efficacité d'un traitement par exemple. 
 
 Pour éviter cette limitation, plusieurs extensions à la méthodologie ROC sont décrites dans la littérature : L-ROC, AF-ROC ou encore F-ROC. Les L-ROC sont décrites ci-après, tandis que les AF-ROC et F-ROC seront décrites dans la section suivante.
 
@@ -157,14 +157,14 @@ Les courbes A-FROC~\cite{chakraborty1990free} sont des extensions des courbes Fr
 \label{lab:AFROC}
 Plusieurs techniques ont été développées pour permettre de réaliser des comparaisons de courbes dérivées de la méthodologie F-ROC. De la même manière que pour les courbes ROC, il est possible de comparer les courbes F-ROC en fonction de la FLL pour un nombre de faux positifs donnés. Cependant, étant donné que les courbes F-ROC n'ont pas de fin déterminée, il n'est pas possible d'utiliser l'aire sous la courbe. 
 
-JAFROC~\cite{chakraborty2004observer} (JAcknife Free Receiver Operating Curve) est un algorithme et un logiciel développé par Chakraborty et se base sur une FDM non liée directement à la courbe. Cette mesure de performance utilise un algorithme dérivé des études A-FROC, ce qui signifie qu'il n'utilise pas l'ensemble des informations disponibles dans les courbes F-ROC mais se borne à comparer les scores des faux positifs de plus forte note pour chaque image avec les notes des vrais positifs. La figure de mérite $\Theta_J$ proposée mesure la probabilité d'avoir un score de vrai positif supérieur à celui d'un faux positif (de n'importe quelle image).
+JAFROC~\cite{chakraborty2004observer} (JAcknife Free Receiver Operating Curve) est un algorithme et un logiciel développé par Chakraborty et se base sur une FDM non liée directement à la courbe. Cette mesure de performance utilise un algorithme dérivé des études A-FROC, ce qui signifie qu'il n'utilise pas l'ensemble des informations disponibles dans les courbes F-ROC mais se borne à comparer les scores des faux positifs de plus forte note pour chaque image avec les notes des vrais positifs. La figure de mérite $\theta_J$ proposée mesure la probabilité d'avoir un score de vrai positif supérieur à celui d'un faux positif (de n'importe quelle image).
 
 Soit $\theta_J$ la valeur de la FDM, $N_T$ le nombre total d'images, indexées par $i$, $N_A$ le nombre total de cas pathologiques, indexées par $j$. $n_j$ est le nombre total de lésions dans le cas anormal $j$.
 
 \begin{equation}
 \label{eq:JAFROC1}
 \begin{array}{l}
-	\displaystyle \theta=\frac{1}{N_T N_A} \sum_{i=1}^{N_T} \sum_{j=1}^{N_A} \sum_{k=1}^{n_j} W_{jk} \psi(X_i, Y_{jk}) \\
+	\displaystyle \theta_J=\frac{1}{N_T N_A} \sum_{i=1}^{N_T} \sum_{j=1}^{N_A} \sum_{k=1}^{n_j} W_{jk} \psi(X_i, Y_{jk}) \\
 	\\
 	\displaystyle \psi(X,Y) = \left\{
 		\begin{array}{lll}
@@ -186,7 +186,7 @@ Une seconde version de JAFROC existe avec une puissance statistique plus importa
 
 \begin{equation}
 \label{eq:JAFROC2}
-\theta=\frac{1}{N_T N_A} \sum_{i=1}^{N_N} \sum_{j=1}^{N_A} \sum_{k=1}^{n_j} W_{jk} \psi(X_i, Y_{jk})
+\theta_J=\frac{1}{N_T N_A} \sum_{i=1}^{N_N} \sum_{j=1}^{N_A} \sum_{k=1}^{n_j} W_{jk} \psi(X_i, Y_{jk})
 \end{equation}
 
 
@@ -222,8 +222,8 @@ L’objectif de l’identification initiale des tumeurs (figure \ref{fig:presSys
 \begin{itemize}
 \item Les régions ou organes d’intérêt du système, lorsque celui-ci n’est pas dédié au corps entier, peuvent être séparés. L’image ou les régions d’intérêt de l’image peuvent ensuite être améliorées lors d’une étape de pré-traitement, reposant par exemple sur du rehaussement du contraste ou du débruitage (figure \ref{fig:presSystemesCAD}.1) ).
 \item Le processus d’extraction des tumeurs suspectes passe ensuite par l’utilisation d’un système de classification (figure \ref{fig:presSystemesCAD}.3) )., optimisé par un apprentissage, s’appliquant sur un ensemble de caractéristiques de l’image ou de la structure cible (figure \ref{fig:presSystemesCAD}.2) ). Ce dernier a pour but de déterminer la classe, « tumeur présente » ou « tumeur absente », de l’image ou de la structure cible. 
-\item L’objectif de l’étape de réduction de faux positifs (figure \ref{fig:presSystemesCAD}.4) ) est de fortement réduire les fausses détections extraites de l’étape précédente, tout en conservant une sensibilité élevée. Cette étape rassemble un ensemble de méthodes permettant de trier les tumeurs candidates précédemment extraites afin de ne conserver que les candidats les plus ‘suspects’.  
 \end{itemize}
+L’objectif de l’étape de réduction de faux positifs (figure \ref{fig:presSystemesCAD}.4) ) est de fortement réduire les fausses détections extraites de l’étape précédente, tout en conservant une sensibilité élevée. Cette étape rassemble un ensemble de méthodes permettant de trier les tumeurs candidates précédemment extraites afin de ne conserver que les candidats les plus ‘suspects’.  
 
 	\section{Les CAD en TEP}
 \label{lab:CADTEP}
@@ -232,7 +232,7 @@ Quelques systèmes CAD sur des images TEP ont été décrits dans des travaux ac
 
 Certaines publications utilisent seulement l'imagerie fonctionnelle TEP~\cite{ying2004novel, kanakatte2007pilot, kanakatte2008pulmonary, saradhi2009framework, el2009exploring, mhd2010artificial}, tandis que d'autres combinent cette information avec l'imagerie TDM~\cite{jafar2006computerized, nie2006integrating, potesil2007automated}.
 
-La plupart des travaux réalisés dans le domaine ont portés sur la segmentation de lésions pré-sélectionnées pour réaliser de l'estimation de volume pour de la planification de radio-thérapie ou du suivi thérapeutique~\cite{kanakatte2007pilot, potesil2007automated, kanakatte2008pulmonary, yu2009automated}. Des publications récentes se sont focalisées sur la problématique du diagnostique pour la classification de nodules~\cite{nie2006integrating} ou la prédiction d'évolution des lésions suite à un traitement~\cite{el2009exploring}. Cependant, très peu d'études se sont focalisées sur la problématique de la localisation des lésions~\cite{guan2006automatic, kanakatte2007pilot, kanakatte2008pulmonary, mhd2010artificial}, surtout dans le cas de lésions de faibles diamètre/faible contraste~\cite{ying2004novel, jafar2006computerized, saradhi2009framework}.
+La plupart des travaux réalisés dans le domaine ont portés sur la segmentation de lésions pré-sélectionnées pour réaliser de l'estimation de volume pour de la planification de radiothérapie ou du suivi thérapeutique~\cite{kanakatte2007pilot, potesil2007automated, kanakatte2008pulmonary, yu2009automated}. Des publications récentes se sont focalisées sur la problématique du diagnostic pour la classification de nodules~\cite{nie2006integrating} ou la prédiction d'évolution des lésions suite à un traitement~\cite{el2009exploring}. Cependant, très peu d'études se sont focalisées sur la problématique de la localisation des lésions~\cite{guan2006automatic, kanakatte2007pilot, kanakatte2008pulmonary, mhd2010artificial}, surtout dans le cas de lésions de faible diamètre et faible contraste~\cite{ying2004novel, jafar2006computerized, saradhi2009framework}.
 
 Les systèmes de classifications existants se concentrent en général sur la délimitation de lésions de fort contraste, ce qui ne correspond pas à notre problématique de détection. 
 
@@ -243,11 +243,11 @@ Les systèmes de classifications existants se concentrent en général sur la d�
 
 Cette étape (figure \ref{fig:presSystemesCAD}.1) ) a pour objectif de préparer et améliorer l’image initiale à l’extraction des tumeurs candidates. 
 
-Cette étape n'est pas obligatoire et certaines études utilisent simplement l’image original en imagerie TDM~\cite{mougiakakou2007differential}. D’autres modifient l’image initiale, pour améliorer les performances finales de classification. En imagerie TDM, des méthodes de rehaussement de contraste sont mises en place à partir de filtres sélectifs~\cite{li2003selective}. Certains pré-traitements visent à éliminer des structures gênantes (vaisseaux sanguins dans les poumons…). En mammographie, il est également courant de débruiter les images par des techniques de filtrage~\cite{bazzani2001svm}. Cependant, le filtrage doit être correctement optimisé pour les images à traiter, car il peut être à l'origine d'une baisse de sensibilité~\cite{ge2005computer}.
+Cette étape n'est pas obligatoire et certaines études utilisent simplement l’image originale en imagerie TDM~\cite{mougiakakou2007differential}. D’autres modifient l’image initiale, pour améliorer les performances finales de classification. En imagerie TDM, des méthodes de rehaussement de contraste sont mises en place à partir de filtres sélectifs~\cite{li2003selective}. Certains pré-traitements visent à éliminer des structures gênantes (vaisseaux sanguins dans les poumons…). En mammographie, il est également courant de débruiter les images par des techniques de filtrage~\cite{bazzani2001svm}. Cependant, le filtrage doit être correctement optimisé pour les images à traiter, car il peut être à l'origine d'une baisse de sensibilité~\cite{ge2005computer}.
 	
 	\subsection{Extraction des caractéristiques}
 
-Un système de classification ne traite que très rarement directement les voxels de l’image brute. Différentes caractéristiques descriptives de l’image ou du cas clinique (patient) (figure \ref{fig:presSystemesCAD}.2) ) sont utilisées pour réaliser la classification. Celles-ci sont en effet porteuses d’informations plus pertinentes facilitant leur interprétation. Ces caractéristiques sont assimilées à l'analyse réalisée par l'oeil humain avant avant de réaliser le diagnostic sur la présence ou non de tumeurs. Elles sont l’interprétation de l’image d’un point de vue numérique. Elles doivent permettre au classifieur de discriminer les éléments pathologiques des éléments sains et être caractéristiques de chacune des classes. 
+Un système de classification ne traite que très rarement directement les voxels de l’image brute. Différentes caractéristiques descriptives de l’image ou du cas clinique (patient) (figure \ref{fig:presSystemesCAD}.2) ) sont utilisées pour réaliser la classification. Celles-ci sont en effet porteuses d’informations plus pertinentes facilitant leur interprétation. Ces caractéristiques sont assimilées à l'analyse réalisée par l'oeil humain avant de réaliser le diagnostic sur la présence ou non de tumeurs. Elles sont l’interprétation de l’image d’un point de vue numérique. Elles doivent permettre au classifieur de discriminer les éléments pathologiques des éléments sains et être caractéristiques de chacune des classes. 
 
 Un état de l'art des différentes caractéristiques a été présenté par~\cite{cheng2006approaches}, classées selon leurs catégories. On peut différentier plusieurs familles de caractéristiques selon leur type :
 
@@ -262,7 +262,7 @@ Un état de l'art des différentes caractéristiques a été présenté par~\cit
 
 
 	\section{Méthodes de classification}
-\todo{sur-sous apprentissage}
+%\todo{sur-sous apprentissage}
 
 Dans cette section je vais décrire les deux principales classes de techniques de classification : supervisée et non supervisée.
 
@@ -314,7 +314,7 @@ La ``Machine à Vecteur de Support'', aussi appelée ``Séparateur à Vaste Marg
 
 \begin{figure}[h]
 	\begin{center}
-	\includegraphics[width=12cm]{images/SVM}
+	\includegraphics[width=11cm]{images/SVM}
 	\end{center}
 	\caption[Machine à Vecteur de Support]{Machine à Vecteur de Support : les points vecteur de support (entourés de bleu) sont les seuls utilisés pour calculer la surface de séparation d'équation $w . x + b = 0$. Le vecteur $w$ est normal à la surface de séparation et permet de calculer la marge $\frac{1}{\Vert w \Vert}$.}
 	\label{fig:SVM}
@@ -327,9 +327,9 @@ Les SVM sont des classifieurs supervisés qui cherchent à maximiser la séparat
 \begin{figure}[h]
 	\label{fig:multiPlansSeparationSVM}
 	\begin{center}
-	\includegraphics[width=13cm]{images/multiPlansSeparationSVM}
+	\includegraphics[width=11cm]{images/multiPlansSeparationSVM}
 	\end{center}
-	\caption[Illustration du principe d'optimisation de la marge sur le SVM]{Illustration du principe d'optimisation de la marge sur un cas à deux classes et deux caractéristiques : Il existe une infinité d'hyperplan qui séparent correctement les classes ``étoile vertes'' et ``ronds rouges'', représentés par les traits fins en pointillé. Cependant, il existe seulement une seule solution qui maximise la marge. Cette solution est représentée en trait plein, avec la marge $\frac{1}{||w||}$. Les points entourés en noir sont les points support utilisés pour contraindre l'hyperplan. }
+	\caption[Illustration du principe d'optimisation de la marge sur le SVM]{Illustration du principe d'optimisation de la marge sur un cas à deux classes et deux caractéristiques : Il existe une infinité d'hyperplans qui séparent correctement les classes ``étoile vertes'' et ``ronds rouges'', représentés par les traits fins en pointillé. Cependant, il existe seulement une seule solution qui maximise la marge. Cette solution est représentée en trait plein, avec la marge $\frac{1}{||w||}$. Les points entourés en noir sont les points support utilisés pour contraindre l'hyperplan. }
 \end{figure}
 
 
@@ -370,7 +370,7 @@ Grâce à la maximisation de la marge, les SVM sont performants dans le cas où 
 De nombreux classifieurs supervisés ont été développés :
 
 \label{lab:LDA}
-Le classifieur LDA~\cite{fisher1936use} approxime les deux classes en supposant qu'elles ont une distribution gaussienne de covariance égale. Seule la moyenne de chaque distribution varie, et tout nouveau point est classé en fonction de sa distance à l'une ou l'autre des classes. Bien qu'il soit très rapide, ce classifieur ne fonctionne que dans le cas linéaire. L'approximation gaussienne donne des résultats suffisament bons dans de nombreux cas, ce qui explique son utilisation pour la détection des lésions en mammographie~\cite{baydush2007incorporation} ou en oncologie TDM~\cite{gurcan2002lung}.
+Le classifieur LDA~\cite{fisher1936use} approxime les deux classes en supposant qu'elles ont une distribution gaussienne de covariance égale. Seule la moyenne de chaque distribution varie, et tout nouveau point est classé en fonction de sa distance à l'une ou l'autre des classes. Bien qu'il soit très rapide, ce classifieur ne fonctionne que dans le cas linéaire. L'approximation gaussienne donne des résultats suffisament bons dans de nombreux cas, ce qui explique son utilisation pour la détection des lésions en mammographie~\cite{baydush2007incorporation} ou en oncologie TDM~\cite{gurcan2002lung} par exemple.
 
 
 Les réseaux de neurones~\cite{haykin1999neural} sont des classifieurs non linéaire qui se basent sur un fonctionnement simplifié des neurones du cerveau humain. il sont constitués de neurones artificiels qui miment les réactions des neurones biologiques. Un neurone applique une fonction à la combinaison linéaire de ses stimuli d'entrée. Chaque élément du vecteur de caractéristique est entré dans un neurone, qui ira stimuler un ou plusieurs autres neurones. L'information se propage jusqu'à un neurone terminal qui donnera le résultat. Les réseaux de neurones sont très performants, mais souffrent de difficultés de mise en place à cause de leur grand nombre de paramètres et de temps d'apprentissage très importants.

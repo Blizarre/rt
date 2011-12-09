@@ -90,7 +90,7 @@ Dawood a réalisé plusieurs publications sur le sujet en utilisant le flux opti
 
 
 \section{Correction pré-reconstruction}
-
+\label{lab:corrPreRecon}
 Les méthodes de correction du mouvement pré-reconstruction modifient les positions des lignes de réponse (LDR) estimée par l'imageur TEP.
 Ce recalage des LDR correspond à un déplacement des lignes de réponse dans l'espace du détecteur (voir figure~\ref{fig:recalageLOR}) en fonction du mouvement respiratoire. La limitation principale de ce type de méthode est que le champ de mouvement ne peut pas être élastique.
 
@@ -119,7 +119,7 @@ Dans le cadre du mouvement respiratoire du thorax, l'approche de recalage par LD
 
 En effet,~\cite{lamare2007respiratory} réalise une estimation du mouvement, en recalant les images TDM de chaque instant du cycle sur l'image de référence à l'aide d'une transformation affine par maximisation de l'information mutuelle normalisée. Les données sont des simulations réalisées à partir du logiciel GATE~\cite{jan2004gate} et du fanôme NCAT. Des lésions de 7, 11, 15 et 21mm de diamètre ont été placées dans le poumon, avec un contraste de 8. Le champ de mouvement est calculé séparément pour le poumon, le coeur et trois organes sous le diaphragme (foie, estomac, rate).
 
-Ces résultats ont été améliorés par l'utilisation de la technique suivante qui permettait la prise en compte d'un mouvement élastique. Les performances comparées des deux méthodes sont présentées dans la section suivante.
+Ces résultats ont été améliorés par l'utilisation de la technique suivante qui permet la prise en compte d'un mouvement élastique. Les performances comparées des deux méthodes sont présentées dans la section suivante.
 
 \section{Correction pendant la reconstruction}
 \label{lab:CorrpendantRecon}
@@ -149,11 +149,11 @@ $S$ est la matrice de sensibilité :
 
  $A_t$ est la matrice permettant de corriger les effets de l'atténuation au temps $t$ et $M$ est la matrice de normalisation qui compense l'inhomogénéité spatiale de la sensibilité. $A_t$ est estimée à partir des cartes d'atténuation de chaque instant $t$.
 
-L'étude~\cite{lamare2007list} a été réalisée sur des données simulées semblables à celles de l'étude précédente. Il sagit de simulations réalisées à l'aide du logiciel GATE, d'un cycle respiratoire du modèle NCAT, constitué de 8 instants temporels ainsi qu'une acquisition statique de référence de statistique équivalente à la somme des 8 acquisitions précédentes. Des lésions de 7, 11, 15 et 21mm de diamètre et d'activité 8 fois plus importante que le fond ont été insérées dans le poumon.
+L'étude~\cite{lamare2007list} a été réalisée sur des données simulées semblables à celles de l'étude précédente~\cite{lamare2007respiratory}. Il sagit de simulations réalisées à l'aide du logiciel GATE, d'un cycle respiratoire du modèle NCAT, constitué de 8 instants temporels ainsi qu'une acquisition statique de référence de statistique équivalente à la somme des 8 acquisitions précédentes. Des lésions de 7, 11, 15 et 21 mm de diamètre et d'activité 8 fois plus importante que le fond ont été insérées dans le poumon.
  
-Dans la publication, deux variantes de la technique de correction du mouvement respiratoire sont comparées avec la correction par synchronisation respiratoire avec recalage présentée précédemment ainsi que la correction pré-reconstruction. Les variantes correspondent à des différences d'interpolation du champ de mouvement dans la matrice système. Les résultats présentés montrent un clair avantage pour la correction pendant la reconstruction, avec des performances couramment améliorées d'un facteur 2. 
+Dans la publication, deux variantes de la technique de correction du mouvement respiratoire sont comparées avec la correction par synchronisation respiratoire avec recalage présentée ci-dessus ainsi que la correction pré-reconstruction précisé en~\ref{lab:corrPreRecon}. Des variantes de la méthode nommées ``Reconstruction 1'' et ``Reconstruction 2'' sur la figure correspondent à des différences d'interpolation du champ de mouvement dans la matrice système. Les résultats présentés montrent un clair avantage pour la correction pendant la reconstruction, avec des performances couramment améliorées d'un facteur 2. 
 
-Par exemple, il utilise le PRD sur la métrique contraste (équation~\ref{eq:percentAmelioraiton}) pour une lésion de 7mm présente dans la partie haute du poumon est de 28\% pour les images non corrigées, contre 4.4\% pour les images corrigées par la méthode de correction pré-reconstruction et de 1.2\% pour la méthode de reconstruction pendant la reconstruction. De la même manière, pour des lésions de 7mm présentes dans le bas du poumon, les images non corrigées montrent une différence relative de contraste de 32\%, contre 2.63\% pour la correction pré-reconstruction et 1.66\% pour la correction pendant la reconstruction.
+Par exemple, le PRD sur la métrique contraste (équation~\ref{eq:percentAmelioraiton}) pour une lésion de 7mm présente dans la partie haute du poumon est de 28\% pour les images non corrigées, contre 4.4\% pour les images corrigées par la méthode de correction pré-reconstruction et de 1.2\% pour la méthode de reconstruction pendant la reconstruction. De la même manière, pour des lésions de 7mm présentes dans le bas du poumon, les images non corrigées montrent une différence relative de contraste de 32\%, contre 2.63\% pour la correction pré-reconstruction et 1.66\% pour la correction pendant la reconstruction.
 
 
 \begin{equation}
@@ -182,12 +182,12 @@ La figure~\ref{fig:lamare2007} montre un profil de l'interface poumon/foie avec 
 \end{figure}
 
 
- La publication~\cite{Thielemans2006Lesion} présente un système hybride de synchronisation respiratoire avec recalage et de correction de mouvement pendant la reconstruction. Ce système a été développé pour pouvoir isoler l'effet de la sommation des images recalées sur le résultat. Pour cela, les données de chaque instant temporel sont corrigées et reconstruites séparément à l'aide de la formule~\ref{lab:OPLLamara}. Les N images sont ensuite directement sommées pour obtenir l'image corrigée. La publication montre que cette technique hybride améliore de manière sensible la détection par rapport aux images non corrigées mais reste inférieure aux deux autres techniques mentionnées pour la mesure de détectabilité, comme présenté dans la figure~\ref{fig:apportCHO}
+ La publication~\cite{Thielemans2006Lesion} présente un système hybride de synchronisation respiratoire avec recalage et de correction de mouvement pendant la reconstruction. Ce système a été développé pour pouvoir isoler l'effet de la sommation des images recalées sur le résultat. Pour cela, les données de chaque instant temporel sont corrigées et reconstruites séparément à l'aide de la formule~\ref{lab:OPLLamara}. Les N images sont ensuite directement sommées pour obtenir l'image corrigée. Les résultats de cette étude, dont la méthode est décrite au paragraphe~\ref{lab:articleThielPres}, sont reportés sur la figure~\ref{fig:apportCHO}. Ils comparent les performances de détection estimées par un observateur numérique sur des images non corrigées du mouvement (symbole étoile), puis sur des image corrigées par les deux modèles de corrections présentés en~\ref{lab:correctionDawood2008} (symbole rond) et~\ref{lab:CorrpendantRecon} (symbole hexagone) et enfin sur sa méthode hybride (symbole triangle). La figure montre que cette technique hybride améliore de manière sensible la détection par rapport aux images non corrigées mais reste inférieure aux deux autres techniques mentionnées pour la mesure de détectabilité, comme présenté dans la figure~\ref{fig:apportCHO}
 \label{lab:evolGating}
 
 \section{Déconvolution de l'image}
 
-Cette technique décrite dans~\cite{naqa2006deblurring} utilise une connaissance du mouvement respiratoire acquise à partir d'une image TDM 4D pour déduire un filtrage appelé TLP (\textit{Tumor Location Probability}) qui correspond à la dégradation dû au mouvement respiratoire. Un exemple de filtre est représenté sous forme 3D dans la figure~\ref{fig:formeTLP}.
+Cette technique décrite dans~\cite{naqa2006deblurring} utilise une connaissance du mouvement respiratoire acquise à partir d'une image TDM 4D pour déduire un filtrage appelé TLP (\textit{Tumor Location Probability}) qui correspond à la dégradation due au mouvement respiratoire. Un exemple de filtre est représenté sous forme 3D dans la figure~\ref{fig:formeTLP}.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -209,11 +209,11 @@ Ce type de méthode est peu présent dans la littérature par rapport aux autres
 	\begin{center}
 		\includegraphics[width=10cm]{images/performanceDeconvolution}
 	\end{center}
-	\caption[Comparaison de l'erreur de sous-estimation de l'activité des lésions]{Comparaison de l'erreur de sous-estimation de l'activité des lésions en fonction de l'algorithme de déconvolution utilisé sur des fantômes. En a) la lésion a une activité moyenne, tandis qu'en b) l'activité de la lésion est faible par rapport au fond. Le déplacement de la lésion est le même dans les deux cas (2cm)} 
+	\caption[Comparaison de l'erreur de sous-estimation de l'activité des lésions]{Comparaison de l'erreur de sous-estimation de l'activité des lésions en fonction de l'algorithme de déconvolution utilisé sur des fantômes. En a) la lésion a une activité moyenne, tandis qu'en b) l'activité de la lésion est faible par rapport au fond. Le déplacement de la lésion est le même dans les deux cas (2cm).} 
 	\label{fig:performanceDeconvolution}
 \end{figure}
 
 
 Un autre article utilisant aussi des algorithmes de déconvolution a été présenté par Wiemker~\cite{wiemker2008combined}. Cependant il ne cherche pas à corriger le mouvement respiratoire sur l'ensemble de l'image mais principalement à améliorer la mesure du SUV sur une lésion. Pour cela, il réalise une estimation de la fonction d'étalement du point (FEP) de l'imageur TEP au niveau de la lésion à l'aide d'un contourage de la lésion réalisé préalablement sur une image TDM. L'estimation de la FEP permet de prendre en compte à la fois les effets du mouvement respiratoire et ceux de la FEP intrinsèque à l'imageur TEP. 
 
-Cependant, cette technique est inapplicable dans notre cas car les lésions doivent être de taille suffisamment importantes et homogènes pour pouvoir les délimiter de manière fiable sur les images TDM.
+Cependant, cette technique est inapplicable dans notre cas car les lésions doivent être de taille suffisamment importante et homogène pour pouvoir les délimiter de manière fiable sur les images TDM.
