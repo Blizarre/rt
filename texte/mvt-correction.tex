@@ -68,14 +68,9 @@ Ces techniques se basent toutes sur une estimation préalable du mouvement respi
 
 Les premières publications décrivant cette technique l'utilisaient notamment pour réaliser de l'imagerie cardiaque en TEP~\cite{klein19973d}. Cette publication démontre la faisabilité du procédé sur un animal en utilisant des techniques de flux optique pour estimer le champ de mouvement. En effet le coeur a l'avantage d'avoir une activité métabolique intense, ce qui rend l'estimation de son mouvement relativement aisée même sur des images avec une faible statistique.
 
-
-
-
-\subsection{Estimation du mouvement respiratoire corps entier}
-
 L'estimation du champ de mouvement interne se fait à l'aide d'une des méthode présentées précédemment en~\ref{lab:estimChamp} et rappelée brièvement :
 
-\subsubsection{Imagerie TEP avec synchronisation respiratoire}
+\subsubsection{Estimation du mouvement respiratoire basé sur l'Imagerie TEP}
 \label{lab:correctionDawood2008}
 
 L'acquisition TEP est réalisée en même temps que l'acquisition du signal respiratoire. Une image est reconstruite par phase du signal respiratoire, puis un algorithme d'estimation de mouvement est utilisé pour calculer le champ de mouvement entre les instants du cycle.
@@ -83,7 +78,7 @@ L'acquisition TEP est réalisée en même temps que l'acquisition du signal resp
 Les premiers algorithmes étaient utilisés en imagerie cardiaque~\cite{klein2002four} avec des transformations simples (affines), puis d'autres algorithmes plus adaptés aux images corps entier ont été utilisés, comme les flux optiques~\cite{dawood2006lung, dawood2006lung}, ou l'interpolation par B-spline~\cite{bai2009regularized}. 
 
 
-\subsubsection{Imagerie TDM 4D}
+\subsubsection{Estimation du mouvement respiratoire basé sur l'Imagerie TDM 4D}
 
 Les images TDM 4D peuvent être utilisées pour réaliser l'estimation du mouvement respiratoire au lieu des données TEP. Cela nécessite un temps d'acquisition plus long et augmente la dose d'irradiation reçue par le patient.
 Dawood a réalisé plusieurs publications sur le sujet en utilisant le flux optique pour l'estimation du champ de mouvement~\cite{dawood2006lung, dawood2008respiratory}. L'algorithme a été étudié sur des images de patients réels. Une autre publication~\cite{thorndyke2006reducing} indique une amélioration du rapport de contraste sur bruit (CNR) d'un facteur 3 grâce à la correction.

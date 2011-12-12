@@ -27,6 +27,8 @@ La suite de ce chapitre présente les caractéristiques principales du système 
 
 \section{Reconstruction des images}
 
+\subsection{Principe de la reconstruction}
+
 Nous avons utilisé le logiciel de reconstruction fourni par le Laboratoire de Traitement de l'Information Médicale (LaTIM) dans le cadre d'un partenariat, créé et utilisé par Frédéric Lamare pour ses travaux sur la correction du mouvement respiratoire~\cite{lamare2007list}.
 
 Ce logiciel est capable de reconstruire les images acquises en données séquentielles à l'aide de l'algorithme OPL-EM décrit en \ref{lab:OPLEM}. La reconstruction permet de prendre en compte la correction de l'atténuation, mais ne permet pas la correction des coïncidences aléatoires et des coïncidences diffusées. Nous avons donc choisi de simplifier le problème en supposant une correction parfaite de ces deux effets. Pour cela, nous n'avons pas inclus les photons diffusés ou les coïncidences aléatoires dans les données séquentielles. 
@@ -199,7 +201,7 @@ Nous avons choisi de corriger les images TEP en utilisant la méthode de correct
 \begin{figure}
  \centering
  \includegraphics[width=15cm]{images/exempleImageReconToutes}
- \caption[Exemples d'mages reconstruites corrigées et non corrigées du mouvement]{Images reconstruites avec et sans correction du mouvement respiratoire (8 itérations et 5 sous-ensemble). Les flèches représentent une lésion du foie de diamètre 8 mm avec un contraste de 3.5 dans le patient 1, ainsi que deux lésions du poumon de 8 mm et de contraste 6.5 pour le patient 2.}
+ \caption[Exemples d'images reconstruites corrigées et non corrigées du mouvement]{Images reconstruites avec et sans correction du mouvement respiratoire (8 itérations et 5 sous-ensemble). Les flèches représentent une lésion du foie de diamètre 8 mm avec un contraste de 3.5 dans le patient 1, ainsi que deux lésions du poumon de 8 mm et de contraste 6.5 pour le patient 2.}
  \label{fig:exempleImageReconTous}
 \end{figure}
 
@@ -476,11 +478,11 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 
 \includegraphics[width=14cm]{images/pareto_param_100}
 
-{\small b) Base appauvrie}
+{\small b) Base Appauvrie}
 
  \includegraphics[width=14cm]{images/pareto_param_1000}
  
-{\small c) Base enrichie}
+{\small c) Base Enrichie}
 
 \end{center}
  \caption[(1/2) Recherche des meilleurs paramètres du classifieurs : Fronts de Pareto]{(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code de couleurs correspond à la valeur de j. Bleu correspond à $j=1$, turquoise à $j=2$, vert à $j=3$ et rouge à $j=4$. En a), la base \textbf{Témoin}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base \textbf{Appauvrie} avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base \textbf{Enrichie} avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
@@ -576,7 +578,7 @@ En pratique, on choisira le seuil pour avoir la certitude d'avoir un nombre de f
  \begin{center}
    \includegraphics[width=15cm]{images/FROC_param_corrige}
  \end{center}
- \caption[Courbe Free-ROC comparant les performances du CAD selon les différents paramètres de base d'apprentissage]{Courbe Free-ROC comparant les performances du CAD sur une base \textbf{Témoin} (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base \textbf{Enrichie} (1000 points négatifs par image), sur une base \textbf{Appauvrie} (100 points négatifs par image), sur une base \textbf{Normalisée Écart} (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
+ \caption[Courbes Free-ROC comparant les performances du CAD selon les différents paramètres de base d'apprentissage]{Courbes Free-ROC comparant les performances du CAD sur une base \textbf{Témoin} (normalisation \emph{moyenne} et 200 points négatifs par image), sur une base \textbf{Enrichie} (1000 points négatifs par image), sur une base \textbf{Appauvrie} (100 points négatifs par image), sur une base \textbf{Normalisée Écart} (normalisation entre -1 et +1 et 200 points négatifs par image) et enfin sur une base de 100 points négatifs par image mais dont les volumes ont été érodés de 2 voxels.}
  \label{lab:froc_comp_static}
 \end{figure}
 
@@ -593,7 +595,7 @@ D'un point de vue statistique, la p-valeur (voir \ref{lab:p-valeur}) calculée p
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_param}
  \end{center}
- \caption{Les FDM (Figure de Mérite) JAFROC obtenues pour les différents paramètres de génération de la base d'apprentissage. Les bases \textbf{Témoin}, \textbf{\'Erodée} et \textbf{Enrichie} montrent les meilleures performances, avec un faible avantage pour la base \textbf{Témoin}. Les bases \textbf{Normalisée écart} et \textbf{Appauvrie} ont une figure de mérite nettement plus faible.}
+ \caption[Figures de Mérites JAFROC obtenues pour les différents paramètres de génération de la base d'apprentissage]{Les FDM (Figure de Mérite) JAFROC obtenues pour les différents paramètres de génération de la base d'apprentissage. Les bases \textbf{Témoin}, \textbf{\'Erodée} et \textbf{Enrichie} montrent les meilleures performances, avec un faible avantage pour la base \textbf{Témoin}. Les bases \textbf{Normalisée écart} et \textbf{Appauvrie} ont une figure de mérite nettement plus faible.}
  \label{lab:fom_param}
 \end{figure}
 
@@ -644,7 +646,7 @@ Quatre jeux d'images seront comparés :
 {\small c) NoCorr}
 
 \end{center}
- \caption[Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image \textbf{TE-IM}, b) les images corrigées par la méthode \textbf{TE-MS}, et c) les images \textbf{NoCorr}.}
+ \caption[Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaires]{Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur pour les différents jeux d'images pulmonaire, avec 200 points négatifs par image. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. a) représente la correction d'image \textbf{TE-IM}, b) les images corrigées par la méthode \textbf{TE-MS}, et c) les images \textbf{NoCorr}.}
 \label{fig:paretoModalite} 
 \end{figure}
 
@@ -714,7 +716,7 @@ Globalement, le graphique montre que le maximum de performance est apporté par 
  \begin{center}
    \includegraphics[width=13cm]{images/FROC_mod_corrige}
  \end{center}
- \caption{Courbe Free-ROC comparant les performances du CAD sur les lésions pulmonaires selon la technique de correction du mouvement respiratoire.}
+ \caption{Courbes Free-ROC comparant les performances du CAD sur les lésions pulmonaires selon la technique de correction du mouvement respiratoire.}
  \label{fig:froc_mod}
 \end{figure}
 
@@ -825,7 +827,7 @@ Précision& 0.98		& 0.98		& 0.97		& 0.94		\\
    \includegraphics[width=15cm]{images/FROC_mod19_corrige}
    \vspace{-0.3cm}
  \end{center}
- \caption{Courbe Free-ROC comparant les performances du CAD sur les lésions hépatiques selon la technique de correction du mouvement respiratoire.}
+ \caption{Courbes Free-ROC comparant les performances du CAD sur les lésions hépatiques selon la technique de correction du mouvement respiratoire.}
 \label{fig:froc_mod19}
 \end{figure}
 
@@ -847,7 +849,7 @@ Les performances sont globalement en retrait par rapport à celles du poumon, ma
  \begin{center}
    \includegraphics[width=15cm]{images/FOM_mod19}
  \end{center}
- \caption{Les FDM (Figure de Mérite) JAFROC obtenues pour les différents type d'images pour la détectabilité des lésions du foie.}
+ \caption{Les FDM (Figure de Mérite) JAFROC obtenues pour les différents types d'images pour la détectabilité des lésions du foie.}
  \label{fig:fom_mod19} 
 \end{figure}
 
