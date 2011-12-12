@@ -117,7 +117,7 @@ Le champ de mouvement est estimé en utilisant une méthode de recalage par B-sp
 \begin{figure}
 \centering
 \includegraphics[width=17cm]{images/Bspline}
-\caption[Exemple d'interpolation par B-spline]{Exemple d'interpolation par B-spline en 1 dimension : La courbe en trait pointillé épais est représentée par la la somme des contributions des courbes B-spline représentées en traits pointillés fins. Les points de la grille utilisée pour le placement des courbes sont représentés par les ronds rouge.}
+\caption[Exemple d'interpolation par B-spline]{Exemple d'interpolation par B-spline en 1 dimension : La courbe en trait pointillé épais est représentée par la la somme des contributions des courbes B-spline représentées en traits pointillés fins. Les points de la grille utilisée pour le placement des courbes sont représentés par les ronds rouges.}
 \label{fig:Bspline}
 \end{figure}
 
@@ -194,7 +194,7 @@ Les résultats sont présentés dans la figure~\ref{lab:perfsFctIterReg}. Ils mo
 
 \section{Description des différents types d'images à évaluer}
 
-Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche et intégrée dans le logiciel de reocnstruction fourni par le LATIM. Des images générées sur deux patients sont présentées dans la figure~\ref{fig:exempleImageReconTous}.
+Nous avons choisi de corriger les images TEP en utilisant la méthode de correction post reconstruction décrite en \ref{lab:corrPostRecon} ainsi que la correction par modification de la matrice système décrite en \ref{lab:corrMatSyst}. La première est déjà implémentée sur les imageur GE (technologie motionFree), tandis que la seconde est activement étudiée en recherche et intégrée dans le logiciel de reconstruction fourni par le LATIM. Des images générées sur deux patients sont présentées dans la figure~\ref{fig:exempleImageReconTous}.
 
 \begin{figure}
  \centering
@@ -226,7 +226,7 @@ Ces images sont reconstruites avec OPL-EM en utilisant 8 itérations et 5 sous-e
 
 \subsection{Images TE-IM}
 
-La méthode TE-IM est présentée en~\ref{lab:corrPostRecon}. Les 8 images correspondant aux 8 instants du cycle moyen sont reconstruites séparément à l'aide de la carte d'atténuation recalée correspondante. Chacune de ces images est recontruite avec les mêmes paramètres que pour les autre types d'images, soit 8 itérations et 5 sous-ensembles. Ces 8 images sont ensuite déformées sur l'image correspondant au premier instant du cycle, à l'aide de la carte de mouvement estimée précédemment. Ces 8 cartes recalées sont ensuite sommées pour obtenir les images corrigées.
+La méthode TE-IM est présentée en~\ref{lab:corrPostRecon}. Les 8 images correspondant aux 8 instants du cycle moyen sont reconstruites séparément à l'aide de la carte d'atténuation recalée correspondante. Chacune de ces images est reconstruite avec les mêmes paramètres que pour les autres types d'images, soit 8 itérations et 5 sous-ensembles. Ces 8 images sont ensuite déformées sur l'image correspondant au premier instant du cycle, à l'aide de la carte de mouvement estimée précédemment. Ces 8 cartes recalées sont ensuite sommées pour obtenir les images corrigées.
 
 Bien que chaque image prise indépendamment soit très bruitée à cause du faible nombre d'évènements, la déformation suivie par la sommation des différentes images apporte une régularisation importante, comme on peut le voir dans la figure~\ref{fig:exempleImageReconTous}. 
 
@@ -278,7 +278,7 @@ Les données générées par la décomposition en ondelettes de chaque image se 
 
 La base d'apprentissage sert à entraîner le classifieur dans un processus de classification supervisée, en lui fournissant un ensemble d'exemples avec leur classes associées (voir figure \ref{fig:fonctClassif}) page \pageref{fig:fonctClassif}).
 
-La génération de cette base demande l'extraction de points de la classe ``pathologique'', et de la classe ``sain''. Pour chaque tumeur de la vérité terrain, nous extrayons de l'image correspndante le vecteur de caractéristiques du voxel placée au centre de la tumeur. Ce vecteur de caractéristique correspond aux coefficients de la décomposition en ondelette du voxel de l'image ($8 \times j$).
+La génération de cette base demande l'extraction de points de la classe ``pathologique'', et de la classe ``sain''. Pour chaque tumeur de la vérité terrain, nous extrayons de l'image correspondante le vecteur de caractéristiques du voxel placée au centre de la tumeur. Ce vecteur de caractéristique correspond aux coefficients de la décomposition en ondelette du voxel de l'image ($8 \times j$).
 
 Les points de la classe ``sain'' sont extraits de manière aléatoire dans les volumes de toutes les images (hors tumeurs). Pour des raisons de simplicité d'implémentation, un nombre fixe de points est extrait de chaque image.
 
@@ -348,7 +348,7 @@ Les différentes étapes de l'évaluation des performances nécessitent de fixer
 
 \subsubsection{Paramètres de la base d'apprentissage}
 
-Nous avons identifié plusieurs autres paramètres qui, sont suceptibles d'influencer les performances de détection :
+Nous avons identifié plusieurs autres paramètres qui, sont susceptibles d'influencer les performances de détection :
 
 \begin{enumerate}
  \item \textbf{Normalisation :} Le but de la normalisation est d'homogénéiser les plages de valeurs des différentes caractéristiques pour faciliter le travail du classifieur, dont les paramètres $C$ et $\gamma$ (définis ci-après) dépendent de la distance entre les points et ne permettent pas de gérer des différences trop importantes d'étendues dans les caractéristiques.  Nous avons proposé de comparer deux méthodes de normalisation. La première consiste à modifier les données pour que la moyenne et l'écart-type aient une valeur respectivement de 0 et 1 ($(\mu, \sigma)=(0,1)$). Cette méthode est notée ``\emph{moyenne}'' dans la suite du texte. La seconde méthode consiste à adapter des données pour que l'ensemble des valeurs soit comprises entre -1 et +1. Cette méthode est notée ``\emph{écart}''. La première méthode (\emph{moyenne}) a l'avantage d'être relativement peu sensible aux valeurs extrêmes, contrairement à la seconde (\emph{écart}).
@@ -364,7 +364,7 @@ Nous avons identifié plusieurs autres paramètres qui, sont suceptibles d'influ
 
 \subsubsection{Paramètres du classifieur}
 \label{lab:paramClassif}
-Le classifieur (SVM) utilise les données d'apprentissage formatées selon les choix opérés précédemment (normalisation, volumes utilisés pour extraire les points de la base de points ''sain`` et nombre de ces points) pour générer un modèle de prédiction. Cependant, cet algorithme dispose de paramètres intrinsèques, qui sont beaucoup plus dépendans des données d'apprentissage (voir \ref{lab:SVM}).
+Le classifieur (SVM) utilise les données d'apprentissage formatées selon les choix opérés précédemment (normalisation, volumes utilisés pour extraire les points de la base de points ''sain`` et nombre de ces points) pour générer un modèle de prédiction. Cependant, cet algorithme dispose de paramètres intrinsèques, qui sont beaucoup plus dépendants des données d'apprentissage (voir \ref{lab:SVM}).
 
 \begin{description}
  \item[Niveau de la décomposition en ondelettes $j$ :] Ce paramètre détermine la taille du vecteur de caractéristiques. Il correspond au nombre de niveaux de décomposition pris en compte par le SVM. Les niveaux de décomposition élevés ($j$ grand) correspondant à des informations de très basse fréquence, les informations qu'ils apportent ne sont pas forcément pertinentes pour la détection des lésions. Cependant, les caractéristiques fréquentielles des images générées par les différents jeux d'images étant différentes, il est nécessaire d'adapter ce paramètre à chaque type d'images.
@@ -404,8 +404,8 @@ Nous avons représenté pour chaque jeu d'image le nuage de points correspondant
 \subsection{Mesure des performances de détection}
 \label{lab:selectionSeuil}
 \label{lab:optimIMSTNOMS}
-Les performances de détection obtenues par la méthode de validation croisée considère uniquement le voxel central de la tumeur
-pour déterminer si la lésion est correctement détectée. Ces performances ne traduisent donc pas forcément le comportement d'un observateur humain, qui détecte plutôt des aggrégats. Nous avons donc proposé d'estimer les performances en considérant la notion d'aggrégats. Pour un seuil donné, le CAD génére un ensemble d'agrégats associés à un score, comme présenté en \ref{lab:aggregatsCAD}. Il est ensuite possible d'évaluer la performance de ce CAD à l'aide de courbes F-ROC décrites en \ref{lab:FROC} construites à l'aide de la vérité terrain.
+Les performances de détection obtenues par la méthode de validation croisée considèrent uniquement le voxel central de la tumeur
+pour déterminer si la lésion est correctement détectée. Ces performances ne traduisent donc pas forcément le comportement d'un observateur humain, qui détecte plutôt des agrégats. Nous avons donc proposé d'estimer les performances en considérant la notion d'agrégats. Pour un seuil donné, le CAD génère un ensemble d'agrégats associés à un score, comme présenté en \ref{lab:aggregatsCAD}. Il est ensuite possible d'évaluer la performance de ce CAD à l'aide de courbes F-ROC décrites en \ref{lab:FROC} construites à l'aide de la vérité terrain.
 
 Le seuil sélectionné $s$ pour générer les agrégats est celui qui maximise la Fraction de Localisation de Lésion (FLL : nombre de lésions localisées divisé par le nombre total de lésions), c'est à dire celui qui va permettre de détecter un maximum de lésions. 
 
@@ -417,13 +417,13 @@ Le seuil optimal retenu est celui qui maximise la sensibilité. Nous recherchons
 
 Ce critère de sélection va naturellement engendrer un grand nombre de faux positifs, mais il faut garder à l'esprit qu'il sera utilisé pour réaliser des courbes F-ROC, qui indiquent une spécificité pour chaque nombre de faux positif en jouant sur un second seuil, toujours supérieur à celui retenu pour extraire les agrégats.
 
-Le second critère utilisé pour comparer les bases d'apprentissage est la figure de mérite extraite de l'analyse JAFROC décrite en \ref{lab:AFROC}. Elle va comparer pour chaque image le score du faux positif le plus haut avec les score des vrais positifs de l'image. Pour cette étude, nous avons utilisé la version 4.0 du logiciel JAFROC.
+Le second critère utilisé pour comparer les bases d'apprentissage est la figure de mérite extraite de l'analyse JAFROC décrite en \ref{lab:AFROC}. Elle va comparer pour chaque image le score du faux positif le plus haut avec les scores des vrais positifs de l'image. Pour cette étude, nous avons utilisé la version 4.0 du logiciel JAFROC.
 
 \section{Comparaison des performances de détection des différentes méthodes de correction du mouvement respiratoire}
 
 L'optimisation des paramètres décrits dans la section~\ref{lab:optimParametres} nous a permis de fixer les paramètres de la base d'apprentissage (normalisation, nombre de cas sains, localisation des cas sains).
 
-Afin de comparer les performances des quatre séries d'images (statique, non corrigéee, TE-IM et TE-MS) nous avons dans un premier temps réalisé une nouvelle optimisation des paramètres ($C$, $\gamma$, $j$) pour chaque type d'images en suivant la méthode décrite en~\ref{lab:optimCGJ}. Puis nous avons comparé les courbes F-ROC et réalisé une étude JAFROC comme décrit dans la section~\ref{lab:optimIMSTNOMS}
+Afin de comparer les performances des quatre séries d'images (statique, non corrigée, TE-IM et TE-MS) nous avons dans un premier temps réalisé une nouvelle optimisation des paramètres ($C$, $\gamma$, $j$) pour chaque type d'images en suivant la méthode décrite en~\ref{lab:optimCGJ}. Puis nous avons comparé les courbes F-ROC et réalisé une étude JAFROC comme décrit dans la section~\ref{lab:optimIMSTNOMS}
 
 
 
@@ -483,7 +483,7 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 {\small c) Base enrichie}
 
 \end{center}
- \caption[(1/2) Recherche des meilleurs paramètres du classifieurs : Fronts de pareto]{(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code de couleurs correspond à la valeur de j. Bleu correspond à $j=1$, turquoise à $j=2$, vert à $j=3$ et rouge à $j=4$. En a), la base \textbf{Témoin}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base \textbf{Appauvrie} avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base \textbf{Enrichie} avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
+ \caption[(1/2) Recherche des meilleurs paramètres du classifieurs : Fronts de Pareto]{(1/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code de couleurs correspond à la valeur de j. Bleu correspond à $j=1$, turquoise à $j=2$, vert à $j=3$ et rouge à $j=4$. En a), la base \textbf{Témoin}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en b) la base \textbf{Appauvrie} avec 100 points négatifs par image et une normalisation \emph{moyenne}, et en c) la base \textbf{Enrichie} avec 1000 points négatifs par image et une normalisation \emph{moyenne}.}
 \label{fig:paretoParams1}
 \end{figure}
 
@@ -508,7 +508,7 @@ Pour vérifier que les résultats de la sélection des paramètres du classifieu
 {\small c) Base Témoin 2}
 
 \end{center}
- \caption[(2/2) Recherche des meilleurs paramètres du classifieurs : Fronts de pareto ]{(2/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base \textbf{Normalisée Écart} avec 200 points négatifs par image et une normalisation écart. En b), la base \textbf{Érodée}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en c) la base \textbf{Témoin 2}, réalisée de la même manière que la base \textbf{Témoin} mais en retirant une image. }
+ \caption[(2/2) Recherche des meilleurs paramètres du classifieurs : Fronts de Pareto ]{(2/2) Fronts de Pareto des résultats de la recherche des meilleurs paramètres du classifieur. Pour chaque triplet de paramètres $(C, \gamma, j)$, la sensibilité et la spécificité sont reportées sur le graphique. Le code couleur correspond à la valeur de j. En a) la base \textbf{Normalisée Écart} avec 200 points négatifs par image et une normalisation écart. En b), la base \textbf{Érodée}, avec 200 points négatifs par image et une normalisation \emph{moyenne}, en c) la base \textbf{Témoin 2}, réalisée de la même manière que la base \textbf{Témoin} mais en retirant une image. }
 \label{fig:paretoParams2}
 \end{figure}
 
@@ -699,7 +699,7 @@ La spécificité observée pour les meilleurs jeux de paramètres est sensibleme
 
 \subsection{Courbes Free-ROC}
 
-Les courbes F-ROC obtenues sur les différents type d'images à l'aide des triplets ($C$, $\gamma$, $j$) reportés dans la table~\ref{tab:paramsModPoumon} sont présentées dans la figure \ref{fig:froc_mod}. 
+Les courbes F-ROC obtenues sur les différents types d'images à l'aide des triplets ($C$, $\gamma$, $j$) reportés dans la table~\ref{tab:paramsModPoumon} sont présentées dans la figure \ref{fig:froc_mod}. 
 
 Toutes les courbes ont un NFM (nombre de faux positifs moyen par image) à la sensibilité maximale à peu près équivalent entre 20 et 24, excepté TE-MS avec un NFM à la sensibilité maximale de 34. Cependant, les performances en FLL (fraction  des lésions détectées et localisées) de TE-MS sont constantes à partir d'une NFM de 20 environ. 
 

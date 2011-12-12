@@ -1,6 +1,6 @@
 \chapter{Simulations}
 
-Simuler des images réalistes est un enjeu important en imagerie médicale. Le fait d'avoir accès à la vérité terrain, contrairement à la routine clinique, permet de valider des hypothèses de manière beaucoup plus fine. De plus, avec l'augmentation des performances de ordinateurs et l'accès à des centres de calculs, il devient possible de créer des bases de données de patients de plus en plus importantes et réalistes.
+Simuler des images réalistes est un enjeu important en imagerie médicale. Le fait d'avoir accès à la vérité terrain, contrairement à la routine clinique, permet de valider des hypothèses de manière beaucoup plus fine. De plus, avec l'augmentation des performances des ordinateurs et l'accès à des centres de calculs, il devient possible de créer des bases de données de patients de plus en plus importantes et réalistes.
 
 Nous allons tout d'abord présenter les différents types d'algorithme de simulations disponibles. Ensuite, nous ferons un état de l'art des simulateurs développés par la communauté. Enfin, nous décrirons le simulateur retenu ainsi que les contributions réalisées pour adapter ce simulateur à nos besoins.
 
@@ -8,7 +8,7 @@ Nous allons tout d'abord présenter les différents types d'algorithme de simula
 
 		\subsection{Simulations analytiques}
 
-Les simulateurs analytiques utilisent des approximations fortes pour résoudre les problèmes de manière analytique. Il ne simulent pas de manière réaliste le déplacement des particules (positon, photon) comme les simulateurs Monte-Carlo.
+Les simulateurs analytiques utilisent des approximations fortes pour résoudre les problèmes de manière analytique. Ils ne simulent pas de manière réaliste le déplacement des particules (positon, photon) comme les simulateurs Monte-Carlo.
 
 Dans le cas de l'imagerie TEP, la simulation analytique revient à réaliser des projections du volume TEP dans l'espace du sinogramme. Ce sinogramme est ensuite bruité et modifié pour prendre en compte les effets des coïncidences aléatoires et des photons diffusés. L'efficacité des détecteurs est aussi prise en compte, tout comme les effets de l'atténuation. 
 
@@ -50,11 +50,11 @@ Pour reproduire les données fournies par les systèmes cliniques TEP, les simul
 
 a) Le logiciel prend en entrée deux cartes de labels voxelisées correspondant respectivement au type de traceur et à sa concentration (en Bq/cm$^3$), ainsi qu'à l'atténuation pour chaque voxel. A chaque label (nombre entier définissant une région) correspond un organe, qui peut être différent pour les deux cartes. Le type de scanner doit être précisé, ainsi que les paramètres d'acquisition (2D ou 3D), et le format de sortie (mode séquence ou sinogramme).
 
-Toutes ces informations sont stockées dans un fichier texte, appellé fichier de protocole. Les cartes d'émission et d'atténuation voxeliques doivent être fournie au format ECAT (développé par Siemens).
+Toutes ces informations sont stockées dans un fichier texte, appelé fichier de protocole. Les cartes d'émission et d'atténuation voxeliques doivent être fournies au format ECAT (développé par Siemens).
 
 b) La première partie de la simulation est utilisée pour déterminer un ensemble de probabilités permettant d'accélérer les calculs futurs. Pour cela, SORTEO réalise des simulations Monte-Carlo complètes pour chaque label avec un faible nombre de photons. Cela permet de calculer plusieurs grandeurs telle que la probabilité de détection des photons pour chaque couple (label, détecteur) en prenant en compte les phénomènes physiques, ou encore la probabilité de détection en coïncidence des deux photons émis lors d'une désintégration pour chaque label.
 
-c) La seconde partie de la simulation correspond à la réalisation de l'examen proprement dit. C'est à cette étape que sont simulées les coïncidences vraies, qu'elles soient diffusées ou non. Chaque coïncidence de chaque label est simulée une par une, et le trajet de chaque photon est calculé séparément. Si un des photons est absorbé ou si son énergie n'est pas dans la fenêtre énergétique déterminée par les paramètres d'acquision, alors la paire de photons est considérée comme perdue. Le programme passe à la désintégration suivante. \`A cette étape, le programme prend en compte les temps morts (limitation de l'électronique qui ne peut pas prendre en compte un trop grand nombre de photons en même temps), qui dépend de l'activité. Il est intéressant de noter que grâce aux statistiques estimées à la première étape, la trajectoire de certains photons n'est pas calculée car le simulateur considère qu'ils font partie des ``pertes``. C'est ce qui permet de réaliser les calculs très rapidement par rapport aux simulations Monte-Carlo classiques.
+c) La seconde partie de la simulation correspond à la réalisation de l'examen proprement dit. C'est à cette étape que sont simulées les coïncidences vraies, qu'elles soient diffusées ou non. Chaque coïncidence de chaque label est simulée une par une, et le trajet de chaque photon est calculé séparément. Si un des photons est absorbé ou si son énergie n'est pas dans la fenêtre énergétique déterminée par les paramètres d'acquisition, alors la paire de photons est considérée comme perdue. Le programme passe à la désintégration suivante. \`A cette étape, le programme prend en compte les temps morts (limitation de l'électronique qui ne peut pas prendre en compte un trop grand nombre de photons en même temps), qui dépend de l'activité. Il est intéressant de noter que grâce aux statistiques estimées à la première étape, la trajectoire de certains photons n'est pas calculée car le simulateur considère qu'ils font partie des ``pertes``. C'est ce qui permet de réaliser les calculs très rapidement par rapport aux simulations Monte-Carlo classiques.
 
 d) La dernière étape consiste à simuler les coïncidences aléatoires, qui sont ajoutées aux données précédentes. Ces dernières sont calculées à l'aide d'un modèle utilisant les paramètres mesurés à l'étape b), notamment le taux de photons simples arrivant sur chaque détecteur.
 
@@ -72,7 +72,7 @@ Au cours de cette thèse, nous avons effectué plusieurs contributions au code d
 
 Le code original de SORTEO était adapté à une exécution sur des centres de calculs de petite taille, où la communication entre les processus n’est pas limitée. Cependant, étant donné les volumes de calculs représentés par nos simulations, nous avons fait appel au centre de calcul de l'in2p3 (Institut National de Physique Nucléaire et de Physique des Particules).
 
-Ce centre de calcul regroupe plus de 1300 machines totalisant plus de 17000 cœurs, ainsi que 13 PetaOctets de stockage sur disques en 2011. Les technologies mises en places par les administrateur du centre de calcul sont spécialisées pour gérer cette quantité de données, ce qui représente des contraintes particulières quand aux techniques employées par les logiciels.
+Ce centre de calcul regroupe plus de 1300 machines totalisant plus de 17000 cœurs, ainsi que 13 Petaoctets de stockage sur disques en 2011. Les technologies mises en places par les administrateurs du centre de calcul sont spécialisées pour gérer cette quantité de données, ce qui représente des contraintes particulières quand aux techniques employées par les logiciels.
 
 Par exemple, les différents processus du simulateur PET-SORTEO dialoguaient à travers des fichiers partagés. Cela engendrait des problèmes de saturation de la bande passante entre les nœuds. J'ai donc réalisé des modifications en profondeur du code pour séparer le simulateur en plusieurs entités, chacune réalisant une seule partie du travail :
 
@@ -91,7 +91,7 @@ Bien que le code original permettait de spécifier un format de sortie, en prati
 
 En effet, le code original ne permettait pas la sauvegarde de l'information temporelle de chaque évènement détecté. Or cette information est nécessaire aux méthodes de correction du mouvement respiratoire. 
 
-Nous avons donc adapté PET-SORTEO au format séquence. Nous avons repris le format LMF développé lors de la collaboration CrystalClear pour générer les données, car ce format de données est simple à utiliser. Il se compose d'un fichier texte comprenant les informations sur l'acquisition ainsi que d'un fichier binaire contenant les évènements organisés de manière séquentiel.
+Nous avons donc adapté PET-SORTEO au format séquence. Nous avons repris le format LMF développé lors de la collaboration CrystalClear pour générer les données, car ce format de données est simple à utiliser. Il se compose d'un fichier texte comprenant les informations sur l'acquisition ainsi que d'un fichier binaire contenant les évènements organisés de manière séquentielle.
 
  L'adaptation de SORTEO a nécessité entre autres ces adaptations :
 

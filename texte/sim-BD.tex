@@ -19,16 +19,16 @@ De plus, les simulations permettent d’obtenir des images avec des paramètres 
 
 \subsection{Modèle anatomique}
 
-Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles de patients. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été déformé de manière manuelle sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des surfaces paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'interêt du patient en déplacant les points de contrôle. L'adaptation n’est pas parfaite, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associées aux fantômes adaptés sont présentées dans la figure~\ref{fig:adaptXCAT}.
+Nous avons utilisé une base de données d’images TDM fournie par le Centre Hospitalier Lyon-Sud (CHLS) pour créer 15 modèles de patients. Le fantôme paramétrique XCAT~\cite{segars2009mcatoverview} développé par Paul Segars a été déformé de manière manuelle sur chacune des images TDM à l’aide d’un logiciel fourni avec le modèle, présenté dans la figure~\ref{fig:fitXCAT}. Ce modèle est basé sur des surfaces paramétriques NURB (Non-Uniform Rational B-Splines) que l'on peut ajuster manuellement sur les organes d'intérêt du patient en déplaçant les points de contrôle. L'adaptation n’est pas parfaite, du fait des limitations du logiciel, mais permet d’obtenir une variabilité suffisante pour notre étude. Deux images TDM associées aux fantômes adaptés sont présentées dans la figure~\ref{fig:adaptXCAT}.
 
 \begin{figure}
  \centering
  \includegraphics[width=10cm]{images/FIT_XCAT}
- \caption[Adaptation du modèle XCAT sur une image TDM de patient]{Adaptation du modèle XCAT sur une image TDM de patient : le logiciel ne gère pas correctement l'anisotrpie des voxels, ce qui explique la déformation du modèle sur la vue de droite. Chaque organe est représenté par une surface paramétrique qu’il est possible d’adapter sur un modèle de patient.}
+ \caption[Adaptation du modèle XCAT sur une image TDM de patient]{Adaptation du modèle XCAT sur une image TDM de patient : le logiciel ne gère pas correctement l'anisotropie des voxels, ce qui explique la déformation du modèle sur la vue de droite. Chaque organe est représenté par une surface paramétrique qu’il est possible d’adapter sur un modèle de patient.}
  \label{fig:fitXCAT}
 \end{figure}
 
-Nous avons choisi le XCAT car il intégre directement un modèle de mouvement respiratoire, et il est conçu pour pouvoir être déformé et ainsi engendrer différents patients virtuels.
+Nous avons choisi le XCAT car il intègre directement un modèle de mouvement respiratoire, et il est conçu pour pouvoir être déformé et ainsi engendrer différents patients virtuels.
 
 \begin{figure}
  \centering
@@ -121,7 +121,7 @@ Nous avons inséré 280 lésions dans les 15 modèles de patients que nous avons
 
 Les lésions ont été placées manuellement dans tout le volume de l'organe, en privilégiant les parties à fort mouvement proche du diaphragme. 
 
-Les contrastes ont été calibrés pour correspondre à des lésions de faibles détectabilité par l'étude suivante :
+Les contrastes ont été calibrés pour correspondre à des lésions de faible détectabilité par l'étude suivante :
 
 \subsubsection{Calibration des contrastes des lésions}
 \label{lab:etudeDetect}
@@ -164,7 +164,7 @@ Poumon	& 10\% & 30\% & 50\% & 70\% & 90\% \\
 16mm    & 2    &  3   &  4   & 4.5   & 7.5   \\
 \hline
 \end{tabular}
-\caption[Contraste de la base originale OncoPET\_DB des lésions du poumon et du foie pour létude de détectabilité]{Contraste de la base originale OncoPET\_DB des lésions du poumon et du foie, avec les pourcentages de détection associés.}
+\caption[Contraste de la base originale OncoPET\_DB des lésions du poumon et du foie pour l'étude de détectabilité]{Contraste de la base originale OncoPET\_DB des lésions du poumon et du foie, avec les pourcentages de détection associés.}
 \label{fig:contrtasteFoiePoumonOrig}
 \end{table}
 
@@ -243,7 +243,7 @@ Foie :\\
 \label{fig:detectabiliteVue}
 \end{table}
 
-Ces résultats sont également résumés dans la table~\ref{fig:detectabiliteVue}. Ils montrent une détectabilité largement supérieure à celle que nous avions estimée initialement à partir des résultats obtenus sur la première base de données OncoPET\_DB. Les écarts peuvent s'expliquer par le fait que nous n'avons pas simulé le même scanner TEP (Caméra HR+ pour la base OncoPET\_BD, Philips Gemini pour la nouvelle base), et que les données ont été reconstruites avec un algorithme différent. Il s'avère également que les lésions de 16 mm sont trop visibles pour être intégrées dans l'étude. Nous avons fait des interpolations linéaires entre les statistiques obtenues pour définir les nouvelles gamme d'activités. Les valeurs de contraste utilisées dans notre étude sont finalement reportées dans la table \ref{tab:contrasteFoieFinal} pour les lésions du foie et du poumon.
+Ces résultats sont également résumés dans la table~\ref{fig:detectabiliteVue}. Ils montrent une détectabilité largement supérieure à celle que nous avions estimée initialement à partir des résultats obtenus sur la première base de données OncoPET\_DB. Les écarts peuvent s'expliquer par le fait que nous n'avons pas simulé le même scanner TEP (Caméra HR+ pour la base OncoPET\_BD, Philips Gemini pour la nouvelle base), et que les données ont été reconstruites avec un algorithme différent. Il s'avère également que les lésions de 16 mm sont trop visibles pour être intégrées dans l'étude. Nous avons fait des interpolations linéaires entre les statistiques obtenues pour définir les nouvelles gammes d'activités. Les valeurs de contraste utilisées dans notre étude sont finalement reportées dans la table \ref{tab:contrasteFoieFinal} pour les lésions du foie et du poumon.
 
 
 

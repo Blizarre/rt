@@ -27,11 +27,11 @@ Différentes technologies existent pour mesurer cette information (RespiTrace R2
 
 Bien qu'elles puissent être influencées par les mouvements involontaires du patient, il a été montré dans~\cite{Guivarch2004Sync} que les données acquises selon les méthodes par respiromètre et par ceinture sont équivalentes.
 
-\subsection{Techniques basés sur des caméras vidéos}
+\subsection{Techniques basés sur des caméras vidéo}
 
 Des caméras peuvent être utilisées pour estimer le mouvement respiratoire. Une des techniques consiste à utiliser des informations surfaciques en reconstruisant en 3D certaines parties du corps à l'aide de plusieurs caméras~\cite{beach2004feasibility}, ou en utilisant des caméras 3D temps de vol~\cite{fayad2009patient}. Cela permet d'avoir plus d'informations sur la respiration.
 
-Une autre technique consiste à installer un marqueur sur le corps du patient et à relever les déplacements de ce marqueur selon plusieurs axes à l'aide d'une ou plusieurs caméra. Un tel système est décrit dans~\cite{nehmeh2002effect}. L'un de ces systèmes, le ``Respiratory Gating System'' de Varian Medical Systems est illustré sur  la figure~\ref{fig:RGSdeVarian}.
+Une autre technique consiste à installer un marqueur sur le corps du patient et à relever les déplacements de ce marqueur selon plusieurs axes à l'aide d'une ou plusieurs caméras. Un tel système est décrit dans~\cite{nehmeh2002effect}. L'un de ces systèmes, le ``Respiratory Gating System'' de Varian Medical Systems est illustré sur  la figure~\ref{fig:RGSdeVarian}.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -48,7 +48,7 @@ Ces techniques ont l'avantage d'être moins invasives et plus facilement accept�
 En TEP, la publication de Bundschuh et al.~\cite{bundschuh2007postacquisition} utilise les données dynamiques pour estimer le signal respiratoire sans avoir besoin de capteur externe. Ce processus est réalisé en 5 étapes : 
 
 \begin{enumerate}
- \item Les données TEP sont acquises en mode séquence (aussi appellé mode liste, défini en \ref{lab:modeliste}) : toutes les désintégrations détectées sont enregistrées dans un fichier de manière séquentielle.
+ \item Les données TEP sont acquises en mode séquence (aussi appelé mode liste, défini en \ref{lab:modeliste}) : toutes les désintégrations détectées sont enregistrées dans un fichier de manière séquentielle.
  \item Une image TEP statique est reconstruite. Elle permet de localiser une lésion dans l'image qui servira d'amer pour l'estimation du mouvement respiratoire.
  \item Les données dynamiques sont regroupées en blocs de 0.5 secondes d'acquisitions. Chaque bloc est reconstruit séparément. 
  \item La zone d'intérêt choisie précédemment est sélectionnée dans chaque image reconstruite. La position axiale du barycentre à chaque instant temporel va donner une estimation du mouvement respiratoire pour le volume donné.
@@ -73,7 +73,7 @@ L'estimation du champ de mouvement respiratoire peut être faite à partir des d
 
 Les techniques utilisées sont analogues à celle présentée en~\ref{lab:estimMvtTEP}. Elles consistent à réaliser une acquisition séquentielle des données en même temps qu'une acquisition du signal respiratoire, puis à réorganiser les données acquises pour reconstruire les différents instants du cycle indépendamment et sans correction d'atténuation. Le mouvement est ensuite estimé à partir de ces images.
 
-Pour obtenir le signal respiratoire, Dawood~\cite{dawood2008respiratory} utilise une caméra vidéo qui enregistre le mouvement d'un marqueur placé sur l'abdomen du patient. Ce marqueur est un point blanc placé sur un disque noir, et sa position axiale est détectée en calculant le barycentre des pixels dépassant une certain seuil. 
+Pour obtenir le signal respiratoire, Dawood~\cite{dawood2008respiratory} utilise une caméra vidéo qui enregistre le mouvement d'un marqueur placé sur l'abdomen du patient. Ce marqueur est un point blanc placé sur un disque noir, et sa position axiale est détectée en calculant le barycentre des pixels dépassant un certain seuil. 
 
 La synchronisation avec l'acquisition PET est réalisée à l'aide d'une LED située dans le champ de vue de la caméra qui s'allume lors du début de l'acquisition. Une fois l'acquisition terminée, le signal respiratoire obtenu par la caméra est utilisé pour répartir les évènements acquis par l'imageur TEP le long du cycle respiratoire. Ce cycle est décomposé en 8 parties qui seront reconstruites séparément, sans correction d'atténuation.
 
@@ -81,7 +81,7 @@ Les auteurs utilisent ensuite un algorithme de flux optique 3D présenté dans~\
 
 L'algorithme a été testé sur le fantôme XCAT~\cite{segars2009mcatoverview} ainsi que sur les données de 16 patients. La performance de l'estimation de mouvement a été évaluée selon trois critères sur les images corrigées : la correction du déplacement axial du coeur, le coefficient de corrélation des images corrigées du mouvement, ainsi que le bruit obtenu. Ces résultats sont détaillés dans la présentation de cet article de la partie~\ref{lab:correctionDawood2008}.
 
-Bai a présenté une technique d'estimation semblable~\cite{bai2009regularized}. L'étude a été réalisée sur des images simulées à l'aide du logiciel PET-SORTEO~\cite{reilhac2005pet} en utilisant le modèle NCAT~\cite{segars2009mcatoverview}, ainsi que sur une acquisition clinique. 24 lésions de fort contrastes (8:1) ont été introduites dans les modèles, pour une durée d'examen simulé de 10 minutes. L'erreur moyenne du diamètre longitudinal des lésions est très fortement améliorée par la correction, avec une erreur passant de 36\% à 16\% en moyenne sur l'ensemble des lésions. Le principe est le même que pour la publication précédente, à la différence que l'estimation de mouvement a été réalisée sur des images corrigées de l'atténuation à partir de la carte d'atténuation de la phase de référence. De plus, cette estimation du mouvement à été réalisée à l'aide d'une inteprolation par B-splines~\cite{thevenaz2000optimization}.
+Bai a présenté une technique d'estimation semblable~\cite{bai2009regularized}. L'étude a été réalisée sur des images simulées à l'aide du logiciel PET-SORTEO~\cite{reilhac2005pet} en utilisant le modèle NCAT~\cite{segars2009mcatoverview}, ainsi que sur une acquisition clinique. 24 lésions de forts contrastes (8:1) ont été introduites dans les modèles, pour une durée d'examen simulé de 10 minutes. L'erreur moyenne du diamètre longitudinal des lésions est très fortement améliorée par la correction, avec une erreur passant de 36\% à 16\% en moyenne sur l'ensemble des lésions. Le principe est le même que pour la publication précédente, à la différence que l'estimation de mouvement a été réalisée sur des images corrigées de l'atténuation à partir de la carte d'atténuation de la phase de référence. De plus, cette estimation du mouvement à été réalisée à l'aide d'une interpolation par B-splines~\cite{thevenaz2000optimization}.
 
 Un exemple de champ de déformation obtenu sur l'acquisition clinique est présenté en~\ref{fig:champMouvementBai}
 
@@ -101,7 +101,7 @@ Des algorithmes de recalage sont utilisés de manière à déduire le champ de m
 
 \begin{itemize}
  \item Une possible incohérence entre le cycle acquis en TDM 4D et la respiration du patient en TEP. Bien que les imageurs TEP/TDM couplent les deux sur la même machine, de manière à éviter les mouvements du patient entre les acquisitions, le cycle acquis en TDM ne représente qu'un cycle, tandis que l'acquisition TEP va donner un ``cycle moyen`` plus proche de la réalité.
- \item Une dose de radiation émise plus importante. Bien que les technologies récentes permettent de réduire les doses de manière importante pour l'acquisition dynamique, elles restent tout de même plus importante que pour un CT 3D.
+ \item Une dose de radiation émise plus importante. Bien que les technologies récentes permettent de réduire les doses de manière importante pour l'acquisition dynamique, elles restent tout de même plus importantes que pour un CT 3D.
 \end{itemize}
 
 Il faut noter que plusieurs publications basées sur des simulations se servent des cartes de labels utilisées par le simulateur pour réaliser les estimation de mouvement~\cite{lamare2007list}. Cela donne une estimation dans le ``meilleur des cas'', où l'image TDM est parfaitement en phase avec les images TEP. On utilise alors la méthode décrite précédemment pour estimer le champ de mouvement. L'intérêt de cette méthode est que les données anatomiques sont moins bruitées que les données TEP et contiennent plus d'information pour l'estimation des déformations. Cependant, l'acquisition d'un scanner TDM 4D en routine clinique peut être considérée comme très irradiante.
@@ -114,4 +114,4 @@ Ce modèle est adapté à un patient à partir de deux images TDM prises à des 
 
 L'avantage de ce modèle est qu'il est totalement continu, et permet l'extraction d'un nombre arbitraire de phases sous la forme de matrices de déformation. Ce modèle a été testé sur des images simulées (2 fantômes XCAT) et 6 patients.
 
-L'article \cite{vandemeulebroucke2009respiratory} présente une autre technique adaptée à l'imagerie TDM. Dans ce cas, un modèle est généré à partir d'une acquisitions TDM 4D en créant une image de mouvement moyenne, puis ce modèle est utilisé pour déduire le mouvement interne à partir d'accquisition de fluoroscopies en temps réel.
+L'article \cite{vandemeulebroucke2009respiratory} présente une autre technique adaptée à l'imagerie TDM. Dans ce cas, un modèle est généré à partir d'une acquisition TDM 4D en créant une image de mouvement moyenne, puis ce modèle est utilisé pour déduire le mouvement interne à partir d'acquisition de fluoroscopies en temps réel.

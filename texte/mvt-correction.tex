@@ -37,7 +37,7 @@ Une autre publication~\cite{boucher2004respiratory} utilise un thermomètre dét
 	\begin{center}
 		\includegraphics[width=12cm]{images/gatingBoucher2004}
 	\end{center}
-	\caption[Illustration de l'étendue du mouvement respiratoire sur des images reconstruites ]{Illustration de l'étendue du mouvement respiratoire sur des images reconstruites après synchronisation respiratoire~\cite{boucher2004respiratory}. La rangée du haut montre l'étendue du mouvement de l'apex du coeur, et celle du bas l'étendue du mouvement du rein} 
+	\caption[Illustration de l'étendue du mouvement respiratoire sur des images reconstruites ]{Illustration de l'étendue du mouvement respiratoire sur des images reconstruites après synchronisation respiratoire~\cite{boucher2004respiratory}. La rangée du haut montre l'étendue du mouvement de l'apex du coeur, et celle du bas l'étendue du mouvement du rein.} 
 	\label{fig:boucher2004}
 \end{figure}
 
@@ -45,7 +45,7 @@ Une variante de cette technique ne nécessitant pas de capteur est décrite dans
 
 Cette technique a été comparée avec celle présentée précédemment~\cite{nehmeh2002effect} basée sur le système RPM de Variant. Ces deux techniques n'ont été testées cliniquement que sur un patient mais ont montré des performances tout à fait semblables (6\% de différence dans les activités et 2\% pour le volume de la lésion).
 
-Cependant, ces techniques n'utilisent pas forcément une carte d'atténuation optimisée pour la position du cycle correspondant aux acquisitions TEP. L'article~\cite{boucher2004respiratory} utilise par exemple une carte d'atténuation obtenue par transmission, qui est une moyenne acquise sur plusieurs cycles respiratoires. Chang et al.~\cite{GuopingChang2010Implementation} estiment la carte d'atténuation à partir d'une image TDM réalisée en respiration libre synchronisée. La phase du cycle respiratoire où l'acquistion TDM a été réalisée est enregistrée, et les données TEP acquises sur tous les cycles à cette phase sont reconstruites (voir exemples figure~\ref{fig:chang2010}). Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
+Cependant, ces techniques n'utilisent pas forcément une carte d'atténuation optimisée pour la position du cycle correspondant aux acquisitions TEP. L'article~\cite{boucher2004respiratory} utilise par exemple une carte d'atténuation obtenue par transmission, qui est une moyenne acquise sur plusieurs cycles respiratoires. Chang et al.~\cite{GuopingChang2010Implementation} estiment la carte d'atténuation à partir d'une image TDM réalisée en respiration libre synchronisée. La phase du cycle respiratoire où l'acquisition TDM a été réalisée est enregistrée, et les données TEP acquises sur tous les cycles à cette phase sont reconstruites (voir exemples figure~\ref{fig:chang2010}). Les résultats présentés sur 13 patients (21 tumeurs) montrent une amélioration du rapport signal sur bruit pouvant aller de -3.4 à 81\% suivant les tumeurs, avec une amélioration moyenne de 26.3\%.
 
 \begin{figure}[h!]
 	\begin{center}
@@ -117,7 +117,7 @@ Dans le cadre du mouvement respiratoire du thorax, l'approche de recalage par LD
 \end{figure}
  
 
-En effet,~\cite{lamare2007respiratory} réalise une estimation du mouvement, en recalant les images TDM de chaque instant du cycle sur l'image de référence à l'aide d'une transformation affine par maximisation de l'information mutuelle normalisée. Les données sont des simulations réalisées à partir du logiciel GATE~\cite{jan2004gate} et du fanôme NCAT. Des lésions de 7, 11, 15 et 21mm de diamètre ont été placées dans le poumon, avec un contraste de 8. Le champ de mouvement est calculé séparément pour le poumon, le coeur et trois organes sous le diaphragme (foie, estomac, rate).
+En effet,~\cite{lamare2007respiratory} réalise une estimation du mouvement, en recalant les images TDM de chaque instant du cycle sur l'image de référence à l'aide d'une transformation affine par maximisation de l'information mutuelle normalisée. Les données sont des simulations réalisées à partir du logiciel GATE~\cite{jan2004gate} et du fantôme NCAT. Des lésions de 7, 11, 15 et 21mm de diamètre ont été placées dans le poumon, avec un contraste de 8. Le champ de mouvement est calculé séparément pour le poumon, le coeur et trois organes sous le diaphragme (foie, estomac, rate).
 
 Ces résultats ont été améliorés par l'utilisation de la technique suivante qui permet la prise en compte d'un mouvement élastique. Les performances comparées des deux méthodes sont présentées dans la section suivante.
 
@@ -149,7 +149,7 @@ $S$ est la matrice de sensibilité :
 
  $A_t$ est la matrice permettant de corriger les effets de l'atténuation au temps $t$ et $M$ est la matrice de normalisation qui compense l'inhomogénéité spatiale de la sensibilité. $A_t$ est estimée à partir des cartes d'atténuation de chaque instant $t$.
 
-L'étude~\cite{lamare2007list} a été réalisée sur des données simulées semblables à celles de l'étude précédente~\cite{lamare2007respiratory}. Il sagit de simulations réalisées à l'aide du logiciel GATE, d'un cycle respiratoire du modèle NCAT, constitué de 8 instants temporels ainsi qu'une acquisition statique de référence de statistique équivalente à la somme des 8 acquisitions précédentes. Des lésions de 7, 11, 15 et 21 mm de diamètre et d'activité 8 fois plus importante que le fond ont été insérées dans le poumon.
+L'étude~\cite{lamare2007list} a été réalisée sur des données simulées semblables à celles de l'étude précédente~\cite{lamare2007respiratory}. Il s'agit de simulations réalisées à l'aide du logiciel GATE, d'un cycle respiratoire du modèle NCAT, constitué de 8 instants temporels ainsi qu'une acquisition statique de référence de statistique équivalente à la somme des 8 acquisitions précédentes. Des lésions de 7, 11, 15 et 21 mm de diamètre et d'activité 8 fois plus importante que le fond ont été insérées dans le poumon.
  
 Dans la publication, deux variantes de la technique de correction du mouvement respiratoire sont comparées avec la correction par synchronisation respiratoire avec recalage présentée ci-dessus ainsi que la correction pré-reconstruction précisé en~\ref{lab:corrPreRecon}. Des variantes de la méthode nommées ``Reconstruction 1'' et ``Reconstruction 2'' sur la figure correspondent à des différences d'interpolation du champ de mouvement dans la matrice système. Les résultats présentés montrent un clair avantage pour la correction pendant la reconstruction, avec des performances couramment améliorées d'un facteur 2. 
 
@@ -193,7 +193,7 @@ Cette technique décrite dans~\cite{naqa2006deblurring} utilise une connaissance
 	\begin{center}
 		\includegraphics[width=10cm]{images/formeTLP}
 	\end{center}
-	\caption[Exemple de filtres TLP pour la correction par déconvolution]{Exemple de filtres TLP calculé dans l'article~\cite{naqa2006deblurring} pour la correction par déconvolution, rendu en 3D après tesselation,lissage et normalisation. Il représente la probabilité de présence du centre de la lésion.} 
+	\caption[Exemple de filtres TLP pour la correction par déconvolution]{Exemple de filtres TLP calculé dans l'article~\cite{naqa2006deblurring} pour la correction par déconvolution, rendu en 3D après tesselation, lissage et normalisation. Il représente la probabilité de présence du centre de la lésion.} 
 	\label{fig:formeTLP}
 \end{figure}
 
