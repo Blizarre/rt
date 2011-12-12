@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=texte/transition.tex
+lastDocument=main.tex
 masterDocument=
 name=rapportBiblio
 pkg_extIsRegExp=false
@@ -17,12 +17,12 @@ QuickBuild=
 
 [item:main.tex]
 archive=true
-column=17
+column=1
 encoding=UTF-8
 highlight=LaTeX
-line=65
+line=138
 open=true
-order=3
+order=14
 
 [item:nomenclature.txt]
 archive=true
@@ -44,19 +44,19 @@ order=-1
 
 [item:texte/ImagerieTEP.tex]
 archive=true
-column=0
+column=5
 encoding=UTF-8
 highlight=LaTeX
-line=162
+line=260
 open=true
-order=2
+order=3
 
 [item:texte/biblioperso.tex]
 archive=true
-column=212
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=7
+line=10
 open=false
 order=5
 
@@ -65,9 +65,9 @@ archive=true
 column=16
 encoding=UTF-8
 highlight=LaTeX
-line=17
+line=27
 open=true
-order=7
+order=0
 
 [item:texte/corrections.txt]
 archive=true
@@ -80,66 +80,66 @@ order=3
 
 [item:texte/discussion.tex]
 archive=true
-column=35
+column=89
 encoding=UTF-8
 highlight=LaTeX
-line=165
-open=true
-order=13
-
-[item:texte/eval-perf.tex]
-archive=true
-column=0
-encoding=UTF-8
-highlight=LaTeX
-line=267
-open=true
-order=5
-
-[item:texte/introduction.tex]
-archive=true
-column=264
-encoding=UTF-8
-highlight=LaTeX
-line=26
-open=true
-order=8
-
-[item:texte/mvt-correction.tex]
-archive=true
-column=0
-encoding=UTF-8
-highlight=LaTeX
-line=7
+line=190
 open=true
 order=1
 
-[item:texte/mvt-estimation.tex]
+[item:texte/eval-perf.tex]
 archive=true
-column=245
+column=928
 encoding=UTF-8
 highlight=LaTeX
-line=2
+line=350
+open=true
+order=2
+
+[item:texte/introduction.tex]
+archive=true
+column=318
+encoding=UTF-8
+highlight=LaTeX
+line=24
+open=true
+order=4
+
+[item:texte/mvt-correction.tex]
+archive=true
+column=30
+encoding=UTF-8
+highlight=LaTeX
+line=17
+open=true
+order=5
+
+[item:texte/mvt-estimation.tex]
+archive=true
+column=6
+encoding=UTF-8
+highlight=LaTeX
+line=103
 open=true
 order=6
 
 [item:texte/mvt-respi.tex]
 archive=true
-column=0
+column=6
 encoding=UTF-8
 highlight=LaTeX
-line=2
+line=11
 open=true
-order=0
+order=7
 
 [item:texte/resultats.tex]
 archive=true
-column=86
+column=6
 encoding=UTF-8
 highlight=LaTeX
-line=835
+line=7
 open=true
-order=9
+order=8
 
 [item:texte/resume.tex]
 archive=true
@@ -148,40 +148,40 @@ encoding=UTF-8
 highlight=LaTeX
 line=19
 open=true
-order=14
+order=9
 
 [item:texte/sim-BD.tex]
 archive=true
-column=194
+column=5
 encoding=UTF-8
 highlight=LaTeX
-line=338
+line=174
 open=true
-order=12
+order=10
 
 [item:texte/sim-simulation.tex]
 archive=true
-column=0
+column=13
 encoding=UTF-8
 highlight=LaTeX
-line=92
+line=79
 open=true
 order=11
 
 [item:texte/titre.tex]
 archive=true
-column=95
+column=23
 encoding=UTF-8
 highlight=LaTeX
 line=40
 open=true
-order=4
+order=12
 
 [item:texte/transition.tex]
 archive=true
-column=122
+column=55
 encoding=UTF-8
 highlight=LaTeX
-line=4
+line=8
 open=true
-order=10
+order=13

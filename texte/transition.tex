@@ -29,16 +29,16 @@ La quatrième partie de ce manuscrit s'attarde à décrire la méthode utilisée
 
 \section{Mesure des performances de détection}
 
-Nous avons montré dans le chapitre 7 que les analyses ROC ou F-ROC sont les méthodes de référence pour évaluer les performances de détection. Ces études sont néanmoins lourdes à mettre en oeuvre lorsque l'on cherche à optimiser des paramètres et requierent la participation active d'observateurs, souvent difficile à mobiliser lorsque les tâches de lecture sont longues et répétitives.
+Nous avons montré dans le chapitre 7 que les analyses ROC ou F-ROC sont les méthodes de référence pour évaluer les performances de détection. Ces études sont néanmoins lourdes à mettre en oeuvre lorsque l'on cherche à optimiser des paramètres et requièrent la participation active d'observateurs, souvent difficiles à mobiliser lorsque les tâches de lecture sont longues et répétitives.
 
-Nous avons donc cherché à développer une stratégie qui permet de respecter les conditions de l'analyse F-ROC mais en s'affranchissant d'observateurs humains.
+Nous avons donc cherché à développer une stratégie qui permette de respecter les conditions de l'analyse F-ROC tout en s'affranchissant d'observateurs humains.
 
 Le chapitre 8 a présenté le principe des systèmes d'aide à la détection, développés pour fournir une seconde lecture au médecin lors de son diagnostic. Nous avons proposé d'utiliser ces systèmes CAD comme observateurs numériques.
 
-Les systèmes CAD permettent de surmonter les inconvénients des observateur humain lors des évaluation de méthodes. Ils permettent de limiter la variabilité inter-observateurs en permettant de réaliser l'ensemble des détections avec un seul observateur, et garantissent que toutes les observations sont réalisées dans les mêmes conditions. Il est aussi possible de reproduire à l'identique les conditions d'évaluation pour traiter de nouvelles données.
+Les systèmes CAD permettent de surmonter les inconvénients des observateur humain lors des évaluations de méthodes. Ils permettent de limiter la variabilité inter-observateurs en permettant de réaliser l'ensemble des détections avec un seul observateur, et garantissent que toutes les observations sont réalisées dans les mêmes conditions. Il est aussi possible de reproduire à l'identique les conditions d'évaluation pour traiter de nouvelles données.
 
-Nous avons développé une méthode d'évaluation des performances de correction basée sur l'utilisation d'un système de détection des lésions automatisé. Les performances de ce système de détection sur les lésions présentes dans les modèles vont définir la qualité de la correction. 
+Nous avons développé une méthode d'évaluation des performances de correction basée sur l'utilisation d'un système de détection des lésions automatisé. Les performances de ce système de détection sur les lésions présentes dans les modèles vont définir la qualité et la pertinence de la correction. 
 
-Nous utilisons un classifieur basé sur les Machines à Vecteur de support (SVM) utilisant les ondelettes non décimées comme caractéristiques fréquentielles. La classification est réalisée sur chaque voxel des images, puis une étape de réduction des faux positifs est appliquée, en agrégeant les voxels classés positifs, et en supprimant les agrégats trop petits.
+Nous utilisons un classifieur basé sur les Machines à Vecteurs de Support (SVM) utilisant les coefficients d'ondelettes non décimées comme caractéristiques fréquentielles. La classification est réalisée sur chaque voxel des images, puis une étape de réduction des faux positifs est appliquée, en agrégeant les voxels classés positifs, et en supprimant les agrégats de trop petite taille.
 
 Les performances sont mesurées par l’analyse psychophysique des courbes free-receiver operating characteristics (FROC) que nous avons adaptée aux spécificités de l’imagerie TEP. L’évaluation des performances est réalisée sur deux méthodes prometteuses de correction du mouvement respiratoire, en les comparants avec les performances obtenues sur les images non corrigées ainsi que sur les images idéales sans mouvement respiratoire.
