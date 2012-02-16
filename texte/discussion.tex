@@ -1,4 +1,4 @@
-\chapter{Discussion}
+\chapter{Discussion et Conclusion}
 
 Les contributions de cette thèse sont doubles. Elles portent, à la fois sur la
 création d'une base de données de patients simulés respirant, en TEP dynamique, et
@@ -211,6 +211,27 @@ une grille de calculs (actuellement la grille Égée). Les simulateurs que nous
 avons utilisés (PET-SORTEO et SINDBAD) sont en cours d'intégration ainsi
 que le modèle XCAT. Des travaux sont en cours pour améliorer le réalisme des
 modèles, notamment grâce à l'ajout d'informations de texture.  
+
+\section{Conclusion}
+
+L'étude que nous avons réalisée a montré une amélioration globale de la
+détectabilité des lésions, apportée par les techniques de correction du
+mouvement respiratoire. Cependant, les résultats sont parfois contrastés
+selon les deux techniques que nous avons évaluées, notamment
+pour le poumon, ce qui semble indiquer que les organes réagissent différemment à
+ces corrections.
+
+L'approche région que nous avons proposée et intégrée à notre système d'évaluation est
+originale, dans le sens où nous avons appliqué un estimateur région qui se
+rapproche du modèle de détection humain. Cependant, il reste de nombreuses
+possibilités d'amélioration, notamment au niveau de la complexité du modèle
+utilisé et de la sélection des paramètres. 
+
+De plus, la référence reste toujours l'observateur humain, et les résultats que
+nous avons observés doivent être comparés avec les performances d'un observateur
+humain, et validés sur des données cliniques. Nous avons montré qu'il était
+possible de répondre à la problématique uniquement à partir de données simulées
+et d'observateurs informatiques.
 
 %Actuellement toutes les acquisitions sont réalisées en TEP/TDM. Avons tenté de générer base TEP/TDM, mais sans succès. Problème de qualité de simulation. Modèle trop pauvre, => images trop parfaites => plus besoin de la TEP
 

@@ -348,7 +348,7 @@ proba(p|f) = \prod\limits_{i=1}^{L} \frac{<p_i>^{p_i}}{<p_i> !} e^{-<p_i>}
 Où $<p_i>$ est le paramètre de la loi de Poisson (moyenne) de la ligne de réponse $p_i$. L'objectif des algorithmes de reconstruction itératifs est d'estimer la distribution $f$ des $(f_j)_{i=j..P}$, avec $P$ le nombre de pixels, conduisant à l'ensemble $(<p_i>)_{i=1..L}$. L'équation~\ref{eq:eqTEP}, en négligeant les erreurs, s'écrit donc :
 
 \begin{equation}
-<p_i> = \sum\limits_{i=1}^{P} R_{ij}f_j
+<p_i> = \sum\limits_{j=1}^{P} R_{ij}f_j
 \end{equation}
 
 On maximise la log-vraisemblance de l'équation~\ref{lab:proba} pour évaluer la cohérence entre les pixels de l'image $(f_j)_{j=1..P}$ et les projections observées $(p_i)_{i=1..L}$. Cette fonction de coût est notée $Q(f_1 \dots f_P, q_1 \dots q_L)$. On cherche l'estimation $\hat{f}$ de $f$ qui maximise cette fonction de coût :
